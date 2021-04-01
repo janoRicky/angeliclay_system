@@ -1,0 +1,14 @@
+
+html, body {
+	margin: 0;
+	height: 100%;
+}
+
+.sidebar {
+	min-width: 15rem;
+	max-width: 15rem;
+	overflow-y: auto;
+}
+.content {
+	margin-left: 15rem;
+}

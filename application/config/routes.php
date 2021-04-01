@@ -49,6 +49,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'welcome';
+$route['default_controller'] = 'controller_main';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+
+// PAGES
+$route['admin'] = 'controller_main/view_a_login';
+$route['admin/dashboard'] = 'controller_main/view_a_dashboard';
+$route['admin/accounts'] = 'controller_main/view_a_accounts';
+$route['admin/accounts_edit'] = 'controller_main/view_a_accounts_edit';
+
+
+// FUNCTIONS
+$route['admin/login'] = 'controller_login/admin_login_verification';
+$route['admin/logout'] = 'controller_main/admin_logout';
+
+// - CREATE
+$route['admin/acc_create'] = 'controller_create/new_admin_account';
+
+// - UPDATE
+$route['admin/acc_update'] = 'controller_update/edit_admin_account';
+
+// - DELETE
+$route['admin/acc_delete'] = 'controller_delete/delete_admin_account';
+
+
+// NOTES:
+// url of admin log-in is "http://localhost/luna_likha_system/admin"
+// url of admin dashboard is "http://localhost/luna_likha_system/admin/dashboard"
