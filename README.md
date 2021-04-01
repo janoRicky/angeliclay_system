@@ -9,6 +9,7 @@ ADMIN PASSWORD:	1234
 
 NOTES:
 	- import database luna_likha_db.sql on phpmyadmin
+	- localhost/luna_likha_system/admin
 
 LIBRARIES USED:
 	- bootstrap (for css)
