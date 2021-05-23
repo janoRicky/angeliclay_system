@@ -31,23 +31,23 @@ $template_header;
 						</a>
 					</div>
 					<div class="col-3">
-						<a href="#">
+						<a href="products">
 							<div class="card text-center bg-dark text-light p-3">
-								test
+								PRODUCTS (0)
 							</div>
 						</a>
 					</div>
 					<div class="col-3">
-						<a href="#">
+						<a href="types">
 							<div class="card text-center bg-dark text-light p-3">
-								test
+								PRODUCT TYPES (0)
 							</div>
 						</a>
 					</div>
 					<div class="col-3">
-						<a href="#">
+						<a href="orders">
 							<div class="card text-center bg-dark text-light p-3">
-								test
+								ORDERS (0)
 							</div>
 						</a>
 					</div>

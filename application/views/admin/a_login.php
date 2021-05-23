@@ -44,7 +44,7 @@ $template_header; // loads in the header of the page obtained from views/admin/t
 								</button>
 							</div>
 						<?php endif; ?>
-						<?=form_open(base_url() . 'admin/login', 'method="POST"'); ?>
+						<?=form_open(base_url() . 'admin/login', 'method="POST"')?>
 							<div class="form-group">
 								<label for="inp_email">Email:</label>
 								<input type="email" class="form-control" name="inp_email" placeholder="Email Address">
@@ -54,7 +54,7 @@ $template_header; // loads in the header of the page obtained from views/admin/t
 								<input type="password" class="form-control" name="inp_password" placeholder="Password">
 							</div>
 							<input type="submit" class="btn btn-primary" value="Log-In">
-						<?=form_close();?>
+						<?=form_close()?>
 					</div>
 				</div>
 			</div>

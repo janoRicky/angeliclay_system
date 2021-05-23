@@ -20,42 +20,53 @@ $template_header;
 				<?php endif; ?>
 				<div class="row">
 					<div class="col-6 text-left">
-						<h2>Accounts (<?=$tbl_accounts->num_rows()?>)</h2>
+						<h2>Users (<?=$tbl_users->num_rows()?>)</h2>
 					</div>
 					<div class="col-6 text-right">
-						<button class="btn btn-primary" data-toggle="modal" data-target="#modal_new_account">New Account</button>
+						<button class="btn btn-primary" data-toggle="modal" data-target="#modal_new_account">New User</button>
 					</div>
 					<div class="col-12">
-						<table id="table_accounts" class="table table-striped table-bordered">
+						<table id="table_users" class="table table-striped table-bordered">
 							<thead>
 								<tr>
 									<th>ID</th>
 									<th>Name</th>
+									<th>Gender</th>
 									<th>Email</th>
+									<th>Contact #</th>
+									<th>Address</th>
 									<th>Action</th>
 								</tr>
 							</thead>
 							<tbody>
-								<!-- iterate through each row of the table array -->
-								<?php foreach ($tbl_accounts->result_array() as $row): ?>
+								<?php foreach ($tbl_users->result_array() as $row): ?>
 									<tr class="text-center align-middle">
 										<td>
-											<?=$row["admin_id"]?>
+											<?=$row["user_id"]?>
 										</td>
 										<td>
 											<?=$row["name"]?>
 										</td>
 										<td>
+											<?=$row["gender"]?>
+										</td>
+										<td>
 											<?=$row["email"]?>
 										</td>
 										<td>
-											<a href="<?=base_url();?>admin/accounts_view?id=<?=$row['admin_id']?>">
-												<button class="btn btn-primary mb-1">View</button>
+											<?=$row["contact_num"]?>
+										</td>
+										<td>
+											<?=$row["address"]?>
+										</td>
+										<td>
+											<a href="<?=base_url();?>admin/users_view?id=<?=$row['user_id']?>">
+												<button class="btn btn-sm btn-primary mb-1">View</button>
 											</a><br>
-											<a href="<?=base_url();?>admin/accounts_edit?id=<?=$row['admin_id']?>">
-												<button class="btn btn-primary mb-1">Edit</button>
+											<a href="<?=base_url();?>admin/users_edit?id=<?=$row['user_id']?>">
+												<button class="btn btn-sm btn-primary mb-1">Edit</button>
 											</a><br>
-											<button class="btn btn-primary btn_delete" data-toggle="modal" data-target="#modal_delete_account" data-id="<?=$row['admin_id']?>">Delete</button>
+											<button class="btn btn-sm btn-primary btn_delete" data-toggle="modal" data-target="#modal_delete_user" data-id="<?=$row['user_id']?>">Delete</button>
 										</td>
 									</tr>
 								<?php endforeach; ?>
@@ -70,7 +81,7 @@ $template_header;
 	<div id="modal_new_account" class="modal">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<?=form_open(base_url() . "admin/acc_create", "method='POST'");?>
+				<?=form_open(base_url() . "admin/user_create", "method='POST'");?>
 					<div class="modal-header">
 						<h4 class="modal-title">New Account</h4>
 						<button type="button" class="close" data-dismiss="modal">
@@ -79,15 +90,31 @@ $template_header;
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<label>Name:</label>
+							<label for="inp_name">Name:</label>
 							<input type="text" class="form-control" name="inp_name" placeholder="Name" autocomplete="off">
 						</div>
 						<div class="form-group">
-							<label>Email:</label>
+							<label for="inp_gender">Gender:</label>
+							<select name="inp_gender" class="form-control">
+								<option value="male" selected="">Male</option>
+								<option value="female">Female</option>
+								<option value="other">Other</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="inp_email">Email:</label>
 							<input type="email" class="form-control" name="inp_email" placeholder="Email Address" autocomplete="off">
 						</div>
 						<div class="form-group">
-							<label>Password:</label>
+							<label for="inp_contact_num">Contact Number:</label>
+							<input type="text" class="form-control" name="inp_contact_num" placeholder="Contact #" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<label for="inp_address">Address:</label>
+							<input type="text" class="form-control" name="inp_address" placeholder="Address" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<label for="inp_password">Password:</label>
 							<input type="password" class="form-control" name="inp_password" placeholder="Password" autocomplete="off">
 						</div>
 					</div>
@@ -98,10 +125,10 @@ $template_header;
 			</div>
 		</div>
 	</div>
-	<div id="modal_delete_account" class="modal">
+	<div id="modal_delete_user" class="modal">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<?=form_open(base_url() . "admin/acc_delete", "method='POST'");?>
+				<?=form_open(base_url() . "admin/user_delete", "method='POST'");?>
 					<input id="delete_inp_id" type="hidden" name="inp_id">
 					<div class="modal-header">
 						<h4 class="modal-title">Delete Account</h4>
@@ -113,8 +140,8 @@ $template_header;
 						Are you sure you want to delete Account #<span id="delete_id"></span>?
 					</div>
 					<div class="modal-footer">
-						<input type="submit" class="btn btn-primary" value="Yes">
 						<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+						<input type="submit" class="btn btn-primary" value="Yes">
 					</div>
 				<?=form_close();?>
 			</div>
@@ -125,12 +152,11 @@ $template_header;
 <script type="text/javascript">
 	$(document).ready(function () {
 		$(".btn_delete").on("click", function() {
-			// replace text on the modal with data obtained from the table
 			$("#delete_id").text($(this).data("id"));
 			$("#delete_inp_id").val($(this).data("id"));
 		});
 
-		$("#table_accounts").DataTable();
+		$("#table_users").DataTable();
 	});
 </script>
 </html>

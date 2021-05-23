@@ -1,7 +1,7 @@
 <?php 
  defined("BASEPATH") OR exit("No direct script access allowed");
 
- class controller_login extends CI_Controller {
+ class a_controller_login extends CI_Controller {
 
  	public function __construct() {
  		parent::__construct();
@@ -13,7 +13,7 @@
 		if ($email == NULL || $password == NULL) {
 			$this->session->set_flashdata("login_alert", array("warning", "One or more inputs are empty."));
 		} else {
-			$account = $this->model_read->get_adm_acc_w_email($email);
+			$account = $this->model_read->get_adm_acc_wemail($email);
 			if ($account->num_rows() < 1) {
 				$this->session->set_flashdata("login_alert", array("warning", "Account does not exist."));
 			} else {

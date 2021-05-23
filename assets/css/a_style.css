@@ -8,7 +8,25 @@ html, body {
 	min-width: 15rem;
 	max-width: 15rem;
 	overflow-y: auto;
+
+	background-color: #72b1a1;
+}
+.side_link {
+	color: #fff !important;
+	background-color: #705f57;
+	border-radius: 0 !important;
+}
+.side_link:hover {
+	font-weight: bold;
+}
+.navbar {
+	z-index: 100;
+	background-color: #705f57;
+}
+.navbar a {
+	color: #fff;
 }
 .content {
 	margin-left: 15rem;
 }
+

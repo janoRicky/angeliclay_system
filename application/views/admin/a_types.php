@@ -20,42 +20,37 @@ $template_header;
 				<?php endif; ?>
 				<div class="row">
 					<div class="col-6 text-left">
-						<h2>Accounts (<?=$tbl_accounts->num_rows()?>)</h2>
+						<h2>Types (<?=$tbl_types->num_rows()?>)</h2>
 					</div>
 					<div class="col-6 text-right">
-						<button class="btn btn-primary" data-toggle="modal" data-target="#modal_new_account">New Account</button>
+						<button class="btn btn-primary" data-toggle="modal" data-target="#modal_new_type">New Type</button>
 					</div>
 					<div class="col-12">
-						<table id="table_accounts" class="table table-striped table-bordered">
+						<table id="table_types" class="table table-striped table-bordered">
 							<thead>
 								<tr>
 									<th>ID</th>
-									<th>Name</th>
-									<th>Email</th>
+									<th>Type</th>
 									<th>Action</th>
 								</tr>
 							</thead>
 							<tbody>
-								<!-- iterate through each row of the table array -->
-								<?php foreach ($tbl_accounts->result_array() as $row): ?>
+								<?php foreach ($tbl_types->result_array() as $row): ?>
 									<tr class="text-center align-middle">
 										<td>
-											<?=$row["admin_id"]?>
+											<?=$row["type_id"]?>
 										</td>
 										<td>
-											<?=$row["name"]?>
+											<?=$row["type"]?>
 										</td>
 										<td>
-											<?=$row["email"]?>
-										</td>
-										<td>
-											<a href="<?=base_url();?>admin/accounts_view?id=<?=$row['admin_id']?>">
+											<a href="<?=base_url()?>admin/types_view?id=<?=$row['type_id']?>">
 												<button class="btn btn-primary mb-1">View</button>
 											</a><br>
-											<a href="<?=base_url();?>admin/accounts_edit?id=<?=$row['admin_id']?>">
+											<a href="<?=base_url()?>admin/types_edit?id=<?=$row['type_id']?>">
 												<button class="btn btn-primary mb-1">Edit</button>
 											</a><br>
-											<button class="btn btn-primary btn_delete" data-toggle="modal" data-target="#modal_delete_account" data-id="<?=$row['admin_id']?>">Delete</button>
+											<button class="btn btn-primary btn_delete" data-toggle="modal" data-target="#modal_delete_type" data-id="<?=$row['type_id']?>">Delete</button>
 										</td>
 									</tr>
 								<?php endforeach; ?>
@@ -67,56 +62,48 @@ $template_header;
 		</div>
 	</div>
 	<!-- bootstrap modals -->
-	<div id="modal_new_account" class="modal">
+	<div id="modal_new_type" class="modal">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<?=form_open(base_url() . "admin/acc_create", "method='POST'");?>
+				<?=form_open(base_url() . "admin/type_create", "method='POST'")?>
 					<div class="modal-header">
-						<h4 class="modal-title">New Account</h4>
+						<h4 class="modal-title">New Type</h4>
 						<button type="button" class="close" data-dismiss="modal">
 							&times;
 						</button>
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<label>Name:</label>
-							<input type="text" class="form-control" name="inp_name" placeholder="Name" autocomplete="off">
-						</div>
-						<div class="form-group">
-							<label>Email:</label>
-							<input type="email" class="form-control" name="inp_email" placeholder="Email Address" autocomplete="off">
-						</div>
-						<div class="form-group">
-							<label>Password:</label>
-							<input type="password" class="form-control" name="inp_password" placeholder="Password" autocomplete="off">
+							<label>Type:</label>
+							<input type="text" class="form-control" name="inp_type" placeholder="Type" autocomplete="off">
 						</div>
 					</div>
 					<div class="modal-footer">
-						<input type="submit" class="btn btn-primary" value="Add Account">
+						<input type="submit" class="btn btn-primary" value="Add Type">
 					</div>
-				<?=form_close();?>
+				<?=form_close()?>
 			</div>
 		</div>
 	</div>
-	<div id="modal_delete_account" class="modal">
+	<div id="modal_delete_type" class="modal">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<?=form_open(base_url() . "admin/acc_delete", "method='POST'");?>
+				<?=form_open(base_url() . "admin/type_delete", "method='POST'")?>
 					<input id="delete_inp_id" type="hidden" name="inp_id">
 					<div class="modal-header">
-						<h4 class="modal-title">Delete Account</h4>
+						<h4 class="modal-title">Delete Type</h4>
 						<button type="button" class="close" data-dismiss="modal">
 							&times;
 						</button>
 					</div>
 					<div class="modal-body">
-						Are you sure you want to delete Account #<span id="delete_id"></span>?
+						Are you sure you want to delete Type #<span id="delete_id"></span>?
 					</div>
 					<div class="modal-footer">
 						<input type="submit" class="btn btn-primary" value="Yes">
 						<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
 					</div>
-				<?=form_close();?>
+				<?=form_close()?>
 			</div>
 		</div>
 	</div>
@@ -125,12 +112,11 @@ $template_header;
 <script type="text/javascript">
 	$(document).ready(function () {
 		$(".btn_delete").on("click", function() {
-			// replace text on the modal with data obtained from the table
 			$("#delete_id").text($(this).data("id"));
 			$("#delete_inp_id").val($(this).data("id"));
 		});
 
-		$("#table_accounts").DataTable();
+		$("#table_types").DataTable();
 	});
 </script>
 </html>

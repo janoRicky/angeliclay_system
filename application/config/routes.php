@@ -53,28 +53,75 @@ $route['default_controller'] = 'controller_main';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
+// PAGES - USER
+$route['home'] = 'controller_main/view_u_home';
+$route['products'] = 'controller_main/view_u_products';
+$route['product'] = 'controller_main/view_u_product';
+$route['cart'] = 'controller_main/view_u_cart';
+$route['login'] = 'controller_main/view_u_login';
 
-// PAGES
+$route['test'] = 'controller_main/test';
+
+// SESSION
+$route['to_cart'] = 'user/u_controller_session/to_cart';
+$route['remove_from_cart'] = 'user/u_controller_session/remove_from_cart';
+
+// FUNCTIONS
+$route['user_login'] = 'user/u_controller_login/user_login_verification';
+
+
+
+// PAGES - ADMIN
 $route['admin'] = 'controller_main/view_a_login';
 $route['admin/dashboard'] = 'controller_main/view_a_dashboard';
+
+$route['admin/products'] = 'controller_main/view_a_products';
+$route['admin/products_view'] = 'controller_main/view_a_products_view';
+$route['admin/products_edit'] = 'controller_main/view_a_products_edit';
+
+$route['admin/types'] = 'controller_main/view_a_types';
+$route['admin/types_view'] = 'controller_main/view_a_types_view';
+$route['admin/types_edit'] = 'controller_main/view_a_types_edit';
+
+$route['admin/orders'] = 'controller_main/view_a_orders';
+$route['admin/orders_view'] = 'controller_main/view_a_orders_view';
+$route['admin/orders_edit'] = 'controller_main/view_a_orders_edit';
+
+$route['admin/users'] = 'controller_main/view_a_users';
+$route['admin/users_view'] = 'controller_main/view_a_users_view';
+$route['admin/users_edit'] = 'controller_main/view_a_users_edit';
+
 $route['admin/accounts'] = 'controller_main/view_a_accounts';
+$route['admin/accounts_view'] = 'controller_main/view_a_accounts_view';
 $route['admin/accounts_edit'] = 'controller_main/view_a_accounts_edit';
 
 
 // FUNCTIONS
-$route['admin/login'] = 'controller_login/admin_login_verification';
+$route['admin/login'] = 'admin/a_controller_login/admin_login_verification';
 $route['admin/logout'] = 'controller_main/admin_logout';
 
 // - CREATE
-$route['admin/acc_create'] = 'controller_create/new_admin_account';
+$route['admin/product_create'] = 'admin/a_controller_create/new_product';
+$route['admin/type_create'] = 'admin/a_controller_create/new_type';
+$route['admin/order_create'] = 'admin/a_controller_create/new_order';
+$route['admin/user_create'] = 'admin/a_controller_create/new_user_account';
+$route['admin/acc_create'] = 'admin/a_controller_create/new_admin_account';
 
 // - UPDATE
-$route['admin/acc_update'] = 'controller_update/edit_admin_account';
+$route['admin/product_update'] = 'admin/a_controller_update/edit_product';
+$route['admin/type_update'] = 'admin/a_controller_update/edit_type';
+$route['admin/order_update'] = 'admin/a_controller_update/edit_order';
+$route['admin/user_update'] = 'admin/a_controller_update/edit_user_account';
+$route['admin/acc_update'] = 'admin/a_controller_update/edit_admin_account';
 
 // - DELETE
-$route['admin/acc_delete'] = 'controller_delete/delete_admin_account';
+$route['admin/product_delete'] = 'admin/a_controller_delete/delete_product';
+$route['admin/type_delete'] = 'admin/a_controller_delete/delete_type';
+$route['admin/order_delete'] = 'admin/a_controller_delete/delete_order';
+$route['admin/user_delete'] = 'admin/a_controller_delete/delete_user_account';
+$route['admin/acc_delete'] = 'admin/a_controller_delete/delete_admin_account';
 
 
 // NOTES:
-// url of admin log-in is "http://localhost/luna_likha_system/admin"
-// url of admin dashboard is "http://localhost/luna_likha_system/admin/dashboard"
+// url of admin log-in is "http://localhost/angeliclay_system/admin"
+// url of admin dashboard is "http://localhost/angeliclay_system/admin/dashboard"

@@ -16,13 +16,13 @@
 	<!-- DATATABLES -->
 	<link rel="stylesheet" href="<?=base_url()?>assets/css/datatables.min.css">
 	<!-- CUSTOM STYLE -->
-	<link rel="stylesheet" href="<?=base_url()?>assets/css/a_style.css">
+	<link rel="stylesheet" href="<?=base_url()?>assets/css/u_style.css">
 
 	<!-- PAGE ICON -->
 	<!-- <link rel="icon" href="<?=base_url()?>/favicon.ico" type="image/gif"> -->
 
 
-	<?php $this->load->view('admin/template/a_t_scripts'); // include the scripts from the view folder ?>
+	<?php $this->load->view('user/template/u_t_scripts'); // include the scripts from the view folder ?>
 
 	<?php date_default_timezone_set('Asia/Manila'); ?>
 </head>

@@ -1,4 +1,4 @@
-# luna_likha_system
+# angeliclay_system
 
 used Code Igniter 3, php framework
 
@@ -8,8 +8,8 @@ ADMIN PASSWORD:	1234
 
 
 NOTES:
-	- import database luna_likha_db.sql on phpmyadmin
-	- localhost/luna_likha_system/admin
+	- import database angeliclay_db.sql on phpmyadmin
+	- localhost/angeliclay_system/admin
 
 LIBRARIES USED:
 	- bootstrap (for css)
@@ -47,4 +47,9 @@ CODE IGNITER (PHP framework)
 			- create new function on controller_create
 		FOR UPDATE, DELETE - use model_update, model_delete, controller_update, controller_delete
 
+
+
+
+To-Do:
+	add stocks function
 
