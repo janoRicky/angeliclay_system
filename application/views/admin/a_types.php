@@ -44,13 +44,13 @@ $template_header;
 											<?=$row["type"]?>
 										</td>
 										<td>
-											<a href="<?=base_url()?>admin/types_view?id=<?=$row['type_id']?>">
-												<button class="btn btn-primary mb-1">View</button>
-											</a><br>
-											<a href="<?=base_url()?>admin/types_edit?id=<?=$row['type_id']?>">
-												<button class="btn btn-primary mb-1">Edit</button>
-											</a><br>
-											<button class="btn btn-primary btn_delete" data-toggle="modal" data-target="#modal_delete_type" data-id="<?=$row['type_id']?>">Delete</button>
+											<a class="action_button" href="<?=base_url()?>admin/types_view?id=<?=$row['type_id']?>">
+												<i class="fa fa-eye p-1" aria-hidden="true"></i>
+											</a>
+											<a class="action_button" href="<?=base_url()?>admin/types_edit?id=<?=$row['type_id']?>">
+												<i class="fa fa-pencil p-1" aria-hidden="true"></i>
+											</a>
+											<i class="fa fa-trash p-1 btn_delete action_button" data-toggle="modal" data-target="#modal_delete_type" data-id="<?=$row['type_id']?>" aria-hidden="true"></i>
 										</td>
 									</tr>
 								<?php endforeach; ?>

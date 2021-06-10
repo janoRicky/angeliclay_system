@@ -53,3 +53,34 @@ CODE IGNITER (PHP framework)
 To-Do:
 	add stocks function
 
+
+allow more photos?
+
+when user orders check if there is enough stock
+
+include product photos when changing order state
+
+
+
+custom products - custom orders
+
+
+custom ordered products has 'type' of CUSTOM
+
+
+product search with dropdown and images
+
+
+
+revert product image function
+
+
+add error messages for user and in unauthorized access
+
+
+
+
+
+
+
+

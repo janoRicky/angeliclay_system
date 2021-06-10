@@ -30,3 +30,25 @@ html, body {
 	margin-left: 15rem;
 }
 
+.action_button {
+	text-decoration: none;
+	color: #007bff;
+	cursor: pointer;
+}
+.action_button:hover {
+	text-decoration: none;
+	color: #0056b3;
+}
+
+.view_container label {
+	font-weight: bold;
+	font-size: 1.1rem;
+}
+.view_container .row {
+	border-top: 1px solid #000;
+}
+
+form label {
+	font-weight: bold;
+	font-size: 1.1rem;
+}

@@ -14,20 +14,55 @@
 	// = = = PRODUCTS
 	public function edit_product() {
 		$product_id = $this->input->post("inp_id");
+		$name = $this->input->post("inp_name");
 		$type_id = $this->input->post("inp_type_id");
 		$description = $this->input->post("inp_description");
 		$price = $this->input->post("inp_price");
 		$qty = $this->input->post("inp_qty");
 
-		if ($product_id == NULL || $type_id == NULL || $description == NULL || $price == NULL || $qty == NULL) {
+		if ($product_id == NULL || $name == NULL || $type_id == NULL || $description == NULL || $price == NULL || $qty == NULL) {
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
 		} else {
+
+			$row_info = $this->model_read->get_product_wid($product_id)->row_array();
+
+			$img = $row_info["img"];
+
+			$product_folder = "product_". $product_id;
+
+			$config["upload_path"] = "./uploads/". $product_folder;
+			$config["allowed_types"] = "gif|jpg|png";
+			$config["max_size"] = 2000;
+			$config["encrypt_name"] = TRUE;
+
+			$this->load->library("upload", $config);
+
+			if (!is_dir("uploads")) {
+				mkdir("./uploads", 0777, TRUE);
+			}
+			if (!is_dir("uploads/". $product_folder)) {
+				mkdir("./uploads/". $product_folder, 0777, TRUE);
+			}
+
+			if (!empty($_FILES["inp_img"]["name"])) {
+				if (!$this->upload->do_upload("inp_img")) {
+					$this->session->set_flashdata("alert", array("warning", $this->upload->display_errors()));
+					redirect("admin/products");
+				} else {
+					unlink($row_info["img"]);
+					$img = $this->upload->data("file_name");
+				}
+			}
+
 			$data = array(
+				"name" => $name,
+				"img" => $img,
 				"type_id" => $type_id,
 				"description" => $description,
 				"price" => $price,
 				"qty" => $qty
 			);
+
 			if ($this->model_update->update_product($product_id, $data)) {
 				$this->session->set_flashdata("alert", array("success", "Product info is successfully updated."));
 			} else {
@@ -118,6 +153,24 @@
 				} else {
 					$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
 				}
+			}
+		}
+		redirect("admin/orders");
+	}
+	public function edit_order_state() {
+		$order_id = $this->input->post("inp_id");
+		$state = $this->input->post("inp_state");
+
+		if ($state == NULL) {
+			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
+		} else {
+			$data = array(
+				"state" => $state
+			);
+			if ($this->model_update->update_order($order_id, $data)) {
+				$this->session->set_flashdata("alert", array("success", "State is successfully updated."));
+			} else {
+				$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
 			}
 		}
 		redirect("admin/orders");

@@ -60,13 +60,13 @@ $template_header;
 											<?=$row["address"]?>
 										</td>
 										<td>
-											<a href="<?=base_url();?>admin/users_view?id=<?=$row['user_id']?>">
-												<button class="btn btn-sm btn-primary mb-1">View</button>
-											</a><br>
-											<a href="<?=base_url();?>admin/users_edit?id=<?=$row['user_id']?>">
-												<button class="btn btn-sm btn-primary mb-1">Edit</button>
-											</a><br>
-											<button class="btn btn-sm btn-primary btn_delete" data-toggle="modal" data-target="#modal_delete_user" data-id="<?=$row['user_id']?>">Delete</button>
+											<a class="action_button" href="<?=base_url();?>admin/users_view?id=<?=$row['user_id']?>">
+												<i class="fa fa-eye p-1" aria-hidden="true"></i>
+											</a>
+											<a class="action_button" href="<?=base_url();?>admin/users_edit?id=<?=$row['user_id']?>">
+												<i class="fa fa-pencil p-1" aria-hidden="true"></i>
+											</a>
+											<i class="fa fa-trash p-1 btn_delete action_button" data-toggle="modal" data-target="#modal_delete_user" data-id="<?=$row['user_id']?>" aria-hidden="true"></i>
 										</td>
 									</tr>
 								<?php endforeach; ?>

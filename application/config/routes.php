@@ -57,8 +57,14 @@ $route['translate_uri_dashes'] = FALSE;
 $route['home'] = 'controller_main/view_u_home';
 $route['products'] = 'controller_main/view_u_products';
 $route['product'] = 'controller_main/view_u_product';
+$route['custom'] = 'controller_main/view_u_custom';
 $route['cart'] = 'controller_main/view_u_cart';
 $route['login'] = 'controller_main/view_u_login';
+$route['register'] = 'controller_main/view_u_register';
+
+$route['account'] = 'controller_main/view_u_account';
+$route['account_details'] = 'controller_main/view_u_account_details';
+$route['user_orders'] = 'controller_main/view_u_user_orders';
 
 $route['test'] = 'controller_main/test';
 
@@ -67,7 +73,8 @@ $route['to_cart'] = 'user/u_controller_session/to_cart';
 $route['remove_from_cart'] = 'user/u_controller_session/remove_from_cart';
 
 // FUNCTIONS
-$route['user_login'] = 'user/u_controller_login/user_login_verification';
+$route['login_verify'] = 'user/u_controller_login/user_login_verification';
+$route['logout'] = 'controller_main/user_logout';
 
 
 
@@ -100,6 +107,8 @@ $route['admin/accounts_edit'] = 'controller_main/view_a_accounts_edit';
 $route['admin/login'] = 'admin/a_controller_login/admin_login_verification';
 $route['admin/logout'] = 'controller_main/admin_logout';
 
+$route['admin/email_search'] = 'controller_main/search_emails';
+
 // - CREATE
 $route['admin/product_create'] = 'admin/a_controller_create/new_product';
 $route['admin/type_create'] = 'admin/a_controller_create/new_type';
@@ -113,6 +122,8 @@ $route['admin/type_update'] = 'admin/a_controller_update/edit_type';
 $route['admin/order_update'] = 'admin/a_controller_update/edit_order';
 $route['admin/user_update'] = 'admin/a_controller_update/edit_user_account';
 $route['admin/acc_update'] = 'admin/a_controller_update/edit_admin_account';
+
+$route['admin/order_update_state'] = 'admin/a_controller_update/edit_order_state';
 
 // - DELETE
 $route['admin/product_delete'] = 'admin/a_controller_delete/delete_product';

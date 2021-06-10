@@ -20,7 +20,7 @@
 		$this->load->view("user/u_home", $data);
 	}
 	public function view_u_products() {
-		$head["title"] = "Home - Luna Likha Ordering System";
+		$head["title"] = "Products - Luna Likha Ordering System";
 		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
 
 		$data["tbl_products"] = $this->model_read->get_products_user();
@@ -43,12 +43,25 @@
 			$this->load->view("user/u_product", $data);
 		}
 	}
+	public function view_u_custom() {
+		$head["title"] = "Custom - Luna Likha Ordering System";
+		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
+
+		foreach ($this->model_read->get_types()->result_array() as $row) {
+			$data["types"][$row["type_id"]] = $row["type"];
+		}
+
+		$this->load->view("user/u_custom", $data);
+	}
 	public function view_u_cart() {
 		$head["title"] = "Cart - Luna Likha Ordering System";
 		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
 
 		if (isset($_SESSION["cart"])) {
 			$data["cart"] = $_SESSION["cart"];
+			foreach ($this->model_read->get_types()->result_array() as $row) {
+				$data["types"][$row["type_id"]] = $row["type"];
+			}
 		} else {
 			$data["cart"] = array();
 		}
@@ -61,6 +74,64 @@
 
 		$this->load->view("user/u_login", $data);
 	}
+	public function view_u_register() {
+		$head["title"] = "Register - Luna Likha Ordering System";
+		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
+
+		$this->load->view("user/u_register", $data);
+	}
+	public function user_logout() {
+		session_destroy();
+		redirect("home");
+	}
+	public function view_u_account() {
+		$head["title"] = "Account - Luna Likha Ordering System";
+		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
+
+		if (!isset($_SESSION["user_in"])) {
+			session_destroy();
+			redirect("home");
+		} else {
+			$user_details = $this->model_read->get_user_acc_wid($_SESSION["user_id"]);
+			if ($user_details->num_rows() < 1) {
+				session_destroy();
+				redirect("home");
+			} else {
+				$data["account_details"] = $user_details->row_array();
+				$this->load->view("user/u_account", $data);
+			}
+		}
+	}
+	public function view_u_account_details() {
+		$head["title"] = "Account Details - Luna Likha Ordering System";
+		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
+
+		if (!isset($_SESSION["user_in"])) {
+			session_destroy();
+			redirect("home");
+		} else {
+			$user_details = $this->model_read->get_user_acc_wid($_SESSION["user_id"]);
+			if ($user_details->num_rows() < 1) {
+				session_destroy();
+				redirect("home");
+			} else {
+				$data["account_details"] = $user_details->row_array();
+				$this->load->view("user/u_account_details", $data);
+			}
+		}
+	}
+	public function view_u_user_orders() {
+		$head["title"] = "Account - Luna Likha Ordering System";
+		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
+
+		if (!isset($_SESSION["user_in"])) {
+			session_destroy();
+			redirect("home");
+		} else {
+			$data["user_orders"] = $this->model_read->get_order_wuser_id($_SESSION["user_id"]);
+			$this->load->view("user/u_user_orders", $data);
+		}
+	}
 
 	public function test() {
 		$head["title"] = "test - Luna Likha Ordering System";
@@ -68,6 +139,10 @@
 
 		$this->load->view("user/test", $data);
 	}
+
+
+
+
 
 
 	// ADMIN
@@ -392,4 +467,21 @@
 		}
 	}
 
+	// UTILITY
+	public function search_emails() {
+		$this->admin_login_check();
+
+		$search = $this->input->get("search");
+
+		if (strlen($search) > 0) {
+			
+			$result = $this->model_read->search_user_emails($search)->result_array();
+
+			foreach ($result as $row) {
+				$emails[] = $row["email"];
+			}
+
+			echo json_encode($emails);
+		}
+	}
 }

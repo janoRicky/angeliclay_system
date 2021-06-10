@@ -29,6 +29,7 @@ $template_header;
 							<thead>
 								<tr>
 									<th>ID</th>
+									<th>Name</th>
 									<th>Description</th>
 									<th>Type</th>
 									<th>Price</th>
@@ -41,6 +42,9 @@ $template_header;
 									<tr class="text-center align-middle">
 										<td>
 											<?=$row["product_id"]?>
+										</td>
+										<td>
+											<?=$row["name"]?>
 										</td>
 										<td>
 											<?=$row["description"]?>
@@ -61,13 +65,13 @@ $template_header;
 											<?=$row["qty"]?>
 										</td>
 										<td>
-											<a href="<?=base_url();?>admin/products_view?id=<?=$row['product_id']?>">
-												<button class="btn btn-primary mb-1">View</button>
-											</a><br>
-											<a href="<?=base_url();?>admin/products_edit?id=<?=$row['product_id']?>">
-												<button class="btn btn-primary mb-1">Edit</button>
-											</a><br>
-											<button class="btn btn-primary btn_delete" data-toggle="modal" data-target="#modal_delete_product" data-id="<?=$row['product_id']?>">Delete</button>
+											<a class="action_button" href="<?=base_url();?>admin/products_view?id=<?=$row['product_id']?>">
+												<i class="fa fa-eye p-1" aria-hidden="true"></i>
+											</a>
+											<a class="action_button" href="<?=base_url();?>admin/products_edit?id=<?=$row['product_id']?>">
+												<i class="fa fa-pencil p-1" aria-hidden="true"></i>
+											</a>
+											<i class="fa fa-trash p-1 btn_delete action_button" data-toggle="modal" data-target="#modal_delete_product" data-id="<?=$row['product_id']?>" aria-hidden="true"></i>
 										</td>
 									</tr>
 								<?php endforeach; ?>
@@ -82,7 +86,7 @@ $template_header;
 	<div id="modal_new_product" class="modal">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<?=form_open(base_url() . "admin/product_create", "method='POST'")?>
+				<?=form_open(base_url() . "admin/product_create", "method='POST' enctype='multipart/form-data'")?>
 					<div class="modal-header">
 						<h4 class="modal-title">New Product</h4>
 						<button type="button" class="close" data-dismiss="modal">
@@ -90,6 +94,16 @@ $template_header;
 						</button>
 					</div>
 					<div class="modal-body">
+						<div class="form-group">
+							<label>Image:</label>
+							<input id="product_image" type="file" name="inp_img">
+							<img class="w-100" id="image_preview" src="<?=base_url()?>assets/img/no_img.png" height="150" style="object-fit: contain;">
+						</div>
+
+						<div class="form-group">
+							<label>Name:</label>
+							<input type="text" class="form-control" name="inp_name" placeholder="Name" autocomplete="off">
+						</div>
 						<div class="form-group">
 							<label>Description:</label>
 							<input type="text" class="form-control" name="inp_description" placeholder="Description" autocomplete="off">
@@ -150,6 +164,18 @@ $template_header;
 		});
 
 		$("#table_products").DataTable();
+
+
+		$("#product_image").change(function() {
+			if (this.files && this.files[0]) {
+				var reader = new FileReader();
+				reader.readAsDataURL(this.files[0]);
+				reader.onload = function(e) {
+					$("#image_preview").attr("src", e.target.result);
+				};
+			}
+		});
+
 	});
 </script>
 </html>

@@ -4,16 +4,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class model_read extends CI_Model {
 
 	public function get_products() {
-		return $this->db->get("products");
+		return $this->db->get_where("products", array("status" => "ACTIVE"));
 	}
 	public function get_products_user() {
-		return $this->db->get_where("products", array("type_id != " => "NULL", "qty > " => "0"));
+		return $this->db->get_where("products", array("type_id != " => "NULL", "qty > " => "0", "status" => "ACTIVE"));
 	}
 	public function get_product_wid($id) {
 		return $this->db->get_where("products", array("product_id" => $id));
 	}
 	public function get_product_wid_user($id) {
-		return $this->db->get_where("products", array("product_id" => $id, "type_id != " => "NULL"));
+		return $this->db->get_where("products", array("product_id" => $id, "type_id != " => "NULL", "status" => "ACTIVE"));
 	}
 	public function get_product_desc_wid($id) {
 		$this->db->select("description");
@@ -24,34 +24,45 @@ class model_read extends CI_Model {
 	}
 
 	public function get_types() {
-		return $this->db->get("types");
+		return $this->db->get_where("types", array("status" => "ACTIVE"));
 	}
 	public function get_type_wid($id) {
 		return $this->db->get_where("types", array("type_id" => $id));
 	}
 
 	public function get_orders() {
-		return $this->db->get("orders");
+		return $this->db->get_where("orders", array("status" => "ACTIVE"));
 	}
 	public function get_order_wid($id) {
 		return $this->db->get_where("orders", array("order_id" => $id));
+	}
+	public function get_order_wuser_id($id) {
+		return $this->db->get_where("orders", array("status" => "ACTIVE"));
 	}
 	public function get_order_items_wid($id) {
 		return $this->db->get_where("orders_items", array("order_id" => $id));
 	}
 
 	public function get_user_accounts() {
-		return $this->db->get("user_accounts");
+		return $this->db->get_where("user_accounts", array("status" => "ACTIVE"));
 	}
 	public function get_user_acc_wid($id) {
 		return $this->db->get_where("user_accounts", array("user_id" => $id));
 	}
 	public function get_user_acc_wemail($email) {
-		return $this->db->get_where("user_accounts", array("email" => $email));
+		return $this->db->get_where("user_accounts", array("email" => $email, "status" => "ACTIVE"));
+	}
+	public function search_user_emails($search) {
+		$this->db->select("email");
+		$this->db->from("user_accounts");
+		$this->db->where("status", "ACTIVE");
+		$this->db->like("email", $search, "both");
+		$this->db->limit(5);
+		return $this->db->get();
 	}
 
 	public function get_adm_accounts() {
-		return $this->db->get("admin_accounts");
+		return $this->db->get_where("admin_accounts", array("status" => "ACTIVE"));
 	}
 	public function get_adm_acc_wid($id) {
 		return $this->db->get_where("admin_accounts", array("admin_id" => $id));

@@ -23,7 +23,7 @@ $template_header;
 					</div>
 					<div class="col-12">
 						<?=form_open(base_url() . "admin/acc_update", "method='POST'"); ?>
-							<input id="update_inp_id" type="hidden" name="inp_id" value="<?=$id?>">
+							<input id="update_inp_id" type="hidden" name="inp_id" value="<?=$row_info["admin_id"]?>">
 							<div class="form-group">
 								<label for="inp_name">Name:</label>
 								<input type="text" class="form-control" name="inp_name" placeholder="Name" value="<?=$row_info['name']?>" autocomplete="off">

@@ -22,8 +22,24 @@ $template_header;
 						<h2>Update Product #<?=$row_info["product_id"]?></h2>
 					</div>
 					<div class="col-12">
-						<?=form_open(base_url() . "admin/product_update", "method='POST'"); ?>
+						<?=form_open(base_url() . "admin/product_update", "method='POST' enctype='multipart/form-data'")?>
 							<input id="update_inp_id" type="hidden" name="inp_id" value="<?=$row_info['product_id']?>">
+							<div class="form-group">
+								<?php $images = explode("/", $row_info["img"]); ?>
+								<label>Image:</label>
+								<input id="product_image" type="file" name="inp_img">
+								<img class="w-100" id="image_preview" src="<?php
+								if (!empty($row_info["img"])) {
+									echo base_url(). 'uploads/product_'. $row_info["product_id"] .'/'. explode("/", $row_info["img"])[0];
+								} else {
+									echo base_url(). "assets/img/no_img.png";
+								}
+								?>" height="300" style="object-fit: contain;">
+							</div>
+							<div class="form-group">
+								<label>Name:</label>
+								<input type="text" class="form-control" name="inp_name" placeholder="Name" value="<?=$row_info['name']?>" autocomplete="off">
+							</div>
 							<div class="form-group">
 								<label>Description:</label>
 								<input type="text" class="form-control" name="inp_description" placeholder="Description" value="<?=$row_info['description']?>" autocomplete="off">
@@ -54,6 +70,18 @@ $template_header;
 </body>
 <?php $this->load->view("admin/template/a_t_scripts"); ?>
 <script type="text/javascript">
-	
+	$(document).ready(function () {
+
+		$("#product_image").change(function() {
+			if (this.files && this.files[0]) {
+				var reader = new FileReader();
+				reader.readAsDataURL(this.files[0]);
+				reader.onload = function(e) {
+					$("#image_preview").attr("src", e.target.result);
+				};
+			}
+		});
+
+	});
 </script>
 </html>

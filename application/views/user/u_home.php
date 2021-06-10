@@ -3,25 +3,49 @@
 $template_header;
 ?>
 
-<body>
-	<div class="wrapper h-100">
-		<div class="container-fluid">
-			<div class="row">
-
-				<style type="text/css">
-					a {
-						margin: 0 1rem;
-					}
-				</style>
-				<a href="home">HOME</a>
-				<a href="products">PRODUCTS</a>
-				<a href="cart">CART</a>
-				<a href="login">LOGIN</a>
-				<a href="test">test</a>
-				
+<body class="" style="background-color: rgba(241, 182, 171, 1);">
+	<?php $this->load->view("user/template/u_t_navbar"); ?>
+	<div class="container px-5 rounded pb-5" style="background-color: rgba(220, 138, 107, 0.40);">
+		<span>
+			<h1 class="m-0" style="padding-top: 60px;">Home</h1>
+		</span>
+		<?php if (isset($_SESSION["user_name"])): ?>
+			<div class="row mt-5">
+				<div class="col-sm-12">
+					<div class="text-center">
+						<span class="font-weight-bold">
+							<h2>Welcome <?=$_SESSION["user_name"]?>!</h2>
+						</span>
+					</div>
+				</div>
+			</div>
+		<?php endif; ?>
+	</div>
+	<footer style="background-color: white; height: auto;">
+		<div class="row mx-5 py-4">
+			<div class="col">
+				<h6 class="mb-2">Links</h6>
+					<ul class="nav flex-column">
+						<li><a class="text-dark" href="#">FAQs</a></li>
+						<li><a class="text-dark" href="#">About Us</a></li>
+						<li><a class="text-dark" href="#">Contact Us</a></li>
+						<li><a class="text-dark" href="#">Terms of Service</a></li>
+						<li><a class="text-dark" href="#">Privacy Policy</a></li>
+					</ul>
+			</div>
+			<div class="col">
+				<h6>Our Location</h6>
+			</div>
+			<div class="col">
+				<h6>Follow us on</h6>
+				<ul class="nav">
+					<li><a href="#">
+						<i class="fa fa-facebook-official bg dark" aria-hidden="true"></i></a></li>
+					<li><a href="#">
+						<i class="fa fa-facebook-official" aria-hidden="true"></i></a></li>
+				</ul>
 			</div>
 		</div>
-	</div>
+	</footer>
 </body>
-<?php $this->load->view("user/template/u_t_scripts"); ?>
 </html>

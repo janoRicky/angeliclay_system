@@ -33,6 +33,7 @@ $template_header;
 									<th>User ID</th>
 									<th>Description</th>
 									<th>Date / Time</th>
+									<th>State</th>
 									<th>Action</th>
 								</tr>
 							</thead>
@@ -52,13 +53,17 @@ $template_header;
 											<?=$row["date"]." / ".date("h:i A", strtotime($row["time"]))?>
 										</td>
 										<td>
-											<a href="<?=base_url()?>admin/orders_view?id=<?=$row['order_id']?>">
-												<button class="btn btn-sm btn-primary mb-1">View</button>
-											</a><br>
-											<a href="<?=base_url();?>admin/orders_edit?id=<?=$row['order_id']?>">
-												<button class="btn btn-sm btn-primary mb-1">Edit</button>
-											</a><br>
-											<button class="btn btn-sm btn-primary btn_delete" data-toggle="modal" data-target="#modal_delete_order" data-id="<?=$row['order_id']?>">Delete</button>
+											<?=$row["state"]?>
+										</td>
+										<td>
+											<button class="btn btn-primary btn-sm btn_state" data-toggle="modal" data-target="#modal_state_order" data-id="<?=$row['order_id']?>">State</button>
+											<a class="action_button" href="<?=base_url()?>admin/orders_view?id=<?=$row['order_id']?>">
+												<i class="fa fa-eye p-1" aria-hidden="true"></i>
+											</a>
+											<a class="action_button" href="<?=base_url();?>admin/orders_edit?id=<?=$row['order_id']?>">
+												<i class="fa fa-pencil p-1" aria-hidden="true"></i>
+											</a>
+											<i class="fa fa-trash p-1 btn_delete action_button" data-toggle="modal" data-target="#modal_delete_order" data-id="<?=$row['order_id']?>" aria-hidden="true"></i>
 										</td>
 									</tr>
 								<?php endforeach; ?>
@@ -83,7 +88,7 @@ $template_header;
 					<div class="modal-body">
 						<div class="form-group">
 							<label for="inp_user_email">User Email:</label>
-							<input type="text" class="form-control" name="inp_user_email" placeholder="Email Address" autocomplete="off">
+							<input id="user_email" type="text" class="form-control" name="inp_user_email" placeholder="Email Address" autocomplete="off">
 						</div>
 						<div class="form-group">
 							<label for="inp_description">Description:</label>
@@ -196,9 +201,40 @@ $template_header;
 			</div>
 		</div>
 	</div>
+	<div id="modal_state_order" class="modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<?=form_open(base_url() . "admin/order_update_state", "method='POST'");?>
+					<input id="state_inp_id" type="hidden" name="inp_id">
+					<div class="modal-header">
+						<h4 class="modal-title">Change State</h4>
+						<button type="button" class="close" data-dismiss="modal">
+							&times;
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label>State:</label>
+							<select name="inp_state" class="form-control">
+								<option value="PENDING">Pending</option>
+								<option value="ACCEPTED">Accepted</option>
+								<option value="COMPLETED">Completed</option>
+							</select>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<input type="submit" class="btn btn-primary" value="Update State">
+					</div>
+				<?=form_close();?>
+			</div>
+		</div>
+	</div>
 </body>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$(".btn_state").on("click", function() {
+			$("#state_inp_id").val($(this).data("id"));
+		});
 		$(".btn_delete").on("click", function() {
 			$("#delete_id").text($(this).data("id"));
 			$("#delete_inp_id").val($(this).data("id"));
@@ -298,6 +334,16 @@ $template_header;
 		});
 
 		$("#table_products").DataTable();
+
+
+		// $("#user_email").on("keyup", function(e) {
+		// 	if ($(this).val().length > 0) {
+		// 		$.get('email_search', { search: $(this).val() })
+		// 		.done(function(data) {
+		// 			console.log(JSON.parse(data));
+		// 		});
+		// 	}
+		// });
 	});
 </script>
 </html>

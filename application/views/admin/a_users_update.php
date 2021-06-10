@@ -23,7 +23,7 @@ $template_header;
 					</div>
 					<div class="col-12">
 						<?=form_open(base_url() . "admin/user_update", "method='POST'"); ?>
-							<input id="update_inp_id" type="hidden" name="inp_id" value="<?=$id?>">
+							<input id="update_inp_id" type="hidden" name="inp_id" value="<?=$row_info["user_id"]?>">
 							<div class="form-group">
 								<label for="inp_name">Name:</label>
 								<input type="text" class="form-control" name="inp_name" placeholder="Name" value="<?=$row_info['name']?>" autocomplete="off">
@@ -38,15 +38,15 @@ $template_header;
 							</div>
 							<div class="form-group">
 								<label for="inp_email">Email:</label>
-								<input type="email" class="form-control" name="inp_email" placeholder="Email Address" autocomplete="off">
+								<input type="email" class="form-control" name="inp_email" placeholder="Email Address" value="<?=$row_info['email']?>" autocomplete="off">
 							</div>
 							<div class="form-group">
 								<label for="inp_contact_num">Contact Number:</label>
-								<input type="text" class="form-control" name="inp_contact_num" placeholder="Contact #" autocomplete="off">
+								<input type="text" class="form-control" name="inp_contact_num" placeholder="Contact #" value="<?=$row_info['contact_num']?>" autocomplete="off">
 							</div>
 							<div class="form-group">
 								<label for="inp_address">Address:</label>
-								<input type="text" class="form-control" name="inp_address" placeholder="Address" autocomplete="off">
+								<input type="text" class="form-control" name="inp_address" placeholder="Address" value="<?=$row_info['address']?>" autocomplete="off">
 							</div>
 							<div class="form-group">
 								<label for="inp_password">Password:</label>

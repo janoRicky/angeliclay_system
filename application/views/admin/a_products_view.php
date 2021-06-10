@@ -17,47 +17,68 @@ $template_header;
 						</button>
 					</div>
 				<?php endif; ?>
-				<div class="row">
+				<div class="row view_container">
 					<div class="col-12 text-left">
 						<h2>View Product #<?=$row_info["product_id"]?></h2>
 					</div>
-					<div class="col-12">
+					<div class="col-3">
+						<img class="w-100" src="<?php
+						if (!empty($row_info["img"])) {
+							echo base_url(). 'uploads/product_'. $row_info["product_id"] .'/'. explode("/", $row_info["img"])[0];
+						} else {
+							echo base_url(). "assets/img/no_img.png";
+						}
+						?>" style="object-fit: contain; max-height: 500px;">
+					</div>
+					<div class="col-9">
+						<div class="row mt-2">
+							<div class="col-6">
+								<div class="col-12">
+									<label>Name:</label>
+								</div>
+								<div class="col-12">
+									<?=$row_info["name"]?>
+								</div>
+							</div>
+							<div class="col-6">
+								<div class="col-12">
+									<label>Type:</label>
+								</div>
+								<div class="col-12">
+									<?php
+									if (isset($tbl_types[$row_info["type_id"]])) {
+										echo $tbl_types[$row_info["type_id"]];
+									} else {
+										echo "Deleted Type (Edit Required)";
+									}
+									?>
+								</div>
+							</div>
+						</div>
 						<div class="row mt-2">
 							<div class="col-12">
-								<h5>Description:</h5>
+								<label>Description:</label>
 							</div>
 							<div class="col-12">
 								<?=$row_info["description"]?>
 							</div>
 						</div>
 						<div class="row mt-2">
-							<div class="col-12">
-								<h5>Type:</h5>
+							<div class="col-6">
+								<div class="col-12">
+									<label>Price:</label>
+								</div>
+								<div class="col-12">
+									<?=$row_info["price"]?>
+								</div>
 							</div>
-							<div class="col-12">
-								<?php
-								if (isset($tbl_types[$row_info["type_id"]])) {
-									echo $tbl_types[$row_info["type_id"]];
-								} else {
-									echo "Deleted Type (Edit Required)";
-								}
-								?>
-							</div>
-						</div>
-						<div class="row mt-2">
-							<div class="col-12">
-								<h5>Price:</h5>
-							</div>
-							<div class="col-12">
-								<?=$row_info["price"]?>
-							</div>
-						</div>
-						<div class="row mt-2">
-							<div class="col-12">
-								<h5>Quantity:</h5>
-							</div>
-							<div class="col-12">
-								<?=$row_info["qty"]?>
+							<div class="col-6">
+								<div class="col-12">
+									<label>Quantity:</label>
+								</div>
+								<div class="col-12">
+									<?=$row_info["qty"]?>
+								</div>
 							</div>
 						</div>
 					</div>

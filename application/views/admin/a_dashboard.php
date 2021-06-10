@@ -26,28 +26,28 @@ $template_header;
 					<div class="col-3">
 						<a href="accounts">
 							<div class="card text-center bg-dark text-light p-3">
-								ADMINS (<?=$this->model_read->get_adm_accounts()->num_rows()?>)
+								ADMINS (<?=$this->db->count_all("admin_accounts")?>)
 							</div>
 						</a>
 					</div>
 					<div class="col-3">
 						<a href="products">
 							<div class="card text-center bg-dark text-light p-3">
-								PRODUCTS (0)
+								PRODUCTS (<?=$this->db->count_all("products")?>)
 							</div>
 						</a>
 					</div>
 					<div class="col-3">
 						<a href="types">
 							<div class="card text-center bg-dark text-light p-3">
-								PRODUCT TYPES (0)
+								PRODUCT TYPES (<?=$this->db->count_all("types")?>)
 							</div>
 						</a>
 					</div>
 					<div class="col-3">
 						<a href="orders">
 							<div class="card text-center bg-dark text-light p-3">
-								ORDERS (0)
+								ORDERS (<?=$this->db->count_all("orders")?>)
 							</div>
 						</a>
 					</div>
