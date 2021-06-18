@@ -1,0 +1,97 @@
+
+allow more photos?
+
+when user orders check if there is enough stock
+
+include product photos when changing order state
+
+
+
+custom products - custom orders
+
+
+custom ordered products has 'type' of CUSTOM
+
+
+product search with dropdown and images
+
+
+
+revert product image function
+
+
+add error messages for user and in unauthorized access
+
+
+add flashdata
+
+add availability of products
+
+to pay
+to ship
+to receive
+to rate/review
+returns/cancellations
+
+
+user's orders has:
+placed orders		PENDING
+to pay orders		ACCEPTED/WAITING FOR PAYMENT
+in progress orders	IN PROGRESS
+to receive orders	SHIPPED
+to rate/review orders	RECEIVED
+
+
+user places custom order
+admin checks custom orders
+admin sets price and completion time for custom order
+user accepts the set price, places order, and pays
+admin changes order state to accepted(?) and works on order
+admin updates state when product is complete and sent to
+
+
+ADMIN
+custom orders change state
+change to accepted = price and quantity of order item is added
+change to in progress = user has paid
+
+
+
+
+
+deleting all order items of an order removes the order from the table
+
+
+
+TOTDODODODO
+
+CHANGE STRING TABLE VALUES TO NUMBER INDEX
+
+WHEN CUSTOM PRODUCT IS FINISHED, 
+=MOVE PRODUCTCUSTOM ROW TO PRODUCTS TABLE
+=VIEW PAGE IN ORDER CUSTOM SHOW ORDER DETAILS, ORDER ITEM DETAILS, AND CUSTOM PRODUCT (FROM PRODUCTS TABLE) INFO
+
+REPLACED IMAGES IS NOT UNLINKED
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

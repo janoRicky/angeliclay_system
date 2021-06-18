@@ -3,6 +3,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class model_create extends CI_Model {
 
+
+	public function create_product_custom($data) {
+		return $this->db->insert("products_custom", $data);
+	}
+
 	public function create_product($data) {
 		return $this->db->insert("products", $data);
 	}

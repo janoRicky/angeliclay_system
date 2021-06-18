@@ -46,8 +46,8 @@ $template_header;
 								</div>
 								<div class="col-12">
 									<?php
-									if (isset($tbl_types[$row_info["type_id"]])) {
-										echo $tbl_types[$row_info["type_id"]];
+									if ($row_info["type_name"] != NULL) {
+										echo $row_info["type_name"];
 									} else {
 										echo "Deleted Type (Edit Required)";
 									}

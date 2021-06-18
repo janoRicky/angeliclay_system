@@ -94,6 +94,10 @@ $route['admin/orders'] = 'controller_main/view_a_orders';
 $route['admin/orders_view'] = 'controller_main/view_a_orders_view';
 $route['admin/orders_edit'] = 'controller_main/view_a_orders_edit';
 
+$route['admin/orders_custom'] = 'controller_main/view_a_orders_custom';
+$route['admin/orders_custom_view'] = 'controller_main/view_a_orders_custom_view';
+$route['admin/orders_custom_edit'] = 'controller_main/view_a_orders_custom_edit';
+
 $route['admin/users'] = 'controller_main/view_a_users';
 $route['admin/users_view'] = 'controller_main/view_a_users_view';
 $route['admin/users_edit'] = 'controller_main/view_a_users_edit';
@@ -113,6 +117,7 @@ $route['admin/email_search'] = 'controller_main/search_emails';
 $route['admin/product_create'] = 'admin/a_controller_create/new_product';
 $route['admin/type_create'] = 'admin/a_controller_create/new_type';
 $route['admin/order_create'] = 'admin/a_controller_create/new_order';
+$route['admin/order_custom_create'] = 'admin/a_controller_create/new_order_custom';
 $route['admin/user_create'] = 'admin/a_controller_create/new_user_account';
 $route['admin/acc_create'] = 'admin/a_controller_create/new_admin_account';
 
@@ -120,6 +125,7 @@ $route['admin/acc_create'] = 'admin/a_controller_create/new_admin_account';
 $route['admin/product_update'] = 'admin/a_controller_update/edit_product';
 $route['admin/type_update'] = 'admin/a_controller_update/edit_type';
 $route['admin/order_update'] = 'admin/a_controller_update/edit_order';
+$route['admin/order_custom_update'] = 'admin/a_controller_update/edit_order_custom';
 $route['admin/user_update'] = 'admin/a_controller_update/edit_user_account';
 $route['admin/acc_update'] = 'admin/a_controller_update/edit_admin_account';
 
@@ -129,6 +135,7 @@ $route['admin/order_update_state'] = 'admin/a_controller_update/edit_order_state
 $route['admin/product_delete'] = 'admin/a_controller_delete/delete_product';
 $route['admin/type_delete'] = 'admin/a_controller_delete/delete_type';
 $route['admin/order_delete'] = 'admin/a_controller_delete/delete_order';
+$route['admin/order_custom_delete'] = 'admin/a_controller_delete/delete_order_custom';
 $route['admin/user_delete'] = 'admin/a_controller_delete/delete_user_account';
 $route['admin/acc_delete'] = 'admin/a_controller_delete/delete_admin_account';
 

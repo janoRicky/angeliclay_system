@@ -3,6 +3,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class model_update extends CI_Model {
 
+	public function update_product_custom($id, $data) {
+		$this->db->where("custom_id", $id);
+		return $this->db->update("products_custom", $data);
+	}
+
+	public function update_order_item($id, $data) {
+		$this->db->where("order_id", $id);
+		return $this->db->update("orders_items", $data);
+	}
+
 	public function update_product($id, $data) {
 		$this->db->where("product_id", $id);
 		return $this->db->update("products", $data);

@@ -131,7 +131,7 @@
 				);
 				if ($this->model_update->update_order($order_id, $data)) {
 
-					$order_items = $this->model_read->get_order_items_wid($order_id);
+					$order_items = $this->model_read->get_order_items_worder_id($order_id);
 					foreach ($order_items->result_array() as $row) { // restore stock before deleting order
 						$product_info = $this->model_read->get_product_wid($row["product_id"])->row_array();
 						$data_product["qty"] = $product_info["qty"] + $row["qty"];
@@ -174,6 +174,105 @@
 			}
 		}
 		redirect("admin/orders");
+	}
+	// = = = ORDERS CUSTOM
+	public function edit_order_custom() {
+		$order_id = $this->input->post("inp_id");
+		$user_email = $this->input->post("inp_user_email");
+		$description = $this->input->post("inp_description");
+		$date = $this->input->post("inp_date");
+		$time = $this->input->post("inp_time");
+
+		$product_id = $this->input->post("inp_product_id");
+		$custom_description = $this->input->post("inp_custom_description");
+		$type_id = $this->input->post("inp_type_id");
+		$size = $this->input->post("inp_size");
+		$img_count = $this->input->post("inp_img_count");
+
+		$order_item_id = $this->input->post("inp_order_item_id");
+		$qty = $this->input->post("inp_qty");
+		$price = $this->input->post("inp_price");
+
+
+		if ($user_email == NULL || $description == NULL || $date == NULL || $time == NULL) {
+			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
+		} else {
+			$user_info = $this->model_read->get_user_acc_wemail($user_email);
+			if ($user_info->num_rows() < 1) {
+				$this->session->set_flashdata("alert", array("warning", "User Email does not exist."));
+			} else {
+				$user_id = $user_info->row_array()["user_id"];
+				$data = array(
+					"user_id" => $user_id,
+					"description" => $description,
+					"date" => $date,
+					"time" => $time
+				);
+				if ($this->model_update->update_order($order_id, $data)) {
+
+					$row_info = $this->model_read->get_product_custom_wid($product_id)->row_array();
+
+					$imgs = explode("/", $row_info["img"]);
+					$img = NULL;
+
+					$product_folder = "custom_". $product_id;
+
+					$config["upload_path"] = "./uploads/". $product_folder;
+					$config["allowed_types"] = "gif|jpg|png";
+					$config["max_size"] = 2000;
+					$config["encrypt_name"] = TRUE;
+
+					$this->load->library("upload", $config);
+
+					if (!is_dir("uploads")) {
+						mkdir("./uploads", 0777, TRUE);
+					}
+					if (!is_dir("uploads/". $product_folder)) {
+						mkdir("./uploads/". $product_folder, 0777, TRUE);
+					}
+
+					for ($i = 1; $i <= $img_count; $i++) {
+						if (!empty($_FILES["inp_img_". $i]["name"])) {
+							if (!$this->upload->do_upload("inp_img_". $i)) {
+								$this->session->set_flashdata("alert", array("warning", $this->upload->display_errors()));
+								redirect("admin/orders_custom");
+							} else {
+								if (isset($imgs[$i - 1])) {
+									unlink($imgs[$i - 1]);
+								}
+								$imgs[$i - 1] = $this->upload->data("file_name");
+							}
+						} elseif ($this->input->post("inp_img_". $i ."_check") == 0) {
+							$imgs[$i - 1] = "";
+						}
+						// elseif the checker is 0, then remove the image from the list
+						// else there is no new changes don't change anything
+						$img .= ($imgs[$i - 1] != "" ? $imgs[$i - 1] : "") . (($i < $img_count && $imgs[$i - 1] != "") ? "/" : "");
+					}
+
+					$data_product = array(
+						"description" => $custom_description,
+						"type_id" => $type_id,
+						"size" => $size,
+						"img" => $img
+					);
+					if ($this->model_update->update_product_custom($product_id, $data_product)) {
+						$data_item = array(
+							"qty" => $qty,
+							"price" => $price
+						);
+						$this->model_update->update_order_item($order_id, $data_item);
+
+						$this->session->set_flashdata("alert", array("success", "Order is successfully updated."));
+					} else {
+						$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
+					}
+				} else {
+					$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
+				}
+			}
+		}
+		redirect("admin/orders_custom");
 	}
 	// = = = USERS
 	public function edit_user_account() {

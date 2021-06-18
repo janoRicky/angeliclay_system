@@ -14,7 +14,7 @@ $template_header;
 				<?=form_open(base_url() . "#", "method='GET'")?>
 					<div class="row mt-2">
 						<h5 class="font-weight-bold m-2 p-0">Description: </h5>
-						<textarea class="w-100" rows="5" style="resize: none;" name="inp_description" placeholder="e.g. Based on [character]"></textarea>
+						<textarea class="w-100" rows="5" style="resize: none;" name="inp_description" placeholder="e.g. Based on [character]" maxlength="2040"></textarea>
 					</div>
 					<div class="row mt-2">
 						<div class="col-6">

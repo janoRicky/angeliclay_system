@@ -48,7 +48,7 @@ $template_header;
 								<label>Type:</label>
 								<select name="inp_type_id" class="form-control">
 									<?php foreach ($tbl_types as $key => $val): ?>
-										<option value="<?=$key?>" <?=$row_info["type_id"] == $key ? "selected" : "" ?>><?=$val?></option>
+										<option value="<?=$key?>" <?=($row_info["type_id"] == $key ? "selected" : "")?>><?=$val?></option>
 									<?php endforeach; ?>
 								</select>
 							</div>

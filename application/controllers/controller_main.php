@@ -186,7 +186,7 @@
 		// $nav will have the value array("text" => "Dashboard", "link" => "dashboard")
 		$this->load->view("admin/a_dashboard", $data);
 	}
-	// = = = PRODUCTS
+// = = = PRODUCTS
 	public function view_a_products() {
 		$this->admin_login_check();
 
@@ -217,9 +217,9 @@
 			$data["nav"] = array("text" => "Products/View", "link" => "products");
 
 			$data["row_info"] = $row_info->row_array();
-			foreach ($this->model_read->get_types()->result_array() as $row) {
-				$data["tbl_types"][$row["type_id"]] = $row["type"];
-			}
+			
+			$type = $this->model_read->get_type_wid($data["row_info"]["type_id"]);
+			$data["row_info"]["type_name"] = ($type->num_rows() > 0 ? $type->row_array()["type"] : NULL);
 
 			$this->load->view("admin/a_products_view", $data);
 		}
@@ -247,7 +247,7 @@
 			$this->load->view("admin/a_products_update", $data);
 		}
 	}
-	// = = = TYPES
+// = = = TYPES
 	public function view_a_types() {
 		$this->admin_login_check();
 
@@ -292,14 +292,14 @@
 		} else {
 			$head["title"] = "Types/Edit - Luna Likha Ordering System";
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
-			$data["nav"] = array("text" => "Types/Edit", "link" => "types_edit");
+			$data["nav"] = array("text" => "Types/Edit", "link" => "types");
 
 			$data["row_info"] = $row_info->row_array();
 
 			$this->load->view("admin/a_types_update", $data);
 		}
 	}
-	// = = = ORDERS
+// = = = ORDERS
 	public function view_a_orders() {
 		$this->admin_login_check();
 
@@ -331,7 +331,7 @@
 			$data["nav"] = array("text" => "Orders/View", "link" => "orders");
 
 			$data["row_info"] = $row_info->row_array();
-			$data["tbl_order_items"] = $this->model_read->get_order_items_wid($id);
+			$data["tbl_order_items"] = $this->model_read->get_order_items_worder_id($id);
 
 			$this->load->view("admin/a_orders_view", $data);
 		}
@@ -349,10 +349,10 @@
 		} else {
 			$head["title"] = "Orders/Edit - Luna Likha Ordering System";
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
-			$data["nav"] = array("text" => "Orders/Edit", "link" => "orders_edit");
+			$data["nav"] = array("text" => "Orders/Edit", "link" => "orders");
 
 			$data["row_info"] = $row_info->row_array();
-			$data["tbl_order_items"] = $this->model_read->get_order_items_wid($id);
+			$data["tbl_order_items"] = $this->model_read->get_order_items_worder_id($id);
 			$data["tbl_products"] = $this->model_read->get_products_user();
 			foreach ($this->model_read->get_types()->result_array() as $row) {
 				$data["tbl_types"][$row["type_id"]] = $row["type"];
@@ -361,7 +361,73 @@
 			$this->load->view("admin/a_orders_update", $data);
 		}
 	}
-	// = = = USERS
+// = = = ORDERS CUSTOM
+	public function view_a_orders_custom() {
+		$this->admin_login_check();
+
+		$head["title"] = "Custom Orders - Luna Likha Ordering System";
+		$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
+		$data["nav"] = array("text" => "Orders", "link" => "orders_custom");
+
+		$data["tbl_orders_custom"] = $this->model_read->get_orders_custom();
+		foreach ($this->model_read->get_types()->result_array() as $row) {
+			$data["tbl_types"][$row["type_id"]] = $row["type"];
+		}
+
+		$this->load->view("admin/a_orders_custom", $data);
+	}
+	public function view_a_orders_custom_view() {
+		$this->admin_login_check();
+
+		$id = $this->input->get("id");
+
+		$row_info = $this->model_read->get_order_custom_wid($id);
+
+		if ($id == NULL || $row_info->num_rows() < 1) {
+			$this->session->set_flashdata("alert", array("warning", "Order ID does not exist."));
+			redirect("admin/orders_custom");
+		} else {
+			$head["title"] = "Custom Orders/View - Luna Likha Ordering System";
+			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
+			$data["nav"] = array("text" => "Orders/View", "link" => "orders_custom");
+
+			$data["row_info"] = $row_info->row_array();
+			$data["order_item_info"] = $this->model_read->get_order_items_worder_id($data["row_info"]["order_id"])->row_array();
+			$data["product_info"] = $this->model_read->get_product_custom_wid($data["order_item_info"]["product_id"])->row_array();
+
+			$type = $this->model_read->get_type_wid($data["product_info"]["type_id"]);
+			$data["product_info"]["type_name"] = ($type->num_rows() > 0 ? $type->row_array()["type"] : NULL);
+
+
+			$this->load->view("admin/a_orders_custom_view", $data);
+		}
+	}
+	public function view_a_orders_custom_edit() {
+		$this->admin_login_check();
+
+		$id = $this->input->get("id");
+
+		$row_info = $this->model_read->get_order_custom_wid($id);
+
+		if ($id == NULL || $row_info->num_rows() < 1) {
+			$this->session->set_flashdata("alert", array("warning", "Order ID does not exist."));
+			redirect("admin/orders_custom");
+		} else {
+			$head["title"] = "Custom Orders/Edit - Luna Likha Ordering System";
+			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
+			$data["nav"] = array("text" => "Orders/Edit", "link" => "orders_custom");
+
+			$data["row_info"] = $row_info->row_array();
+			$data["order_item_info"] = $this->model_read->get_order_items_worder_id($data["row_info"]["order_id"])->row_array();
+			$data["product_info"] = $this->model_read->get_product_custom_wid($data["order_item_info"]["product_id"])->row_array();
+			foreach ($this->model_read->get_types()->result_array() as $row) {
+				$data["tbl_types"][$row["type_id"]] = $row["type"];
+			}
+
+			$this->load->view("admin/a_orders_custom_update", $data);
+		}
+	}
+// = = = USERS
 	public function view_a_users() {
 		$this->admin_login_check();
 
@@ -406,14 +472,14 @@
 		} else {
 			$head["title"] = "Users/Edit - Luna Likha Ordering System";
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
-			$data["nav"] = array("text" => "Users/Edit", "link" => "users_edit");
+			$data["nav"] = array("text" => "Users/Edit", "link" => "users");
 
 			$data["row_info"] = $row_info->row_array();
 
 			$this->load->view("admin/a_users_update", $data);
 		}
 	}
-	// = = = ADMINS
+// = = = ADMINS
 	public function view_a_accounts() {
 		$this->admin_login_check();
 
@@ -459,7 +525,7 @@
 		} else {
 			$head["title"] = "Accounts/Edit - Luna Likha Ordering System";
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
-			$data["nav"] = array("text" => "Accounts/Edit", "link" => "accounts_edit");
+			$data["nav"] = array("text" => "Accounts/Edit", "link" => "accounts");
 
 			$data["row_info"] = $row_info->row_array();
 

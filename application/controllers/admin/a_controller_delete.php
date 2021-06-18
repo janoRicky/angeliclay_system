@@ -75,7 +75,7 @@
 				$this->session->set_flashdata("alert", array("warning", "Order does not exist."));
 				redirect("admin/orders");
 			} else {
-				$order_items = $this->model_read->get_order_items_wid($id);
+				$order_items = $this->model_read->get_order_items_worder_id($id);
 				foreach ($order_items->result_array() as $row) { // restore stock before deleting order
 					$product_info = $this->model_read->get_product_wid($row["product_id"])->row_array();
 					$data_product["qty"] = $product_info["qty"] + $row["qty"];

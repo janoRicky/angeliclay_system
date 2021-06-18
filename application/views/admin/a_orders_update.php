@@ -77,7 +77,7 @@ $template_header;
 							?>
 							<td>
 								<input type="hidden" name="item_<?=$key + 1?>_id" value="<?=$row["product_id"]?>">
-								<?=$tbl_types[$product["type_id"]]. "/" .$product["description"]?>
+								<?=($product["type_id"] == NULL ? "(No Type)" : $tbl_types[$product["type_id"]]). "/" .$product["description"]?>
 							</td>
 							<td>
 								<input class="item_qty" type="number" name="item_<?=$key + 1?>_qty" min="1" value="<?=$row["qty"]?>" max="<?=$product["qty"] + $row["qty"]?>">

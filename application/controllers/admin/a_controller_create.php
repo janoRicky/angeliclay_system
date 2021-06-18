@@ -55,6 +55,7 @@
 				"description" => $description,
 				"price" => $price,
 				"qty" => $qty,
+				"type" => "NORMAL",
 				"status" => "ACTIVE"
 			);
 			if ($this->model_create->create_product($data)) {
@@ -143,6 +144,94 @@
 			}
 		}
 		redirect("admin/orders");
+	}
+	// = = = ORDERS CUSTOM
+	public function new_order_custom() {
+		$user_email = $this->input->post("inp_user_email");
+		$description = $this->input->post("inp_description");
+		$date = $this->input->post("inp_date");
+		$time = $this->input->post("inp_time");
+
+		$custom_description = $this->input->post("inp_custom_description");
+		$type_id = $this->input->post("inp_type_id");
+		$size = $this->input->post("inp_size");
+		$img_count = $this->input->post("inp_img_count");
+
+
+		if ($user_email == NULL || $description == NULL || $date == NULL || $time == NULL || $custom_description == NULL || $type_id == NULL || $size == NULL) {
+			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
+		} else {
+			$user_info = $this->model_read->get_user_acc_wemail($user_email);
+			if ($user_info->num_rows() < 1) {
+				$this->session->set_flashdata("alert", array("warning", "User Email does not exist."));
+			} else {
+				$user_id = $user_info->row_array()["user_id"];
+				$data = array(
+					"user_id" => $user_id,
+					"description" => $description,
+					"date" => $date,
+					"time" => $time,
+					"state" => "PENDING",
+					"status" => "ACTIVE"
+				);
+				if ($this->model_create->create_order($data)) {
+					$order_id = $this->db->insert_id();
+
+					$img = NULL;
+
+					$product_folder = "custom_". $this->db->count_all("products_custom") + 1;
+
+					$config["upload_path"] = "./uploads/". $product_folder;
+					$config["allowed_types"] = "gif|jpg|png";
+					$config["max_size"] = 2000;
+					$config["encrypt_name"] = TRUE;
+
+					$this->load->library("upload", $config);
+
+					if (!is_dir("uploads")) {
+						mkdir("./uploads", 0777, TRUE);
+					}
+					if (!is_dir("uploads/". $product_folder)) {
+						mkdir("./uploads/". $product_folder, 0777, TRUE);
+					}
+
+					for ($i = 1; $i <= $img_count; $i++) {
+						if (isset($_FILES["inp_img_". $i])) {
+							if (!$this->upload->do_upload("inp_img_". $i)) {
+								$this->session->set_flashdata("alert", array("warning", $this->upload->display_errors()));
+							} else {
+								$img .= $this->upload->data("file_name");
+								$img .= ($i < $img_count ? "/" : "");
+							}
+						}
+					}
+
+					$data_product = array(
+						"description" => $custom_description,
+						"type_id" => $type_id,
+						"size" => $size,
+						"img" => $img,
+						"status" => "ACTIVE"
+					);
+					if ($this->model_create->create_product_custom($data_product)) {
+						$product_id = $this->db->insert_id();
+						$data_item = array(
+							"order_id" => $order_id,
+							"product_id" => $product_id,
+							"type" => "CUSTOM"
+						);
+						$this->model_create->create_order_item($data_item);
+
+						$this->session->set_flashdata("alert", array("success", "Order is successfully added."));
+					} else {
+						$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
+					}
+				} else {
+					$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
+				}
+			}
+		}
+		redirect("admin/orders_custom");
 	}
 	// = = = USERS
 	public function new_user_account() {

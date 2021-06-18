@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2021 at 09:57 AM
+-- Generation Time: Jun 18, 2021 at 10:28 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -79,7 +79,10 @@ INSERT INTO `orders` (`order_id`, `user_id`, `description`, `date`, `time`, `sta
 (12, '1', 'test', '2021-05-23', '15:20', NULL, 'ACTIVE'),
 (13, '1', 'test', '2021-05-23', '15:21', NULL, 'ACTIVE'),
 (16, '4', 'test', '2021-06-09', '13:21', 'COMPLETED', 'ACTIVE'),
-(17, '4', 'test', '2021-06-09', '16:16', 'PENDING', 'ACTIVE');
+(17, '4', 'test', '2021-06-09', '16:16', 'PENDING', 'ACTIVE'),
+(18, '1', 'testeeeeee', '2021-05-17', '22:00', 'PENDING', 'ACTIVE'),
+(19, '1', 'test', '2021-06-17', '23:13', 'PENDING', 'ACTIVE'),
+(20, '1', 'test', '2021-06-19', '02:49', 'PENDING', 'ACTIVE');
 
 -- --------------------------------------------------------
 
@@ -93,6 +96,7 @@ CREATE TABLE `orders_items` (
   `product_id` varchar(16) DEFAULT NULL,
   `qty` varchar(16) DEFAULT NULL,
   `price` varchar(32) DEFAULT NULL,
+  `type` varchar(32) DEFAULT NULL,
   `status` varchar(16) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -100,25 +104,27 @@ CREATE TABLE `orders_items` (
 -- Dumping data for table `orders_items`
 --
 
-INSERT INTO `orders_items` (`item_id`, `order_id`, `product_id`, `qty`, `price`, `status`) VALUES
-(1, '7', '4', '7', '1234', NULL),
-(2, '7', '3', '5', '11', NULL),
-(3, '7', '1', '3', '5.45', NULL),
-(4, '8', '1', '1', '5.45', NULL),
-(17, '10', '1', '1', '5.45', NULL),
-(18, '10', '8', '2', '565', NULL),
-(19, '10', '9', '2', '3223.75', NULL),
-(21, '12', '3', '1', '11', NULL),
-(22, '13', '3', '1', '11', NULL),
-(23, '13', '4', '1', '1234', NULL),
-(48, '11', '1', '5', '5.45', NULL),
-(49, '11', '11', '4', '235', NULL),
-(50, '11', '10', '2', '32', NULL),
-(51, '11', '9', '2', '3223.75', NULL),
-(52, '9', '1', '1', '5.45', NULL),
-(54, '15', '3', '14', '11', NULL),
-(55, '16', '1', '1', '23', NULL),
-(56, '17', '1', '7', '23', NULL);
+INSERT INTO `orders_items` (`item_id`, `order_id`, `product_id`, `qty`, `price`, `type`, `status`) VALUES
+(1, '7', '4', '7', '1234', 'NORMAL', NULL),
+(2, '7', '3', '5', '11', 'NORMAL', NULL),
+(3, '7', '1', '3', '5.45', 'NORMAL', NULL),
+(4, '8', '1', '1', '5.45', 'NORMAL', NULL),
+(17, '10', '1', '1', '5.45', 'NORMAL', NULL),
+(18, '10', '8', '2', '565', 'NORMAL', NULL),
+(19, '10', '9', '2', '3223.75', 'NORMAL', NULL),
+(22, '13', '3', '1', '11', 'NORMAL', NULL),
+(23, '13', '4', '1', '1234', 'NORMAL', NULL),
+(48, '11', '1', '5', '5.45', 'NORMAL', NULL),
+(49, '11', '11', '4', '235', 'NORMAL', NULL),
+(50, '11', '10', '2', '32', 'NORMAL', NULL),
+(51, '11', '9', '2', '3223.75', 'NORMAL', NULL),
+(52, '9', '1', '1', '5.45', 'NORMAL', NULL),
+(54, '15', '3', '14', '11', 'NORMAL', NULL),
+(55, '16', '1', '1', '23', 'NORMAL', NULL),
+(56, '17', '1', '7', '23', 'NORMAL', NULL),
+(57, '18', '1', '3', '2.999999', 'CUSTOM', NULL),
+(58, '19', '2', NULL, NULL, 'CUSTOM', NULL),
+(59, '20', '3', NULL, NULL, 'CUSTOM', NULL);
 
 -- --------------------------------------------------------
 
@@ -157,11 +163,12 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`product_id`, `img`, `name`, `type_id`, `description`, `price`, `qty`, `type`, `status`) VALUES
-(1, NULL, 'Figure 1', '4', 'Desc 1', '23', '24', NULL, 'ACTIVE'),
-(2, 'ebe49a8517d631d74c230d830bc7f4c8.jpg', 'Figure 3', '4', 'Desc 3', '555', '3', NULL, 'ACTIVE'),
-(3, 'fdc0cf6ca69fa22e2959f70bcd6e931b.jpg', 'Test', '4', 'Desc', '622', '3', NULL, 'ACTIVE'),
-(4, 'd69258a24ea68b4b31491657677b62f7.jpg', 'Testing', '4', 'test', '32', '29', NULL, 'ACTIVE'),
-(5, '01a7cd4499f0aa19e06f440d9a028877.png', 'test', '4', 'test', '32', '44', NULL, 'ACTIVE');
+(1, NULL, 'Figure 1', NULL, 'Desc 1', '23', '24', 'NORMAL', 'ACTIVE'),
+(2, 'ebe49a8517d631d74c230d830bc7f4c8.jpg', 'Figure 3', '4', 'Desc 3', '555', '3', 'NORMAL', 'ACTIVE'),
+(3, 'fdc0cf6ca69fa22e2959f70bcd6e931b.jpg', 'Test', '4', 'Desc', '622', '0', 'NORMAL', 'ACTIVE'),
+(4, 'd69258a24ea68b4b31491657677b62f7.jpg', 'Testing', '4', 'test', '32', '29', 'NORMAL', 'ACTIVE'),
+(5, '01a7cd4499f0aa19e06f440d9a028877.png', 'test', '4', 'test', '32', '44', 'NORMAL', 'ACTIVE'),
+(6, '25b1478e92aebb5f5481b53b3eb610bd.jpg', 'test', '4', 'test', '234', '42342', 'NORMAL', 'ACTIVE');
 
 -- --------------------------------------------------------
 
@@ -171,12 +178,21 @@ INSERT INTO `products` (`product_id`, `img`, `name`, `type_id`, `description`, `
 
 CREATE TABLE `products_custom` (
   `custom_id` int(11) NOT NULL,
-  `description` varchar(1020) DEFAULT NULL,
-  `type_id` varchar(8) DEFAULT NULL,
+  `description` varchar(2040) DEFAULT NULL,
+  `type_id` varchar(11) DEFAULT NULL,
   `size` varchar(32) DEFAULT NULL,
   `img` varchar(510) DEFAULT NULL,
   `status` varchar(16) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `products_custom`
+--
+
+INSERT INTO `products_custom` (`custom_id`, `description`, `type_id`, `size`, `img`, `status`) VALUES
+(1, 'testeree', '5', 'wawaweewa', '6ab162de7cba19cd95f253028f68291e.jpg/6650358dc4dea8957784ece2f03d6374.jpg/0e8391783fe19217653d597c725a234d.jpg/', 'ACTIVE'),
+(2, 'test', '5', 'test', '428b2538a71bdbf5b419685ad39b216f.jpg/9e516cc2e94ab7a9e47e3ef3950dfa55.jpg/82a7519bd11ae76ef64a20bc238c6f87.jpg/dcbad62ec6cc0ad39e76d3411b6bd74e.jpg/57b54f2af72802a69627c53b65aef437.jpg/93984f87000a59056bd8addb993848ed.jpg/640d2e3c47f37fee1094cd198f8c3ea0.jpg/16f6bb9237c9c44da8c7236883b8024f.jpg/566b14ebc0fe696b93c1c3ccbbc7de81.jpg/2b311270b7c9dcde56264b5ef9f77ba6.jpg', 'ACTIVE'),
+(3, 'testserrr', '4', 'eaa3', '71b51963a8fe29220b9509e15f516951.jpg/cccbd1333d3a101845099cf2ab903462.jpg/', 'ACTIVE');
 
 -- --------------------------------------------------------
 
@@ -292,13 +308,13 @@ ALTER TABLE `admin_accounts`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `orders_items`
 --
 ALTER TABLE `orders_items`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `orders_payments`
@@ -310,13 +326,13 @@ ALTER TABLE `orders_payments`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `products_custom`
 --
 ALTER TABLE `products_custom`
-  MODIFY `custom_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `custom_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `types`

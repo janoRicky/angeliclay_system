@@ -1,4 +1,4 @@
-<div class="sidebar h-100 position-fixed">
+<div class="sidebar h-100 position-fixed pb-4">
 	<img class="w-100 p-4" src="<?=base_url()?>assets/img/angeliclay_logo.png">
 	<div class="list-group mt-2">
 		<a href="dashboard" class="list-group-item side_link">Dashboard</a>
@@ -7,6 +7,7 @@
 		<a href="products" class="list-group-item side_link">Products</a>
 		<a href="types" class="list-group-item side_link">Types</a>
 		<a href="orders" class="list-group-item side_link">Orders</a>
+		<a href="orders_custom" class="list-group-item side_link">Custom Orders</a>
 		<a href="users" class="list-group-item side_link">User Accounts</a>
 		<a href="accounts" class="list-group-item side_link">Admin Accounts</a>
 	</div>
