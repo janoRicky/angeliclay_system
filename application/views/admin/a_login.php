@@ -28,7 +28,12 @@ $template_header; // loads in the header of the page obtained from views/admin/t
 	 -->
 	<div class="wrapper">
 		<div class="row">
-			<div class="col-4"><!-- this serves as margin --></div> 
+			<div class="col-12">
+				<a class="btn m-3" href="<?=base_url()?>" style="font-weight: bold;">< BACK TO MAIN SITE</a>
+			</div> 
+		</div>
+		<div class="row">
+			<div class="col-4"></div> 
 			<div class="col-4">
 				<div class="card text-center mt-5">
 					<div class="card-header">

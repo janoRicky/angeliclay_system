@@ -3,6 +3,33 @@
 $template_header;
 ?>
 
+<style>
+	.img_box {
+		cursor: pointer;
+		margin: auto;
+	}
+	.img_change {
+		position: absolute;
+		top: 0;
+		left: 0;
+
+		background-color: rgba(0,0,0,0.8);
+		color: #fff;
+		font-weight: bold;
+	}
+	.img_preview {
+		object-fit: contain;
+		min-height: 10rem;
+		max-height: 12rem;
+		border: 1px solid #000;
+	}
+	.img_remove {
+		position: absolute;
+		top: 0;
+		right: 0;
+		color: red !important;
+	}
+</style>
 <body class="" style="background-color: rgba(241, 182, 171, 1);">
 	<?php $this->load->view("user/template/u_t_navbar"); ?>
 	<div class="container px-5 rounded pb-5" style="background-color: rgba(220, 138, 107, 0.40);">
@@ -11,7 +38,7 @@ $template_header;
 		</span>
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12 mt-md-0 mt-sm-4 p-5">
-				<?=form_open(base_url() . "#", "method='GET'")?>
+				<?=form_open(base_url() . "place_custom_order", "method='POST' enctype='multipart/form-data'")?>
 					<div class="row mt-2">
 						<h5 class="font-weight-bold m-2 p-0">Description: </h5>
 						<textarea class="w-100" rows="5" style="resize: none;" name="inp_description" placeholder="e.g. Based on [character]" maxlength="2040"></textarea>
@@ -31,19 +58,21 @@ $template_header;
 						</div>
 					</div>
 					<div class="row mt-2">
-						<h5 class="font-weight-bold m-2 p-0">Image Reference/s: </h5>
-						<div class="col-12 row">
-							<div class="col-3">
-								<img class="img-fluid img-thumbnail" src="<?=base_url(). "assets/img/no_img.png"?>">
-							</div>
-							<div class="col-3">
-								<img class="img-fluid img-thumbnail" src="<?=base_url(). "assets/img/no_img.png"?>">
-							</div>
-							<div class="col-3">
-								<img class="img-fluid img-thumbnail" src="<?=base_url(). "assets/img/no_img.png"?>">
-							</div>
-							<div class="col-3">
-								<img class="img-fluid img-thumbnail" src="<?=base_url(). "assets/img/no_img.png"?>">
+						<div class="container">
+							<input id="img_count" type="hidden" name="inp_img_count" value="0">
+							<h5 class="font-weight-bold m-2 p-0">Image Reference/s: </h5>
+							<div class="img_container row">
+								<div class="col-3 img_box mb-3">
+									<input type="file" class="d-none img_input no_img" name="inp_img_1">
+									<img class="w-100 img_preview" src="<?=base_url()?>assets/img/no_img.png">
+									<div class="img_change w-100 h-100 p-3 text-center d-none">
+										Change Image
+									</div>
+									<a class="img_remove">
+										<i class="fa fa-times" aria-hidden="true"></i>
+									</a>
+									<input type="hidden" class="img_check" name="inp_img_1_check">
+								</div>
 							</div>
 						</div>
 					</div>
@@ -81,4 +110,56 @@ $template_header;
 		</div>
 	</footer>
 </body>
+<script type="text/javascript">
+	$(document).ready(function () {
+		$(document).on("mouseenter", ".img_box", function() {
+			$(this).children(".img_change").removeClass("d-none");
+		}).on("mouseleave", ".img_box", function() {
+			$(this).children(".img_change").addClass("d-none");
+		})
+		$(document).on("click", ".img_change", function() {
+			$(this).prev().prev().trigger("click");
+		});
+		
+		$(document).on("change", ".img_input", function(t) {
+			if (t.target.files && t.target.files[0]) {
+				var reader = new FileReader();
+				reader.readAsDataURL(t.target.files[0]);
+				reader.onload = function(e) {
+					$(t.target).next().attr("src", e.target.result);
+				};
+				// add new imgbox
+				if ($(".img_box").length < 10 && $(t.target).hasClass("no_img")) {
+					$(t.target).removeClass("no_img");
+
+					$(".img_container").append($("<div>").attr({
+						class: "col-3 img_box mb-3"
+					}).append($("<input>").attr({
+						type: "file",
+						class: "d-none img_input no_img",
+						name: "inp_img_" + ($(".img_box").length + 1)
+					})).append($("<img>").attr({
+						class: "w-100 img_preview",
+						src: "<?=base_url()?>assets/img/no_img.png"
+					})).append($("<div>").attr({
+						class: "img_change w-100 h-100 p-3 text-center d-none"
+					}).html("Change Image")).append($("<a>").attr({
+						class: "img_remove"
+					}).append($("<i>").attr({ class: "fa fa-times", "aria-hidden": "true" }))).append($("<input>").attr({
+						type: "hidden",
+						class: "img_check",
+						name: "inp_img_" + ($(".img_box").length + 1) + "_check"
+					})));
+					
+					$("#img_count").val($(".img_box").length);
+				}
+			}
+		});
+
+		$(document).on("click", ".img_remove", function(t) {
+			$(this).siblings(".img_preview").attr("src", "<?=base_url()?>assets/img/no_img.png");
+			$(this).siblings(".img_input").val("");
+		});
+	});
+</script>
 </html>

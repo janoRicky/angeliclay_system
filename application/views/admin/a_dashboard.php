@@ -21,7 +21,7 @@ $template_header;
 				<?php endif; ?>
 				<div class="row">
 					<div class="col-12">
-						<h2 class="p-3">Welcome <?=$_SESSION["admin_name"]?>!</h2>
+						<h2 class="p-3">Welcome <?=$this->session->userdata("admin_name")?>!</h2>
 					</div>
 					<div class="col-3">
 						<a href="accounts">

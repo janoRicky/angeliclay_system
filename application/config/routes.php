@@ -66,7 +66,7 @@ $route['account'] = 'controller_main/view_u_account';
 $route['account_details'] = 'controller_main/view_u_account_details';
 $route['user_orders'] = 'controller_main/view_u_user_orders';
 
-$route['test'] = 'controller_main/test';
+$route['test'] = 'controller_main/test'; // REMOVE
 
 // SESSION
 $route['to_cart'] = 'user/u_controller_session/to_cart';
@@ -75,6 +75,10 @@ $route['remove_from_cart'] = 'user/u_controller_session/remove_from_cart';
 // FUNCTIONS
 $route['login_verify'] = 'user/u_controller_login/user_login_verification';
 $route['logout'] = 'controller_main/user_logout';
+
+
+$route['place_order'] = 'user/u_controller_create/new_order';
+$route['place_custom_order'] = 'user/u_controller_create/new_order_custom';
 
 
 
@@ -130,6 +134,7 @@ $route['admin/user_update'] = 'admin/a_controller_update/edit_user_account';
 $route['admin/acc_update'] = 'admin/a_controller_update/edit_admin_account';
 
 $route['admin/order_update_state'] = 'admin/a_controller_update/edit_order_state';
+$route['admin/order_update_state_custom'] = 'admin/a_controller_update/edit_order_state_custom';
 
 // - DELETE
 $route['admin/product_delete'] = 'admin/a_controller_delete/delete_product';

@@ -56,7 +56,7 @@
 				"price" => $price,
 				"qty" => $qty,
 				"type" => "NORMAL",
-				"status" => "ACTIVE"
+				"status" => "1"
 			);
 			if ($this->model_create->create_product($data)) {
 				$this->session->set_flashdata("alert", array("success", "Product is successfully added."));
@@ -75,7 +75,7 @@
 		} else {
 			$data = array(
 				"type" => $type,
-				"status" => "ACTIVE"
+				"status" => "1"
 			);
 			if ($this->model_create->create_type($data)) {
 				$this->session->set_flashdata("alert", array("success", "Type is successfully added."));
@@ -122,8 +122,8 @@
 					"description" => $description,
 					"date" => $date,
 					"time" => $time,
-					"state" => "PENDING",
-					"status" => "ACTIVE"
+					"state" => "0",
+					"status" => "1"
 				);
 				if ($this->model_create->create_order($data)) {
 					$order_id = $this->db->insert_id();
@@ -171,8 +171,8 @@
 					"description" => $description,
 					"date" => $date,
 					"time" => $time,
-					"state" => "PENDING",
-					"status" => "ACTIVE"
+					"state" => "0",
+					"status" => "1"
 				);
 				if ($this->model_create->create_order($data)) {
 					$order_id = $this->db->insert_id();
@@ -211,7 +211,7 @@
 						"type_id" => $type_id,
 						"size" => $size,
 						"img" => $img,
-						"status" => "ACTIVE"
+						"status" => "1"
 					);
 					if ($this->model_create->create_product_custom($data_product)) {
 						$product_id = $this->db->insert_id();
@@ -255,7 +255,7 @@
 					"contact_num" => $contact_num,
 					"address" => $address,
 					"password" => password_hash($password, PASSWORD_BCRYPT),
-					"status" => "ACTIVE"
+					"status" => "1"
 				);
 				if ($this->model_create->create_user_account($data)) {
 					$this->session->set_flashdata("alert", array("success", "User is successfully added."));
@@ -282,7 +282,7 @@
 					"name" => $name,
 					"email" => $email,
 					"password" => password_hash($password, PASSWORD_BCRYPT),
-					"status" => "ACTIVE"
+					"status" => "1"
 				);
 				if ($this->model_create->create_adm_account($data)) {
 					$this->session->set_flashdata("alert", array("success", "Account is successfully added."));

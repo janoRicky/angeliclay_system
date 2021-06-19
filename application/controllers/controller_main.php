@@ -7,7 +7,7 @@
  		parent::__construct();
  		$this->load->model("model_read");
 
- 		date_default_timezone_set('Asia/Manila');
+ 		date_default_timezone_set("Asia/Manila");
  	}
 	public function index() {
 		redirect("home");
@@ -57,8 +57,8 @@
 		$head["title"] = "Cart - Luna Likha Ordering System";
 		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
 
-		if (isset($_SESSION["cart"])) {
-			$data["cart"] = $_SESSION["cart"];
+		if ($this->session->has_userdata("cart")) {
+			$data["cart"] = $this->session->userdata("cart");
 			foreach ($this->model_read->get_types()->result_array() as $row) {
 				$data["types"][$row["type_id"]] = $row["type"];
 			}
@@ -88,11 +88,11 @@
 		$head["title"] = "Account - Luna Likha Ordering System";
 		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
 
-		if (!isset($_SESSION["user_in"])) {
+		if (!$this->session->has_userdata("user_in")) {
 			session_destroy();
 			redirect("home");
 		} else {
-			$user_details = $this->model_read->get_user_acc_wid($_SESSION["user_id"]);
+			$user_details = $this->model_read->get_user_acc_wid($this->session->userdata("user_id"));
 			if ($user_details->num_rows() < 1) {
 				session_destroy();
 				redirect("home");
@@ -106,11 +106,11 @@
 		$head["title"] = "Account Details - Luna Likha Ordering System";
 		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
 
-		if (!isset($_SESSION["user_in"])) {
+		if (!$this->session->has_userdata("user_in")) {
 			session_destroy();
 			redirect("home");
 		} else {
-			$user_details = $this->model_read->get_user_acc_wid($_SESSION["user_id"]);
+			$user_details = $this->model_read->get_user_acc_wid($this->session->userdata("user_id"));
 			if ($user_details->num_rows() < 1) {
 				session_destroy();
 				redirect("home");
@@ -124,11 +124,11 @@
 		$head["title"] = "Account - Luna Likha Ordering System";
 		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
 
-		if (!isset($_SESSION["user_in"])) {
+		if (!$this->session->has_userdata("user_in")) {
 			session_destroy();
 			redirect("home");
 		} else {
-			$data["user_orders"] = $this->model_read->get_order_wuser_id($_SESSION["user_id"]);
+			$data["user_orders"] = $this->model_read->get_order_wuser_id($this->session->userdata("user_id"));
 			$this->load->view("user/u_user_orders", $data);
 		}
 	}
@@ -153,7 +153,7 @@
 	}
 	public function admin_login_check() {
 		// check if admin is logged in, sessions are set on a_controller_login
-		if (!isset($_SESSION["admin_in"])) {
+		if (!$this->session->has_userdata("admin_in")) {
 			// set log-in error message
 			$this->session->set_flashdata("login_alert", array("warning", "Please log-in first."));
 			redirect("admin");
@@ -162,7 +162,7 @@
 
 	public function view_a_login() {
 		// check if user is already logged in, if yes return to dashboard
-		if (!isset($_SESSION["admin_in"])) {
+		if (!$this->session->has_userdata("admin_in")) {
 			$head["title"] = "Login - Luna Likha Ordering System";
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
 
@@ -303,15 +303,26 @@
 	public function view_a_orders() {
 		$this->admin_login_check();
 
+		$state = $this->input->get("state");
+
 		$head["title"] = "Orders - Luna Likha Ordering System";
 		$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
 		$data["nav"] = array("text" => "Orders", "link" => "orders");
 
-		$data["tbl_orders"] = $this->model_read->get_orders();
+		$data["tbl_orders"] = $this->model_read->get_orders(!is_null($state) ? $state : "ALL");
 		$data["tbl_products"] = $this->model_read->get_products_user();
 		foreach ($this->model_read->get_types()->result_array() as $row) {
 			$data["tbl_types"][$row["type_id"]] = $row["type"];
 		}
+
+		$data["states"] = array(
+			"PENDING", 
+			"ACCEPTED / WAITING FOR PAYMENT", 
+			"IN PROGRESS", 
+			"SHIPPED", 
+			"RECEIVED", 
+			"CANCELLED"
+		);
 
 		$this->load->view("admin/a_orders", $data);
 	}
@@ -332,6 +343,15 @@
 
 			$data["row_info"] = $row_info->row_array();
 			$data["tbl_order_items"] = $this->model_read->get_order_items_worder_id($id);
+
+			$data["states"] = array(
+				"PENDING", 
+				"ACCEPTED / WAITING FOR PAYMENT", 
+				"IN PROGRESS", 
+				"SHIPPED", 
+				"RECEIVED", 
+				"CANCELLED"
+			);
 
 			$this->load->view("admin/a_orders_view", $data);
 		}
@@ -365,14 +385,25 @@
 	public function view_a_orders_custom() {
 		$this->admin_login_check();
 
+		$state = $this->input->get("state");
+
 		$head["title"] = "Custom Orders - Luna Likha Ordering System";
 		$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
 		$data["nav"] = array("text" => "Orders", "link" => "orders_custom");
 
-		$data["tbl_orders_custom"] = $this->model_read->get_orders_custom();
+		$data["tbl_orders_custom"] = $this->model_read->get_orders_custom(!is_null($state) ? $state : "ALL");
 		foreach ($this->model_read->get_types()->result_array() as $row) {
 			$data["tbl_types"][$row["type_id"]] = $row["type"];
 		}
+
+		$data["states"] = array(
+			"PENDING", 
+			"ACCEPTED / WAITING FOR PAYMENT", 
+			"IN PROGRESS", 
+			"SHIPPED", 
+			"RECEIVED", 
+			"CANCELLED"
+		);
 
 		$this->load->view("admin/a_orders_custom", $data);
 	}
@@ -397,6 +428,15 @@
 
 			$type = $this->model_read->get_type_wid($data["product_info"]["type_id"]);
 			$data["product_info"]["type_name"] = ($type->num_rows() > 0 ? $type->row_array()["type"] : NULL);
+
+			$data["states"] = array(
+				"PENDING", 
+				"ACCEPTED / WAITING FOR PAYMENT", 
+				"IN PROGRESS", 
+				"SHIPPED", 
+				"RECEIVED", 
+				"CANCELLED"
+			);
 
 
 			$this->load->view("admin/a_orders_custom_view", $data);

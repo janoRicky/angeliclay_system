@@ -7,7 +7,7 @@
 				<small>Products</small></a></li>
 			<!-- <li class="nav-item px-2"><a class="nav-link text-uppercase py-0" href="">
 				<small>Orders</small></a></li> -->
-			<?php if (isset($_SESSION["user_in"])): ?>
+			<?php if ($this->session->userdata("user_in")): ?>
 				<li class="nav-item px-2"><a class="nav-link text-uppercase py-0" href="account">
 					<small>Account</small></a></li>
 				<li class="nav-item px-2"><a class="nav-link text-uppercase py-0" href="logout">
@@ -41,8 +41,8 @@
 	<a href="cart">
 		<i class="fa fa-shopping-cart fa-lg nav-icon p-3" aria-hidden="true"></i>
 		<?php
-			if (isset($_SESSION["cart"])) {
-				echo count($_SESSION["cart"]);
+			if ($this->session->has_userdata("cart")) {
+				echo count($this->session->userdata("cart"));
 			}
 		?>
 	</a>

@@ -24,6 +24,8 @@ $template_header;
 					<div class="col-6 text-right">
 						<button class="btn btn-primary" data-toggle="modal" data-target="#modal_new_product">New Product</button>
 					</div>
+				</div>
+				<div class="row">
 					<div class="col-12">
 						<table id="table_products" class="table table-striped table-bordered">
 							<thead>

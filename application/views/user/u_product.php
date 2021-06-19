@@ -22,8 +22,8 @@ $template_header;
 			<div class="col-md-6 col-sm-12 col-xs-12 mt-md-0 mt-sm-4 p-5 ">
 				<?php
 				$current_qty = $product_details["qty"];
-				if (isset($_SESSION["cart"])) {
-					$cart = $_SESSION["cart"];
+				if ($this->session->has_userdata("cart")) {
+					$cart = $this->session->userdata("cart");
 					$item_key = array_search($product_details["product_id"], array_column($cart, 0));
 					if ($item_key !== FALSE) {
 						$current_qty = $product_details["qty"] - $cart[$item_key][1];

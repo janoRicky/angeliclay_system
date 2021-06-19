@@ -88,6 +88,14 @@ $template_header;
 								</table>
 							</div>
 						</div>
+						<div class="row mt-2">
+							<div class="col-12">
+								<h5>Order State:</h5>
+							</div>
+							<div class="col-12">
+								<?=$states[$row_info["state"]]?>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

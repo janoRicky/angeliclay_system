@@ -45,13 +45,31 @@ $template_header;
 						</button>
 					</div>
 				<?php endif; ?>
-				<div class="row">
-					<div class="col-6 text-left">
+				<div class="row mb-3">
+					<div class="col-4 text-left">
 						<h2>Custom Orders (<?=$tbl_orders_custom->num_rows()?>)</h2>
 					</div>
-					<div class="col-6 text-right">
+					<div class="col-4 text-center">
+						<div class="card text-center bg-dark text-light p-1">
+							<?=form_open(base_url() . "admin/orders_custom", "method='GET'");?>
+								<?php $state = (isset($_GET["state"]) ? $_GET["state"] : "ALL"); ?>
+								<select id="state_sort" name="state" class="form-control">
+									<option value="ALL" <?=($state == "ALL" ? "selected" : "")?>>ALL</option>
+									<option value="0" <?=($state == "0" ? "selected" : "")?>>PENDING</option>
+									<option value="1" <?=($state == "1" ? "selected" : "")?>>ACCEPTED / WAITING FOR PAYMENT</option>
+									<option value="2" <?=($state == "2" ? "selected" : "")?>>IN PROGRESS</option>
+									<option value="3" <?=($state == "3" ? "selected" : "")?>>SHIPPED</option>
+									<option value="4" <?=($state == "4" ? "selected" : "")?>>RECEIVED</option>
+									<option value="5" <?=($state == "5" ? "selected" : "")?>>CANCELLED</option>
+								</select>
+							<?=form_close();?>
+						</div>
+					</div>
+					<div class="col-4 text-right">
 						<button class="btn btn-primary" data-toggle="modal" data-target="#modal_new_account">New Custom Order</button>
 					</div>
+				</div>
+				<div class="row">
 					<div class="col-12">
 						<table id="table_orders" class="table table-striped table-bordered">
 							<thead>
@@ -80,7 +98,7 @@ $template_header;
 											<?=$row["date"]." / ".date("h:i A", strtotime($row["time"]))?>
 										</td>
 										<td>
-											<?=$row["state"]?>
+											<?=$states[$row["state"]]?>
 										</td>
 										<td>
 											<button class="btn btn-primary btn-sm btn_state" data-toggle="modal" data-target="#modal_state_order" data-id="<?=$row['order_id']?>">State</button>
@@ -196,7 +214,7 @@ $template_header;
 	<div id="modal_state_order" class="modal">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<?=form_open(base_url() . "admin/order_update_state", "method='POST'");?>
+				<?=form_open(base_url() . "admin/order_update_state_custom", "method='POST'");?>
 					<input id="state_inp_id" type="hidden" name="inp_id">
 					<div class="modal-header">
 						<h4 class="modal-title">Change State</h4>
@@ -208,9 +226,12 @@ $template_header;
 						<div class="form-group">
 							<label>State:</label>
 							<select name="inp_state" class="form-control">
-								<option value="PENDING">Pending</option>
-								<option value="ACCEPTED">Accepted</option>
-								<option value="COMPLETED">Completed</option>
+								<option value="0">PENDING</option>
+								<option value="1">ACCEPTED / WAITING FOR PAYMENT</option>
+								<option value="2">IN PROGRESS</option>
+								<option value="3">SHIPPED</option>
+								<option value="4">RECEIVED</option>
+								<option value="5">CANCELLED</option>
 							</select>
 						</div>
 					</div>
@@ -224,6 +245,9 @@ $template_header;
 </body>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$(".btn_state").on("click", function() {
+			$("#state_inp_id").val($(this).data("id"));
+		});
 		$(".btn_delete").on("click", function() {
 			$("#delete_id").text($(this).data("id"));
 			$("#delete_inp_id").val($(this).data("id"));
@@ -279,6 +303,10 @@ $template_header;
 		$(document).on("click", ".img_remove", function(t) {
 			$(this).siblings(".img_preview").attr("src", "<?=base_url()?>assets/img/no_img.png");
 			$(this).siblings(".img_input").val("");
+		});
+		
+		$(document).on("change", "#state_sort", function(e) {
+			$(this).parent().submit();
 		});
 	});
 </script>

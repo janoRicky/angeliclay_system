@@ -5,7 +5,7 @@ when user orders check if there is enough stock
 
 include product photos when changing order state
 
-
+suer email search on orders
 
 custom products - custom orders
 
@@ -33,13 +33,19 @@ to receive
 to rate/review
 returns/cancellations
 
+status:
+DELETED = 0
+ACTIVE = 1
+
 
 user's orders has:
-placed orders		PENDING
-to pay orders		ACCEPTED/WAITING FOR PAYMENT
-in progress orders	IN PROGRESS
-to receive orders	SHIPPED
-to rate/review orders	RECEIVED
+placed orders		PENDING = 0
+to pay orders		ACCEPTED/WAITING FOR PAYMENT = 1
+in progress orders	IN PROGRESS = 2
+to receive orders	SHIPPED = 3
+to rate/review orders	RECEIVED = 4
+
+cancelled		CANCELLED = 5
 
 
 user places custom order
@@ -67,16 +73,17 @@ TOTDODODODO
 
 CHANGE STRING TABLE VALUES TO NUMBER INDEX
 
-WHEN CUSTOM PRODUCT IS FINISHED, 
+WHEN CUSTOM PRODUCT IS FINISHED,
+=SET QTY AND UNIT PRICE
+=CUSTOM PRODUCT ORDER WILL BE UNEDITABLE BUT WILL STILL BE VIEWABLE
 =MOVE PRODUCTCUSTOM ROW TO PRODUCTS TABLE
 =VIEW PAGE IN ORDER CUSTOM SHOW ORDER DETAILS, ORDER ITEM DETAILS, AND CUSTOM PRODUCT (FROM PRODUCTS TABLE) INFO
 
-REPLACED IMAGES IS NOT UNLINKED
+
+MAKE IT SO WHEN REMOVING INPUT IMAGES THE INPUT INDEX MOVES AND NEW IMAGE INPUTS GET MOVED
 
 
-
-
-
+OPTIMIZE LOGOUT FUNCTIONS
 
 
 

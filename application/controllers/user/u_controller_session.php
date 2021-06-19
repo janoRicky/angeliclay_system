@@ -14,10 +14,10 @@
 		$amount = $this->input->get("amount");
 		$submit = $this->input->get("submit");
 
-		if (!isset($_SESSION["cart"])) {
+		if (!$this->session->has_userdata("cart")) {
 			$data["cart"] = array(array($id, $amount));
 		} else {
-			$cart = $_SESSION["cart"];
+			$cart = $this->session->userdata("cart");
 
 			$item_key = array_search($id, array_column($cart, 0));
 			if ($item_key !== FALSE) {
@@ -40,8 +40,8 @@
 	public function remove_from_cart() {
 		$id = $this->input->get("id");
 
-		if (isset($_SESSION["cart"])) {
-			$cart = $_SESSION["cart"];
+		if ($this->session->has_userdata("cart")) {
+			$cart = $this->session->userdata("cart");
 
 			$item_key = array_search($id, array_column($cart, 0));
 			if ($item_key !== FALSE) {

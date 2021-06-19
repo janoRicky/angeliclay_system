@@ -49,7 +49,7 @@
 					$this->session->set_flashdata("alert", array("warning", $this->upload->display_errors()));
 					redirect("admin/products");
 				} else {
-					unlink($row_info["img"]);
+					unlink("./uploads/". $product_folder ."/". $row_info["img"]);
 					$img = $this->upload->data("file_name");
 				}
 			}
@@ -238,7 +238,7 @@
 								redirect("admin/orders_custom");
 							} else {
 								if (isset($imgs[$i - 1])) {
-									unlink($imgs[$i - 1]);
+									unlink("./uploads/". $product_folder ."/". $imgs[$i - 1]);
 								}
 								$imgs[$i - 1] = $this->upload->data("file_name");
 							}
@@ -270,6 +270,24 @@
 				} else {
 					$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
 				}
+			}
+		}
+		redirect("admin/orders_custom");
+	}
+	public function edit_order_state_custom() {
+		$order_id = $this->input->post("inp_id");
+		$state = $this->input->post("inp_state");
+
+		if ($state == NULL) {
+			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
+		} else {
+			$data = array(
+				"state" => $state
+			);
+			if ($this->model_update->update_order($order_id, $data)) {
+				$this->session->set_flashdata("alert", array("success", "State is successfully updated."));
+			} else {
+				$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
 			}
 		}
 		redirect("admin/orders_custom");
@@ -331,7 +349,7 @@
 				);
 				if ($this->model_update->update_adm_account($admin_id, $data)) {
 					// update admin info
-					if (isset($_SESSION["admin_email"]) && $_SESSION["admin_id"] == $admin_id) {
+					if ($this->session->has_userdata("admin_email") && $this->session->userdata("admin_id") == $admin_id) {
 						$data = array(
 							"admin_name" => $name,
 							"admin_email" => $email
