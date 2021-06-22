@@ -43,6 +43,8 @@
 		<?php
 			if ($this->session->has_userdata("cart")) {
 				echo count($this->session->userdata("cart"));
+			} else {
+				echo "0";
 			}
 		?>
 	</a>

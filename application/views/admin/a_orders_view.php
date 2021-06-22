@@ -47,6 +47,14 @@ $template_header;
 								<?=$row_info["date"]." / ".date("h:i A", strtotime($row_info["time"]))?>
 							</div>
 						</div>
+						<div class="row mt-2">
+							<div class="col-12">
+								<h5>Full Address:</h5>
+							</div>
+							<div class="col-12">
+								<?=$row_info["zip_code"] ." / ". $row_info["country"] ." / ". $row_info["province"] ." / ". $row_info["city"] ." / ". $row_info["street"] ." / ". $row_info["address"]?>
+							</div>
+						</div>
 
 						<div class="row mt-2">
 							<div class="col-12">
@@ -64,12 +72,15 @@ $template_header;
 										</tr>
 									</thead>
 									<tbody>
+										<?php $total_qty = 0; $total_price = 0; ?>
 										<?php foreach ($tbl_order_items->result_array() as $row): ?>
 											<tr>
-												<td><?=$this->model_read->get_product_wid($row["product_id"])->row_array()["description"]?></td>
+												<td><?=$this->model_read->get_product_wid($row["product_id"])->row_array()["name"]?></td>
 												<td><?=$row["qty"]?></td>
+												<?php $total_qty += $row["qty"]; ?>
 												<td><?=$row["price"]?></td>
 												<td class="total_price"><?=$row["qty"] * $row["price"]?></td>
+												<?php $total_price += $row["qty"] * $row["price"]; ?>
 												<td>
 													<a href="<?=base_url();?>admin/products_view?id=<?=$row['product_id']?>">
 														<button class="btn btn-sm btn-primary mb-1">View</button>
@@ -78,13 +89,13 @@ $template_header;
 											</tr>
 										<?php endforeach; ?>
 									</tbody>
-										<tr id="total_info">
-											<td>Total</td>
-											<td id="total_qty">0</td>
-											<td></td>
-											<td id="total_price">0.00</td>
-											<td></td>
-										</tr>
+									<tr id="total_info">
+										<td>Total</td>
+										<td id="total_qty"><?=$total_qty?></td>
+										<td></td>
+										<td id="total_price"><?=$total_price?></td>
+										<td></td>
+									</tr>
 								</table>
 							</div>
 						</div>
@@ -107,8 +118,8 @@ $template_header;
 	$(document).ready(function () {
 		var tbl_items = $("#table_items").DataTable();
 
-		$("#total_qty").html(tbl_items.column(1).data().sum());
-		$("#total_price").html(tbl_items.column(3).data().sum());
+		// $("#total_qty").html(tbl_items.column(1).data().sum());
+		// $("#total_price").html(tbl_items.column(3).data().sum());
 	});
 </script>
 </html>

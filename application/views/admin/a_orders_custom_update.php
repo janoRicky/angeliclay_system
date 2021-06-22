@@ -68,6 +68,30 @@ $template_header;
 								<label for="inp_time">Time:</label>
 								<input type="time" class="form-control" name="inp_time" autocomplete="off" value="<?=date('H:i', strtotime($row_info['time']))?>">
 							</div>
+							<div class="form-group">
+								<label for="inp_zip_code">Zip Code:</label>
+								<input type="text" class="form-control" name="inp_zip_code" placeholder="Zip Code" value="<?=$row_info['zip_code']?>" autocomplete="off">
+							</div>
+							<div class="form-group">
+								<label for="inp_country">Country:</label>
+								<input type="text" class="form-control" name="inp_country" placeholder="Country" value="<?=$row_info['country']?>" autocomplete="off">
+							</div>
+							<div class="form-group">
+								<label for="inp_province">Province:</label>
+								<input type="text" class="form-control" name="inp_province" placeholder="Province" value="<?=$row_info['province']?>" autocomplete="off">
+							</div>
+							<div class="form-group">
+								<label for="inp_city">City:</label>
+								<input type="text" class="form-control" name="inp_city" placeholder="City" value="<?=$row_info['city']?>" autocomplete="off">
+							</div>
+							<div class="form-group">
+								<label for="inp_street">Street/Road:</label>
+								<input type="text" class="form-control" name="inp_street" placeholder="Street/Road" value="<?=$row_info['street']?>" autocomplete="off">
+							</div>
+							<div class="form-group">
+								<label for="inp_address">House Number/Floor/Bldg./etc.:</label>
+								<input type="text" class="form-control" name="inp_address" placeholder="House Number/Floor/Bldg./etc." value="<?=$row_info['address']?>" autocomplete="off">
+							</div>
 
 							<input type="hidden" name="inp_product_id" value="<?=$product_info['custom_id']?>">
 							<div class="form-group">

@@ -14,10 +14,34 @@ $template_header;
 				<?=form_open(base_url() . "#", "method='GET'")?>
 					<div class="row mt-2">
 						<div class="col-3">
-							<h5 class="font-weight-normal m-0 p-0">Name: </h5>
+							<h5 class="font-weight-normal m-0 p-0">Last Name: </h5>
 						</div>
 						<div class="col-9">
-							<input type="text" name="inp_name" placeholder="Name" value="<?=$account_details['name']?>" autocomplete="off">
+							<input type="text" name="inp_name_last" placeholder="Last Name" value="<?=$account_details['name_last']?>" autocomplete="off">
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col-3">
+							<h5 class="font-weight-normal m-0 p-0">First Name: </h5>
+						</div>
+						<div class="col-9">
+							<input type="text" name="inp_name_first" placeholder="First Name" value="<?=$account_details['name_first']?>" autocomplete="off">
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col-3">
+							<h5 class="font-weight-normal m-0 p-0">Middle Name: </h5>
+						</div>
+						<div class="col-9">
+							<input type="text" name="inp_name_middle" placeholder="Middle Name" value="<?=$account_details['name_middle']?>" autocomplete="off">
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col-3">
+							<h5 class="font-weight-normal m-0 p-0">Name Extension: </h5>
+						</div>
+						<div class="col-9">
+							<input type="text" name="inp_name_extension" placeholder="Name Extension" value="<?=$account_details['name_extension']?>" autocomplete="off">
 						</div>
 					</div>
 					<div class="row mt-2">
@@ -42,10 +66,50 @@ $template_header;
 					</div>
 					<div class="row mt-2">
 						<div class="col-3">
-							<h5 class="font-weight-normal m-0 p-0">Address: </h5>
+							<h5 class="font-weight-normal m-0 p-0">Zip Code: </h5>
 						</div>
 						<div class="col-9">
-							<input type="text" name="inp_address" placeholder="Address" value="<?=$account_details['address']?>" autocomplete="off">
+							<input type="text" name="inp_zip_code" placeholder="Zip Code" value="<?=$account_details['zip_code']?>" autocomplete="off">
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col-3">
+							<h5 class="font-weight-normal m-0 p-0">Country: </h5>
+						</div>
+						<div class="col-9">
+							<input type="text" name="inp_country" placeholder="Country" value="<?=$account_details['country']?>" autocomplete="off">
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col-3">
+							<h5 class="font-weight-normal m-0 p-0">Province: </h5>
+						</div>
+						<div class="col-9">
+							<input type="text" name="inp_province" placeholder="Province" value="<?=$account_details['province']?>" autocomplete="off">
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col-3">
+							<h5 class="font-weight-normal m-0 p-0">City: </h5>
+						</div>
+						<div class="col-9">
+							<input type="text" name="inp_city" placeholder="City" value="<?=$account_details['city']?>" autocomplete="off">
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col-3">
+							<h5 class="font-weight-normal m-0 p-0">Street/Road: </h5>
+						</div>
+						<div class="col-9">
+							<input type="text" name="inp_street" placeholder="Street/Road" value="<?=$account_details['street']?>" autocomplete="off">
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col-3">
+							<h5 class="font-weight-normal m-0 p-0">House Number/Floor/Bldg./etc.: </h5>
+						</div>
+						<div class="col-9">
+							<input type="text" name="inp_address" placeholder="House Number/Floor/Bldg./etc." value="<?=$account_details['address']?>" autocomplete="off">
 						</div>
 					</div>
 					<div class="row mt-2">

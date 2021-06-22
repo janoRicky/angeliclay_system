@@ -77,8 +77,74 @@ $template_header;
 						</div>
 					</div>
 					<div class="row mt-4">
-						<input class="btn btn-outline-dark btn-block font-weight-bold" type="submit" name="submit"  value="Place Order">
+						<button class="btn btn-outline-dark btn-block font-weight-bold" type="button" data-toggle="modal" data-target="#modal_order_address">Place Order</button>
 					</div>
+
+	<div id="modal_order_address" class="modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Address</h4>
+					<button type="button" class="close" data-dismiss="modal">
+						&times;
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row mt-2">
+						<div class="col-3">
+							<h5 class="font-weight-normal m-0 p-0">Zip Code: </h5>
+						</div>
+						<div class="col-9">
+							<input type="text" name="inp_zip_code" placeholder="Zip Code" value="<?=$account_details['zip_code']?>" autocomplete="off">
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col-3">
+							<h5 class="font-weight-normal m-0 p-0">Country: </h5>
+						</div>
+						<div class="col-9">
+							<input type="text" name="inp_country" placeholder="Country" value="<?=$account_details['country']?>" autocomplete="off">
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col-3">
+							<h5 class="font-weight-normal m-0 p-0">Province: </h5>
+						</div>
+						<div class="col-9">
+							<input type="text" name="inp_province" placeholder="Province" value="<?=$account_details['province']?>" autocomplete="off">
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col-3">
+							<h5 class="font-weight-normal m-0 p-0">City: </h5>
+						</div>
+						<div class="col-9">
+							<input type="text" name="inp_city" placeholder="City" value="<?=$account_details['city']?>" autocomplete="off">
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col-3">
+							<h5 class="font-weight-normal m-0 p-0">Street/Road: </h5>
+						</div>
+						<div class="col-9">
+							<input type="text" name="inp_street" placeholder="Street/Road" value="<?=$account_details['street']?>" autocomplete="off">
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col-3">
+							<h5 class="font-weight-normal m-0 p-0">House Number/Floor/Bldg./etc.: </h5>
+						</div>
+						<div class="col-9">
+							<input type="text" name="inp_address" placeholder="House Number/Floor/Bldg./etc." value="<?=$account_details['address']?>" autocomplete="off">
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input type="submit" class="btn btn-primary" value="Place Order">
+				</div>
+			</div>
+		</div>
+	</div>
 				<?=form_close()?>
 			</div>
 		</div>
@@ -116,9 +182,9 @@ $template_header;
 			$(this).children(".img_change").removeClass("d-none");
 		}).on("mouseleave", ".img_box", function() {
 			$(this).children(".img_change").addClass("d-none");
-		})
+		});
 		$(document).on("click", ".img_change", function() {
-			$(this).prev().prev().trigger("click");
+			$(this).siblings(".img_input").trigger("click");
 		});
 		
 		$(document).on("change", ".img_input", function(t) {
@@ -126,8 +192,14 @@ $template_header;
 				var reader = new FileReader();
 				reader.readAsDataURL(t.target.files[0]);
 				reader.onload = function(e) {
-					$(t.target).next().attr("src", e.target.result);
+					$(t.target).siblings(".img_preview").attr("src", e.target.result);
 				};
+
+				$(".img_box").each(function(index, el) {
+					$(this).children(".img_input").attr("name", "inp_img_" + (index + 1));
+					$(this).children(".img_check").attr("name", "inp_img_" + (index + 1) + "_check");
+				});
+
 				// add new imgbox
 				if ($(".img_box").length < 10 && $(t.target).hasClass("no_img")) {
 					$(t.target).removeClass("no_img");
@@ -157,8 +229,13 @@ $template_header;
 		});
 
 		$(document).on("click", ".img_remove", function(t) {
-			$(this).siblings(".img_preview").attr("src", "<?=base_url()?>assets/img/no_img.png");
-			$(this).siblings(".img_input").val("");
+			if ($(".img_box").length > 1 && !$(this).siblings(".img_input").hasClass("no_img")) {
+				$(this).parent().remove();
+			}
+			$(".img_box").each(function(index, el) {
+				$(this).children(".img_input").attr("name", "inp_img_" + (index + 1));
+				$(this).children(".img_check").attr("name", "inp_img_" + (index + 1) + "_check");
+			});
 		});
 	});
 </script>

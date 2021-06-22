@@ -53,6 +53,9 @@ $template_header;
 										<div class="col-md-12 marginslim ml-2">
 											<span class="font-italic"><?=$row["description"]?></span><br>
 											<span class="font-weight-bold">PHP <?=number_format($row["price"], 2)?></span>
+											<?php if ($row["qty"] < 1): ?>
+												<span class="font-weight-bold"><h5>SOLD OUT</h5></span>
+											<?php endif; ?>
 										</div>
 									</div>
 								</div>						

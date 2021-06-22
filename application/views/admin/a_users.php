@@ -47,7 +47,7 @@ $template_header;
 											<?=$row["user_id"]?>
 										</td>
 										<td>
-											<?=$row["name"]?>
+											<?=$row["name_last"] .", ". $row["name_first"] ." ". $row["name_middle"] ." ". $row["name_extension"]?>
 										</td>
 										<td>
 											<?=$row["gender"]?>
@@ -59,7 +59,7 @@ $template_header;
 											<?=$row["contact_num"]?>
 										</td>
 										<td>
-											<?=$row["address"]?>
+											<?=$row["zip_code"] ." / ". $row["country"] ." / ". $row["province"] ." / ". $row["city"] ." / ". $row["street"] ." / ". $row["address"]?>
 										</td>
 										<td>
 											<a class="action_button" href="<?=base_url();?>admin/users_view?id=<?=$row['user_id']?>">
@@ -92,8 +92,20 @@ $template_header;
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<label for="inp_name">Name:</label>
-							<input type="text" class="form-control" name="inp_name" placeholder="Name" autocomplete="off">
+							<label for="inp_name_last">Last Name:</label>
+							<input type="text" class="form-control" name="inp_name_last" placeholder="Last Name" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<label for="inp_name_first">First Name:</label>
+							<input type="text" class="form-control" name="inp_name_first" placeholder="First Name" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<label for="inp_name_middle">Middle Name:</label>
+							<input type="text" class="form-control" name="inp_name_middle" placeholder="Middle Name" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<label for="inp_name_extension">Name Extension:</label>
+							<input type="text" class="form-control" name="inp_name_extension" placeholder="Name Extension" autocomplete="off">
 						</div>
 						<div class="form-group">
 							<label for="inp_gender">Gender:</label>
@@ -112,8 +124,28 @@ $template_header;
 							<input type="text" class="form-control" name="inp_contact_num" placeholder="Contact #" autocomplete="off">
 						</div>
 						<div class="form-group">
-							<label for="inp_address">Address:</label>
-							<input type="text" class="form-control" name="inp_address" placeholder="Address" autocomplete="off">
+							<label for="inp_zip_code">Zip Code:</label>
+							<input type="text" class="form-control" name="inp_zip_code" placeholder="Zip Code" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<label for="inp_country">Country:</label>
+							<input type="text" class="form-control" name="inp_country" placeholder="Country" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<label for="inp_province">Province:</label>
+							<input type="text" class="form-control" name="inp_province" placeholder="Province" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<label for="inp_city">City:</label>
+							<input type="text" class="form-control" name="inp_city" placeholder="City" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<label for="inp_street">Street/Road:</label>
+							<input type="text" class="form-control" name="inp_street" placeholder="Street/Road" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<label for="inp_address">House Number/Floor/Bldg./etc.:</label>
+							<input type="text" class="form-control" name="inp_address" placeholder="House Number/Floor/Bldg./etc." autocomplete="off">
 						</div>
 						<div class="form-group">
 							<label for="inp_password">Password:</label>

@@ -6,17 +6,21 @@ $template_header;
 <body class="" style="background-color: rgba(241, 182, 171, 1);">
 	<?php $this->load->view("user/template/u_t_navbar"); ?>
 	<div class="container px-5 rounded pb-5" style="background-color: rgba(220, 138, 107, 0.40);">
-		<span>
-			<h1 class="m-0" style="padding-top: 60px;">Account</h1>
-		</span>
+		<div class="row">
+			<span>
+				<h4 class="m-0" style="padding-top: 60px;">
+					Account Details <a href="account_details"><i class="fa fa-pencil p-1" aria-hidden="true"></i></a>
+				</h4>
+			</span>
+		</div>
 		<div class="row mt-5">
-			<div class="col-10">
+			<div class="col-9">
 				<div class="row mt-2">
 					<div class="col-3">
-						<h5 class="font-weight-normal m-0 p-0">Name: </h5>
+						<h5 class="font-weight-normal m-0 p-0">Full Name: </h5>
 					</div>
 					<div class="col-9">
-						<?=$account_details["name"]?>
+						<?=$account_details["name_last"] .", ". $account_details["name_first"] ." ". $account_details["name_middle"] ." ". $account_details["name_extension"]?>
 					</div>
 				</div>
 				<div class="row mt-2">
@@ -40,7 +44,7 @@ $template_header;
 						<h5 class="font-weight-normal m-0 p-0">Address: </h5>
 					</div>
 					<div class="col-9">
-						<?=$account_details["address"]?>
+						<?=$account_details["zip_code"] ." / ". $account_details["country"] ." / ". $account_details["province"] ." / ". $account_details["city"] ." / ". $account_details["street"] ." / ". $account_details["address"]?>
 					</div>
 				</div>
 				<div class="row mt-2">
@@ -52,9 +56,14 @@ $template_header;
 					</div>
 				</div>
 			</div>
-			<div class="col-2">
-				<a href="account_details">Update Account Details</a><br><br>
-				<a href="user_orders">Orders List</a>
+			<div class="col-3">
+				<a class="btn btn-primary mt-1" href="my_orders">ALL</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders?state=0">PENDING</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders?state=1">ACCEPTED / WAITING FOR PAYMENT</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders?state=2">IN PROGRESS</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders?state=3">SHIPPED</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders?state=4">RECEIVED</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders?state=5">CANCELLED</a><br>
 			</div>
 		</div>
 	</div>

@@ -147,6 +147,30 @@ $template_header;
 							<label for="inp_time">Time:</label>
 							<input type="time" class="form-control" name="inp_time" autocomplete="off" value="<?=date('H:i')?>">
 						</div>
+						<div class="form-group">
+							<label for="inp_zip_code">Zip Code:</label>
+							<input type="text" class="form-control" name="inp_zip_code" placeholder="Zip Code" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<label for="inp_country">Country:</label>
+							<input type="text" class="form-control" name="inp_country" placeholder="Country" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<label for="inp_province">Province:</label>
+							<input type="text" class="form-control" name="inp_province" placeholder="Province" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<label for="inp_city">City:</label>
+							<input type="text" class="form-control" name="inp_city" placeholder="City" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<label for="inp_street">Street/Road:</label>
+							<input type="text" class="form-control" name="inp_street" placeholder="Street/Road" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<label for="inp_address">House Number/Floor/Bldg./etc.:</label>
+							<input type="text" class="form-control" name="inp_address" placeholder="House Number/Floor/Bldg./etc." autocomplete="off">
+						</div>
 						<h4 class="pt-3">Custom Product Details</h4>
 						<div class="form-group">
 							<label for="inp_custom_description">Custom Description:</label>
@@ -262,7 +286,7 @@ $template_header;
 			$(this).children(".img_change").addClass("d-none");
 		})
 		$(document).on("click", ".img_change", function() {
-			$(this).prev().prev().trigger("click");
+			$(this).siblings(".img_input").trigger("click");
 		});
 		
 		$(document).on("change", ".img_input", function(t) {
@@ -270,8 +294,14 @@ $template_header;
 				var reader = new FileReader();
 				reader.readAsDataURL(t.target.files[0]);
 				reader.onload = function(e) {
-					$(t.target).next().attr("src", e.target.result);
+					$(t.target).siblings(".img_preview").attr("src", e.target.result);
 				};
+
+				$(".img_box").each(function(index, el) {
+					$(this).children(".img_input").attr("name", "inp_img_" + (index + 1));
+					$(this).children(".img_check").attr("name", "inp_img_" + (index + 1) + "_check");
+				});
+
 				// add new imgbox
 				if ($(".img_box").length < 10 && $(t.target).hasClass("no_img")) {
 					$(t.target).removeClass("no_img");
@@ -301,9 +331,57 @@ $template_header;
 		});
 
 		$(document).on("click", ".img_remove", function(t) {
-			$(this).siblings(".img_preview").attr("src", "<?=base_url()?>assets/img/no_img.png");
-			$(this).siblings(".img_input").val("");
+			if ($(".img_box").length > 1 && !$(this).siblings(".img_input").hasClass("no_img")) {
+				$(this).parent().remove();
+			}
+			$(".img_box").each(function(index, el) {
+				$(this).children(".img_input").attr("name", "inp_img_" + (index + 1));
+				$(this).children(".img_check").attr("name", "inp_img_" + (index + 1) + "_check");
+			});
 		});
+		// $(document).on("click", ".img_change", function() {
+		// 	$(this).prev().prev().trigger("click");
+		// });
+		
+		// $(document).on("change", ".img_input", function(t) {
+		// 	if (t.target.files && t.target.files[0]) {
+		// 		var reader = new FileReader();
+		// 		reader.readAsDataURL(t.target.files[0]);
+		// 		reader.onload = function(e) {
+		// 			$(t.target).next().attr("src", e.target.result);
+		// 		};
+		// 		// add new imgbox
+		// 		if ($(".img_box").length < 10 && $(t.target).hasClass("no_img")) {
+		// 			$(t.target).removeClass("no_img");
+
+		// 			$(".img_container").append($("<div>").attr({
+		// 				class: "col-3 img_box mb-3"
+		// 			}).append($("<input>").attr({
+		// 				type: "file",
+		// 				class: "d-none img_input no_img",
+		// 				name: "inp_img_" + ($(".img_box").length + 1)
+		// 			})).append($("<img>").attr({
+		// 				class: "w-100 img_preview",
+		// 				src: "<?=base_url()?>assets/img/no_img.png"
+		// 			})).append($("<div>").attr({
+		// 				class: "img_change w-100 h-100 p-3 text-center d-none"
+		// 			}).html("Change Image")).append($("<a>").attr({
+		// 				class: "img_remove"
+		// 			}).append($("<i>").attr({ class: "fa fa-times", "aria-hidden": "true" }))).append($("<input>").attr({
+		// 				type: "hidden",
+		// 				class: "img_check",
+		// 				name: "inp_img_" + ($(".img_box").length + 1) + "_check"
+		// 			})));
+					
+		// 			$("#img_count").val($(".img_box").length);
+		// 		}
+		// 	}
+		// });
+
+		// $(document).on("click", ".img_remove", function(t) {
+		// 	$(this).siblings(".img_preview").attr("src", "<?=base_url()?>assets/img/no_img.png");
+		// 	$(this).siblings(".img_input").val("");
+		// });
 		
 		$(document).on("change", "#state_sort", function(e) {
 			$(this).parent().submit();

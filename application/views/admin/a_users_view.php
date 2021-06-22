@@ -28,7 +28,7 @@ $template_header;
 								<h5>Full Name:</h5>
 							</div>
 							<div class="col-12">
-								<?=$row_info["name"]?>
+								<?=$row_info["name_last"] .", ". $row_info["name_first"] ." ". $row_info["name_middle"] ." ". $row_info["name_extension"]?>
 							</div>
 						</div>
 						<div class="row mt-2">
@@ -57,10 +57,10 @@ $template_header;
 						</div>
 						<div class="row mt-2">
 							<div class="col-12">
-								<h5>Address:</h5>
+								<h5>Full Address:</h5>
 							</div>
 							<div class="col-12">
-								<?=$row_info["address"]?>
+								<?=$row_info["zip_code"] ." / ". $row_info["country"] ." / ". $row_info["province"] ." / ". $row_info["city"] ." / ". $row_info["street"] ." / ". $row_info["address"]?>
 							</div>
 						</div>
 					</div>

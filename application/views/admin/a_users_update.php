@@ -25,8 +25,20 @@ $template_header;
 						<?=form_open(base_url() . "admin/user_update", "method='POST'"); ?>
 							<input id="update_inp_id" type="hidden" name="inp_id" value="<?=$row_info["user_id"]?>">
 							<div class="form-group">
-								<label for="inp_name">Name:</label>
-								<input type="text" class="form-control" name="inp_name" placeholder="Name" value="<?=$row_info['name']?>" autocomplete="off">
+								<label for="inp_name_last">Last Name:</label>
+								<input type="text" class="form-control" name="inp_name_last" placeholder="Last Name" value="<?=$row_info['name_last']?>" autocomplete="off">
+							</div>
+							<div class="form-group">
+								<label for="inp_name_first">First Name:</label>
+								<input type="text" class="form-control" name="inp_name_first" placeholder="First Name" value="<?=$row_info['name_first']?>" autocomplete="off">
+							</div>
+							<div class="form-group">
+								<label for="inp_name_middle">Middle Name:</label>
+								<input type="text" class="form-control" name="inp_name_middle" placeholder="Middle Name" value="<?=$row_info['name_middle']?>" autocomplete="off">
+							</div>
+							<div class="form-group">
+								<label for="inp_name_extension">Name Extension:</label>
+								<input type="text" class="form-control" name="inp_name_extension" placeholder="Name Extension" value="<?=$row_info['name_extension']?>" autocomplete="off">
 							</div>
 							<div class="form-group">
 								<label for="inp_gender">Gender:</label>
@@ -45,8 +57,28 @@ $template_header;
 								<input type="text" class="form-control" name="inp_contact_num" placeholder="Contact #" value="<?=$row_info['contact_num']?>" autocomplete="off">
 							</div>
 							<div class="form-group">
-								<label for="inp_address">Address:</label>
-								<input type="text" class="form-control" name="inp_address" placeholder="Address" value="<?=$row_info['address']?>" autocomplete="off">
+								<label for="inp_zip_code">Zip Code:</label>
+								<input type="text" class="form-control" name="inp_zip_code" placeholder="Zip Code" value="<?=$row_info['zip_code']?>" autocomplete="off">
+							</div>
+							<div class="form-group">
+								<label for="inp_country">Country:</label>
+								<input type="text" class="form-control" name="inp_country" placeholder="Country" value="<?=$row_info['country']?>" autocomplete="off">
+							</div>
+							<div class="form-group">
+								<label for="inp_province">Province:</label>
+								<input type="text" class="form-control" name="inp_province" placeholder="Province" value="<?=$row_info['province']?>" autocomplete="off">
+							</div>
+							<div class="form-group">
+								<label for="inp_city">City:</label>
+								<input type="text" class="form-control" name="inp_city" placeholder="City" value="<?=$row_info['city']?>" autocomplete="off">
+							</div>
+							<div class="form-group">
+								<label for="inp_street">Street/Road:</label>
+								<input type="text" class="form-control" name="inp_street" placeholder="Street/Road" value="<?=$row_info['street']?>" autocomplete="off">
+							</div>
+							<div class="form-group">
+								<label for="inp_address">House Number/Floor/Bldg./etc.:</label>
+								<input type="text" class="form-control" name="inp_address" placeholder="House Number/Floor/Bldg./etc." value="<?=$row_info['address']?>" autocomplete="off">
 							</div>
 							<div class="form-group">
 								<label for="inp_password">Password:</label>

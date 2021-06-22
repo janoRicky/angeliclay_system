@@ -71,6 +71,30 @@
 		}
 		redirect("admin/products");
 	}
+	public function edit_product_visibility() {
+		$product_id = $this->input->post("inp_id");
+		$submit = $this->input->post("inp_submit");
+
+		if ($product_id == NULL || $submit == NULL) {
+			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
+		} else {
+			if ($submit == "Set to Invisible") {
+				$visibility = 0;
+			} else {
+				$visibility = 1;
+			}
+			$data = array(
+				"visibility" => $visibility
+			);
+
+			if ($this->model_update->update_product($product_id, $data)) {
+				$this->session->set_flashdata("alert", array("success", "Product visibility is successfully updated."));
+			} else {
+				$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
+			}
+		}
+		redirect("admin/products");
+	}
 	// = = = TYPES
 	public function edit_type() {
 		$type_id = $this->input->post("inp_id");
@@ -98,6 +122,13 @@
 		$date = $this->input->post("inp_date");
 		$time = $this->input->post("inp_time");
 
+		$zip_code = $this->input->post("inp_zip_code");
+		$country = $this->input->post("inp_country");
+		$province = $this->input->post("inp_province");
+		$city = $this->input->post("inp_city");
+		$street = $this->input->post("inp_street");
+		$address = $this->input->post("inp_address");
+
 		$items_no = $this->input->post("items_no");
 		$items = array();
 
@@ -115,7 +146,7 @@
 			}
 		}
 
-		if ($user_email == NULL || $description == NULL || $date == NULL || $time == NULL || count($items) < 1) {
+		if ($user_email == NULL || $description == NULL || $date == NULL || $time == NULL || count($items) < 1 || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL) {
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
 		} else {
 			$user_info = $this->model_read->get_user_acc_wemail($user_email);
@@ -127,7 +158,13 @@
 					"user_id" => $user_id,
 					"description" => $description,
 					"date" => $date,
-					"time" => $time
+					"time" => $time,
+					"zip_code" => $zip_code,
+					"country" => $country,
+					"province" => $province,
+					"city" => $city,
+					"street" => $street,
+					"address" => $address
 				);
 				if ($this->model_update->update_order($order_id, $data)) {
 
@@ -145,8 +182,8 @@
 						$this->model_update->update_product($row["product_id"], $data_product);
 
 						$row["order_id"] = $order_id;
+						$row["type"] = "NORMAL";
 						$this->model_create->create_order_item($row);
-						$test[] = $row;
 					}
 
 					$this->session->set_flashdata("alert", array("success", "Order is successfully updated."));
@@ -183,6 +220,13 @@
 		$date = $this->input->post("inp_date");
 		$time = $this->input->post("inp_time");
 
+		$zip_code = $this->input->post("inp_zip_code");
+		$country = $this->input->post("inp_country");
+		$province = $this->input->post("inp_province");
+		$city = $this->input->post("inp_city");
+		$street = $this->input->post("inp_street");
+		$address = $this->input->post("inp_address");
+
 		$product_id = $this->input->post("inp_product_id");
 		$custom_description = $this->input->post("inp_custom_description");
 		$type_id = $this->input->post("inp_type_id");
@@ -194,7 +238,7 @@
 		$price = $this->input->post("inp_price");
 
 
-		if ($user_email == NULL || $description == NULL || $date == NULL || $time == NULL) {
+		if ($user_email == NULL || $description == NULL || $date == NULL || $time == NULL || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL) {
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
 		} else {
 			$user_info = $this->model_read->get_user_acc_wemail($user_email);
@@ -206,7 +250,13 @@
 					"user_id" => $user_id,
 					"description" => $description,
 					"date" => $date,
-					"time" => $time
+					"time" => $time,
+					"zip_code" => $zip_code,
+					"country" => $country,
+					"province" => $province,
+					"city" => $city,
+					"street" => $street,
+					"address" => $address
 				);
 				if ($this->model_update->update_order($order_id, $data)) {
 
@@ -295,28 +345,54 @@
 	// = = = USERS
 	public function edit_user_account() {
 		$user_id = $this->input->post("inp_id");
-		$name = $this->input->post("inp_name");
+
+		$name_last = $this->input->post("inp_name_last");
+		$name_first = $this->input->post("inp_name_first");
+		$name_middle = $this->input->post("inp_name_middle");
+		$name_extension = $this->input->post("inp_name_extension");
+
 		$gender = $this->input->post("inp_gender");
 		$email = $this->input->post("inp_email");
 		$contact_num = $this->input->post("inp_contact_num");
+
+		$zip_code = $this->input->post("inp_zip_code");
+		$country = $this->input->post("inp_country");
+		$province = $this->input->post("inp_province");
+		$city = $this->input->post("inp_city");
+		$street = $this->input->post("inp_street");
 		$address = $this->input->post("inp_address");
+
 		$password = $this->input->post("inp_password");
 
-		if ($user_id == NULL || $name == NULL || $gender == NULL || $email == NULL || $contact_num == NULL || $address == NULL || $password == NULL) {
+
+		if ($user_id == NULL || $name_last == NULL || $name_first == NULL || $gender == NULL || $email == NULL || $contact_num == NULL || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL) {
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
 		} else {
-			$acc_info = $this->model_read->get_user_acc_w_id($user_id)->row_array();
-			if ($this->model_read->get_user_acc_w_email($email)->num_rows() > 0 && $acc_info["email"] != $email) {
+			$acc_info = $this->model_read->get_user_acc_wid($user_id)->row_array();
+			if ($this->model_read->get_user_acc_wemail($email)->num_rows() > 0 && $acc_info["email"] != $email) {
 				$this->session->set_flashdata("alert", array("warning", "Email has already been used."));
 			} else {
 				$data = array(
-					"name" => $name,
+					"name_last" => $name_last,
+					"name_first" => $name_first,
+					"name_middle" => $name_middle,
+					"name_extension" => $name_extension,
+					
 					"gender" => $gender,
 					"email" => $email,
 					"contact_num" => $contact_num,
-					"address" => $address,
-					"password" => password_hash($password, PASSWORD_BCRYPT)
+
+					"zip_code" => $zip_code,
+					"country" => $country,
+					"province" => $province,
+					"city" => $city,
+					"street" => $street,
+					"address" => $address
 				);
+				if ($password != NULL) {
+					$data["password"] = password_hash($password, PASSWORD_BCRYPT);
+				}
+
 				if ($this->model_update->update_user_account($user_id, $data)) {
 					$this->session->set_flashdata("alert", array("success", "Account info is successfully updated."));
 				} else {
@@ -337,8 +413,8 @@
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
 		} else {
 			// if email is already used and if the previous email is not the same with new email, show error
-			$acc_info = $this->model_read->get_adm_acc_w_id($admin_id)->row_array();
-			if ($this->model_read->get_adm_acc_w_email($email)->num_rows() > 0 && $acc_info["email"] != $email) {
+			$acc_info = $this->model_read->get_adm_acc_wid($admin_id)->row_array();
+			if ($this->model_read->get_adm_acc_wemail($email)->num_rows() > 0 && $acc_info["email"] != $email) {
 				$this->session->set_flashdata("alert", array("warning", "Email has already been used."));
 			} else {
 				// set values to be updated on the database table

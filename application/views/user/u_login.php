@@ -6,6 +6,15 @@ $template_header;
 <body class="" style="background-color: rgba(241, 182, 171, 1);">
 	<?php $this->load->view("user/template/u_t_navbar"); ?>
 	<div class="container px-5 rounded pb-5" style="background-color: rgba(220, 138, 107, 0.40);">
+		<?php if ($this->session->flashdata("notice")): ?>
+			<?php $alert = $this->session->flashdata("notice"); ?>
+			<div class="alert alert-<?=$alert[0]?> alert-dismissible">
+				<?=$alert[1]?>
+				<button type="button" class="close" data-dismiss="alert">
+					&times;
+				</button>
+			</div>
+		<?php endif; ?>
 		<span>
 			<h1 class="m-0" style="padding-top: 60px;">Log-In</h1>
 		</span>

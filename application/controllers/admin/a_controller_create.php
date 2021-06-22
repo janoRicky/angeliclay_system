@@ -92,6 +92,13 @@
 		$date = $this->input->post("inp_date");
 		$time = $this->input->post("inp_time");
 
+		$zip_code = $this->input->post("inp_zip_code");
+		$country = $this->input->post("inp_country");
+		$province = $this->input->post("inp_province");
+		$city = $this->input->post("inp_city");
+		$street = $this->input->post("inp_street");
+		$address = $this->input->post("inp_address");
+
 		$items_no = $this->input->post("items_no");
 		$items = array();
 
@@ -109,7 +116,7 @@
 			}
 		}
 
-		if ($user_email == NULL || $description == NULL || $date == NULL || $time == NULL || count($items) < 1) {
+		if ($user_email == NULL || $description == NULL || $date == NULL || $time == NULL || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL || count($items) < 1) {
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
 		} else {
 			$user_info = $this->model_read->get_user_acc_wemail($user_email);
@@ -122,6 +129,12 @@
 					"description" => $description,
 					"date" => $date,
 					"time" => $time,
+					"zip_code" => $zip_code,
+					"country" => $country,
+					"province" => $province,
+					"city" => $city,
+					"street" => $street,
+					"address" => $address,
 					"state" => "0",
 					"status" => "1"
 				);
@@ -134,6 +147,7 @@
 						$this->model_update->update_product($row["product_id"], $data_product);
 
 						$row["order_id"] = $order_id;
+						$row["type"] = "NORMAL";
 						$this->model_create->create_order_item($row);
 					}
 
@@ -152,13 +166,20 @@
 		$date = $this->input->post("inp_date");
 		$time = $this->input->post("inp_time");
 
+		$zip_code = $this->input->post("inp_zip_code");
+		$country = $this->input->post("inp_country");
+		$province = $this->input->post("inp_province");
+		$city = $this->input->post("inp_city");
+		$street = $this->input->post("inp_street");
+		$address = $this->input->post("inp_address");
+
 		$custom_description = $this->input->post("inp_custom_description");
 		$type_id = $this->input->post("inp_type_id");
 		$size = $this->input->post("inp_size");
 		$img_count = $this->input->post("inp_img_count");
 
 
-		if ($user_email == NULL || $description == NULL || $date == NULL || $time == NULL || $custom_description == NULL || $type_id == NULL || $size == NULL) {
+		if ($user_email == NULL || $description == NULL || $date == NULL || $time == NULL || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL || $custom_description == NULL || $type_id == NULL || $size == NULL) {
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
 		} else {
 			$user_info = $this->model_read->get_user_acc_wemail($user_email);
@@ -171,6 +192,12 @@
 					"description" => $description,
 					"date" => $date,
 					"time" => $time,
+					"zip_code" => $zip_code,
+					"country" => $country,
+					"province" => $province,
+					"city" => $city,
+					"street" => $street,
+					"address" => $address,
 					"state" => "0",
 					"status" => "1"
 				);
@@ -235,25 +262,47 @@
 	}
 	// = = = USERS
 	public function new_user_account() {
-		$name = $this->input->post("inp_name");
+		$name_last = $this->input->post("inp_name_last");
+		$name_first = $this->input->post("inp_name_first");
+		$name_middle = $this->input->post("inp_name_middle");
+		$name_extension = $this->input->post("inp_name_extension");
+
 		$gender = $this->input->post("inp_gender");
 		$email = $this->input->post("inp_email");
 		$contact_num = $this->input->post("inp_contact_num");
+
+		$zip_code = $this->input->post("inp_zip_code");
+		$country = $this->input->post("inp_country");
+		$province = $this->input->post("inp_province");
+		$city = $this->input->post("inp_city");
+		$street = $this->input->post("inp_street");
 		$address = $this->input->post("inp_address");
+
 		$password = $this->input->post("inp_password");
 
-		if ($name == NULL || $gender == NULL || $email == NULL || $contact_num == NULL || $address == NULL || $password == NULL) {
+		if ($name_last == NULL || $name_first == NULL || $gender == NULL || $email == NULL || $contact_num == NULL || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL || $password == NULL) {
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
 		} else {
 			if ($this->model_read->get_user_acc_wemail($email)->num_rows() > 0) {
-				$this->session->set_flashdata("alert", array("warning", "Email has already been used."));
+				$this->session->set_flashdata("alert", array("warning", "Email is aready registered."));
 			} else {
 				$data = array(
-					"name" => $name,
+					"name_last" => $name_last,
+					"name_first" => $name_first,
+					"name_middle" => $name_middle,
+					"name_extension" => $name_extension,
+					
 					"gender" => $gender,
 					"email" => $email,
 					"contact_num" => $contact_num,
+
+					"zip_code" => $zip_code,
+					"country" => $country,
+					"province" => $province,
+					"city" => $city,
+					"street" => $street,
 					"address" => $address,
+
 					"password" => password_hash($password, PASSWORD_BCRYPT),
 					"status" => "1"
 				);

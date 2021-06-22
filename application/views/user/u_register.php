@@ -10,15 +10,39 @@ $template_header;
 			<h1 class="m-0" style="padding-top: 60px;">Register</h1>
 		</span>
 		<div class="row mt-5">
-			<div class="col-4"><!-- this serves as margin --></div> 
-			<div class="col-4">
-				<?=form_open(base_url() . "#", "method='GET'")?>
+			<div class="col-3"></div> 
+			<div class="col-6">
+				<?=form_open(base_url() . "register_account", "method='POST'")?>
 					<div class="row mt-2">
 						<div class="col-3">
-							<h5 class="font-weight-normal m-0 p-0">Name: </h5>
+							<h5 class="font-weight-normal m-0 p-0">Last Name: </h5>
 						</div>
 						<div class="col-9">
-							<input type="text" name="inp_name" placeholder="Name" autocomplete="off">
+							<input type="text" name="inp_name_last" placeholder="Last Name" autocomplete="off">
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col-3">
+							<h5 class="font-weight-normal m-0 p-0">First Name: </h5>
+						</div>
+						<div class="col-9">
+							<input type="text" name="inp_name_first" placeholder="First Name" autocomplete="off">
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col-3">
+							<h5 class="font-weight-normal m-0 p-0">Middle Name: </h5>
+						</div>
+						<div class="col-9">
+							<input type="text" name="inp_name_middle" placeholder="Middle Name" autocomplete="off">
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col-3">
+							<h5 class="font-weight-normal m-0 p-0">Name Extension: </h5>
+						</div>
+						<div class="col-9">
+							<input type="text" name="inp_name_extension" placeholder="e.g. Jr., Sr., etc." autocomplete="off">
 						</div>
 					</div>
 					<div class="row mt-2">
@@ -34,7 +58,7 @@ $template_header;
 							<h5 class="font-weight-normal m-0 p-0">Password: </h5>
 						</div>
 						<div class="col-9">
-							<input type="password" name="password" placeholder="Password" autocomplete="off">
+							<input type="password" name="inp_password" placeholder="Password" autocomplete="off">
 						</div>
 					</div>
 					<div class="row mt-2">
@@ -51,7 +75,47 @@ $template_header;
 					</div>
 					<div class="row mt-2">
 						<div class="col-3">
-							<h5 class="font-weight-normal m-0 p-0">Address: </h5>
+							<h5 class="font-weight-normal m-0 p-0">Zip Code: </h5>
+						</div>
+						<div class="col-9">
+							<input type="text" name="inp_zip_code" placeholder="Zip Code" autocomplete="off">
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col-3">
+							<h5 class="font-weight-normal m-0 p-0">Country: </h5>
+						</div>
+						<div class="col-9">
+							<input type="text" name="inp_country" placeholder="Country" autocomplete="off">
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col-3">
+							<h5 class="font-weight-normal m-0 p-0">Province: </h5>
+						</div>
+						<div class="col-9">
+							<input type="text" name="inp_province" placeholder="Province" autocomplete="off">
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col-3">
+							<h5 class="font-weight-normal m-0 p-0">City: </h5>
+						</div>
+						<div class="col-9">
+							<input type="text" name="inp_city" placeholder="City" autocomplete="off">
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col-3">
+							<h5 class="font-weight-normal m-0 p-0">Street/Road: </h5>
+						</div>
+						<div class="col-9">
+							<input type="text" name="inp_street" placeholder="Street/Road" autocomplete="off">
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col-3">
+							<h5 class="font-weight-normal m-0 p-0">House Number/Floor/Bldg./etc.: </h5>
 						</div>
 						<div class="col-9">
 							<input type="text" name="inp_address" placeholder="Address" autocomplete="off">
@@ -73,7 +137,7 @@ $template_header;
 				<?=form_close()?>
 				<a href="register">Log-In</a>
 			</div>
-			<div class="col-4"></div>
+			<div class="col-3"></div>
 		</div>
 	</div>
 	<footer style="background-color: white; height: auto;">

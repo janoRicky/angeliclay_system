@@ -64,7 +64,10 @@ $route['register'] = 'controller_main/view_u_register';
 
 $route['account'] = 'controller_main/view_u_account';
 $route['account_details'] = 'controller_main/view_u_account_details';
-$route['user_orders'] = 'controller_main/view_u_user_orders';
+$route['my_orders'] = 'controller_main/view_u_my_orders';
+$route['my_order_details'] = 'controller_main/view_u_my_order_details';
+
+$route['submit_order'] = 'controller_main/view_u_submit_order';
 
 $route['test'] = 'controller_main/test'; // REMOVE
 
@@ -76,6 +79,7 @@ $route['remove_from_cart'] = 'user/u_controller_session/remove_from_cart';
 $route['login_verify'] = 'user/u_controller_login/user_login_verification';
 $route['logout'] = 'controller_main/user_logout';
 
+$route['register_account'] = 'user/u_controller_create/user_account_register';
 
 $route['place_order'] = 'user/u_controller_create/new_order';
 $route['place_custom_order'] = 'user/u_controller_create/new_order_custom';
@@ -133,6 +137,7 @@ $route['admin/order_custom_update'] = 'admin/a_controller_update/edit_order_cust
 $route['admin/user_update'] = 'admin/a_controller_update/edit_user_account';
 $route['admin/acc_update'] = 'admin/a_controller_update/edit_admin_account';
 
+$route['admin/product_update_visibility'] = 'admin/a_controller_update/edit_product_visibility';
 $route['admin/order_update_state'] = 'admin/a_controller_update/edit_order_state';
 $route['admin/order_update_state_custom'] = 'admin/a_controller_update/edit_order_state_custom';
 

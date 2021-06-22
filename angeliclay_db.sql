@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 19, 2021 at 06:59 PM
+-- Generation Time: Jun 22, 2021 at 11:01 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -57,6 +57,12 @@ CREATE TABLE `orders` (
   `description` varchar(128) DEFAULT NULL,
   `date` varchar(16) DEFAULT NULL,
   `time` varchar(16) DEFAULT NULL,
+  `zip_code` varchar(11) DEFAULT NULL,
+  `country` varchar(64) DEFAULT NULL,
+  `province` varchar(64) DEFAULT NULL,
+  `city` varchar(64) DEFAULT NULL,
+  `street` varchar(64) DEFAULT NULL,
+  `address` varchar(64) DEFAULT NULL,
   `state` varchar(16) DEFAULT NULL,
   `status` varchar(16) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -65,28 +71,45 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`order_id`, `user_id`, `description`, `date`, `time`, `state`, `status`) VALUES
-(1, '2', '12', '2021-05-21', '21:15', '0', '1'),
-(3, '1', '1234', '2021-05-21', '21:21', '1', '1'),
-(4, '1', 'test', '2021-05-22', '01:04', '0', '1'),
-(5, '1', 'test', '2021-05-22', '01:11', '1', '1'),
-(6, '1', 'test', '2021-05-22', '01:13', '1', '1'),
-(7, '1', 'test', '2021-05-22', '01:13', '0', '1'),
-(8, '1', '1234', '2021-05-23', '12:53', '1', '1'),
-(9, '1', 'test', '2021-05-23', '14:02', '2', '1'),
-(10, '1', 'test', '2021-05-23', '14:21', '3', '1'),
-(11, '1', 'test', '2021-05-23', '15:18', '4', '1'),
-(12, '1', 'test', '2021-05-23', '15:20', '1', '1'),
-(13, '1', 'test', '2021-05-23', '15:21', '5', '1'),
-(16, '4', 'test', '2021-06-09', '13:21', '0', '1'),
-(17, '4', 'test', '2021-06-09', '16:16', '2', '1'),
-(18, '1', 'testeeeeee', '2021-05-17', '22:00', '0', '1'),
-(19, '1', 'test', '2021-06-17', '23:13', '1', '1'),
-(20, '1', 'test', '2021-06-19', '02:49', '3', '1'),
-(21, '4', 'user test', '2021-06-19', '18:50', '0', '1'),
-(22, '4', NULL, '2021-06-20', '00:54', '0', '1'),
-(23, '1', 'test', '2021-06-20', '00:55', '0', '1'),
-(24, '4', NULL, '2021-06-20', '00:57', '0', '1');
+INSERT INTO `orders` (`order_id`, `user_id`, `description`, `date`, `time`, `zip_code`, `country`, `province`, `city`, `street`, `address`, `state`, `status`) VALUES
+(1, '2', '12', '2021-05-21', '21:15', NULL, NULL, NULL, NULL, NULL, NULL, '0', '1'),
+(3, '1', '1234', '2021-05-21', '21:21', NULL, NULL, NULL, NULL, NULL, NULL, '1', '1'),
+(4, '1', 'test', '2021-05-22', '01:04', NULL, NULL, NULL, NULL, NULL, NULL, '0', '1'),
+(5, '1', 'test', '2021-05-22', '01:11', NULL, NULL, NULL, NULL, NULL, NULL, '1', '1'),
+(6, '1', 'test', '2021-05-22', '01:13', NULL, NULL, NULL, NULL, NULL, NULL, '1', '1'),
+(7, '1', 'test', '2021-05-22', '01:13', NULL, NULL, NULL, NULL, NULL, NULL, '0', '1'),
+(8, '1', '1234', '2021-05-23', '12:53', NULL, NULL, NULL, NULL, NULL, NULL, '1', '1'),
+(9, '1', 'test', '2021-05-23', '14:02', NULL, NULL, NULL, NULL, NULL, NULL, '2', '1'),
+(10, '1', 'test', '2021-05-23', '14:21', NULL, NULL, NULL, NULL, NULL, NULL, '3', '1'),
+(11, '1', 'test', '2021-05-23', '15:18', NULL, NULL, NULL, NULL, NULL, NULL, '4', '1'),
+(12, '1', 'test', '2021-05-23', '15:20', NULL, NULL, NULL, NULL, NULL, NULL, '1', '1'),
+(13, '1', 'test', '2021-05-23', '15:21', NULL, NULL, NULL, NULL, NULL, NULL, '5', '1'),
+(16, '4', 'test', '2021-06-09', '13:21', NULL, NULL, NULL, NULL, NULL, NULL, '0', '1'),
+(17, '4', 'test', '2021-06-09', '16:16', NULL, NULL, NULL, NULL, NULL, NULL, '2', '1'),
+(18, '1', 'testeeeeee', '2021-05-17', '22:00', NULL, NULL, NULL, NULL, NULL, NULL, '0', '1'),
+(19, '1', 'test', '2021-06-17', '23:13', NULL, NULL, NULL, NULL, NULL, NULL, '1', '1'),
+(20, '1', 'test', '2021-06-19', '02:49', NULL, NULL, NULL, NULL, NULL, NULL, '3', '1'),
+(21, '4', 'user test', '2021-06-19', '18:50', NULL, NULL, NULL, NULL, NULL, NULL, '0', '1'),
+(22, '4', NULL, '2021-06-20', '00:54', NULL, NULL, NULL, NULL, NULL, NULL, '0', '1'),
+(23, '1', 'test', '2021-06-20', '00:55', NULL, NULL, NULL, NULL, NULL, NULL, '0', '1'),
+(24, '4', NULL, '2021-06-20', '00:57', NULL, NULL, NULL, NULL, NULL, NULL, '0', '1'),
+(25, '5', NULL, '2021-06-22', '16:58', NULL, NULL, NULL, NULL, NULL, NULL, '0', '1'),
+(26, '5', NULL, '2021-06-22', '17:45', 'try', 'try', 'try', 'try', 'try', 'try', '2', '1'),
+(27, '5', NULL, '2021-06-22', '18:19', 'cip90', 'count', 'prov', 'cit', 'stroad', 'adrr', '0', '1'),
+(28, '5', NULL, '2021-06-22', '18:21', 'cip90', 'count', 'prov', 'cit', 'stroad', 'adrr', '1', '1'),
+(29, '5', NULL, '2021-06-22', '18:22', 'cip90', 'count', 'prov', 'cit', 'stroad', 'adrr', '3', '1'),
+(30, '5', NULL, '2021-06-22', '18:27', 'cip90', 'count', 'prov', 'cit', 'stroad', 'adrr', '4', '1'),
+(31, '5', NULL, '2021-06-22', '18:30', 'cip90', 'count', 'prov', 'cit', 'stroad', 'adrr', '5', '1'),
+(32, '5', NULL, '2021-06-22', '18:31', 'cip90', 'count', 'prov', 'cit', 'stroad', 'adrr', '5', '1'),
+(33, '5', NULL, '2021-06-23', '00:58', 'cip90', 'count', 'prov', 'cit', 'stroad', 'adrr', '0', '1'),
+(34, '5', NULL, '2021-06-23', '01:01', 'cip90', 'count', 'prov', 'cit', 'stroad', 'adrr', '0', '1'),
+(35, '5', NULL, '2021-06-23', '01:09', 'cip90', 'count', 'prov', 'cit', 'stroad', 'adrr', '0', '1'),
+(36, '5', NULL, '2021-06-23', '01:11', 'cip90', 'count', 'prov', 'cit', 'stroad', 'adrr', '0', '1'),
+(37, '5', 'test', '2021-06-23', '01:13', NULL, NULL, NULL, NULL, NULL, NULL, '0', '1'),
+(38, '5', 'testtttt', '2021-06-23', '01:19', 'try', 'try', 'try', 'try', 'try', 'try', '0', '1'),
+(39, '5', NULL, '2021-06-23', '01:38', 'cip90', 'count', 'prov', 'cit', 'stroad', 'adrr', '0', '1'),
+(40, '4', 'tsetettetttett', '2021-06-23', '01:42', 'tryest', 'tryest', 'tryest', 'tryest', 'tryest', 'tryest', '0', '1'),
+(41, '4', 'etstgddg', '2021-06-23', '01:42', 'try', 'try', 'try', 'try', 'try', 'try', '0', '1');
 
 -- --------------------------------------------------------
 
@@ -132,7 +155,28 @@ INSERT INTO `orders_items` (`item_id`, `order_id`, `product_id`, `qty`, `price`,
 (60, '21', '4', NULL, NULL, 'CUSTOM', NULL),
 (61, '22', '5', NULL, NULL, 'CUSTOM', NULL),
 (62, '23', '6', NULL, NULL, 'CUSTOM', NULL),
-(63, '24', '7', NULL, NULL, 'CUSTOM', NULL);
+(63, '24', '7', NULL, NULL, 'CUSTOM', NULL),
+(64, '25', '8', NULL, NULL, 'CUSTOM', NULL),
+(65, '26', '9', NULL, NULL, 'CUSTOM', NULL),
+(66, '29', '1', '4', '23', 'NORMAL', NULL),
+(67, '30', '1', '4', '23', 'NORMAL', NULL),
+(68, '31', '2', '2', '555', 'NORMAL', NULL),
+(69, '32', '2', '2', '555', 'NORMAL', NULL),
+(70, '34', '2', '1', '555', 'NORMAL', NULL),
+(71, '35', '2', '3', '555', 'NORMAL', NULL),
+(72, '35', '3', '5', '622', 'NORMAL', NULL),
+(73, '35', '5', '14', '32', 'NORMAL', NULL),
+(74, '36', '5', '5', '32', 'NORMAL', NULL),
+(75, '36', '4', '9', '32', 'NORMAL', NULL),
+(76, '37', '1', '5', '23', 'NORMAL', NULL),
+(77, '37', '3', '2', '622', 'NORMAL', NULL),
+(78, '37', '5', '3', '32', 'NORMAL', NULL),
+(81, '39', '10', NULL, NULL, 'CUSTOM', NULL),
+(84, '41', '11', '', '', 'CUSTOM', NULL),
+(87, '38', '1', '6', '23', 'NORMAL', NULL),
+(88, '38', '2', '2', '555', 'NORMAL', NULL),
+(89, '40', '6', '4', '234', 'NORMAL', NULL),
+(90, '40', '5', '4', '32', 'NORMAL', NULL);
 
 -- --------------------------------------------------------
 
@@ -163,6 +207,7 @@ CREATE TABLE `products` (
   `price` varchar(32) DEFAULT NULL,
   `qty` varchar(16) DEFAULT NULL,
   `type` varchar(16) DEFAULT NULL,
+  `visibility` varchar(11) DEFAULT NULL,
   `status` varchar(16) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -170,13 +215,13 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`product_id`, `img`, `name`, `type_id`, `description`, `price`, `qty`, `type`, `status`) VALUES
-(1, 'c14f3edc1f5aeaf147a35c09d045880f.jpg', 'Figure 1', '4', 'Desc 1', '23', '24', 'NORMAL', '1'),
-(2, 'ebe49a8517d631d74c230d830bc7f4c8.jpg', 'Figure 3', '4', 'Desc 3', '555', '3', 'NORMAL', '1'),
-(3, 'fdc0cf6ca69fa22e2959f70bcd6e931b.jpg', 'Test', '4', 'Desc', '622', '0', 'NORMAL', '1'),
-(4, 'd69258a24ea68b4b31491657677b62f7.jpg', 'Testing', '4', 'test', '32', '29', 'NORMAL', '1'),
-(5, '01a7cd4499f0aa19e06f440d9a028877.png', 'test', '4', 'test', '32', '44', 'NORMAL', '1'),
-(6, '25b1478e92aebb5f5481b53b3eb610bd.jpg', 'test', '4', 'test', '234', '42342', 'NORMAL', '1');
+INSERT INTO `products` (`product_id`, `img`, `name`, `type_id`, `description`, `price`, `qty`, `type`, `visibility`, `status`) VALUES
+(1, 'c14f3edc1f5aeaf147a35c09d045880f.jpg', 'Figure 1', '4', 'Desc 1', '23', '13', 'NORMAL', '1', '1'),
+(2, 'ebe49a8517d631d74c230d830bc7f4c8.jpg', 'Figure 3', '4', 'Desc 3', '555', '0', 'NORMAL', '1', '1'),
+(3, 'fdc0cf6ca69fa22e2959f70bcd6e931b.jpg', 'Test', '4', 'Desc', '622', '7', 'NORMAL', '1', '1'),
+(4, 'd69258a24ea68b4b31491657677b62f7.jpg', 'Testing', '4', 'test', '32', '20', 'NORMAL', '1', '1'),
+(5, '01a7cd4499f0aa19e06f440d9a028877.png', 'test', '4', 'test', '32', '18', 'NORMAL', '1', '1'),
+(6, '25b1478e92aebb5f5481b53b3eb610bd.jpg', 'test', '4', 'test', '234', '13', 'NORMAL', '0', '1');
 
 -- --------------------------------------------------------
 
@@ -204,7 +249,11 @@ INSERT INTO `products_custom` (`custom_id`, `description`, `type_id`, `size`, `i
 (4, NULL, '5', '12cm', NULL, '1'),
 (5, 'utest2', '4', '21', NULL, '1'),
 (6, 'test', '4', 'test', '4e0c96a72b706902420d7f4bb9e5d217.jpg/', '1'),
-(7, 'utest3', '5', '212', 'dc092ec9fedf675a4eb48a82ee846cb0.jpg/', '1');
+(7, 'utest3', '5', '212', 'dc092ec9fedf675a4eb48a82ee846cb0.jpg/', '1'),
+(8, 'test', '4', 'test', '20018b0792280da0973f3f049d961361.jpg/', '1'),
+(9, 'try', '5', 'trycm', '98f7471903853a1631268d70b606c8e9.jpg/57011200e075f87ab8f92d828fac09e6.jpg/d837917565ecd16dc13f44bc90e82ffb.jpg/', '1'),
+(10, 'testing', '5', 'te1cm', 'ad0b16db09f62a540346068297514d8a.jpg/4868308e328aeaa3291c6d09f0620d07.jpg/3495b67ce24d609399d42a8f434dac48.jpg/', '1'),
+(11, 'etteetetww', '4', 'tewts2cm', '4b14ae98e1c200749104ad6483475436.jpg/d869d27a672a56dd12c8c0c51b9e14fa.jpg/a0528e1ae8471986618b861b5fdad58c.jpg', '1');
 
 -- --------------------------------------------------------
 
@@ -236,8 +285,16 @@ CREATE TABLE `user_accounts` (
   `user_id` int(11) NOT NULL,
   `email` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
-  `name` varchar(128) DEFAULT NULL,
-  `address` varchar(128) DEFAULT NULL,
+  `name_last` varchar(32) DEFAULT NULL,
+  `name_first` varchar(64) DEFAULT NULL,
+  `name_middle` varchar(32) DEFAULT NULL,
+  `name_extension` varchar(32) DEFAULT NULL,
+  `zip_code` varchar(11) DEFAULT NULL,
+  `country` varchar(64) DEFAULT NULL,
+  `province` varchar(64) DEFAULT NULL,
+  `city` varchar(64) DEFAULT NULL,
+  `street` varchar(64) DEFAULT NULL,
+  `address` varchar(64) DEFAULT NULL,
   `gender` varchar(32) DEFAULT NULL,
   `contact_num` varchar(32) DEFAULT NULL,
   `status` varchar(16) DEFAULT NULL
@@ -247,12 +304,14 @@ CREATE TABLE `user_accounts` (
 -- Dumping data for table `user_accounts`
 --
 
-INSERT INTO `user_accounts` (`user_id`, `email`, `password`, `name`, `address`, `gender`, `contact_num`, `status`) VALUES
-(1, 'user@email.com', '$2y$10$Q1EcDJMNSVc7UUIGBhIVceXqsoJAutUkXJPE872MBNYowzdo4XsEG', 'test', '1234', 'other', '1234', '1'),
-(2, 'etst3@dwae', '$2y$10$WCXQJWElM7ReQws1VgviZOUju.ZGdDmjk/.t1ysUyo.9YxbpqEfFq', 'test2', 'ear4', 'female', 'sdgdfh', '1'),
-(4, 'test@email.com', '$2y$10$eEA2XKEQdwflmPZi10a9.upLep2jA0Ksl3dhwaK9A4n/e.etDunDK', 'test', '23edg', 'male', '24', '1'),
-(5, 'errr@email.com', '$2y$10$PicdJy/FhZaCEhgXYTLePO2eZq.jlvypBCUMeAEwBKyAAANI9DCI.', 'test', 'test', 'male', 'test', '1'),
-(6, 'jojo@email.com', '$2y$10$OOElp2UoiHe1G7iAMFQor.fKU3MvAaW59T5QJpgC5jqkdxUC.oFPe', 'Joseph Joestar', '21 Jump St.', 'male', '123456', '1');
+INSERT INTO `user_accounts` (`user_id`, `email`, `password`, `name_last`, `name_first`, `name_middle`, `name_extension`, `zip_code`, `country`, `province`, `city`, `street`, `address`, `gender`, `contact_num`, `status`) VALUES
+(1, 'user@email.com', '$2y$10$Q1EcDJMNSVc7UUIGBhIVceXqsoJAutUkXJPE872MBNYowzdo4XsEG', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1234', 'other', '1234', '1'),
+(2, 'etst3@dwae', '$2y$10$WCXQJWElM7ReQws1VgviZOUju.ZGdDmjk/.t1ysUyo.9YxbpqEfFq', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ear4', 'female', 'sdgdfh', '1'),
+(4, 'test@email.com', '$2y$10$eEA2XKEQdwflmPZi10a9.upLep2jA0Ksl3dhwaK9A4n/e.etDunDK', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '23edg', 'male', '24', '1'),
+(5, 'errr@email.com', '$2y$10$PicdJy/FhZaCEhgXYTLePO2eZq.jlvypBCUMeAEwBKyAAANI9DCI.', 'last', 'first', 'middle', 'ext', 'cip90', 'count', 'prov', 'cit', 'stroad', 'adrr', 'female', 'contac', '1'),
+(6, 'jojo@email.com', '$2y$10$OOElp2UoiHe1G7iAMFQor.fKU3MvAaW59T5QJpgC5jqkdxUC.oFPe', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '21 Jump St.', 'male', '123456', '1'),
+(7, 'try@email.com', '$2y$10$08d5rvSwGT7nV23BFEBaTeDQVIt7b6lSmg087LObOOCZnJWQPt/Ki', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'other', 'test', '1'),
+(8, 'tester@email.com', '$2y$10$uSGUO1kQNTnwBPywGokgdOjPRhYYFauY2KRHzaNSCLX5cul1WtJOy', 'tester', 'tester', 'tester', 'tester', 'tester', 'tester', 'tester', 'tester', 'tester', 'tester', 'other', 'tester', '1');
 
 --
 -- Indexes for dumped tables
@@ -320,13 +379,13 @@ ALTER TABLE `admin_accounts`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `orders_items`
 --
 ALTER TABLE `orders_items`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT for table `orders_payments`
@@ -344,7 +403,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `products_custom`
 --
 ALTER TABLE `products_custom`
-  MODIFY `custom_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `custom_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `types`
@@ -356,7 +415,7 @@ ALTER TABLE `types`
 -- AUTO_INCREMENT for table `user_accounts`
 --
 ALTER TABLE `user_accounts`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

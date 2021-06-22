@@ -20,6 +20,15 @@ $template_header;
 <body class="" style="background-color: rgba(241, 182, 171, 1);">
 	<?php $this->load->view("user/template/u_t_navbar"); ?>
 	<div class="container px-5 rounded pb-5" style="background-color: rgba(220, 138, 107, 0.40);">
+		<?php if ($this->session->flashdata("notice")): ?>
+			<?php $alert = $this->session->flashdata("notice"); ?>
+			<div class="alert alert-<?=$alert[0]?> alert-dismissible">
+				<?=$alert[1]?>
+				<button type="button" class="close" data-dismiss="alert">
+					&times;
+				</button>
+			</div>
+		<?php endif; ?>
 		<span>
 			<h1 class="m-0" style="padding-top: 60px;">Cart</h1>
 		</span>
@@ -28,13 +37,13 @@ $template_header;
 				<?php
 				$grand_total = 0;
 				?>
-				<?php foreach ($cart as $val):?>
+				<?php foreach ($cart as $key => $val):?>
 					<?php if ($val != NULL):?>
 						<?php
 
-						$item_info = $this->model_read->get_product_wid_user($val[0])->row_array();
+						$item_info = $this->model_read->get_product_wid_user($key)->row_array();
 
-						$price = $val[1] * $item_info["price"];
+						$price = $val * $item_info["price"];
 						$grand_total += ($price);
 
 						?>
@@ -43,8 +52,8 @@ $template_header;
 								<div class="col-md-5 col-sm-5 col-xs-5 marginslim">
 									<a href="<?=base_url()?>product?id=<?=$item_info['product_id']?>" class="text-dark">
 										<img class="img-fluid" src="<?php
-										if (file_exists($item_info["img"])) {
-											echo $item_info["img"];
+										if (!empty($item_info["img"])) {
+											echo base_url(). 'uploads/product_'. $item_info["product_id"] .'/'. explode("/", $item_info["img"])[0];
 										} else {
 											echo base_url(). "assets/img/no_img.png";
 										}
@@ -57,14 +66,14 @@ $template_header;
 									<div class="row mt-4">
 										<div class="col-md-12 marginslim ml-2">
 											<span class="font-weight-bold">Qty: </span>
-											<span><?=$val[1]?></span>
+											<span><?=$val?></span>
 										</div>
 										<div class="col-md-12 marginslim ml-2">
 											<span class="font-weight-bold">Price: </span>
 											<span class="font-weight-bold">PHP <?=number_format($price, 2)?></span>
 										</div>
 										<div class="col-md-12 marginslim ml-2">
-											<a class="remove_item" href="<?=base_url()?>remove_from_cart?id=<?=$val[0]?>">
+											<a class="remove_item" href="<?=base_url()?>remove_from_cart?id=<?=$key?>">
 												<button class="btn btn-danger">Remove</button>
 											</a>
 										</div>
@@ -82,9 +91,9 @@ $template_header;
 							<span class="font-weight-bold">Grand Total: PHP <?=$grand_total?></span>
 						</div>
 						<div class="row">
-							<button class="btn btn-primary">
+							<a class="btn btn-primary" <?=(count($cart) > 0 ? "href='submit_order'" : "")?>>
 								Place Order
-							</button>
+							</a>
 						</div>
 					</div>
 				</div>

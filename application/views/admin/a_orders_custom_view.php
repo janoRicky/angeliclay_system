@@ -55,6 +55,14 @@ $template_header;
 								<?=$row_info["date"]." / ".date("h:i A", strtotime($row_info["time"]))?>
 							</div>
 						</div>
+						<div class="row mt-2">
+							<div class="col-12">
+								<h5>Full Address:</h5>
+							</div>
+							<div class="col-12">
+								<?=$row_info["zip_code"] ." / ". $row_info["country"] ." / ". $row_info["province"] ." / ". $row_info["city"] ." / ". $row_info["street"] ." / ". $row_info["address"]?>
+							</div>
+						</div>
 
 						<div class="row mt-2">
 							<div class="col-12">
@@ -74,7 +82,7 @@ $template_header;
 								<h5>Type:</h5>
 							</div>
 							<div class="col-12">
-								<?=$product_info["type_name"]?>
+								<?=$tbl_types[$product_info["type_id"]]?>
 							</div>
 						</div>
 						<div class="row mt-2">

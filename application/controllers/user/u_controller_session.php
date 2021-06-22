@@ -14,18 +14,14 @@
 		$amount = $this->input->get("amount");
 		$submit = $this->input->get("submit");
 
-		if (!$this->session->has_userdata("cart")) {
-			$data["cart"] = array(array($id, $amount));
-		} else {
-			$cart = $this->session->userdata("cart");
-
-			$item_key = array_search($id, array_column($cart, 0));
-			if ($item_key !== FALSE) {
-				$cart[$item_key][1] += $amount;
-
-				$data["cart"] = $cart;
+		if ($amount > 0) {
+			if (!$this->session->has_userdata("cart")) {
+				$data["cart"] = array($id => $amount);
 			} else {
-				$data["cart"] = array_merge($cart, array(array($id, $amount)));
+				$cart = $this->session->userdata("cart");
+
+				$cart[$id] = $amount;
+				$data["cart"] = $cart;
 			}
 		}
 		
@@ -43,9 +39,8 @@
 		if ($this->session->has_userdata("cart")) {
 			$cart = $this->session->userdata("cart");
 
-			$item_key = array_search($id, array_column($cart, 0));
-			if ($item_key !== FALSE) {
-				unset($cart[$item_key]);
+			if (array_key_exists($id, $cart)) {
+				unset($cart[$id]);
 				$data["cart"] = $cart;
 				$this->session->set_userdata($data);
 			}

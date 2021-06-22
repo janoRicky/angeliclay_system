@@ -6,31 +6,32 @@ $template_header;
 <body class="" style="background-color: rgba(241, 182, 171, 1);">
 	<?php $this->load->view("user/template/u_t_navbar"); ?>
 	<div class="container px-5 rounded pb-5" style="background-color: rgba(220, 138, 107, 0.40);">
-		<span>
-			<h1 class="m-0" style="padding-top: 60px;">My Orders</h1>
-		</span>
-		<div class="row mt-5">
-			<div class="col-10">
+		<div class="row mt-5 pt-5">
+			<div class="col-9">
 				<div class="row mt-2">
 					<table class="table">
 						<thead>
 							<tr>
 								<th>Date / Time</th>
-								<th>Description</th>
+								<th>Address</th>
 								<th>State</th>
+								<th></th>
 							</tr>
 						</thead>
 						<tbody>
-							<?php foreach ($user_orders->result_array() as $row): ?>
+							<?php foreach ($my_orders->result_array() as $row): ?>
 								<tr class="text-center align-middle">
 									<td>
 										<?=$row["date"]." / ".date("h:i A", strtotime($row["time"]))?>
 									</td>
 									<td>
-										<?=$row["description"]?>
+										<?=$row["zip_code"] ." / ". $row["country"] ." / ". $row["province"] ." / ". $row["city"] ." / ". $row["street"] ." / ". $row["address"]?>
 									</td>
 									<td>
-										<?=$row["state"]?>
+										<?=$states[$row["state"]]?>
+									</td>
+									<td>
+										<a href="my_order_details?id=<?=$row["order_id"]?>">Details</a>
 									</td>
 								</tr>
 							<?php endforeach; ?>
@@ -38,9 +39,15 @@ $template_header;
 					</table>
 				</div>
 			</div>
-			<div class="col-2">
-				<a href="account_details">Update Account Details</a><br><br>
-				<a href="user_orders">Orders List</a>
+			<div class="col-3">
+				<h3>My Orders</h3>
+				<a class="btn btn-primary mt-1" href="my_orders">ALL</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders?state=0">PENDING</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders?state=1">ACCEPTED / WAITING FOR PAYMENT</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders?state=2">IN PROGRESS</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders?state=3">SHIPPED</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders?state=4">RECEIVED</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders?state=5">CANCELLED</a><br>
 			</div>
 		</div>
 	</div>

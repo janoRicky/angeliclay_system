@@ -56,14 +56,23 @@ $template_header;
 								<tr>
 									<th>ID</th>
 									<th>User ID</th>
-									<th>Description</th>
 									<th>Date / Time</th>
+									<th>Ordered Qty.</th>
+									<th>Ordered Price</th>
 									<th>State</th>
 									<th>Action</th>
 								</tr>
 							</thead>
 							<tbody>
 								<?php foreach ($tbl_orders->result_array() as $row): ?>
+									<?php
+									$total_qty = 0;
+									$total_price = 0;
+									foreach ($this->model_read->get_order_items_qty_price_worder_id($row["order_id"])->result_array() as $item) {
+										$total_qty += $item["qty"];
+										$total_price += $item["qty"] * $item["price"];
+									}
+									?>
 									<tr class="text-center align-middle">
 										<td>
 											<?=$row["order_id"]?>
@@ -72,10 +81,13 @@ $template_header;
 											<?=$this->model_read->get_user_acc_wid($row["user_id"])->row_array()["email"]?>
 										</td>
 										<td>
-											<?=$row["description"]?>
+											<?=$row["date"]." / ".date("h:i A", strtotime($row["time"]))?>
 										</td>
 										<td>
-											<?=$row["date"]." / ".date("h:i A", strtotime($row["time"]))?>
+											<?=$total_qty?>
+										</td>
+										<td>
+											<?=$total_price?>
 										</td>
 										<td>
 											<?=$states[$row["state"]]?>
@@ -126,6 +138,30 @@ $template_header;
 						<div class="form-group">
 							<label for="inp_time">Time:</label>
 							<input type="time" class="form-control" name="inp_time" autocomplete="off" value="<?=date('H:i')?>">
+						</div>
+						<div class="form-group">
+							<label for="inp_zip_code">Zip Code:</label>
+							<input type="text" class="form-control" name="inp_zip_code" placeholder="Zip Code" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<label for="inp_country">Country:</label>
+							<input type="text" class="form-control" name="inp_country" placeholder="Country" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<label for="inp_province">Province:</label>
+							<input type="text" class="form-control" name="inp_province" placeholder="Province" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<label for="inp_city">City:</label>
+							<input type="text" class="form-control" name="inp_city" placeholder="City" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<label for="inp_street">Street/Road:</label>
+							<input type="text" class="form-control" name="inp_street" placeholder="Street/Road" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<label for="inp_address">House Number/Floor/Bldg./etc.:</label>
+							<input type="text" class="form-control" name="inp_address" placeholder="House Number/Floor/Bldg./etc." autocomplete="off">
 						</div>
 						<div class="form-group">
 							<label for="inp_time">Ordered Items:</label>

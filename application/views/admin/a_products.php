@@ -36,6 +36,7 @@ $template_header;
 									<th>Type</th>
 									<th>Price</th>
 									<th>Qty.</th>
+									<th>Visible</th>
 									<th>Action</th>
 								</tr>
 							</thead>
@@ -67,6 +68,10 @@ $template_header;
 											<?=$row["qty"]?>
 										</td>
 										<td>
+											<?=($row["visibility"] == 1 ? "YES" : "NO")?>
+										</td>
+										<td>
+											<button class="btn btn-primary btn-sm btn_visibility" data-toggle="modal" data-target="#modal_visibility" data-id="<?=$row['product_id']?>">Visibility</button>
 											<a class="action_button" href="<?=base_url();?>admin/products_view?id=<?=$row['product_id']?>">
 												<i class="fa fa-eye p-1" aria-hidden="true"></i>
 											</a>
@@ -156,10 +161,32 @@ $template_header;
 			</div>
 		</div>
 	</div>
+	<div id="modal_visibility" class="modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<?=form_open(base_url() . "admin/product_update_visibility", "method='POST'");?>
+					<input id="visibility_inp_id" type="hidden" name="inp_id">
+					<div class="modal-header">
+						<h4 class="modal-title">Set Visibility</h4>
+						<button type="button" class="close" data-dismiss="modal">
+							&times;
+						</button>
+					</div>
+					<div class="modal-footer">
+						<input type="submit" class="btn btn-warning" name="inp_submit" value="Set to Invisible">
+						<input type="submit" class="btn btn-primary" name="inp_submit" value="Set to Visible">
+					</div>
+				<?=form_close();?>
+			</div>
+		</div>
+	</div>
 </body>
 <?php $this->load->view("admin/template/a_t_scripts"); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$(".btn_visibility").on("click", function() {
+			$("#visibility_inp_id").val($(this).data("id"));
+		});
 		$(".btn_delete").on("click", function() {
 			$("#delete_id").text($(this).data("id"));
 			$("#delete_inp_id").val($(this).data("id"));
@@ -177,7 +204,6 @@ $template_header;
 				};
 			}
 		});
-
 	});
 </script>
 </html>
