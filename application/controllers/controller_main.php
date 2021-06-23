@@ -112,7 +112,7 @@
 	}
 	public function user_logout() {
 		session_destroy();
-		redirect("home");
+		redirect("login");
 	}
 	public function view_u_account() {
 		$head["title"] = "Account - Angeliclay Ordering System";

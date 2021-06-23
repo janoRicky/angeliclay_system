@@ -22,7 +22,7 @@
 				if (password_verify($password, $account_info["password"])) {
 					$data = array(
 						"user_id" => $account_info["user_id"],
-						"user_name" => $account_info["name"],
+						"user_name" => ucwords($account_info["name_first"] ." ". $account_info["name_last"]),
 						"user_email" => $account_info["email"],
 						"user_in" => TRUE
 					);

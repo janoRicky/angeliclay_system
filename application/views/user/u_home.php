@@ -15,11 +15,8 @@ $template_header;
 				</button>
 			</div>
 		<?php endif; ?>
-		<span>
-			<h1 class="m-0" style="padding-top: 60px;">Home</h1>
-		</span>
 		<?php if ($this->session->has_userdata("user_name")): ?>
-			<div class="row mt-5">
+			<div class="row mt-5 pt-5">
 				<div class="col-sm-12">
 					<div class="text-center">
 						<span class="font-weight-bold">
@@ -29,6 +26,57 @@ $template_header;
 				</div>
 			</div>
 		<?php endif; ?>
+		<div class="row mt-5">
+			<div class="col-sm-4 p-2">
+				<img class="w-100" src="<?=base_url()?>assets/img/sample1.jpg">
+			</div>
+			<div class="col-sm-4 border border-dark p-2">
+				<img class="w-100" src="<?=base_url()?>assets/img/sample2.jpg">
+			</div>
+			<div class="col-sm-4 border border-dark p-2">
+				<img class="w-100" src="<?=base_url()?>assets/img/sample3.jpg">
+			</div>
+		</div>
+		<div class="row mt-5 p-4" style="border: 1px solid #000;">
+			<div class="col-2"></div>
+			<div class="col-8">
+				<div class="row">
+					<div class="col-md-5 col-sm-5 col-xs-5 marginslim">
+						<img class="img-fluid" src="<?=base_url()?>assets/img/sample1.jpg">
+					</div>
+					<div class="col-md-6 col-sm-6 col-xs-6 marginslim p-2">
+						<span class="font-weight-bold" style="font-size: 20px;">Figurines</span>
+						<div class="row mt-4">
+							<div class="col-md-12 marginslim ml-2">
+								<span class="font-italic">Figurines of a character of your choosing.</span><br>
+								<span class="font-weight-bold">PHP 0.00 - PHP 100.00</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-2"></div>
+		</div>
+		<div class="row mt-5 p-4" style="border: 1px solid #000;">
+			<div class="col-2"></div>
+			<div class="col-8">
+				<div class="row">
+					<div class="col-md-6 col-sm-6 col-xs-6 marginslim p-2">
+						<span class="font-weight-bold" style="font-size: 20px;">Keychains</span>
+						<div class="row mt-4">
+							<div class="col-md-12 marginslim ml-2">
+								<span class="font-italic">Customized Keychains.</span><br>
+								<span class="font-weight-bold">PHP 0.00 - PHP 100.00</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-5 col-sm-5 col-xs-5 marginslim">
+						<img class="img-fluid" src="<?=base_url()?>assets/img/sample1.jpg">
+					</div>
+				</div>
+			</div>
+			<div class="col-2"></div>
+		</div>
 	</div>
 	<footer style="background-color: white; height: auto;">
 		<div class="row mx-5 py-4">

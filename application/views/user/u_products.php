@@ -20,9 +20,17 @@ $template_header;
 <body class="" style="background-color: rgba(241, 182, 171, 1);">
 	<?php $this->load->view("user/template/u_t_navbar"); ?>
 	<div class="container px-5 rounded pb-5" style="background-color: rgba(220, 138, 107, 0.40);">
-		<span>
-			<h1 class="m-0" style="padding-top: 60px;">Products</h1>
-		</span>
+		<div class="row mt-5 pt-5">
+			<div class="col-6">
+				<input class="w-100" type="text" name="search">
+			</div>
+			<div class="col-6">
+				<select class="w-100">
+					<option>Figurine</option>
+					<option>Keychain</option>
+				</select>
+			</div>
+		</div>
 		<div class="row mt-5">
 			<div class="col-sm-12">
 				<a href="<?=base_url()?>custom" class="text-dark">
@@ -58,7 +66,7 @@ $template_header;
 											<?php endif; ?>
 										</div>
 									</div>
-								</div>						
+								</div>
 							</div>
 						</div>
 					</a>
