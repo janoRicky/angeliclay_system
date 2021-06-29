@@ -1,14 +1,14 @@
 <?php 
  defined('BASEPATH') OR exit('No direct script access allowed');
 
- class a_controller_update extends CI_Controller {
+ class A_controller_update extends CI_Controller {
 
  	public function __construct() {
  		parent::__construct();
- 		$this->load->model("model_create");
- 		$this->load->model("model_read");
- 		$this->load->model("model_update");
- 		$this->load->model("model_delete");
+ 		$this->load->model("Model_create");
+ 		$this->load->model("Model_read");
+ 		$this->load->model("Model_update");
+ 		$this->load->model("Model_delete");
  	}
 
 	// = = = PRODUCTS
@@ -24,7 +24,7 @@
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
 		} else {
 
-			$row_info = $this->model_read->get_product_wid($product_id)->row_array();
+			$row_info = $this->Model_read->get_product_wid($product_id)->row_array();
 
 			$img = $row_info["img"];
 
@@ -63,7 +63,7 @@
 				"qty" => $qty
 			);
 
-			if ($this->model_update->update_product($product_id, $data)) {
+			if ($this->Model_update->update_product($product_id, $data)) {
 				$this->session->set_flashdata("alert", array("success", "Product info is successfully updated."));
 			} else {
 				$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
@@ -87,7 +87,7 @@
 				"visibility" => $visibility
 			);
 
-			if ($this->model_update->update_product($product_id, $data)) {
+			if ($this->Model_update->update_product($product_id, $data)) {
 				$this->session->set_flashdata("alert", array("success", "Product visibility is successfully updated."));
 			} else {
 				$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
@@ -106,7 +106,7 @@
 			$data = array(
 				"type" => $type
 			);
-			if ($this->model_update->update_type($type_id, $data)) {
+			if ($this->Model_update->update_type($type_id, $data)) {
 				$this->session->set_flashdata("alert", array("success", "Type info is successfully updated."));
 			} else {
 				$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
@@ -149,7 +149,7 @@
 		if ($user_email == NULL || $description == NULL || $date == NULL || $time == NULL || count($items) < 1 || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL) {
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
 		} else {
-			$user_info = $this->model_read->get_user_acc_wemail($user_email);
+			$user_info = $this->Model_read->get_user_acc_wemail($user_email);
 			if ($user_info->num_rows() < 1) {
 				$this->session->set_flashdata("alert", array("warning", "User Email does not exist."));
 			} else {
@@ -166,24 +166,24 @@
 					"street" => $street,
 					"address" => $address
 				);
-				if ($this->model_update->update_order($order_id, $data)) {
+				if ($this->Model_update->update_order($order_id, $data)) {
 
-					$order_items = $this->model_read->get_order_items_worder_id($order_id);
+					$order_items = $this->Model_read->get_order_items_worder_id($order_id);
 					foreach ($order_items->result_array() as $row) { // restore stock before deleting order
-						$product_info = $this->model_read->get_product_wid($row["product_id"])->row_array();
+						$product_info = $this->Model_read->get_product_wid($row["product_id"])->row_array();
 						$data_product["qty"] = $product_info["qty"] + $row["qty"];
-						$this->model_update->update_product($row["product_id"], $data_product);
+						$this->Model_update->update_product($row["product_id"], $data_product);
 					}
-					$this->model_delete->delete_order_item_worder_id($order_id);
+					$this->Model_delete->delete_order_item_worder_id($order_id);
 
 					foreach ($items as $row) {
-						$product_info = $this->model_read->get_product_wid($row["product_id"])->row_array();
+						$product_info = $this->Model_read->get_product_wid($row["product_id"])->row_array();
 						$data_product["qty"] = $product_info["qty"] - $row["qty"];
-						$this->model_update->update_product($row["product_id"], $data_product);
+						$this->Model_update->update_product($row["product_id"], $data_product);
 
 						$row["order_id"] = $order_id;
 						$row["type"] = "NORMAL";
-						$this->model_create->create_order_item($row);
+						$this->Model_create->create_order_item($row);
 					}
 
 					$this->session->set_flashdata("alert", array("success", "Order is successfully updated."));
@@ -204,7 +204,7 @@
 			$data = array(
 				"state" => $state
 			);
-			if ($this->model_update->update_order($order_id, $data)) {
+			if ($this->Model_update->update_order($order_id, $data)) {
 				$this->session->set_flashdata("alert", array("success", "State is successfully updated."));
 			} else {
 				$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
@@ -241,7 +241,7 @@
 		if ($user_email == NULL || $description == NULL || $date == NULL || $time == NULL || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL) {
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
 		} else {
-			$user_info = $this->model_read->get_user_acc_wemail($user_email);
+			$user_info = $this->Model_read->get_user_acc_wemail($user_email);
 			if ($user_info->num_rows() < 1) {
 				$this->session->set_flashdata("alert", array("warning", "User Email does not exist."));
 			} else {
@@ -258,9 +258,9 @@
 					"street" => $street,
 					"address" => $address
 				);
-				if ($this->model_update->update_order($order_id, $data)) {
+				if ($this->Model_update->update_order($order_id, $data)) {
 
-					$row_info = $this->model_read->get_product_custom_wid($product_id)->row_array();
+					$row_info = $this->Model_read->get_product_custom_wid($product_id)->row_array();
 
 					$imgs = explode("/", $row_info["img"]);
 					$img = NULL;
@@ -306,12 +306,12 @@
 						"size" => $size,
 						"img" => $img
 					);
-					if ($this->model_update->update_product_custom($product_id, $data_product)) {
+					if ($this->Model_update->update_product_custom($product_id, $data_product)) {
 						$data_item = array(
 							"qty" => $qty,
 							"price" => $price
 						);
-						$this->model_update->update_order_item($order_id, $data_item);
+						$this->Model_update->update_order_item($order_id, $data_item);
 
 						$this->session->set_flashdata("alert", array("success", "Order is successfully updated."));
 					} else {
@@ -334,7 +334,7 @@
 			$data = array(
 				"state" => $state
 			);
-			if ($this->model_update->update_order($order_id, $data)) {
+			if ($this->Model_update->update_order($order_id, $data)) {
 				$this->session->set_flashdata("alert", array("success", "State is successfully updated."));
 			} else {
 				$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
@@ -368,8 +368,8 @@
 		if ($user_id == NULL || $name_last == NULL || $name_first == NULL || $gender == NULL || $email == NULL || $contact_num == NULL || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL) {
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
 		} else {
-			$acc_info = $this->model_read->get_user_acc_wid($user_id)->row_array();
-			if ($this->model_read->get_user_acc_wemail($email)->num_rows() > 0 && $acc_info["email"] != $email) {
+			$acc_info = $this->Model_read->get_user_acc_wid($user_id)->row_array();
+			if ($this->Model_read->get_user_acc_wemail($email)->num_rows() > 0 && $acc_info["email"] != $email) {
 				$this->session->set_flashdata("alert", array("warning", "Email has already been used."));
 			} else {
 				$data = array(
@@ -393,7 +393,7 @@
 					$data["password"] = password_hash($password, PASSWORD_BCRYPT);
 				}
 
-				if ($this->model_update->update_user_account($user_id, $data)) {
+				if ($this->Model_update->update_user_account($user_id, $data)) {
 					$this->session->set_flashdata("alert", array("success", "Account info is successfully updated."));
 				} else {
 					$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
@@ -413,8 +413,8 @@
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
 		} else {
 			// if email is already used and if the previous email is not the same with new email, show error
-			$acc_info = $this->model_read->get_adm_acc_wid($admin_id)->row_array();
-			if ($this->model_read->get_adm_acc_wemail($email)->num_rows() > 0 && $acc_info["email"] != $email) {
+			$acc_info = $this->Model_read->get_adm_acc_wid($admin_id)->row_array();
+			if ($this->Model_read->get_adm_acc_wemail($email)->num_rows() > 0 && $acc_info["email"] != $email) {
 				$this->session->set_flashdata("alert", array("warning", "Email has already been used."));
 			} else {
 				// set values to be updated on the database table
@@ -423,7 +423,7 @@
 					"email" => $email,
 					"password" => password_hash($password, PASSWORD_BCRYPT)
 				);
-				if ($this->model_update->update_adm_account($admin_id, $data)) {
+				if ($this->Model_update->update_adm_account($admin_id, $data)) {
 					// update admin info
 					if ($this->session->has_userdata("admin_email") && $this->session->userdata("admin_id") == $admin_id) {
 						$data = array(

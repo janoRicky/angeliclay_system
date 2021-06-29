@@ -1,11 +1,11 @@
 <?php 
  defined("BASEPATH") OR exit("No direct script access allowed");
 
- class controller_main extends CI_Controller {
+ class E_controller_main extends CI_Controller {
 
  	public function __construct() {
  		parent::__construct();
- 		$this->load->model("model_read");
+ 		$this->load->model("Model_read");
 
  		date_default_timezone_set("Asia/Manila");
  	}
@@ -20,10 +20,22 @@
 		$this->load->view("user/u_home", $data);
 	}
 	public function view_u_products() {
+		$search = $this->input->get("search");
+		$type = $this->input->get("type");
+		$page = intval($this->input->get("page"));
+		$page_no = (!is_null($page) ? $page : 0);
+
 		$head["title"] = "Products - Angeliclay Ordering System";
 		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
 
-		$data["tbl_products"] = $this->model_read->get_products_user();
+		$data["tbl_products"] = $this->Model_read->get_products_user($search, $type, $page_no);
+		foreach ($this->Model_read->get_types()->result_array() as $row) {
+			$data["types"][$row["type_id"]] = $row["type"];
+		}
+
+		$data["page_no"] = $page_no;
+		$next_page = $this->Model_read->get_products_user($search, $type, $page_no + 1);
+		$data["page_limit"] = ($next_page->num_rows() > 0 ? FALSE : TRUE);
 
 		$this->load->view("user/u_products", $data);
 	}
@@ -33,13 +45,13 @@
 		$head["title"] = "Product #$id - Angeliclay Ordering System";
 		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
 
-		$product = $this->model_read->get_product_wid_user($id);
+		$product = $this->Model_read->get_product_wid_user($id);
 
 		if ($id == NULL || $product->num_rows() < 1) {
 			redirect("products");
 		} else {
 			$data["product_details"] = $product->row_array();
-			$data["type"] = $this->model_read->get_type_wid($data["product_details"]["type_id"])->row_array()["type"];
+			$data["type"] = $this->Model_read->get_type_wid($data["product_details"]["type_id"])->row_array()["type"];
 			$this->load->view("user/u_product", $data);
 		}
 	}
@@ -51,11 +63,11 @@
 			$this->session->set_flashdata("notice", array("warning", "Please log-in first."));
 			redirect("login");
 		} else {
-			foreach ($this->model_read->get_types()->result_array() as $row) {
+			foreach ($this->Model_read->get_types()->result_array() as $row) {
 				$data["types"][$row["type_id"]] = $row["type"];
 			}
 
-			$user_details = $this->model_read->get_user_acc_wid($this->session->userdata("user_id"));
+			$user_details = $this->Model_read->get_user_acc_wid($this->session->userdata("user_id"));
 			if ($user_details->num_rows() < 1) {
 				session_destroy();
 				redirect("home");
@@ -71,7 +83,7 @@
 
 		if ($this->session->has_userdata("cart")) {
 			$data["cart"] = $this->session->userdata("cart");
-			foreach ($this->model_read->get_types()->result_array() as $row) {
+			foreach ($this->Model_read->get_types()->result_array() as $row) {
 				$data["types"][$row["type_id"]] = $row["type"];
 			}
 		} else {
@@ -88,7 +100,7 @@
 			$this->session->set_flashdata("notice", array("warning", "Please log-in first."));
 			redirect("login");
 		} else {
-			$user_details = $this->model_read->get_user_acc_wid($this->session->userdata("user_id"));
+			$user_details = $this->Model_read->get_user_acc_wid($this->session->userdata("user_id"));
 			if ($user_details->num_rows() < 1) {
 				session_destroy();
 				redirect("home");
@@ -121,7 +133,12 @@
 		if (!$this->session->has_userdata("user_in")) {
 			redirect("home");
 		} else {
-			$user_details = $this->model_read->get_user_acc_wid($this->session->userdata("user_id"));
+			$user_id = $this->session->userdata("user_id");
+
+			$order_states = $this->Model_read->get_order_states_wuser_id($user_id)->result_array();
+			$data["order_state_counts"] = array_count_values(array_column($order_states, "state"));
+
+			$user_details = $this->Model_read->get_user_acc_wid($user_id);
 			if ($user_details->num_rows() < 1) {
 				session_destroy();
 				redirect("home");
@@ -138,7 +155,9 @@
 		if (!$this->session->has_userdata("user_in")) {
 			redirect("home");
 		} else {
-			$user_details = $this->model_read->get_user_acc_wid($this->session->userdata("user_id"));
+			$user_id = $this->session->userdata("user_id");
+
+			$user_details = $this->Model_read->get_user_acc_wid($user_id);
 			if ($user_details->num_rows() < 1) {
 				session_destroy();
 				redirect("home");
@@ -165,8 +184,12 @@
 				"RECEIVED", 
 				"CANCELLED"
 			);
+			$user_id = $this->session->userdata("user_id");
+			
+			$order_states = $this->Model_read->get_order_states_wuser_id($user_id)->result_array();
+			$data["order_state_counts"] = array_count_values(array_column($order_states, "state"));
 
-			$data["my_orders"] = $this->model_read->get_order_wuser_id($this->session->userdata("user_id"), $state);
+			$data["my_orders"] = $this->Model_read->get_order_wuser_id($user_id, $state);
 			$this->load->view("user/u_my_orders", $data);
 		}
 	}
@@ -176,14 +199,19 @@
 		$head["title"] = "Order Details - Angeliclay Ordering System";
 		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
 
-		$order = $this->model_read->get_order_all_wid_user_id($id, $this->session->userdata("user_id"));
+		$order = $this->Model_read->get_order_all_wid_user_id($id, $this->session->userdata("user_id"));
 		if ($id == NULL || $order->num_rows() < 1) {
 			redirect("my_orders");
 		} else {
-			$order_items = $this->model_read->get_order_items_wid_user_id($id, $this->session->userdata("user_id"), "CUSTOM");
+			$user_id = $this->session->userdata("user_id");
+			
+			$order_states = $this->Model_read->get_order_states_wuser_id($user_id)->result_array();
+			$data["order_state_counts"] = array_count_values(array_column($order_states, "state"));
+
+			$order_items = $this->Model_read->get_order_items_wid_user_id($id, $user_id, "CUSTOM");
 			$type = "CUSTOM";
 			if ($order_items->num_rows() < 1) {
-				$order_items = $this->model_read->get_order_items_wid_user_id($id, $this->session->userdata("user_id"), "NORMAL");
+				$order_items = $this->Model_read->get_order_items_wid_user_id($id, $user_id, "NORMAL");
 				$type = "NORMAL";
 			}
 			$data["states"] = array(
@@ -199,7 +227,7 @@
 			$data["order_items"] = $order_items;
 			$data["type"] = $type;
 
-			foreach ($this->model_read->get_types()->result_array() as $row) {
+			foreach ($this->Model_read->get_types()->result_array() as $row) {
 				$data["types"][$row["type_id"]] = $row["type"];
 			}
 
@@ -226,7 +254,7 @@
 		redirect("admin");
 	}
 	public function admin_login_check() {
-		// check if admin is logged in, sessions are set on a_controller_login
+		// check if admin is logged in, sessions are set on A_controller_login
 		if (!$this->session->has_userdata("admin_in")) {
 			// set log-in error message
 			$this->session->set_flashdata("login_alert", array("warning", "Please log-in first."));
@@ -268,8 +296,8 @@
 		$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
 		$data["nav"] = array("text" => "Products", "link" => "products");
 
-		$data["tbl_products"] = $this->model_read->get_products();
-		foreach ($this->model_read->get_types()->result_array() as $row) {
+		$data["tbl_products"] = $this->Model_read->get_products();
+		foreach ($this->Model_read->get_types()->result_array() as $row) {
 			$data["tbl_types"][$row["type_id"]] = $row["type"];
 		}
 
@@ -280,7 +308,7 @@
 
 		$id = $this->input->get("id");
 
-		$row_info = $this->model_read->get_product_wid($id);
+		$row_info = $this->Model_read->get_product_wid($id);
 
 		if ($id == NULL || $row_info->num_rows() < 1) {
 			$this->session->set_flashdata("alert", array("warning", "Product ID does not exist."));
@@ -292,7 +320,7 @@
 
 			$data["row_info"] = $row_info->row_array();
 			
-			$type = $this->model_read->get_type_wid($data["row_info"]["type_id"]);
+			$type = $this->Model_read->get_type_wid($data["row_info"]["type_id"]);
 			$data["row_info"]["type_name"] = ($type->num_rows() > 0 ? $type->row_array()["type"] : NULL);
 
 			$this->load->view("admin/a_products_view", $data);
@@ -303,7 +331,7 @@
 
 		$id = $this->input->get("id");
 
-		$row_info = $this->model_read->get_product_wid($id);
+		$row_info = $this->Model_read->get_product_wid($id);
 
 		if ($id == NULL || $row_info->num_rows() < 1) {
 			$this->session->set_flashdata("alert", array("warning", "Product ID does not exist."));
@@ -314,7 +342,7 @@
 			$data["nav"] = array("text" => "Products/Edit", "link" => "products");
 
 			$data["row_info"] = $row_info->row_array();
-			foreach ($this->model_read->get_types()->result_array() as $row) {
+			foreach ($this->Model_read->get_types()->result_array() as $row) {
 				$data["tbl_types"][$row["type_id"]] = $row["type"];
 			}
 
@@ -329,7 +357,7 @@
 		$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
 		$data["nav"] = array("text" => "Types", "link" => "types");
 
-		$data["tbl_types"] = $this->model_read->get_types();
+		$data["tbl_types"] = $this->Model_read->get_types();
 
 		$this->load->view("admin/a_types", $data);
 	}
@@ -338,7 +366,7 @@
 
 		$id = $this->input->get("id");
 
-		$row_info = $this->model_read->get_type_wid($id);
+		$row_info = $this->Model_read->get_type_wid($id);
 
 		if ($id == NULL || $row_info->num_rows() < 1) {
 			$this->session->set_flashdata("alert", array("warning", "Type ID does not exist."));
@@ -358,7 +386,7 @@
 
 		$id = $this->input->get("id");
 
-		$row_info = $this->model_read->get_type_wid($id);
+		$row_info = $this->Model_read->get_type_wid($id);
 
 		if ($id == NULL || $row_info->num_rows() < 1) {
 			$this->session->set_flashdata("alert", array("warning", "Type ID does not exist."));
@@ -383,9 +411,9 @@
 		$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
 		$data["nav"] = array("text" => "Orders", "link" => "orders");
 
-		$data["tbl_orders"] = $this->model_read->get_orders(!is_null($state) ? $state : "ALL");
-		$data["tbl_products"] = $this->model_read->get_products_user();
-		foreach ($this->model_read->get_types()->result_array() as $row) {
+		$data["tbl_orders"] = $this->Model_read->get_orders(!is_null($state) ? $state : "ALL");
+		$data["tbl_products"] = $this->Model_read->get_products_user();
+		foreach ($this->Model_read->get_types()->result_array() as $row) {
 			$data["tbl_types"][$row["type_id"]] = $row["type"];
 		}
 
@@ -405,7 +433,7 @@
 
 		$id = $this->input->get("id");
 
-		$row_info = $this->model_read->get_order_wid($id);
+		$row_info = $this->Model_read->get_order_wid($id);
 
 		if ($id == NULL || $row_info->num_rows() < 1) {
 			$this->session->set_flashdata("alert", array("warning", "Order ID does not exist."));
@@ -416,7 +444,7 @@
 			$data["nav"] = array("text" => "Orders/View", "link" => "orders");
 
 			$data["row_info"] = $row_info->row_array();
-			$data["tbl_order_items"] = $this->model_read->get_order_items_worder_id($id);
+			$data["tbl_order_items"] = $this->Model_read->get_order_items_worder_id($id);
 
 			$data["states"] = array(
 				"PENDING", 
@@ -435,7 +463,7 @@
 
 		$id = $this->input->get("id");
 
-		$row_info = $this->model_read->get_order_wid($id);
+		$row_info = $this->Model_read->get_order_wid($id);
 
 		if ($id == NULL || $row_info->num_rows() < 1) {
 			$this->session->set_flashdata("alert", array("warning", "Order ID does not exist."));
@@ -446,9 +474,9 @@
 			$data["nav"] = array("text" => "Orders/Edit", "link" => "orders");
 
 			$data["row_info"] = $row_info->row_array();
-			$data["tbl_order_items"] = $this->model_read->get_order_items_worder_id($id);
-			$data["tbl_products"] = $this->model_read->get_products_user();
-			foreach ($this->model_read->get_types()->result_array() as $row) {
+			$data["tbl_order_items"] = $this->Model_read->get_order_items_worder_id($id);
+			$data["tbl_products"] = $this->Model_read->get_products_user();
+			foreach ($this->Model_read->get_types()->result_array() as $row) {
 				$data["tbl_types"][$row["type_id"]] = $row["type"];
 			}
 
@@ -465,8 +493,8 @@
 		$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
 		$data["nav"] = array("text" => "Orders", "link" => "orders_custom");
 
-		$data["tbl_orders_custom"] = $this->model_read->get_orders_custom(!is_null($state) ? $state : "ALL");
-		foreach ($this->model_read->get_types()->result_array() as $row) {
+		$data["tbl_orders_custom"] = $this->Model_read->get_orders_custom(!is_null($state) ? $state : "ALL");
+		foreach ($this->Model_read->get_types()->result_array() as $row) {
 			$data["tbl_types"][$row["type_id"]] = $row["type"];
 		}
 
@@ -486,7 +514,7 @@
 
 		$id = $this->input->get("id");
 
-		$row_info = $this->model_read->get_order_custom_wid($id);
+		$row_info = $this->Model_read->get_order_custom_wid($id);
 
 		if ($id == NULL || $row_info->num_rows() < 1) {
 			$this->session->set_flashdata("alert", array("warning", "Order ID does not exist."));
@@ -497,12 +525,12 @@
 			$data["nav"] = array("text" => "Orders/View", "link" => "orders_custom");
 
 			$data["row_info"] = $row_info->row_array();
-			$data["order_item_info"] = $this->model_read->get_order_items_worder_id($data["row_info"]["order_id"])->row_array();
-			$data["product_info"] = $this->model_read->get_product_custom_wid($data["order_item_info"]["product_id"])->row_array();
+			$data["order_item_info"] = $this->Model_read->get_order_items_worder_id($data["row_info"]["order_id"])->row_array();
+			$data["product_info"] = $this->Model_read->get_product_custom_wid($data["order_item_info"]["product_id"])->row_array();
 
-			// $type = $this->model_read->get_type_wid($data["product_info"]["type_id"]);
+			// $type = $this->Model_read->get_type_wid($data["product_info"]["type_id"]);
 			// $data["product_info"]["type_name"] = ($type->num_rows() > 0 ? $type->row_array()["type"] : NULL);
-			foreach ($this->model_read->get_types()->result_array() as $row) {
+			foreach ($this->Model_read->get_types()->result_array() as $row) {
 				$data["tbl_types"][$row["type_id"]] = $row["type"];
 			}
 
@@ -524,7 +552,7 @@
 
 		$id = $this->input->get("id");
 
-		$row_info = $this->model_read->get_order_custom_wid($id);
+		$row_info = $this->Model_read->get_order_custom_wid($id);
 
 		if ($id == NULL || $row_info->num_rows() < 1) {
 			$this->session->set_flashdata("alert", array("warning", "Order ID does not exist."));
@@ -535,9 +563,9 @@
 			$data["nav"] = array("text" => "Orders/Edit", "link" => "orders_custom");
 
 			$data["row_info"] = $row_info->row_array();
-			$data["order_item_info"] = $this->model_read->get_order_items_worder_id($data["row_info"]["order_id"])->row_array();
-			$data["product_info"] = $this->model_read->get_product_custom_wid($data["order_item_info"]["product_id"])->row_array();
-			foreach ($this->model_read->get_types()->result_array() as $row) {
+			$data["order_item_info"] = $this->Model_read->get_order_items_worder_id($data["row_info"]["order_id"])->row_array();
+			$data["product_info"] = $this->Model_read->get_product_custom_wid($data["order_item_info"]["product_id"])->row_array();
+			foreach ($this->Model_read->get_types()->result_array() as $row) {
 				$data["tbl_types"][$row["type_id"]] = $row["type"];
 			}
 
@@ -552,7 +580,7 @@
 		$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
 		$data["nav"] = array("text" => "Users", "link" => "users");
 
-		$data["tbl_users"] = $this->model_read->get_user_accounts();
+		$data["tbl_users"] = $this->Model_read->get_user_accounts();
 
 		$this->load->view("admin/a_users", $data);
 	}
@@ -561,7 +589,7 @@
 
 		$id = $this->input->get("id");
 
-		$row_info = $this->model_read->get_user_acc_wid($id);
+		$row_info = $this->Model_read->get_user_acc_wid($id);
 
 		if ($id == NULL || $row_info->num_rows() < 1) {
 			$this->session->set_flashdata("alert", array("warning", "User ID does not exist."));
@@ -581,7 +609,7 @@
 
 		$id = $this->input->get("id");
 
-		$row_info = $this->model_read->get_user_acc_wid($id);
+		$row_info = $this->Model_read->get_user_acc_wid($id);
 
 		if ($id == NULL || $row_info->num_rows() < 1) {
 			$this->session->set_flashdata("alert", array("warning", "User ID does not exist."));
@@ -604,7 +632,7 @@
 		$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
 		$data["nav"] = array("text" => "Accounts", "link" => "accounts");
 
-		$data["tbl_accounts"] = $this->model_read->get_adm_accounts();
+		$data["tbl_accounts"] = $this->Model_read->get_adm_accounts();
 
 		$this->load->view("admin/a_accounts", $data);
 	}
@@ -613,7 +641,7 @@
 
 		$id = $this->input->get("id");
 
-		$row_info = $this->model_read->get_adm_acc_wid($id);
+		$row_info = $this->Model_read->get_adm_acc_wid($id);
 
 		if ($id == NULL || $row_info->num_rows() < 1) {
 			$this->session->set_flashdata("alert", array("warning", "Admin ID does not exist."));
@@ -633,7 +661,7 @@
 
 		$id = $this->input->get("id");
 
-		$row_info = $this->model_read->get_adm_acc_wid($id);
+		$row_info = $this->Model_read->get_adm_acc_wid($id);
 
 		// if id of the account is non-existent, redirect to accounts page
 		if ($id == NULL || $row_info->num_rows() < 1) {
@@ -658,7 +686,7 @@
 
 		if (strlen($search) > 0) {
 			
-			$result = $this->model_read->search_user_emails($search)->result_array();
+			$result = $this->Model_read->search_user_emails($search)->result_array();
 
 			foreach ($result as $row) {
 				$emails[] = $row["email"];

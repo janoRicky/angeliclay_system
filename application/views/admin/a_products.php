@@ -157,7 +157,7 @@ $template_header;
 						<input type="submit" class="btn btn-primary" value="Yes">
 						<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
 					</div>
-				<?=form_close();?>
+				<?=form_close()?>
 			</div>
 		</div>
 	</div>
@@ -176,7 +176,7 @@ $template_header;
 						<input type="submit" class="btn btn-warning" name="inp_submit" value="Set to Invisible">
 						<input type="submit" class="btn btn-primary" name="inp_submit" value="Set to Visible">
 					</div>
-				<?=form_close();?>
+				<?=form_close()?>
 			</div>
 		</div>
 	</div>

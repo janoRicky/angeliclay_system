@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class model_update extends CI_Model {
+class Model_update extends CI_Model {
 
 	public function update_product_custom($id, $data) {
 		$this->db->where("custom_id", $id);

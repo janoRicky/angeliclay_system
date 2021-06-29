@@ -6,6 +6,15 @@ $template_header;
 <body class="" style="background-color: rgba(241, 182, 171, 1);">
 	<?php $this->load->view("user/template/u_t_navbar"); ?>
 	<div class="container px-5 rounded pb-5" style="background-color: rgba(220, 138, 107, 0.40);">
+		<?php if ($this->session->flashdata("notice")): ?>
+			<?php $alert = $this->session->flashdata("notice"); ?>
+			<div class="alert alert-<?=$alert[0]?> alert-dismissible">
+				<?=$alert[1]?>
+				<button type="button" class="close" data-dismiss="alert">
+					&times;
+				</button>
+			</div>
+		<?php endif; ?>
 		<div class="row">
 			<span>
 				<h4 class="m-0" style="padding-top: 60px;">
@@ -57,13 +66,14 @@ $template_header;
 				</div>
 			</div>
 			<div class="col-3">
-				<a class="btn btn-primary mt-1" href="my_orders">ALL</a><br>
-				<a class="btn btn-primary mt-1" href="my_orders?state=0">PENDING</a><br>
-				<a class="btn btn-primary mt-1" href="my_orders?state=1">ACCEPTED / WAITING FOR PAYMENT</a><br>
-				<a class="btn btn-primary mt-1" href="my_orders?state=2">IN PROGRESS</a><br>
-				<a class="btn btn-primary mt-1" href="my_orders?state=3">SHIPPED</a><br>
-				<a class="btn btn-primary mt-1" href="my_orders?state=4">RECEIVED</a><br>
-				<a class="btn btn-primary mt-1" href="my_orders?state=5">CANCELLED</a><br>
+				<h3>My Orders</h3>
+				<a class="btn btn-primary mt-1" href="my_orders">ALL (<?=array_sum($order_state_counts)?>)</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders?state=0">PENDING (<?=$order_state_counts["0"]?>)</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders?state=1">ACCEPTED / WAITING FOR PAYMENT (<?=$order_state_counts["1"]?>)</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders?state=2">IN PROGRESS (<?=$order_state_counts["2"]?>)</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders?state=3">SHIPPED (<?=$order_state_counts["3"]?>)</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders?state=4">RECEIVED (<?=$order_state_counts["4"]?>)</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders?state=5">CANCELLED (<?=$order_state_counts["5"]?>)</a><br>
 			</div>
 		</div>
 	</div>

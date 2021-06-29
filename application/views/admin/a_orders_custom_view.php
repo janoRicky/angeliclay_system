@@ -36,7 +36,7 @@ $template_header;
 								<h5>User Email:</h5>
 							</div>
 							<div class="col-12">
-								<?=$this->model_read->get_user_acc_wid($row_info["user_id"])->row_array()["email"]?>
+								<?=$this->Model_read->get_user_acc_wid($row_info["user_id"])->row_array()["email"]?>
 							</div>
 						</div>
 						<div class="row mt-2">

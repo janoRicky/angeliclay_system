@@ -49,105 +49,109 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'controller_main';
+$route['default_controller'] = 'E_controller_main';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 // PAGES - USER
-$route['home'] = 'controller_main/view_u_home';
-$route['products'] = 'controller_main/view_u_products';
-$route['product'] = 'controller_main/view_u_product';
-$route['custom'] = 'controller_main/view_u_custom';
-$route['cart'] = 'controller_main/view_u_cart';
-$route['login'] = 'controller_main/view_u_login';
-$route['register'] = 'controller_main/view_u_register';
+$route['home'] = 'E_controller_main/view_u_home';
+$route['products'] = 'E_controller_main/view_u_products';
+$route['product'] = 'E_controller_main/view_u_product';
+$route['custom'] = 'E_controller_main/view_u_custom';
+$route['cart'] = 'E_controller_main/view_u_cart';
+$route['login'] = 'E_controller_main/view_u_login';
+$route['register'] = 'E_controller_main/view_u_register';
 
-$route['account'] = 'controller_main/view_u_account';
-$route['account_details'] = 'controller_main/view_u_account_details';
-$route['my_orders'] = 'controller_main/view_u_my_orders';
-$route['my_order_details'] = 'controller_main/view_u_my_order_details';
+$route['account'] = 'E_controller_main/view_u_account';
+$route['account_details'] = 'E_controller_main/view_u_account_details';
+$route['my_orders'] = 'E_controller_main/view_u_my_orders';
+$route['my_order_details'] = 'E_controller_main/view_u_my_order_details';
 
-$route['submit_order'] = 'controller_main/view_u_submit_order';
+$route['submit_order'] = 'E_controller_main/view_u_submit_order';
 
-$route['test'] = 'controller_main/test'; // REMOVE
+$route['test'] = 'E_controller_main/test'; // REMOVE
 
 // SESSION
-$route['to_cart'] = 'user/u_controller_session/to_cart';
-$route['remove_from_cart'] = 'user/u_controller_session/remove_from_cart';
+$route['to_cart'] = 'user/U_controller_session/to_cart';
+$route['remove_from_cart'] = 'user/U_controller_session/remove_from_cart';
 
 // FUNCTIONS
-$route['login_verify'] = 'user/u_controller_login/user_login_verification';
-$route['logout'] = 'controller_main/user_logout';
+$route['login_verify'] = 'user/U_controller_login/user_login_verification';
+$route['logout'] = 'E_controller_main/user_logout';
 
-$route['register_account'] = 'user/u_controller_create/user_account_register';
+$route['register_account'] = 'user/U_controller_create/user_account_register';
 
-$route['place_order'] = 'user/u_controller_create/new_order';
-$route['place_custom_order'] = 'user/u_controller_create/new_order_custom';
+$route['place_order'] = 'user/U_controller_create/new_order';
+$route['place_custom_order'] = 'user/U_controller_create/new_order_custom';
 
+$route['update_personal_info'] = 'user/U_controller_update/user_details_update';
+$route['update_account_info'] = 'user/U_controller_update/user_account_update';
+$route['update_address_info'] = 'user/U_controller_update/user_address_update';
+$route['update_contact_info'] = 'user/U_controller_update/user_contact_update';
 
 
 // PAGES - ADMIN
-$route['admin'] = 'controller_main/view_a_login';
-$route['admin/dashboard'] = 'controller_main/view_a_dashboard';
+$route['admin'] = 'E_controller_main/view_a_login';
+$route['admin/dashboard'] = 'E_controller_main/view_a_dashboard';
 
-$route['admin/products'] = 'controller_main/view_a_products';
-$route['admin/products_view'] = 'controller_main/view_a_products_view';
-$route['admin/products_edit'] = 'controller_main/view_a_products_edit';
+$route['admin/products'] = 'E_controller_main/view_a_products';
+$route['admin/products_view'] = 'E_controller_main/view_a_products_view';
+$route['admin/products_edit'] = 'E_controller_main/view_a_products_edit';
 
-$route['admin/types'] = 'controller_main/view_a_types';
-$route['admin/types_view'] = 'controller_main/view_a_types_view';
-$route['admin/types_edit'] = 'controller_main/view_a_types_edit';
+$route['admin/types'] = 'E_controller_main/view_a_types';
+$route['admin/types_view'] = 'E_controller_main/view_a_types_view';
+$route['admin/types_edit'] = 'E_controller_main/view_a_types_edit';
 
-$route['admin/orders'] = 'controller_main/view_a_orders';
-$route['admin/orders_view'] = 'controller_main/view_a_orders_view';
-$route['admin/orders_edit'] = 'controller_main/view_a_orders_edit';
+$route['admin/orders'] = 'E_controller_main/view_a_orders';
+$route['admin/orders_view'] = 'E_controller_main/view_a_orders_view';
+$route['admin/orders_edit'] = 'E_controller_main/view_a_orders_edit';
 
-$route['admin/orders_custom'] = 'controller_main/view_a_orders_custom';
-$route['admin/orders_custom_view'] = 'controller_main/view_a_orders_custom_view';
-$route['admin/orders_custom_edit'] = 'controller_main/view_a_orders_custom_edit';
+$route['admin/orders_custom'] = 'E_controller_main/view_a_orders_custom';
+$route['admin/orders_custom_view'] = 'E_controller_main/view_a_orders_custom_view';
+$route['admin/orders_custom_edit'] = 'E_controller_main/view_a_orders_custom_edit';
 
-$route['admin/users'] = 'controller_main/view_a_users';
-$route['admin/users_view'] = 'controller_main/view_a_users_view';
-$route['admin/users_edit'] = 'controller_main/view_a_users_edit';
+$route['admin/users'] = 'E_controller_main/view_a_users';
+$route['admin/users_view'] = 'E_controller_main/view_a_users_view';
+$route['admin/users_edit'] = 'E_controller_main/view_a_users_edit';
 
-$route['admin/accounts'] = 'controller_main/view_a_accounts';
-$route['admin/accounts_view'] = 'controller_main/view_a_accounts_view';
-$route['admin/accounts_edit'] = 'controller_main/view_a_accounts_edit';
+$route['admin/accounts'] = 'E_controller_main/view_a_accounts';
+$route['admin/accounts_view'] = 'E_controller_main/view_a_accounts_view';
+$route['admin/accounts_edit'] = 'E_controller_main/view_a_accounts_edit';
 
 
 // FUNCTIONS
-$route['admin/login'] = 'admin/a_controller_login/admin_login_verification';
-$route['admin/logout'] = 'controller_main/admin_logout';
+$route['admin/login'] = 'admin/A_controller_login/admin_login_verification';
+$route['admin/logout'] = 'E_controller_main/admin_logout';
 
-$route['admin/email_search'] = 'controller_main/search_emails';
+$route['admin/email_search'] = 'E_controller_main/search_emails';
 
 // - CREATE
-$route['admin/product_create'] = 'admin/a_controller_create/new_product';
-$route['admin/type_create'] = 'admin/a_controller_create/new_type';
-$route['admin/order_create'] = 'admin/a_controller_create/new_order';
-$route['admin/order_custom_create'] = 'admin/a_controller_create/new_order_custom';
-$route['admin/user_create'] = 'admin/a_controller_create/new_user_account';
-$route['admin/acc_create'] = 'admin/a_controller_create/new_admin_account';
+$route['admin/product_create'] = 'admin/A_controller_create/new_product';
+$route['admin/type_create'] = 'admin/A_controller_create/new_type';
+$route['admin/order_create'] = 'admin/A_controller_create/new_order';
+$route['admin/order_custom_create'] = 'admin/A_controller_create/new_order_custom';
+$route['admin/user_create'] = 'admin/A_controller_create/new_user_account';
+$route['admin/acc_create'] = 'admin/A_controller_create/new_admin_account';
 
 // - UPDATE
-$route['admin/product_update'] = 'admin/a_controller_update/edit_product';
-$route['admin/type_update'] = 'admin/a_controller_update/edit_type';
-$route['admin/order_update'] = 'admin/a_controller_update/edit_order';
-$route['admin/order_custom_update'] = 'admin/a_controller_update/edit_order_custom';
-$route['admin/user_update'] = 'admin/a_controller_update/edit_user_account';
-$route['admin/acc_update'] = 'admin/a_controller_update/edit_admin_account';
+$route['admin/product_update'] = 'admin/A_controller_update/edit_product';
+$route['admin/type_update'] = 'admin/A_controller_update/edit_type';
+$route['admin/order_update'] = 'admin/A_controller_update/edit_order';
+$route['admin/order_custom_update'] = 'admin/A_controller_update/edit_order_custom';
+$route['admin/user_update'] = 'admin/A_controller_update/edit_user_account';
+$route['admin/acc_update'] = 'admin/A_controller_update/edit_admin_account';
 
-$route['admin/product_update_visibility'] = 'admin/a_controller_update/edit_product_visibility';
-$route['admin/order_update_state'] = 'admin/a_controller_update/edit_order_state';
-$route['admin/order_update_state_custom'] = 'admin/a_controller_update/edit_order_state_custom';
+$route['admin/product_update_visibility'] = 'admin/A_controller_update/edit_product_visibility';
+$route['admin/order_update_state'] = 'admin/A_controller_update/edit_order_state';
+$route['admin/order_update_state_custom'] = 'admin/A_controller_update/edit_order_state_custom';
 
 // - DELETE
-$route['admin/product_delete'] = 'admin/a_controller_delete/delete_product';
-$route['admin/type_delete'] = 'admin/a_controller_delete/delete_type';
-$route['admin/order_delete'] = 'admin/a_controller_delete/delete_order';
-$route['admin/order_custom_delete'] = 'admin/a_controller_delete/delete_order_custom';
-$route['admin/user_delete'] = 'admin/a_controller_delete/delete_user_account';
-$route['admin/acc_delete'] = 'admin/a_controller_delete/delete_admin_account';
+$route['admin/product_delete'] = 'admin/A_controller_delete/delete_product';
+$route['admin/type_delete'] = 'admin/A_controller_delete/delete_type';
+$route['admin/order_delete'] = 'admin/A_controller_delete/delete_order';
+$route['admin/order_custom_delete'] = 'admin/A_controller_delete/delete_order_custom';
+$route['admin/user_delete'] = 'admin/A_controller_delete/delete_user_account';
+$route['admin/acc_delete'] = 'admin/A_controller_delete/delete_admin_account';
 
 
 // NOTES:

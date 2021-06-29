@@ -1,13 +1,13 @@
 <?php 
  defined('BASEPATH') OR exit('No direct script access allowed');
 
- class a_controller_create extends CI_Controller {
+ class A_controller_create extends CI_Controller {
 
  	public function __construct() {
  		parent::__construct();
- 		$this->load->model("model_create");
- 		$this->load->model("model_read");
- 		$this->load->model("model_update");
+ 		$this->load->model("Model_create");
+ 		$this->load->model("Model_read");
+ 		$this->load->model("Model_update");
  	}
 
 	// = = = PRODUCTS
@@ -58,7 +58,7 @@
 				"type" => "NORMAL",
 				"status" => "1"
 			);
-			if ($this->model_create->create_product($data)) {
+			if ($this->Model_create->create_product($data)) {
 				$this->session->set_flashdata("alert", array("success", "Product is successfully added."));
 			} else {
 				$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
@@ -77,7 +77,7 @@
 				"type" => $type,
 				"status" => "1"
 			);
-			if ($this->model_create->create_type($data)) {
+			if ($this->Model_create->create_type($data)) {
 				$this->session->set_flashdata("alert", array("success", "Type is successfully added."));
 			} else {
 				$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
@@ -119,7 +119,7 @@
 		if ($user_email == NULL || $description == NULL || $date == NULL || $time == NULL || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL || count($items) < 1) {
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
 		} else {
-			$user_info = $this->model_read->get_user_acc_wemail($user_email);
+			$user_info = $this->Model_read->get_user_acc_wemail($user_email);
 			if ($user_info->num_rows() < 1) {
 				$this->session->set_flashdata("alert", array("warning", "User Email does not exist."));
 			} else {
@@ -138,17 +138,17 @@
 					"state" => "0",
 					"status" => "1"
 				);
-				if ($this->model_create->create_order($data)) {
+				if ($this->Model_create->create_order($data)) {
 					$order_id = $this->db->insert_id();
 
 					foreach ($items as $row) {
-						$product_info = $this->model_read->get_product_wid($row["product_id"])->row_array();
+						$product_info = $this->Model_read->get_product_wid($row["product_id"])->row_array();
 						$data_product["qty"] = $product_info["qty"] - $row["qty"];
-						$this->model_update->update_product($row["product_id"], $data_product);
+						$this->Model_update->update_product($row["product_id"], $data_product);
 
 						$row["order_id"] = $order_id;
 						$row["type"] = "NORMAL";
-						$this->model_create->create_order_item($row);
+						$this->Model_create->create_order_item($row);
 					}
 
 					$this->session->set_flashdata("alert", array("success", "Order is successfully added."));
@@ -182,7 +182,7 @@
 		if ($user_email == NULL || $description == NULL || $date == NULL || $time == NULL || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL || $custom_description == NULL || $type_id == NULL || $size == NULL) {
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
 		} else {
-			$user_info = $this->model_read->get_user_acc_wemail($user_email);
+			$user_info = $this->Model_read->get_user_acc_wemail($user_email);
 			if ($user_info->num_rows() < 1) {
 				$this->session->set_flashdata("alert", array("warning", "User Email does not exist."));
 			} else {
@@ -201,7 +201,7 @@
 					"state" => "0",
 					"status" => "1"
 				);
-				if ($this->model_create->create_order($data)) {
+				if ($this->Model_create->create_order($data)) {
 					$order_id = $this->db->insert_id();
 
 					$img = NULL;
@@ -240,14 +240,14 @@
 						"img" => $img,
 						"status" => "1"
 					);
-					if ($this->model_create->create_product_custom($data_product)) {
+					if ($this->Model_create->create_product_custom($data_product)) {
 						$product_id = $this->db->insert_id();
 						$data_item = array(
 							"order_id" => $order_id,
 							"product_id" => $product_id,
 							"type" => "CUSTOM"
 						);
-						$this->model_create->create_order_item($data_item);
+						$this->Model_create->create_order_item($data_item);
 
 						$this->session->set_flashdata("alert", array("success", "Order is successfully added."));
 					} else {
@@ -283,7 +283,7 @@
 		if ($name_last == NULL || $name_first == NULL || $gender == NULL || $email == NULL || $contact_num == NULL || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL || $password == NULL) {
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
 		} else {
-			if ($this->model_read->get_user_acc_wemail($email)->num_rows() > 0) {
+			if ($this->Model_read->get_user_acc_wemail($email)->num_rows() > 0) {
 				$this->session->set_flashdata("alert", array("warning", "Email is aready registered."));
 			} else {
 				$data = array(
@@ -306,7 +306,7 @@
 					"password" => password_hash($password, PASSWORD_BCRYPT),
 					"status" => "1"
 				);
-				if ($this->model_create->create_user_account($data)) {
+				if ($this->Model_create->create_user_account($data)) {
 					$this->session->set_flashdata("alert", array("success", "User is successfully added."));
 				} else {
 					$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
@@ -324,7 +324,7 @@
 		if ($name == NULL || $email == NULL || $password == NULL) {
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
 		} else {
-			if ($this->model_read->get_adm_acc_wemail($email)->num_rows() > 0) {
+			if ($this->Model_read->get_adm_acc_wemail($email)->num_rows() > 0) {
 				$this->session->set_flashdata("alert", array("warning", "Email has already been registered."));
 			} else {
 				$data = array(
@@ -333,7 +333,7 @@
 					"password" => password_hash($password, PASSWORD_BCRYPT),
 					"status" => "1"
 				);
-				if ($this->model_create->create_adm_account($data)) {
+				if ($this->Model_create->create_adm_account($data)) {
 					$this->session->set_flashdata("alert", array("success", "Account is successfully added."));
 				} else {
 					$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));

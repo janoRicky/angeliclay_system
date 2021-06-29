@@ -1,13 +1,13 @@
 <?php 
  defined('BASEPATH') OR exit('No direct script access allowed');
 
- class u_controller_create extends CI_Controller {
+ class U_controller_create extends CI_Controller {
 
  	public function __construct() {
  		parent::__construct();
- 		$this->load->model("model_create");
- 		$this->load->model("model_read");
- 		$this->load->model("model_update");
+ 		$this->load->model("Model_create");
+ 		$this->load->model("Model_read");
+ 		$this->load->model("Model_update");
 
  		date_default_timezone_set('Asia/Manila');
  	}
@@ -34,7 +34,7 @@
 		if ($name_last == NULL || $name_first == NULL || $gender == NULL || $email == NULL || $contact_num == NULL || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL || $password == NULL) {
 			$this->session->set_flashdata("notice", array("warning", "One or more inputs are empty."));
 		} else {
-			if ($this->model_read->get_user_acc_wemail($email)->num_rows() > 0) {
+			if ($this->Model_read->get_user_acc_wemail($email)->num_rows() > 0) {
 				$this->session->set_flashdata("notice", array("warning", "Email is aready registered."));
 			} else {
 				$data = array(
@@ -57,7 +57,7 @@
 					"password" => password_hash($password, PASSWORD_BCRYPT),
 					"status" => "1"
 				);
-				if ($this->model_create->create_user_account($data)) {
+				if ($this->Model_create->create_user_account($data)) {
 					$this->session->set_flashdata("notice", array("success", "User is successfully added."));
 				} else {
 					$this->session->set_flashdata("notice", array("danger", "Something went wrong, please try again."));
@@ -88,7 +88,7 @@
 		if ($user_id == NULL || $description == NULL || $type_id == NULL || $size == NULL || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL) {
 			$this->session->set_flashdata("notice", array("warning", "One or more inputs are empty."));
 		} else {
-			$user_info = $this->model_read->get_user_acc_wid($user_id);
+			$user_info = $this->Model_read->get_user_acc_wid($user_id);
 			if ($user_info->num_rows() < 1) {
 				$this->session->set_flashdata("notice", array("warning", "User does not exist."));
 			} else {
@@ -105,7 +105,7 @@
 					"state" => "0",
 					"status" => "1"
 				);
-				if ($this->model_create->create_order($data)) {
+				if ($this->Model_create->create_order($data)) {
 					$order_id = $this->db->insert_id();
 
 					$img = NULL;
@@ -144,14 +144,14 @@
 						"img" => $img,
 						"status" => "1"
 					);
-					if ($this->model_create->create_product_custom($data_product)) {
+					if ($this->Model_create->create_product_custom($data_product)) {
 						$product_id = $this->db->insert_id();
 						$data_item = array(
 							"order_id" => $order_id,
 							"product_id" => $product_id,
 							"type" => "CUSTOM"
 						);
-						$this->model_create->create_order_item($data_item);
+						$this->Model_create->create_order_item($data_item);
 
 						$this->session->set_flashdata("notice", array("success", "Order is successfully added."));
 					} else {
@@ -183,7 +183,7 @@
 		if ($user_id == NULL || $date == NULL || $time == NULL || count($items) < 1 || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL) {
 			$this->session->set_flashdata("notice", array("warning", "One or more inputs are empty."));
 		} else {
-			$user_info = $this->model_read->get_user_acc_wid($user_id);
+			$user_info = $this->Model_read->get_user_acc_wid($user_id);
 			if ($user_info->num_rows() < 1) {
 				$this->session->set_flashdata("notice", array("warning", "User does not exist."));
 			} else {
@@ -191,7 +191,7 @@
 				$data_items = array();
 				foreach ($items as $id => $qty) {
 					if ($id != NULL && $qty != NULL) {
-						$p_details = $this->model_read->get_product_wid_user($id)->row_array();
+						$p_details = $this->Model_read->get_product_wid_user($id)->row_array();
 						$total_qty = $p_details["qty"] - $qty;
 						if ($total_qty < 0) {
 							break;
@@ -222,17 +222,17 @@
 						"state" => "0",
 						"status" => "1"
 					);
-					if ($this->model_create->create_order($data)) {
+					if ($this->Model_create->create_order($data)) {
 						$order_id = $this->db->insert_id();
 
 						foreach ($data_products as $id => $qty) {
 							$data_product["qty"] = $qty;
-							$this->model_update->update_product($id, $data_product);
+							$this->Model_update->update_product($id, $data_product);
 						}
 
 						foreach ($data_items as $row) {
 							$row["order_id"] = $order_id;
-							$this->model_create->create_order_item($row);
+							$this->Model_create->create_order_item($row);
 						}
 
 						$this->session->unset_userdata("cart");

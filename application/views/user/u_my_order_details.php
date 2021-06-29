@@ -51,7 +51,7 @@ $template_header;
 						<?php if ($type == "CUSTOM"): ?>
 							<?php
 							$order_item = $order_items->row_array();
-							$product_info = $this->model_read->get_product_custom_wid($order_item["product_id"])->row_array();
+							$product_info = $this->Model_read->get_product_custom_wid($order_item["product_id"])->row_array();
 							?>
 							<div class="row mt-2">
 								<div class="col-12">
@@ -121,7 +121,7 @@ $template_header;
 									<?php $total_qty = 0; $total_price = 0; ?>
 									<?php foreach ($order_items->result_array() as $row): ?>
 										<tr>
-											<td><?=$this->model_read->get_product_wid($row["product_id"])->row_array()["name"]?></td>
+											<td><?=$this->Model_read->get_product_wid($row["product_id"])->row_array()["name"]?></td>
 											<td><?=$row["qty"]?></td>
 											<?php $total_qty += $row["qty"]; ?>
 											<td><?=$row["price"]?></td>
@@ -149,13 +149,13 @@ $template_header;
 			</div>
 			<div class="col-3">
 				<h3>My Orders</h3>
-				<a class="btn btn-primary mt-1" href="my_orders">ALL</a><br>
-				<a class="btn btn-primary mt-1" href="my_orders?state=0">PENDING</a><br>
-				<a class="btn btn-primary mt-1" href="my_orders?state=1">ACCEPTED / WAITING FOR PAYMENT</a><br>
-				<a class="btn btn-primary mt-1" href="my_orders?state=2">IN PROGRESS</a><br>
-				<a class="btn btn-primary mt-1" href="my_orders?state=3">SHIPPED</a><br>
-				<a class="btn btn-primary mt-1" href="my_orders?state=4">RECEIVED</a><br>
-				<a class="btn btn-primary mt-1" href="my_orders?state=5">CANCELLED</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders">ALL (<?=array_sum($order_state_counts)?>)</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders?state=0">PENDING (<?=$order_state_counts["0"]?>)</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders?state=1">ACCEPTED / WAITING FOR PAYMENT (<?=$order_state_counts["1"]?>)</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders?state=2">IN PROGRESS (<?=$order_state_counts["2"]?>)</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders?state=3">SHIPPED (<?=$order_state_counts["3"]?>)</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders?state=4">RECEIVED (<?=$order_state_counts["4"]?>)</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders?state=5">CANCELLED (<?=$order_state_counts["5"]?>)</a><br>
 			</div>
 		</div>
 	</div>

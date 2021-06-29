@@ -155,7 +155,7 @@ $template_header;
 					<div class="modal-footer">
 						<input type="submit" class="btn btn-primary" value="Add Account">
 					</div>
-				<?=form_close();?>
+				<?=form_close()?>
 			</div>
 		</div>
 	</div>
@@ -177,7 +177,7 @@ $template_header;
 						<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
 						<input type="submit" class="btn btn-primary" value="Yes">
 					</div>
-				<?=form_close();?>
+				<?=form_close()?>
 			</div>
 		</div>
 	</div>

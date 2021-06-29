@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class model_read extends CI_Model {
+class Model_read extends CI_Model {
 
 
 	public function get_orders_custom($state) {
@@ -21,8 +21,23 @@ class model_read extends CI_Model {
 	public function get_products() {
 		return $this->db->get_where("products", array("status" => "1", "type" => "NORMAL"));
 	}
-	public function get_products_user() {
-		$query = "SELECT * FROM products AS p WHERE status = '1' AND visibility = '1' AND EXISTS(SELECT * FROM types AS t WHERE p.type_id = t.type_id)";
+	public function get_products_user($search, $type, $page) {
+		// $this->db->select("*");
+		// $this->db->from("products AS p");
+		// $this->db->where("EXISTS(SELECT * FROM types AS t WHERE p.type_id = t.type_id)", NULL, FALSE);
+		// $this->db->where(array(
+		// 	"status" => "1",
+		// 	"visibility" => "1"
+		// ));
+		// $this->db->like("name", $search);
+		// $this->db->or_like("description", $search);
+		// $this->db->order_by("date_added", "DESC");
+		// $this->db->limit(10);
+		// return $this->db->get();
+		$search_query = (!is_null($type) && !empty($type) ? "AND type_id = '$type' " : "") . (!is_null($search) ? "AND (name LIKE '%$search%' OR description LIKE '%$search%') " : "");
+		$pg_no = (!is_null($page) && !empty($page) ? $page * 10 : 0);
+
+		$query = "SELECT * FROM products AS p WHERE status = '1' AND visibility = '1'$search_query AND EXISTS(SELECT * FROM types AS t WHERE p.type_id = t.type_id) ORDER BY p.date_added DESC LIMIT 10 OFFSET $pg_no";
 		return $this->db->query($query);
 	}
 	public function get_product_wid($id) {
@@ -59,6 +74,10 @@ class model_read extends CI_Model {
 	public function get_order_wuser_id($id, $state) {
 		$where_state = ($state != "ALL" ? array("state" => $state) : array());
 		return $this->db->get_where("orders", array_merge(array("user_id" => $id, "status" => "1"), $where_state));
+	}
+	public function get_order_states_wuser_id($id) {
+		$this->db->select("state");
+		return $this->db->get_where("orders", array("user_id" => $id, "status" => "1"));
 	}
 	public function get_order_items_worder_id($id) {
 		return $this->db->get_where("orders_items", array("order_id" => $id));

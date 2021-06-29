@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class model_delete extends CI_Model {
+class Model_delete extends CI_Model {
 
 	public function delete_product($id) {
 		$this->db->where("product_id", $id);

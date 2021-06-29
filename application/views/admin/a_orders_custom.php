@@ -62,7 +62,7 @@ $template_header;
 									<option value="4" <?=($state == "4" ? "selected" : "")?>>RECEIVED</option>
 									<option value="5" <?=($state == "5" ? "selected" : "")?>>CANCELLED</option>
 								</select>
-							<?=form_close();?>
+							<?=form_close()?>
 						</div>
 					</div>
 					<div class="col-4 text-right">
@@ -89,7 +89,7 @@ $template_header;
 											<?=$row["order_id"]?>
 										</td>
 										<td>
-											<?=$this->model_read->get_user_acc_wid($row["user_id"])->row_array()["email"]?>
+											<?=$this->Model_read->get_user_acc_wid($row["user_id"])->row_array()["email"]?>
 										</td>
 										<td>
 											<?=$row["description"]?>
@@ -209,7 +209,7 @@ $template_header;
 					<div class="modal-footer">
 						<input type="submit" class="btn btn-primary" value="Add Order">
 					</div>
-				<?=form_close();?>
+				<?=form_close()?>
 			</div>
 		</div>
 	</div>
@@ -231,7 +231,7 @@ $template_header;
 						<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
 						<input type="submit" class="btn btn-primary" value="Yes">
 					</div>
-				<?=form_close();?>
+				<?=form_close()?>
 			</div>
 		</div>
 	</div>
@@ -262,7 +262,7 @@ $template_header;
 					<div class="modal-footer">
 						<input type="submit" class="btn btn-primary" value="Update State">
 					</div>
-				<?=form_close();?>
+				<?=form_close()?>
 			</div>
 		</div>
 	</div>

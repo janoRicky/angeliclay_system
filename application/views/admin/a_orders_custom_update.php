@@ -54,7 +54,7 @@ $template_header;
 							<input type="hidden" name="inp_id" value="<?=$row_info['order_id']?>">
 							<div class="form-group">
 								<label for="inp_user_email">User Email:</label>
-								<input type="text" class="form-control" name="inp_user_email" placeholder="Email Address" autocomplete="off" value="<?=$this->model_read->get_user_acc_wid($row_info["user_id"])->row_array()["email"]?>">
+								<input type="text" class="form-control" name="inp_user_email" placeholder="Email Address" autocomplete="off" value="<?=$this->Model_read->get_user_acc_wid($row_info["user_id"])->row_array()["email"]?>">
 							</div>
 							<div class="form-group">
 								<label for="inp_description">Description:</label>

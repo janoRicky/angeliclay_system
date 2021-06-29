@@ -41,7 +41,7 @@ $template_header;
 					<?php if ($val != NULL):?>
 						<?php
 
-						$item_info = $this->model_read->get_product_wid_user($key)->row_array();
+						$item_info = $this->Model_read->get_product_wid_user($key)->row_array();
 
 						$price = $val * $item_info["price"];
 						$grand_total += ($price);

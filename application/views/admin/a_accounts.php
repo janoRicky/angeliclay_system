@@ -38,7 +38,6 @@ $template_header;
 								</tr>
 							</thead>
 							<tbody>
-								<!-- iterate through each row of the table array -->
 								<?php foreach ($tbl_accounts->result_array() as $row): ?>
 									<tr class="text-center align-middle">
 										<td>
@@ -96,7 +95,7 @@ $template_header;
 					<div class="modal-footer">
 						<input type="submit" class="btn btn-primary" value="Add Account">
 					</div>
-				<?=form_close();?>
+				<?=form_close()?>
 			</div>
 		</div>
 	</div>
@@ -118,7 +117,7 @@ $template_header;
 						<input type="submit" class="btn btn-primary" value="Yes">
 						<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
 					</div>
-				<?=form_close();?>
+				<?=form_close()?>
 			</div>
 		</div>
 	</div>

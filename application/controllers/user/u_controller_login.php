@@ -1,11 +1,11 @@
 <?php 
  defined("BASEPATH") OR exit("No direct script access allowed");
 
- class u_controller_login extends CI_Controller {
+ class U_controller_login extends CI_Controller {
 
  	public function __construct() {
  		parent::__construct();
- 		$this->load->model("model_read");
+ 		$this->load->model("Model_read");
  	}
 	public function user_login_verification() {
 		$email = $this->input->post("inp_email", TRUE);
@@ -14,7 +14,7 @@
 		if ($email == NULL || $password == NULL) {
 			$this->session->set_flashdata("user_alert", array("warning", "One or more inputs are empty."));
 		} else {
-			$account = $this->model_read->get_user_acc_wemail($email);
+			$account = $this->Model_read->get_user_acc_wemail($email);
 			if ($account->num_rows() < 1) {
 				$this->session->set_flashdata("user_alert", array("warning", "Account does not exist."));
 			} else {

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class model_create extends CI_Model {
+class Model_create extends CI_Model {
 
 
 	public function create_product_custom($data) {

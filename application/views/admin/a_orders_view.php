@@ -28,7 +28,7 @@ $template_header;
 								<h5>User Email:</h5>
 							</div>
 							<div class="col-12">
-								<?=$this->model_read->get_user_acc_wid($row_info["user_id"])->row_array()["email"]?>
+								<?=$this->Model_read->get_user_acc_wid($row_info["user_id"])->row_array()["email"]?>
 							</div>
 						</div>
 						<div class="row mt-2">
@@ -75,7 +75,7 @@ $template_header;
 										<?php $total_qty = 0; $total_price = 0; ?>
 										<?php foreach ($tbl_order_items->result_array() as $row): ?>
 											<tr>
-												<td><?=$this->model_read->get_product_wid($row["product_id"])->row_array()["name"]?></td>
+												<td><?=$this->Model_read->get_product_wid($row["product_id"])->row_array()["name"]?></td>
 												<td><?=$row["qty"]?></td>
 												<?php $total_qty += $row["qty"]; ?>
 												<td><?=$row["price"]?></td>
