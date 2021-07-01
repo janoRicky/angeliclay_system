@@ -129,7 +129,7 @@ $template_header;
 						</div>
 						<div class="form-group">
 							<label for="inp_description">Description:</label>
-							<input type="text" class="form-control" name="inp_description" placeholder="Description" autocomplete="off">
+							<textarea class="form-control" name="inp_description" placeholder="Description"style="resize: none;" rows="5"></textarea>
 						</div>
 						<div class="form-group">
 							<label for="inp_date">Date:</label>
@@ -164,7 +164,7 @@ $template_header;
 							<input type="text" class="form-control" name="inp_address" placeholder="House Number/Floor/Bldg./etc." autocomplete="off">
 						</div>
 						<div class="form-group">
-							<label for="inp_time">Ordered Items:</label>
+							<label>Ordered Items:</label>
 							<input id="items_no" type="hidden" name="items_no" value="0">
 							<table id="table_items" class="table table-striped table-bordered">
 								<thead>
@@ -188,7 +188,7 @@ $template_header;
 							</table>
 						</div>
 						<div class="form-group">
-							<label for="inp_time">Products:</label>
+							<label>Products:</label>
 							<table id="table_products" class="table table-striped table-bordered">
 								<thead>
 									<tr>

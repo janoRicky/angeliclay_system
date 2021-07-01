@@ -3,12 +3,25 @@
 
  class E_controller_main extends CI_Controller {
 
- 	public function __construct() {
- 		parent::__construct();
- 		$this->load->model("Model_read");
+	public function __construct() {
+		parent::__construct();
+		$this->load->model("Model_read");
 
- 		date_default_timezone_set("Asia/Manila");
- 	}
+		date_default_timezone_set("Asia/Manila");
+	}
+
+	public function view_image() { // <img src="img">
+		$name = $this->input->get("name");
+
+		$test = imagecreatefromjpeg(base_url()."assets/img/sample2.jpg");
+
+		header("Content-type: image/jpg");
+		imagejpeg($test);
+
+		imagedestroy($test);
+
+	}
+
 	public function index() {
 		redirect("home");
 	}
@@ -16,6 +29,8 @@
 	public function view_u_home() {
 		$head["title"] = "Home - Angeliclay Ordering System";
 		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
+
+		$data["tbl_types"] = $this->Model_read->get_types_user();
 
 		$this->load->view("user/u_home", $data);
 	}
@@ -28,13 +43,13 @@
 		$head["title"] = "Products - Angeliclay Ordering System";
 		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
 
-		$data["tbl_products"] = $this->Model_read->get_products_user($search, $type, $page_no);
-		foreach ($this->Model_read->get_types()->result_array() as $row) {
-			$data["types"][$row["type_id"]] = $row["type"];
+		$data["tbl_products"] = $this->Model_read->get_products_user_view($search, $type, $page_no);
+		foreach ($this->Model_read->get_types_user_view()->result_array() as $row) {
+			$data["types"][$row["type_id"]] = $row["name"];
 		}
 
 		$data["page_no"] = $page_no;
-		$next_page = $this->Model_read->get_products_user($search, $type, $page_no + 1);
+		$next_page = $this->Model_read->get_products_user_view($search, $type, $page_no + 1);
 		$data["page_limit"] = ($next_page->num_rows() > 0 ? FALSE : TRUE);
 
 		$this->load->view("user/u_products", $data);
@@ -51,7 +66,7 @@
 			redirect("products");
 		} else {
 			$data["product_details"] = $product->row_array();
-			$data["type"] = $this->Model_read->get_type_wid($data["product_details"]["type_id"])->row_array()["type"];
+			$data["type"] = $this->Model_read->get_type_wid($data["product_details"]["type_id"])->row_array()["name"];
 			$this->load->view("user/u_product", $data);
 		}
 	}
@@ -64,7 +79,7 @@
 			redirect("login");
 		} else {
 			foreach ($this->Model_read->get_types()->result_array() as $row) {
-				$data["types"][$row["type_id"]] = $row["type"];
+				$data["types"][$row["type_id"]] = $row["name"];
 			}
 
 			$user_details = $this->Model_read->get_user_acc_wid($this->session->userdata("user_id"));
@@ -84,7 +99,7 @@
 		if ($this->session->has_userdata("cart")) {
 			$data["cart"] = $this->session->userdata("cart");
 			foreach ($this->Model_read->get_types()->result_array() as $row) {
-				$data["types"][$row["type_id"]] = $row["type"];
+				$data["types"][$row["type_id"]] = $row["name"];
 			}
 		} else {
 			$data["cart"] = array();
@@ -228,7 +243,7 @@
 			$data["type"] = $type;
 
 			foreach ($this->Model_read->get_types()->result_array() as $row) {
-				$data["types"][$row["type_id"]] = $row["type"];
+				$data["types"][$row["type_id"]] = $row["name"];
 			}
 
 			$this->load->view("user/u_my_order_details", $data);
@@ -298,7 +313,7 @@
 
 		$data["tbl_products"] = $this->Model_read->get_products();
 		foreach ($this->Model_read->get_types()->result_array() as $row) {
-			$data["tbl_types"][$row["type_id"]] = $row["type"];
+			$data["tbl_types"][$row["type_id"]] = $row["name"];
 		}
 
 		$this->load->view("admin/a_products", $data);
@@ -321,7 +336,7 @@
 			$data["row_info"] = $row_info->row_array();
 			
 			$type = $this->Model_read->get_type_wid($data["row_info"]["type_id"]);
-			$data["row_info"]["type_name"] = ($type->num_rows() > 0 ? $type->row_array()["type"] : NULL);
+			$data["row_info"]["type_name"] = ($type->num_rows() > 0 ? $type->row_array()["name"] : NULL);
 
 			$this->load->view("admin/a_products_view", $data);
 		}
@@ -343,7 +358,7 @@
 
 			$data["row_info"] = $row_info->row_array();
 			foreach ($this->Model_read->get_types()->result_array() as $row) {
-				$data["tbl_types"][$row["type_id"]] = $row["type"];
+				$data["tbl_types"][$row["type_id"]] = $row["name"];
 			}
 
 			$this->load->view("admin/a_products_update", $data);
@@ -414,7 +429,7 @@
 		$data["tbl_orders"] = $this->Model_read->get_orders(!is_null($state) ? $state : "ALL");
 		$data["tbl_products"] = $this->Model_read->get_products_user();
 		foreach ($this->Model_read->get_types()->result_array() as $row) {
-			$data["tbl_types"][$row["type_id"]] = $row["type"];
+			$data["tbl_types"][$row["type_id"]] = $row["name"];
 		}
 
 		$data["states"] = array(
@@ -477,7 +492,7 @@
 			$data["tbl_order_items"] = $this->Model_read->get_order_items_worder_id($id);
 			$data["tbl_products"] = $this->Model_read->get_products_user();
 			foreach ($this->Model_read->get_types()->result_array() as $row) {
-				$data["tbl_types"][$row["type_id"]] = $row["type"];
+				$data["tbl_types"][$row["type_id"]] = $row["name"];
 			}
 
 			$this->load->view("admin/a_orders_update", $data);
@@ -495,7 +510,7 @@
 
 		$data["tbl_orders_custom"] = $this->Model_read->get_orders_custom(!is_null($state) ? $state : "ALL");
 		foreach ($this->Model_read->get_types()->result_array() as $row) {
-			$data["tbl_types"][$row["type_id"]] = $row["type"];
+			$data["tbl_types"][$row["type_id"]] = $row["name"];
 		}
 
 		$data["states"] = array(
@@ -531,7 +546,7 @@
 			// $type = $this->Model_read->get_type_wid($data["product_info"]["type_id"]);
 			// $data["product_info"]["type_name"] = ($type->num_rows() > 0 ? $type->row_array()["type"] : NULL);
 			foreach ($this->Model_read->get_types()->result_array() as $row) {
-				$data["tbl_types"][$row["type_id"]] = $row["type"];
+				$data["tbl_types"][$row["type_id"]] = $row["name"];
 			}
 
 			$data["states"] = array(
@@ -566,7 +581,7 @@
 			$data["order_item_info"] = $this->Model_read->get_order_items_worder_id($data["row_info"]["order_id"])->row_array();
 			$data["product_info"] = $this->Model_read->get_product_custom_wid($data["order_item_info"]["product_id"])->row_array();
 			foreach ($this->Model_read->get_types()->result_array() as $row) {
-				$data["tbl_types"][$row["type_id"]] = $row["type"];
+				$data["tbl_types"][$row["type_id"]] = $row["name"];
 			}
 
 			$this->load->view("admin/a_orders_custom_update", $data);

@@ -14,6 +14,38 @@ $template_header;
 			<div class="col-6">
 				<?=form_open(base_url() . "place_order", "method='POST'")?>
 					<div class="row mt-2">
+						<h2>Payment Method</h2>
+					</div>
+					<div class="row mt-2">
+						<div class="col-9">
+							<select class="w-100" name="inp_payment_method">
+								<option value="gcash">GCash</option>
+							</select>
+						</div>
+					</div>
+					<div class="row mt-2">
+						<span>(Send Payment to GCash # 0999999999)</span>
+					</div>
+					<div class="row mt-2">
+						<div class="col-3">
+							<h5 class="font-weight-normal m-0 p-0">Ref No: </h5>
+						</div>
+						<div class="col-9">
+							<input type="text" name="inp_ref_no" placeholder="Ref No" autocomplete="off">
+						</div>
+					</div>
+					<div class="row mt-2">
+						<div class="col-3">
+							<h5 class="font-weight-normal m-0 p-0">Proof of Payment (Img / Screenshot): </h5>
+						</div>
+						<div class="col-9">
+							<img class="w-100" src="<?=base_url()?>assets/img/no_img.png">
+						</div>
+					</div>
+					<div class="row mt-2">
+						<h2>Address</h2>
+					</div>
+					<div class="row mt-2">
 						<div class="col-3">
 							<h5 class="font-weight-normal m-0 p-0">Zip Code: </h5>
 						</div>

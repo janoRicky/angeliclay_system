@@ -32,7 +32,9 @@ $template_header;
 							<thead>
 								<tr>
 									<th>ID</th>
-									<th>Type</th>
+									<th>Name</th>
+									<th>Price Range</th>
+									<th>Featured</th>
 									<th>Action</th>
 								</tr>
 							</thead>
@@ -43,9 +45,16 @@ $template_header;
 											<?=$row["type_id"]?>
 										</td>
 										<td>
-											<?=$row["type"]?>
+											<?=$row["name"]?>
 										</td>
 										<td>
+											<?=$row["price_range"]?>
+										</td>
+										<td>
+											<?=($row["featured"] == 1 ? "YES" : "NO")?>
+										</td>
+										<td>
+											<button class="btn btn-primary btn-sm btn_featured" data-toggle="modal" data-target="#modal_featured" data-id="<?=$row['type_id']?>">Feature</button>
 											<a class="action_button" href="<?=base_url()?>admin/types_view?id=<?=$row['type_id']?>">
 												<i class="fa fa-eye p-1" aria-hidden="true"></i>
 											</a>
@@ -67,7 +76,7 @@ $template_header;
 	<div id="modal_new_type" class="modal">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<?=form_open(base_url() . "admin/type_create", "method='POST'")?>
+				<?=form_open(base_url() . "admin/type_create", "method='POST' enctype='multipart/form-data'")?>
 					<div class="modal-header">
 						<h4 class="modal-title">New Type</h4>
 						<button type="button" class="close" data-dismiss="modal">
@@ -76,8 +85,21 @@ $template_header;
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<label>Type:</label>
-							<input type="text" class="form-control" name="inp_type" placeholder="Type" autocomplete="off">
+							<label>Image:</label>
+							<input id="type_image" type="file" name="inp_img">
+							<img class="w-100" id="image_preview" src="<?=base_url()?>assets/img/no_img.png" height="150" style="object-fit: contain;">
+						</div>
+						<div class="form-group">
+							<label>Type Name:</label>
+							<input type="text" class="form-control" name="inp_name" placeholder="Type Name" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<label>Description:</label>
+							<textarea class="form-control" name="inp_description" placeholder="Description"style="resize: none;"></textarea>
+						</div>
+						<div class="form-group">
+							<label>Price Range:</label>
+							<input type="text" class="form-control" name="inp_price_range" placeholder="Price Range" autocomplete="off">
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -109,16 +131,48 @@ $template_header;
 			</div>
 		</div>
 	</div>
+	<div id="modal_featured" class="modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<?=form_open(base_url() . "admin/type_update_featured", "method='POST'");?>
+					<input id="featured_inp_id" type="hidden" name="inp_id">
+					<div class="modal-header">
+						<h4 class="modal-title">Feature Type</h4>
+						<button type="button" class="close" data-dismiss="modal">
+							&times;
+						</button>
+					</div>
+					<div class="modal-footer">
+						<input type="submit" class="btn btn-warning" name="inp_submit" value="Unfeature">
+						<input type="submit" class="btn btn-primary" name="inp_submit" value="Feature">
+					</div>
+				<?=form_close()?>
+			</div>
+		</div>
+	</div>
 </body>
 <?php $this->load->view("admin/template/a_t_scripts"); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$(".btn_featured").on("click", function() {
+			$("#featured_inp_id").val($(this).data("id"));
+		});
 		$(".btn_delete").on("click", function() {
 			$("#delete_id").text($(this).data("id"));
 			$("#delete_inp_id").val($(this).data("id"));
 		});
 
 		$("#table_types").DataTable();
+
+		$(document).on("change", "#type_image", function() {
+			if (this.files && this.files[0]) {
+				var reader = new FileReader();
+				reader.readAsDataURL(this.files[0]);
+				reader.onload = function(e) {
+					$("#image_preview").attr("src", e.target.result);
+				};
+			}
+		});
 	});
 </script>
 </html>

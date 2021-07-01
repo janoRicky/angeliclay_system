@@ -53,6 +53,10 @@ $route['default_controller'] = 'E_controller_main';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
+
+$route['img'] = 'E_controller_main/view_image';
+
+
 // PAGES - USER
 $route['home'] = 'E_controller_main/view_u_home';
 $route['products'] = 'E_controller_main/view_u_products';
@@ -141,6 +145,7 @@ $route['admin/order_custom_update'] = 'admin/A_controller_update/edit_order_cust
 $route['admin/user_update'] = 'admin/A_controller_update/edit_user_account';
 $route['admin/acc_update'] = 'admin/A_controller_update/edit_admin_account';
 
+$route['admin/type_update_featured'] = 'admin/A_controller_update/edit_type_featured';
 $route['admin/product_update_visibility'] = 'admin/A_controller_update/edit_product_visibility';
 $route['admin/order_update_state'] = 'admin/A_controller_update/edit_order_state';
 $route['admin/order_update_state_custom'] = 'admin/A_controller_update/edit_order_state_custom';

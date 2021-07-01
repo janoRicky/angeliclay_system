@@ -106,7 +106,6 @@ $template_header;
 							<input id="product_image" type="file" name="inp_img">
 							<img class="w-100" id="image_preview" src="<?=base_url()?>assets/img/no_img.png" height="150" style="object-fit: contain;">
 						</div>
-
 						<div class="form-group">
 							<label>Name:</label>
 							<input type="text" class="form-control" name="inp_name" placeholder="Name" autocomplete="off">

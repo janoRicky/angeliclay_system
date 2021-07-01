@@ -137,7 +137,7 @@ $template_header;
 						</div>
 						<div class="form-group">
 							<label for="inp_description">Description:</label>
-							<input type="text" class="form-control" name="inp_description" placeholder="Description" autocomplete="off">
+							<textarea class="form-control" name="inp_description" placeholder="Description"style="resize: none;" rows="5"></textarea>
 						</div>
 						<div class="form-group">
 							<label for="inp_date">Date:</label>

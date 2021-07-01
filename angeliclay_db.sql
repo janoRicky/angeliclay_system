@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 22, 2021 at 11:01 PM
+-- Generation Time: Jul 01, 2021 at 03:19 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -89,10 +89,10 @@ INSERT INTO `orders` (`order_id`, `user_id`, `description`, `date`, `time`, `zip
 (18, '1', 'testeeeeee', '2021-05-17', '22:00', NULL, NULL, NULL, NULL, NULL, NULL, '0', '1'),
 (19, '1', 'test', '2021-06-17', '23:13', NULL, NULL, NULL, NULL, NULL, NULL, '1', '1'),
 (20, '1', 'test', '2021-06-19', '02:49', NULL, NULL, NULL, NULL, NULL, NULL, '3', '1'),
-(21, '4', 'user test', '2021-06-19', '18:50', NULL, NULL, NULL, NULL, NULL, NULL, '0', '1'),
-(22, '4', NULL, '2021-06-20', '00:54', NULL, NULL, NULL, NULL, NULL, NULL, '0', '1'),
+(21, '4', 'user test', '2021-06-19', '18:50', NULL, NULL, NULL, NULL, NULL, NULL, '5', '1'),
+(22, '4', NULL, '2021-06-20', '00:54', NULL, NULL, NULL, NULL, NULL, NULL, '1', '1'),
 (23, '1', 'test', '2021-06-20', '00:55', NULL, NULL, NULL, NULL, NULL, NULL, '0', '1'),
-(24, '4', NULL, '2021-06-20', '00:57', NULL, NULL, NULL, NULL, NULL, NULL, '0', '1'),
+(24, '4', NULL, '2021-06-20', '00:57', NULL, NULL, NULL, NULL, NULL, NULL, '3', '1'),
 (25, '5', NULL, '2021-06-22', '16:58', NULL, NULL, NULL, NULL, NULL, NULL, '0', '1'),
 (26, '5', NULL, '2021-06-22', '17:45', 'try', 'try', 'try', 'try', 'try', 'try', '2', '1'),
 (27, '5', NULL, '2021-06-22', '18:19', 'cip90', 'count', 'prov', 'cit', 'stroad', 'adrr', '0', '1'),
@@ -108,8 +108,10 @@ INSERT INTO `orders` (`order_id`, `user_id`, `description`, `date`, `time`, `zip
 (37, '5', 'test', '2021-06-23', '01:13', NULL, NULL, NULL, NULL, NULL, NULL, '0', '1'),
 (38, '5', 'testtttt', '2021-06-23', '01:19', 'try', 'try', 'try', 'try', 'try', 'try', '0', '1'),
 (39, '5', NULL, '2021-06-23', '01:38', 'cip90', 'count', 'prov', 'cit', 'stroad', 'adrr', '0', '1'),
-(40, '4', 'tsetettetttett', '2021-06-23', '01:42', 'tryest', 'tryest', 'tryest', 'tryest', 'tryest', 'tryest', '0', '1'),
-(41, '4', 'etstgddg', '2021-06-23', '01:42', 'try', 'try', 'try', 'try', 'try', 'try', '0', '1');
+(40, '4', 'tsetettetttett', '2021-06-23', '01:42', 'tryest', 'tryest', 'tryest', 'tryest', 'tryest', 'tryest', '4', '1'),
+(41, '4', 'etstgddg', '2021-06-23', '01:42', 'try', 'try', 'try', 'try', 'try', 'try', '0', '1'),
+(42, '5', NULL, '2021-06-23', '13:37', 'cip90', 'count', 'prov', 'cit', 'stroad', 'adrr', '0', '1'),
+(43, '5', NULL, '2021-06-23', '13:50', 'cip90', 'count', 'prov', 'cit', 'stroad', 'adrr', '0', '1');
 
 -- --------------------------------------------------------
 
@@ -176,7 +178,9 @@ INSERT INTO `orders_items` (`item_id`, `order_id`, `product_id`, `qty`, `price`,
 (87, '38', '1', '6', '23', 'NORMAL', NULL),
 (88, '38', '2', '2', '555', 'NORMAL', NULL),
 (89, '40', '6', '4', '234', 'NORMAL', NULL),
-(90, '40', '5', '4', '32', 'NORMAL', NULL);
+(90, '40', '5', '4', '32', 'NORMAL', NULL),
+(91, '42', '1', '3', '23', 'NORMAL', NULL),
+(92, '43', '12', NULL, NULL, 'CUSTOM', NULL);
 
 -- --------------------------------------------------------
 
@@ -187,6 +191,7 @@ INSERT INTO `orders_items` (`item_id`, `order_id`, `product_id`, `qty`, `price`,
 CREATE TABLE `orders_payments` (
   `payment_id` int(11) NOT NULL,
   `description` varchar(128) DEFAULT NULL,
+  `img` varchar(64) DEFAULT NULL,
   `date_time` varchar(32) DEFAULT NULL,
   `amount` varchar(32) DEFAULT NULL,
   `status` varchar(16) DEFAULT NULL
@@ -207,6 +212,7 @@ CREATE TABLE `products` (
   `price` varchar(32) DEFAULT NULL,
   `qty` varchar(16) DEFAULT NULL,
   `type` varchar(16) DEFAULT NULL,
+  `date_added` datetime DEFAULT NULL,
   `visibility` varchar(11) DEFAULT NULL,
   `status` varchar(16) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -215,13 +221,13 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`product_id`, `img`, `name`, `type_id`, `description`, `price`, `qty`, `type`, `visibility`, `status`) VALUES
-(1, 'c14f3edc1f5aeaf147a35c09d045880f.jpg', 'Figure 1', '4', 'Desc 1', '23', '13', 'NORMAL', '1', '1'),
-(2, 'ebe49a8517d631d74c230d830bc7f4c8.jpg', 'Figure 3', '4', 'Desc 3', '555', '0', 'NORMAL', '1', '1'),
-(3, 'fdc0cf6ca69fa22e2959f70bcd6e931b.jpg', 'Test', '4', 'Desc', '622', '7', 'NORMAL', '1', '1'),
-(4, 'd69258a24ea68b4b31491657677b62f7.jpg', 'Testing', '4', 'test', '32', '20', 'NORMAL', '1', '1'),
-(5, '01a7cd4499f0aa19e06f440d9a028877.png', 'test', '4', 'test', '32', '18', 'NORMAL', '1', '1'),
-(6, '25b1478e92aebb5f5481b53b3eb610bd.jpg', 'test', '4', 'test', '234', '13', 'NORMAL', '0', '1');
+INSERT INTO `products` (`product_id`, `img`, `name`, `type_id`, `description`, `price`, `qty`, `type`, `date_added`, `visibility`, `status`) VALUES
+(1, 'c14f3edc1f5aeaf147a35c09d045880f.jpg', 'Figure 1', '2', 'Desc 1', '23', '10', 'NORMAL', '2021-06-01 14:56:34', '1', '1'),
+(2, 'ebe49a8517d631d74c230d830bc7f4c8.jpg', 'Figure 3', '1', 'Desc 3', '555', '0', 'NORMAL', '2021-06-02 14:56:43', '1', '1'),
+(3, 'fdc0cf6ca69fa22e2959f70bcd6e931b.jpg', 'Test', '1', 'Desc', '622', '7', 'NORMAL', '2021-06-03 14:56:48', '1', '1'),
+(4, 'd69258a24ea68b4b31491657677b62f7.jpg', 'Testing', '2', 'test', '32', '20', 'NORMAL', '2021-06-06 14:57:01', '1', '1'),
+(5, '01a7cd4499f0aa19e06f440d9a028877.png', 'test', '3', 'test', '32', '18', 'NORMAL', '2021-06-04 14:56:53', '1', '1'),
+(6, '25b1478e92aebb5f5481b53b3eb610bd.jpg', 'test', '3', 'test', '234', '13', 'NORMAL', '2021-06-05 14:56:57', '0', '1');
 
 -- --------------------------------------------------------
 
@@ -253,7 +259,8 @@ INSERT INTO `products_custom` (`custom_id`, `description`, `type_id`, `size`, `i
 (8, 'test', '4', 'test', '20018b0792280da0973f3f049d961361.jpg/', '1'),
 (9, 'try', '5', 'trycm', '98f7471903853a1631268d70b606c8e9.jpg/57011200e075f87ab8f92d828fac09e6.jpg/d837917565ecd16dc13f44bc90e82ffb.jpg/', '1'),
 (10, 'testing', '5', 'te1cm', 'ad0b16db09f62a540346068297514d8a.jpg/4868308e328aeaa3291c6d09f0620d07.jpg/3495b67ce24d609399d42a8f434dac48.jpg/', '1'),
-(11, 'etteetetww', '4', 'tewts2cm', '4b14ae98e1c200749104ad6483475436.jpg/d869d27a672a56dd12c8c0c51b9e14fa.jpg/a0528e1ae8471986618b861b5fdad58c.jpg', '1');
+(11, 'etteetetww', '4', 'tewts2cm', '4b14ae98e1c200749104ad6483475436.jpg/d869d27a672a56dd12c8c0c51b9e14fa.jpg/a0528e1ae8471986618b861b5fdad58c.jpg', '1'),
+(12, 'test', '5', '2121', '1125d92878db8325f1eb294de4160320.jpg/1db91bddbe438cca0938154656ea8177.jpg/6998d259169db39be51219c285325c64.jpg/', '1');
 
 -- --------------------------------------------------------
 
@@ -263,7 +270,11 @@ INSERT INTO `products_custom` (`custom_id`, `description`, `type_id`, `size`, `i
 
 CREATE TABLE `types` (
   `type_id` int(11) NOT NULL,
-  `type` varchar(64) DEFAULT NULL,
+  `name` varchar(32) DEFAULT NULL,
+  `img` varchar(64) DEFAULT NULL,
+  `description` varchar(128) DEFAULT NULL,
+  `price_range` varchar(32) DEFAULT NULL,
+  `featured` varchar(11) DEFAULT NULL,
   `status` varchar(16) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -271,9 +282,11 @@ CREATE TABLE `types` (
 -- Dumping data for table `types`
 --
 
-INSERT INTO `types` (`type_id`, `type`, `status`) VALUES
-(4, 'Figurine', '1'),
-(5, 'Keychain', '1');
+INSERT INTO `types` (`type_id`, `name`, `img`, `description`, `price_range`, `featured`, `status`) VALUES
+(1, 'Figurine', '024f68ebe3846b4d0558afed27bce979.jpg', 'Desc Figurine', '175.00 - 300.00', '1', '1'),
+(2, 'Keychain', '4d22d1a8f214e9d125dbff88403c1920.jpg', 'Desc Keychain', '80.00 - 150.00', '1', '1'),
+(3, 'NewType', '5d9ee47aecc7aada07bfcd63ed40180f.jpg', 'Type Desc', '100.00 - 1000.00', '1', '1'),
+(4, 'testype', 'fbd7b1d530181697a0b88f716e62444a.jpg', 'desc tset', '0.00 - 3.00', '0', '1');
 
 -- --------------------------------------------------------
 
@@ -307,7 +320,7 @@ CREATE TABLE `user_accounts` (
 INSERT INTO `user_accounts` (`user_id`, `email`, `password`, `name_last`, `name_first`, `name_middle`, `name_extension`, `zip_code`, `country`, `province`, `city`, `street`, `address`, `gender`, `contact_num`, `status`) VALUES
 (1, 'user@email.com', '$2y$10$Q1EcDJMNSVc7UUIGBhIVceXqsoJAutUkXJPE872MBNYowzdo4XsEG', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1234', 'other', '1234', '1'),
 (2, 'etst3@dwae', '$2y$10$WCXQJWElM7ReQws1VgviZOUju.ZGdDmjk/.t1ysUyo.9YxbpqEfFq', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ear4', 'female', 'sdgdfh', '1'),
-(4, 'test@email.com', '$2y$10$eEA2XKEQdwflmPZi10a9.upLep2jA0Ksl3dhwaK9A4n/e.etDunDK', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '23edg', 'male', '24', '1'),
+(4, 'test@email.com', '$2y$10$8gZIcjpLxi.Kt3LJ9boGQO0VgnUtVVc06cxdINOEs9wXMr6moCPgq', 'Jano', 'Ricky John', 'Pilar', 'Jr', '1870', 'Philippines', 'Rizal', 'Antipolo', 'Aster', 'Blk 8 Lt.28', 'male', '099999999', '1'),
 (5, 'errr@email.com', '$2y$10$PicdJy/FhZaCEhgXYTLePO2eZq.jlvypBCUMeAEwBKyAAANI9DCI.', 'last', 'first', 'middle', 'ext', 'cip90', 'count', 'prov', 'cit', 'stroad', 'adrr', 'female', 'contac', '1'),
 (6, 'jojo@email.com', '$2y$10$OOElp2UoiHe1G7iAMFQor.fKU3MvAaW59T5QJpgC5jqkdxUC.oFPe', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '21 Jump St.', 'male', '123456', '1'),
 (7, 'try@email.com', '$2y$10$08d5rvSwGT7nV23BFEBaTeDQVIt7b6lSmg087LObOOCZnJWQPt/Ki', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'other', 'test', '1'),
@@ -379,13 +392,13 @@ ALTER TABLE `admin_accounts`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `orders_items`
 --
 ALTER TABLE `orders_items`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- AUTO_INCREMENT for table `orders_payments`
@@ -403,13 +416,13 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `products_custom`
 --
 ALTER TABLE `products_custom`
-  MODIFY `custom_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `custom_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `types`
 --
 ALTER TABLE `types`
-  MODIFY `type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `user_accounts`

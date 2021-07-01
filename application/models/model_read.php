@@ -21,7 +21,11 @@ class Model_read extends CI_Model {
 	public function get_products() {
 		return $this->db->get_where("products", array("status" => "1", "type" => "NORMAL"));
 	}
-	public function get_products_user($search, $type, $page) {
+	public function get_products_user() {
+		$query = "SELECT * FROM products AS p WHERE status = '1' AND visibility = '1' AND EXISTS(SELECT * FROM types AS t WHERE p.type_id = t.type_id)";
+		return $this->db->query($query);
+	}
+	public function get_products_user_view($search, $type, $page) {
 		// $this->db->select("*");
 		// $this->db->from("products AS p");
 		// $this->db->where("EXISTS(SELECT * FROM types AS t WHERE p.type_id = t.type_id)", NULL, FALSE);
@@ -58,8 +62,15 @@ class Model_read extends CI_Model {
 	public function get_types() {
 		return $this->db->get_where("types", array("status" => "1"));
 	}
+	public function get_types_user_view() {
+		$query = "SELECT * FROM types AS t WHERE status = '1' AND EXISTS(SELECT * FROM products AS p WHERE t.type_id = p.type_id AND visibility = '1')";
+		return $this->db->query($query);
+	}
 	public function get_type_wid($id) {
 		return $this->db->get_where("types", array("type_id" => $id));
+	}
+	public function get_types_user() {
+		return $this->db->get_where("types", array("status" => "1", "featured" => "1"));
 	}
 
 	public function get_orders($state) {

@@ -21,7 +21,6 @@
 		if ($name == NULL || $type_id == NULL || $description == NULL || $price == NULL || $qty == NULL) {
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
 		} else {
-
 			$img = NULL;
 
 			$product_folder = "product_". $this->db->count_all("products") + 1;
@@ -68,13 +67,45 @@
 	}
 	// = = = TYPES
 	public function new_type() {
-		$type = $this->input->post("inp_type");
+		$name = $this->input->post("inp_name");
+		$description = $this->input->post("inp_description");
+		$price_range = $this->input->post("inp_price_range");
 
-		if ($type == NULL) {
+		if ($name == NULL || $description == NULL || $price_range == NULL) {
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
 		} else {
+			$img = NULL;
+
+			$type_folder = "type_". $this->db->count_all("types") + 1;
+
+			$config["upload_path"] = "./assets/img/featured/". $type_folder;
+			$config["allowed_types"] = "gif|jpg|png";
+			$config["max_size"] = 2000;
+			$config["encrypt_name"] = TRUE;
+
+			$this->load->library("upload", $config);
+
+			if (!is_dir("assets/img/featured")) {
+				mkdir("./assets/img/featured", 0777, TRUE);
+			}
+			if (!is_dir("assets/img/featured/". $type_folder)) {
+				mkdir("./assets/img/featured/". $type_folder, 0777, TRUE);
+			}
+
+			if (isset($_FILES["inp_img"])) {
+				if (!$this->upload->do_upload("inp_img")) {
+					$this->session->set_flashdata("alert", array("warning", $this->upload->display_errors()));
+				} else {
+					$img = $this->upload->data("file_name");
+				}
+			}
+
 			$data = array(
-				"type" => $type,
+				"name" => $name,
+				"img" => $img,
+				"description" => $description,
+				"price_range" => $price_range,
+				"featured" => "0",
 				"status" => "1"
 			);
 			if ($this->Model_create->create_type($data)) {

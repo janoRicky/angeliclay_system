@@ -78,11 +78,7 @@
 		if ($product_id == NULL || $submit == NULL) {
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
 		} else {
-			if ($submit == "Set to Invisible") {
-				$visibility = 0;
-			} else {
-				$visibility = 1;
-			}
+			$visibility = ($submit == "Set to Invisible" ? 0 : 1);
 			$data = array(
 				"visibility" => $visibility
 			);
@@ -98,16 +94,72 @@
 	// = = = TYPES
 	public function edit_type() {
 		$type_id = $this->input->post("inp_id");
-		$type = $this->input->post("inp_type");
+		$name = $this->input->post("inp_name");
+		$description = $this->input->post("inp_description");
+		$price_range = $this->input->post("inp_price_range");
 
-		if ($type_id == NULL || $type == NULL) {
+		if ($name == NULL || $description == NULL || $price_range == NULL) {
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
 		} else {
+
+			$row_info = $this->Model_read->get_type_wid($type_id)->row_array();
+
+			$img = $row_info["img"];
+
+			$type_folder = "type_". $type_id;
+
+			$config["upload_path"] = "./assets/img/featured/". $type_folder;
+			$config["allowed_types"] = "gif|jpg|png";
+			$config["max_size"] = 2000;
+			$config["encrypt_name"] = TRUE;
+
+			$this->load->library("upload", $config);
+
+			if (!is_dir("assets/img/featured")) {
+				mkdir("./assets/img/featured", 0777, TRUE);
+			}
+			if (!is_dir("assets/img/featured/". $type_folder)) {
+				mkdir("./assets/img/featured/". $type_folder, 0777, TRUE);
+			}
+
+			if (!empty($_FILES["inp_img"]["name"])) {
+				if (!$this->upload->do_upload("inp_img")) {
+					$this->session->set_flashdata("alert", array("warning", $this->upload->display_errors()));
+					redirect("admin/types");
+				} else {
+					unlink("./assets/img/featured/". $type_folder ."/". $row_info["img"]);
+					$img = $this->upload->data("file_name");
+				}
+			}
+
 			$data = array(
-				"type" => $type
+				"name" => $name,
+				"img" => $img,
+				"description" => $description,
+				"price_range" => $price_range
 			);
 			if ($this->Model_update->update_type($type_id, $data)) {
 				$this->session->set_flashdata("alert", array("success", "Type info is successfully updated."));
+			} else {
+				$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
+			}
+		}
+		redirect("admin/types");
+	}
+	public function edit_type_featured() {
+		$type_id = $this->input->post("inp_id");
+		$submit = $this->input->post("inp_submit");
+
+		if ($type_id == NULL || $submit == NULL) {
+			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
+		} else {
+			$featured = ($submit == "Unfeature" ? 0 : 1);
+			$data = array(
+				"featured" => $featured
+			);
+
+			if ($this->Model_update->update_type($type_id, $data)) {
+				$this->session->set_flashdata("alert", array("success", "Product featured is successfully updated."));
 			} else {
 				$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
 			}

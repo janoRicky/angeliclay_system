@@ -68,6 +68,13 @@ change to in progress = user has paid
 deleting all order items of an order removes the order from the table
 
 
+birthday
+address
+region/city/district, input street/building name, unit/floor
+region(metro manila,sluzon,nluzon),province,city,barangay,zip code
+
+zip code, country, province, city, street/road, house number
+
 
 TOTDODODODO
 
@@ -80,10 +87,44 @@ WHEN CUSTOM PRODUCT IS FINISHED,
 =VIEW PAGE IN ORDER CUSTOM SHOW ORDER DETAILS, ORDER ITEM DETAILS, AND CUSTOM PRODUCT (FROM PRODUCTS TABLE) INFO
 
 
-MAKE IT SO WHEN REMOVING INPUT IMAGES THE INPUT INDEX MOVES AND NEW IMAGE INPUTS GET MOVED
-
 
 OPTIMIZE LOGOUT FUNCTIONS
+
+
+
+
+ADMIN / auto address when inputting email
+
+submit, with payment options
+
+
+image protection, controller access for image src
+
+
+add function for user to set an order to received
+
+
+
+
+Placing order with payment details (function)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
