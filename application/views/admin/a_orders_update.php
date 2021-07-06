@@ -34,11 +34,11 @@ $template_header;
 							</div>
 							<div class="form-group">
 								<label for="inp_date">Date:</label>
-								<input type="date" class="form-control" name="inp_date" autocomplete="off" value="<?=date('Y-m-d', strtotime($row_info['date']))?>">
+								<input type="date" class="form-control" name="inp_date" autocomplete="off" value="<?=date('Y-m-d', strtotime($row_info['date_time']))?>">
 							</div>
 							<div class="form-group">
 								<label for="inp_time">Time:</label>
-								<input type="time" class="form-control" name="inp_time" autocomplete="off" value="<?=date('H:i', strtotime($row_info['time']))?>">
+								<input type="time" class="form-control" name="inp_time" autocomplete="off" value="<?=date('H:i', strtotime($row_info['date_time']))?>">
 							</div>
 							<div class="form-group">
 								<label for="inp_zip_code">Zip Code:</label>

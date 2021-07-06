@@ -88,10 +88,10 @@ $template_header;
 				<div class="product-inline-block">
 					<div class="p-3">
 						<div class="row">
-							<span class="font-weight-bold">Grand Total: PHP <?=$grand_total?></span>
+							<span class="font-weight-bold">Grand Total: PHP <?=number_format($grand_total, 2)?></span>
 						</div>
 						<div class="row">
-							<a class="btn btn-primary" <?=(count($cart) > 0 ? "href='submit_order'" : "")?>>
+							<a class="btn btn-primary" <?=(count($cart) > 0 ? "href='submit_order?grand_total=". $grand_total ."'" : "")?>>
 								Place Order
 							</a>
 						</div>

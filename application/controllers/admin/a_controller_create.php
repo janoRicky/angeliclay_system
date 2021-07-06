@@ -8,6 +8,8 @@
  		$this->load->model("Model_create");
  		$this->load->model("Model_read");
  		$this->load->model("Model_update");
+
+		date_default_timezone_set("Asia/Manila");
  	}
 
 	// = = = PRODUCTS
@@ -31,10 +33,6 @@
 			$config["encrypt_name"] = TRUE;
 
 			$this->load->library("upload", $config);
-
-			if (!is_dir("uploads")) {
-				mkdir("./uploads", 0777, TRUE);
-			}
 			if (!is_dir("uploads/". $product_folder)) {
 				mkdir("./uploads/". $product_folder, 0777, TRUE);
 			}
@@ -55,6 +53,8 @@
 				"price" => $price,
 				"qty" => $qty,
 				"type" => "NORMAL",
+				"date_added" => date("Y-m-d H:i:s"),
+				"visibility" => "0",
 				"status" => "1"
 			);
 			if ($this->Model_create->create_product($data)) {
@@ -85,9 +85,6 @@
 
 			$this->load->library("upload", $config);
 
-			if (!is_dir("assets/img/featured")) {
-				mkdir("./assets/img/featured", 0777, TRUE);
-			}
 			if (!is_dir("assets/img/featured/". $type_folder)) {
 				mkdir("./assets/img/featured/". $type_folder, 0777, TRUE);
 			}
@@ -245,10 +242,6 @@
 					$config["encrypt_name"] = TRUE;
 
 					$this->load->library("upload", $config);
-
-					if (!is_dir("uploads")) {
-						mkdir("./uploads", 0777, TRUE);
-					}
 					if (!is_dir("uploads/". $product_folder)) {
 						mkdir("./uploads/". $product_folder, 0777, TRUE);
 					}

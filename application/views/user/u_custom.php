@@ -192,7 +192,6 @@ $template_header;
 
 				$(".img_box").each(function(index, el) {
 					$(this).children(".img_input").attr("name", "inp_img_" + (index + 1));
-					$(this).children(".img_check").attr("name", "inp_img_" + (index + 1) + "_check");
 				});
 
 				// add new imgbox
@@ -212,11 +211,7 @@ $template_header;
 						class: "img_change w-100 h-100 p-3 text-center d-none"
 					}).html("Change Image")).append($("<a>").attr({
 						class: "img_remove"
-					}).append($("<i>").attr({ class: "fa fa-times", "aria-hidden": "true" }))).append($("<input>").attr({
-						type: "hidden",
-						class: "img_check",
-						name: "inp_img_" + ($(".img_box").length + 1) + "_check"
-					})));
+					}).append($("<i>").attr({ class: "fa fa-times", "aria-hidden": "true" }))));
 					
 					$("#img_count").val($(".img_box").length);
 				}
@@ -229,7 +224,6 @@ $template_header;
 			}
 			$(".img_box").each(function(index, el) {
 				$(this).children(".img_input").attr("name", "inp_img_" + (index + 1));
-				$(this).children(".img_check").attr("name", "inp_img_" + (index + 1) + "_check");
 			});
 		});
 

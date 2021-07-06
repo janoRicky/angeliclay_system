@@ -71,7 +71,6 @@ $template_header;
 <?php $this->load->view("admin/template/a_t_scripts"); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
-
 		$("#product_image").change(function() {
 			if (this.files && this.files[0]) {
 				var reader = new FileReader();
@@ -81,7 +80,6 @@ $template_header;
 				};
 			}
 		});
-
 	});
 </script>
 </html>

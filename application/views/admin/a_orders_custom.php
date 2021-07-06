@@ -95,13 +95,13 @@ $template_header;
 											<?=$row["description"]?>
 										</td>
 										<td>
-											<?=$row["date"]." / ".date("h:i A", strtotime($row["time"]))?>
+											<?=date("Y-m-d / H:i:s A", strtotime($row["date_time"]))?>
 										</td>
 										<td>
 											<?=$states[$row["state"]]?>
 										</td>
 										<td>
-											<button class="btn btn-primary btn-sm btn_state" data-toggle="modal" data-target="#modal_state_order" data-id="<?=$row['order_id']?>">State</button>
+											<!-- <button class="btn btn-primary btn-sm btn_state" data-toggle="modal" data-target="#modal_state_order" data-id="<?=$row['order_id']?>">State</button> -->
 											<a class="action_button" href="<?=base_url()?>admin/orders_custom_view?id=<?=$row['order_id']?>">
 												<i class="fa fa-eye p-1" aria-hidden="true"></i>
 											</a>
@@ -201,7 +201,6 @@ $template_header;
 									<a class="img_remove">
 										<i class="fa fa-times" aria-hidden="true"></i>
 									</a>
-									<input type="hidden" class="img_check" name="inp_img_1_check">
 								</div>
 							</div>
 						</div>
@@ -235,7 +234,7 @@ $template_header;
 			</div>
 		</div>
 	</div>
-	<div id="modal_state_order" class="modal">
+	<!-- <div id="modal_state_order" class="modal">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<?=form_open(base_url() . "admin/order_update_state_custom", "method='POST'");?>
@@ -265,13 +264,13 @@ $template_header;
 				<?=form_close()?>
 			</div>
 		</div>
-	</div>
+	</div> -->
 </body>
 <script type="text/javascript">
 	$(document).ready(function () {
-		$(".btn_state").on("click", function() {
-			$("#state_inp_id").val($(this).data("id"));
-		});
+		// $(".btn_state").on("click", function() {
+		// 	$("#state_inp_id").val($(this).data("id"));
+		// });
 		$(".btn_delete").on("click", function() {
 			$("#delete_id").text($(this).data("id"));
 			$("#delete_inp_id").val($(this).data("id"));
@@ -299,7 +298,6 @@ $template_header;
 
 				$(".img_box").each(function(index, el) {
 					$(this).children(".img_input").attr("name", "inp_img_" + (index + 1));
-					$(this).children(".img_check").attr("name", "inp_img_" + (index + 1) + "_check");
 				});
 
 				// add new imgbox
@@ -319,11 +317,7 @@ $template_header;
 						class: "img_change w-100 h-100 p-3 text-center d-none"
 					}).html("Change Image")).append($("<a>").attr({
 						class: "img_remove"
-					}).append($("<i>").attr({ class: "fa fa-times", "aria-hidden": "true" }))).append($("<input>").attr({
-						type: "hidden",
-						class: "img_check",
-						name: "inp_img_" + ($(".img_box").length + 1) + "_check"
-					})));
+					}).append($("<i>").attr({ class: "fa fa-times", "aria-hidden": "true" }))));
 					
 					$("#img_count").val($(".img_box").length);
 				}
@@ -336,7 +330,6 @@ $template_header;
 			}
 			$(".img_box").each(function(index, el) {
 				$(this).children(".img_input").attr("name", "inp_img_" + (index + 1));
-				$(this).children(".img_check").attr("name", "inp_img_" + (index + 1) + "_check");
 			});
 		});
 		// $(document).on("click", ".img_change", function() {

@@ -78,15 +78,6 @@ zip code, country, province, city, street/road, house number
 
 TOTDODODODO
 
-CHANGE STRING TABLE VALUES TO NUMBER INDEX
-
-WHEN CUSTOM PRODUCT IS FINISHED,
-=SET QTY AND UNIT PRICE
-=CUSTOM PRODUCT ORDER WILL BE UNEDITABLE BUT WILL STILL BE VIEWABLE
-=MOVE PRODUCTCUSTOM ROW TO PRODUCTS TABLE
-=VIEW PAGE IN ORDER CUSTOM SHOW ORDER DETAILS, ORDER ITEM DETAILS, AND CUSTOM PRODUCT (FROM PRODUCTS TABLE) INFO
-
-
 
 OPTIMIZE LOGOUT FUNCTIONS
 
@@ -95,8 +86,6 @@ OPTIMIZE LOGOUT FUNCTIONS
 
 ADMIN / auto address when inputting email
 
-submit, with payment options
-
 
 image protection, controller access for image src
 
@@ -104,13 +93,15 @@ image protection, controller access for image src
 add function for user to set an order to received
 
 
+DON'T ALLOW ADMINS TO REMOVE ALL ORDER ITEMS WHEN UPDATING
 
 
-Placing order with payment details (function)
+add shipping fee on order submit
 
 
-
-
+show order payment description and amount only when the admin has checked it
+	"description" => "User ordered a custom product, amounting to (". $order_item["price"] ."). [Payment Method: ". $payment_method ."][Ref No.: ". $ref_no ."]",
+	"description" => "User ordered a total of ". count($data_items) ." items, amounting to (". $total_amount ."). [Payment Method: ". $payment_method ."][Ref No.: ". $ref_no ."]",
 
 
 

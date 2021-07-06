@@ -119,9 +119,6 @@
 
 					$this->load->library("upload", $config);
 
-					if (!is_dir("uploads")) {
-						mkdir("./uploads", 0777, TRUE);
-					}
 					if (!is_dir("uploads/". $product_folder)) {
 						mkdir("./uploads/". $product_folder, 0777, TRUE);
 					}
@@ -166,8 +163,9 @@
 	}
 	public function new_order() {
 		$user_id = ($this->session->has_userdata("user_id") ? $this->session->userdata("user_id") : NULL);
-		$date = date('Y-m-d');
-		$time = date('H:i');
+		$date_time = date('Y-m-d H:i:s');
+		$payment_method = $this->input->post("inp_payment_method");
+		$ref_no = $this->input->post("inp_ref_no");
 
 		$zip_code = $this->input->post("inp_zip_code");
 		$country = $this->input->post("inp_country");
@@ -180,7 +178,7 @@
 		$items = ($this->session->has_userdata("cart") ? $this->session->userdata("cart") : array());
 
 
-		if ($user_id == NULL || $date == NULL || $time == NULL || count($items) < 1 || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL) {
+		if ($user_id == NULL || $date_time == NULL || $payment_method == NULL || $ref_no == NULL || count($items) < 1 || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL) {
 			$this->session->set_flashdata("notice", array("warning", "One or more inputs are empty."));
 		} else {
 			$user_info = $this->Model_read->get_user_acc_wid($user_id);
@@ -211,8 +209,7 @@
 				if ($total_qty >= 0) {
 					$data = array(
 						"user_id" => $user_id,
-						"date" => $date,
-						"time" => $time,
+						"date_time" => $date_time,
 						"zip_code" => $zip_code,
 						"country" => $country,
 						"province" => $province,
@@ -237,12 +234,117 @@
 
 						$this->session->unset_userdata("cart");
 
-						$this->session->set_flashdata("notice", array("success", "Order is successfully added."));
+						// insert order payment
+						$img = NULL;
+
+						$user_folder = "user_". $user_id;
+						$payment_folder = "order_". $order_id;
+
+						$config["upload_path"] = "./uploads/users/". $user_folder ."/payments/". $payment_folder;
+						$config["allowed_types"] = "gif|jpg|png";
+						$config["max_size"] = 2000;
+						$config["encrypt_name"] = TRUE;
+
+						$this->load->library("upload", $config);
+						if (!is_dir("uploads/users/". $user_folder)) {
+							mkdir("./uploads/users/". $user_folder, 0777, TRUE);
+						}
+						if (!is_dir("uploads/users/". $user_folder ."/payments")) {
+							mkdir("./uploads/users/". $user_folder ."/payments", 0777, TRUE);
+						}
+						if (!is_dir("uploads/users/". $user_folder ."/payments/". $payment_folder)) {
+							mkdir("./uploads/users/". $user_folder ."/payments/". $payment_folder, 0777, TRUE);
+						}
+
+						if (isset($_FILES["inp_img"])) {
+							if (!$this->upload->do_upload("inp_img")) {
+								$this->session->set_flashdata("notice", array("warning", $this->upload->display_errors()));
+							} else {
+								$img = $this->upload->data("file_name");
+							}
+						}
+
+						$data = array(
+							"order_id" => $order_id,
+							"img" => $img,
+							"date_time" => $date_time,
+							"status" => "1"
+						);
+
+						if ($this->Model_create->create_order_payment($data)) {
+							$this->session->set_flashdata("notice", array("success", "Order is successfully added."));
+						} else {
+							$this->session->set_flashdata("notice", array("danger", "Something went wrong, please try again."));
+						}
 					} else {
 						$this->session->set_flashdata("notice", array("danger", "Something went wrong, please try again."));
 					}
 				} else {
 					$this->session->unset_userdata("cart");
+					$this->session->set_flashdata("notice", array("danger", "Something went wrong, please try again."));
+				}
+			}
+		}
+		redirect("home");
+	}
+	public function submit_payment() {
+		$order_id = $this->input->post("inp_order_id");
+		$user_id = ($this->session->has_userdata("user_id") ? $this->session->userdata("user_id") : NULL);
+		$date_time = date('Y-m-d H:i:s');
+		$payment_method = $this->input->post("inp_payment_method");
+		$ref_no = $this->input->post("inp_ref_no");
+
+		$order = $this->Model_read->get_order_custom_to_pay_wid_user_id($order_id, $user_id);
+		if ($order_id == NULL || $order->num_rows() < 1) {
+			$this->session->set_flashdata("notice", array("danger", "Something went wrong, please try again."));
+			redirect("home");
+		} elseif ($order_id == NULL || $user_id == NULL || $date_time == NULL || $payment_method == NULL || $ref_no == NULL) {
+			$this->session->set_flashdata("notice", array("warning", "One or more inputs are empty."));
+		} else {
+			$user_info = $this->Model_read->get_user_acc_wid($user_id);
+			if ($user_info->num_rows() < 1) {
+				$this->session->set_flashdata("notice", array("warning", "User does not exist."));
+			} else {
+				// insert order payment
+				$img = NULL;
+
+				$user_folder = "user_". $user_id;
+				$payment_folder = "order_". $order_id;
+
+				$config["upload_path"] = "./uploads/users/". $user_folder ."/payments/". $payment_folder;
+				$config["allowed_types"] = "gif|jpg|png";
+				$config["max_size"] = 2000;
+				$config["encrypt_name"] = TRUE;
+
+				$this->load->library("upload", $config);
+				if (!is_dir("uploads/users/". $user_folder)) {
+					mkdir("./uploads/users/". $user_folder, 0777, TRUE);
+				}
+				if (!is_dir("uploads/users/". $user_folder ."/payments")) {
+					mkdir("./uploads/users/". $user_folder ."/payments", 0777, TRUE);
+				}
+				if (!is_dir("uploads/users/". $user_folder ."/payments/". $payment_folder)) {
+					mkdir("./uploads/users/". $user_folder ."/payments/". $payment_folder, 0777, TRUE);
+				}
+
+				if (isset($_FILES["inp_img"])) {
+					if (!$this->upload->do_upload("inp_img")) {
+						$this->session->set_flashdata("notice", array("warning", $this->upload->display_errors()));
+					} else {
+						$img = $this->upload->data("file_name");
+					}
+				}
+
+				$data = array(
+					"order_id" => $order_id,
+					"img" => $img,
+					"date_time" => $date_time,
+					"status" => "1"
+				);
+
+				if ($this->Model_create->create_order_payment($data)) {
+					$this->session->set_flashdata("notice", array("success", "Payment is successfully sent."));
+				} else {
 					$this->session->set_flashdata("notice", array("danger", "Something went wrong, please try again."));
 				}
 			}

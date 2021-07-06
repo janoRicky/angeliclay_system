@@ -3,6 +3,14 @@
 $template_header;
 ?>
 
+<style>
+	.img_preview {
+		object-fit: contain;
+		min-height: 10rem;
+		max-height: 12rem;
+		border: 1px solid #000;
+	}
+</style>
 <body>
 	<div class="wrapper h-100">
 		<?php $this->load->view("admin/template/a_t_sidebar"); ?>
@@ -44,7 +52,7 @@ $template_header;
 								<h5>Date / Time:</h5>
 							</div>
 							<div class="col-12">
-								<?=$row_info["date"]." / ".date("h:i A", strtotime($row_info["time"]))?>
+								<?=date("Y-m-d / H:i:s A", strtotime($row_info["date_time"]))?>
 							</div>
 						</div>
 						<div class="row mt-2">
@@ -101,10 +109,55 @@ $template_header;
 						</div>
 						<div class="row mt-2">
 							<div class="col-12">
+								<h5>Payments:</h5>
+							</div>
+							<div class="col-12">
+								<table id="table_payments" class="table table-striped table-bordered">
+									<thead>
+										<tr>
+											<th>ID</th>
+											<th>Img</th>
+											<th>Date / Time</th>
+											<th>Description</th>
+											<th>Amount</th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php $total_payment = 0; ?>
+										<?php foreach ($tbl_payments->result_array() as $row): ?>
+											<tr>
+												<td><?=$row["payment_id"]?></td>
+												<td>
+													<?php if($row["img"] != NULL): ?>
+														<img class="img_preview" src="<?php
+														if (!empty($row["img"])) {
+															echo base_url(). 'uploads/users/user_'. $row_info["user_id"] .'/payments/order_'. $row_info["order_id"] .'/'. $row["img"];
+														} else {
+															echo base_url(). "assets/img/no_img.png";
+														}
+														?>">
+													<?php endif; ?>
+												</td>
+												<td><?=date("Y-m-d / H:i:s A", strtotime($row_info["date_time"]))?></td>
+												<td><?=$row["description"]?></td>
+												<td><?=$row["amount"]?></td>
+											</tr>
+										<?php endforeach; ?>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="row mt-2">
+							<div class="col-12">
 								<h5>Order State:</h5>
 							</div>
 							<div class="col-12">
 								<?=$states[$row_info["state"]]?>
+							</div>
+						</div>
+						<div class="row mt-2">
+							<div class="col-12 text-center">
+								<button class="btn btn-primary btn-lg btn_state" data-toggle="modal" data-target="#modal_state_order" data-id="<?=$row_info['order_id']?>">State</button>
 							</div>
 						</div>
 					</div>
@@ -112,14 +165,44 @@ $template_header;
 			</div>
 		</div>
 	</div>
+	<div id="modal_state_order" class="modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<?=form_open(base_url() . "admin/order_update_state", "method='POST'");?>
+					<input id="state_inp_id" type="hidden" name="inp_id">
+					<div class="modal-header">
+						<h4 class="modal-title">Change State</h4>
+						<button type="button" class="close" data-dismiss="modal">
+							&times;
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label>State:</label>
+							<select name="inp_state" class="form-control">
+								<?php foreach ($states as $key => $val): ?>
+									<option value="<?=$key?>"><?=$val?></option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<input type="submit" class="btn btn-primary" value="Update State">
+					</div>
+				<?=form_close()?>
+			</div>
+		</div>
+	</div>
 </body>
 <script type="text/javascript" src="<?=base_url()?>assets/js/sum().js"></script>
 <script type="text/javascript">
 	$(document).ready(function () {
-		var tbl_items = $("#table_items").DataTable();
+		$("#table_items").DataTable();
+		$("#table_payments").DataTable();
 
-		// $("#total_qty").html(tbl_items.column(1).data().sum());
-		// $("#total_price").html(tbl_items.column(3).data().sum());
+		$(".btn_state").on("click", function() {
+			$("#state_inp_id").val($(this).data("id"));
+		});
 	});
 </script>
 </html>

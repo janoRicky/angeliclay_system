@@ -40,8 +40,19 @@ $template_header;
 		<div class="row mt-5 p-4" style="border: 1px solid #000;">
 			<div class="col-2"></div>
 			<div class="col-8">
-				<?php foreach ($tbl_types->result_array() as $row): ?>
+				<?php foreach ($tbl_types->result_array() as $key => $row): ?>
 					<div class="row mb-4">
+						<?php if ($key % 2 == 0): ?>
+							<div class="col-md-6 col-sm-6 col-xs-6 marginslim p-2 text-right">
+								<span class="font-weight-bold" style="font-size: 20px;"><?=$row["name"]?></span>
+								<div class="row mt-4">
+									<div class="col-md-12 marginslim ml-2">
+										<span class="font-italic"><?=$row["description"]?></span><br>
+										<span class="font-weight-bold">PHP <?=$row["price_range"]?></span>
+									</div>
+								</div>
+							</div>
+						<?php endif; ?>
 						<div class="col-md-5 col-sm-5 col-xs-5 marginslim">
 							<img class="img-fluid" src="<?php
 							if (!empty($row["img"])) {
@@ -51,15 +62,17 @@ $template_header;
 							}
 							?>">
 						</div>
-						<div class="col-md-6 col-sm-6 col-xs-6 marginslim p-2">
-							<span class="font-weight-bold" style="font-size: 20px;"><?=$row["name"]?></span>
-							<div class="row mt-4">
-								<div class="col-md-12 marginslim ml-2">
-									<span class="font-italic"><?=$row["description"]?></span><br>
-									<span class="font-weight-bold">PHP <?=$row["price_range"]?></span>
+						<?php if ($key % 2 == 1): ?>
+							<div class="col-md-6 col-sm-6 col-xs-6 marginslim p-2">
+								<span class="font-weight-bold" style="font-size: 20px;"><?=$row["name"]?></span>
+								<div class="row mt-4">
+									<div class="col-md-12 marginslim ml-2">
+										<span class="font-italic"><?=$row["description"]?></span><br>
+										<span class="font-weight-bold">PHP <?=$row["price_range"]?></span>
+									</div>
 								</div>
 							</div>
-						</div>
+						<?php endif; ?>
 					</div>
 				<?php endforeach; ?>
 			</div>

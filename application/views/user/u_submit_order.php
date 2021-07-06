@@ -3,6 +3,25 @@
 $template_header;
 ?>
 
+<style>
+	.img_change {
+		position: absolute;
+		top: 0;
+		left: 0;
+
+		background-color: rgba(0,0,0,0.8);
+		color: #fff;
+		font-weight: bold;
+
+		cursor: pointer;
+	}
+	.img_preview {
+		object-fit: contain;
+		min-height: 10rem;
+		max-height: 12rem;
+		border: 1px solid #000;
+	}
+</style>
 <body class="" style="background-color: rgba(241, 182, 171, 1);">
 	<?php $this->load->view("user/template/u_t_navbar"); ?>
 	<div class="container px-5 rounded pb-5" style="background-color: rgba(220, 138, 107, 0.40);">
@@ -12,7 +31,10 @@ $template_header;
 		<div class="row mt-5">
 			<div class="col-3"></div> 
 			<div class="col-6">
-				<?=form_open(base_url() . "place_order", "method='POST'")?>
+				<?=form_open(base_url() . "place_order", "method='POST' enctype='multipart/form-data'")?>
+					<div class="row mt-2">
+						<h3 class="font-weight-bold">Grand Total: </h3><h3><?=number_format($grand_total, 2)?></h3>
+					</div>
 					<div class="row mt-2">
 						<h2>Payment Method</h2>
 					</div>
@@ -39,7 +61,13 @@ $template_header;
 							<h5 class="font-weight-normal m-0 p-0">Proof of Payment (Img / Screenshot): </h5>
 						</div>
 						<div class="col-9">
-							<img class="w-100" src="<?=base_url()?>assets/img/no_img.png">
+							<div class="img_box">
+								<div class="img_change w-100 h-100 p-3 text-center d-none">
+									Change Image
+								</div>
+								<input class="d-none img_input" id="product_image" type="file" name="inp_img">
+								<img class="w-100" id="image_preview" src="<?=base_url()?>assets/img/no_img.png" height="150" style="object-fit: contain;">
+							</div>
 						</div>
 					</div>
 					<div class="row mt-2">
@@ -130,4 +158,26 @@ $template_header;
 		</div>
 	</footer>
 </body>
+<script type="text/javascript">
+	$(document).ready(function () {
+		$(document).on("mouseenter", ".img_box", function() {
+			$(this).children(".img_change").removeClass("d-none");
+		}).on("mouseleave", ".img_box", function() {
+			$(this).children(".img_change").addClass("d-none");
+		});
+		$(document).on("click", ".img_change", function() {
+			$(this).siblings(".img_input").trigger("click");
+		});
+
+		$(document).on("change", "#product_image", function() {
+			if (this.files && this.files[0]) {
+				var reader = new FileReader();
+				reader.readAsDataURL(this.files[0]);
+				reader.onload = function(e) {
+					$("#image_preview").attr("src", e.target.result);
+				};
+			}
+		});
+	});
+</script>
 </html>

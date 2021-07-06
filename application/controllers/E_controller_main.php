@@ -111,6 +111,8 @@
 		$head["title"] = "Place Order - Angeliclay Ordering System";
 		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
 
+		$grand_total = $this->input->get("grand_total");
+
 		if (!$this->session->has_userdata("user_in")) {
 			$this->session->set_flashdata("notice", array("warning", "Please log-in first."));
 			redirect("login");
@@ -120,6 +122,7 @@
 				session_destroy();
 				redirect("home");
 			} else {
+				$data["grand_total"] = $grand_total;
 				$data["account_details"] = $user_details->row_array();
 				$this->load->view("user/u_submit_order", $data);
 			}
@@ -149,6 +152,15 @@
 			redirect("home");
 		} else {
 			$user_id = $this->session->userdata("user_id");
+
+			$data["states"] = array(
+				"PENDING", 
+				"WAITING FOR PAYMENT", 
+				"ACCEPTED / IN PROGRESS", 
+				"SHIPPED", 
+				"RECEIVED", 
+				"CANCELLED"
+			);
 
 			$order_states = $this->Model_read->get_order_states_wuser_id($user_id)->result_array();
 			$data["order_state_counts"] = array_count_values(array_column($order_states, "state"));
@@ -193,8 +205,8 @@
 		} else {
 			$data["states"] = array(
 				"PENDING", 
-				"ACCEPTED / WAITING FOR PAYMENT", 
-				"IN PROGRESS", 
+				"WAITING FOR PAYMENT", 
+				"ACCEPTED / IN PROGRESS", 
 				"SHIPPED", 
 				"RECEIVED", 
 				"CANCELLED"
@@ -214,39 +226,82 @@
 		$head["title"] = "Order Details - Angeliclay Ordering System";
 		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
 
-		$order = $this->Model_read->get_order_all_wid_user_id($id, $this->session->userdata("user_id"));
+		$user_id = $this->session->userdata("user_id");
+
+		// get order details
+		$order = $this->Model_read->get_order_all_wid_user_id($id, $user_id);
 		if ($id == NULL || $order->num_rows() < 1) {
 			redirect("my_orders");
 		} else {
-			$user_id = $this->session->userdata("user_id");
-			
+			// get state count
 			$order_states = $this->Model_read->get_order_states_wuser_id($user_id)->result_array();
 			$data["order_state_counts"] = array_count_values(array_column($order_states, "state"));
 
+			// get order item details
 			$order_items = $this->Model_read->get_order_items_wid_user_id($id, $user_id, "CUSTOM");
 			$type = "CUSTOM";
 			if ($order_items->num_rows() < 1) {
 				$order_items = $this->Model_read->get_order_items_wid_user_id($id, $user_id, "NORMAL");
 				$type = "NORMAL";
 			}
+			// state descriptions
 			$data["states"] = array(
 				"PENDING", 
-				"ACCEPTED / WAITING FOR PAYMENT", 
-				"IN PROGRESS", 
+				"WAITING FOR PAYMENT", 
+				"ACCEPTED / IN PROGRESS", 
 				"SHIPPED", 
 				"RECEIVED", 
 				"CANCELLED"
 			);
-			
+			// get order payments
+			$data["order_payments"] = $this->Model_read->get_order_payments_worder_id($id);
+
 			$data["my_order"] = $order->row_array();
 			$data["order_items"] = $order_items;
 			$data["type"] = $type;
+			$data["user_id"] = $user_id;
+			$data["order_id"] = $id;
 
 			foreach ($this->Model_read->get_types()->result_array() as $row) {
 				$data["types"][$row["type_id"]] = $row["name"];
 			}
 
 			$this->load->view("user/u_my_order_details", $data);
+		}
+	}
+	public function view_u_my_order_payment() {
+		$id = $this->input->get("id");
+
+		$head["title"] = "Order Payment - Angeliclay Ordering System";
+		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
+
+		$user_id = $this->session->userdata("user_id");
+
+		$order = $this->Model_read->get_order_custom_to_pay_wid_user_id($id, $user_id);
+		if ($id == NULL || $order->num_rows() < 1) {
+			redirect("my_orders");
+		} else {
+			$order_items = $this->Model_read->get_order_items_wid_user_id($id, $user_id, "CUSTOM");
+			
+			$data["my_order"] = $order->row_array();
+			$data["order_items"] = $order_items;
+
+			$data["states"] = array(
+				"PENDING", 
+				"WAITING FOR PAYMENT", 
+				"ACCEPTED / IN PROGRESS", 
+				"SHIPPED", 
+				"RECEIVED", 
+				"CANCELLED"
+			);
+
+			$data["order_id"] = $id;
+
+			foreach ($this->Model_read->get_types()->result_array() as $row) {
+				$data["types"][$row["type_id"]] = $row["name"];
+			}
+
+			$this->load->view("user/u_my_order_payment", $data);
 		}
 	}
 
@@ -434,8 +489,8 @@
 
 		$data["states"] = array(
 			"PENDING", 
-			"ACCEPTED / WAITING FOR PAYMENT", 
-			"IN PROGRESS", 
+			"WAITING FOR PAYMENT", 
+			"ACCEPTED / IN PROGRESS", 
 			"SHIPPED", 
 			"RECEIVED", 
 			"CANCELLED"
@@ -463,12 +518,14 @@
 
 			$data["states"] = array(
 				"PENDING", 
-				"ACCEPTED / WAITING FOR PAYMENT", 
-				"IN PROGRESS", 
+				"WAITING FOR PAYMENT", 
+				"ACCEPTED / IN PROGRESS", 
 				"SHIPPED", 
 				"RECEIVED", 
 				"CANCELLED"
 			);
+			
+			$data["tbl_payments"] = $this->Model_read->get_order_payments_worder_id($id);
 
 			$this->load->view("admin/a_orders_view", $data);
 		}
@@ -515,8 +572,8 @@
 
 		$data["states"] = array(
 			"PENDING", 
-			"ACCEPTED / WAITING FOR PAYMENT", 
-			"IN PROGRESS", 
+			"WAITING FOR PAYMENT", 
+			"ACCEPTED / IN PROGRESS", 
 			"SHIPPED", 
 			"RECEIVED", 
 			"CANCELLED"
@@ -551,13 +608,14 @@
 
 			$data["states"] = array(
 				"PENDING", 
-				"ACCEPTED / WAITING FOR PAYMENT", 
-				"IN PROGRESS", 
+				"WAITING FOR PAYMENT", 
+				"ACCEPTED / IN PROGRESS", 
 				"SHIPPED", 
 				"RECEIVED", 
 				"CANCELLED"
 			);
 
+			$data["tbl_payments"] = $this->Model_read->get_order_payments_worder_id($id);
 
 			$this->load->view("admin/a_orders_custom_view", $data);
 		}

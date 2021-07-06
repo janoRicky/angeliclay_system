@@ -22,6 +22,9 @@ class Model_create extends CI_Model {
 	public function create_order_item($data) {
 		return $this->db->insert("orders_items", $data);
 	}
+	public function create_order_payment($data) {
+		return $this->db->insert("orders_payments", $data);
+	}
 
 	public function create_user_account($data) {
 		return $this->db->insert("user_accounts", $data);

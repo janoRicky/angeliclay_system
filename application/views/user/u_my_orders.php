@@ -22,7 +22,7 @@ $template_header;
 							<?php foreach ($my_orders->result_array() as $row): ?>
 								<tr class="text-center align-middle">
 									<td>
-										<?=$row["date"]." / ".date("h:i A", strtotime($row["time"]))?>
+										<?=date("Y-m-d / H:i:s A", strtotime($row["date_time"]))?>
 									</td>
 									<td>
 										<?=$row["zip_code"] ." / ". $row["country"] ." / ". $row["province"] ." / ". $row["city"] ." / ". $row["street"] ." / ". $row["address"]?>
@@ -31,6 +31,9 @@ $template_header;
 										<?=$states[$row["state"]]?>
 									</td>
 									<td>
+										<?php if ($row["state"] == 1): ?>
+											<a href="my_order_payment?id=<?=$row["order_id"]?>">Payment</a>
+										<?php endif; ?>
 										<a href="my_order_details?id=<?=$row["order_id"]?>">Details</a>
 									</td>
 								</tr>
@@ -42,12 +45,12 @@ $template_header;
 			<div class="col-3">
 				<h3>My Orders</h3>
 				<a class="btn btn-primary mt-1" href="my_orders">ALL (<?=array_sum($order_state_counts)?>)</a><br>
-				<a class="btn btn-primary mt-1" href="my_orders?state=0">PENDING (<?=$order_state_counts["0"]?>)</a><br>
-				<a class="btn btn-primary mt-1" href="my_orders?state=1">ACCEPTED / WAITING FOR PAYMENT (<?=$order_state_counts["1"]?>)</a><br>
-				<a class="btn btn-primary mt-1" href="my_orders?state=2">IN PROGRESS (<?=$order_state_counts["2"]?>)</a><br>
-				<a class="btn btn-primary mt-1" href="my_orders?state=3">SHIPPED (<?=$order_state_counts["3"]?>)</a><br>
-				<a class="btn btn-primary mt-1" href="my_orders?state=4">RECEIVED (<?=$order_state_counts["4"]?>)</a><br>
-				<a class="btn btn-primary mt-1" href="my_orders?state=5">CANCELLED (<?=$order_state_counts["5"]?>)</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders?state=0"><?=$states[0]?> (<?=$order_state_counts["0"]?>)</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders?state=1"><?=$states[1]?> (<?=$order_state_counts["1"]?>)</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders?state=2"><?=$states[2]?> (<?=$order_state_counts["2"]?>)</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders?state=3"><?=$states[3]?> (<?=$order_state_counts["3"]?>)</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders?state=4"><?=$states[4]?> (<?=$order_state_counts["4"]?>)</a><br>
+				<a class="btn btn-primary mt-1" href="my_orders?state=5"><?=$states[5]?> (<?=$order_state_counts["5"]?>)</a><br>
 			</div>
 		</div>
 	</div>

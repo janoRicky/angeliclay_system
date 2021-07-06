@@ -18,13 +18,6 @@ $template_header;
 						</button>
 					</div>
 				<?php endif; ?>
-				<!-- <div class="row">
-					<div class="col-6 ml-auto">
-						<div class="card text-center bg-dark text-light p-2">
-							
-						</div>
-					</div>
-				</div> -->
 				<div class="row mb-3">
 					<div class="col-4 text-left">
 						<h2>Orders (<?=$tbl_orders->num_rows()?>)</h2>
@@ -35,12 +28,12 @@ $template_header;
 								<?php $state = (isset($_GET["state"]) ? $_GET["state"] : "ALL"); ?>
 								<select id="state_sort" name="state" class="form-control">
 									<option value="ALL" <?=($state == "ALL" ? "selected" : "")?>>ALL</option>
-									<option value="0" <?=($state == "0" ? "selected" : "")?>>PENDING</option>
-									<option value="1" <?=($state == "1" ? "selected" : "")?>>ACCEPTED / WAITING FOR PAYMENT</option>
-									<option value="2" <?=($state == "2" ? "selected" : "")?>>IN PROGRESS</option>
-									<option value="3" <?=($state == "3" ? "selected" : "")?>>SHIPPED</option>
-									<option value="4" <?=($state == "4" ? "selected" : "")?>>RECEIVED</option>
-									<option value="5" <?=($state == "5" ? "selected" : "")?>>CANCELLED</option>
+									<option value="0" <?=($state == "0" ? "selected" : "")?>><?=$states[0]?></option>
+									<option value="1" <?=($state == "1" ? "selected" : "")?>><?=$states[1]?></option>
+									<option value="2" <?=($state == "2" ? "selected" : "")?>><?=$states[2]?></option>
+									<option value="3" <?=($state == "3" ? "selected" : "")?>><?=$states[3]?></option>
+									<option value="4" <?=($state == "4" ? "selected" : "")?>><?=$states[4]?></option>
+									<option value="5" <?=($state == "5" ? "selected" : "")?>><?=$states[5]?></option>
 								</select>
 							<?=form_close()?>
 						</div>
@@ -81,7 +74,7 @@ $template_header;
 											<?=$this->Model_read->get_user_acc_wid($row["user_id"])->row_array()["email"]?>
 										</td>
 										<td>
-											<?=$row["date"]." / ".date("h:i A", strtotime($row["time"]))?>
+											<?=date("Y-m-d / H:i:s A", strtotime($row["date_time"]))?>
 										</td>
 										<td>
 											<?=$total_qty?>
@@ -93,7 +86,7 @@ $template_header;
 											<?=$states[$row["state"]]?>
 										</td>
 										<td>
-											<button class="btn btn-primary btn-sm btn_state" data-toggle="modal" data-target="#modal_state_order" data-id="<?=$row['order_id']?>">State</button>
+											<!-- <button class="btn btn-primary btn-sm btn_state" data-toggle="modal" data-target="#modal_state_order" data-id="<?=$row['order_id']?>">State</button> -->
 											<a class="action_button" href="<?=base_url()?>admin/orders_view?id=<?=$row['order_id']?>">
 												<i class="fa fa-eye p-1" aria-hidden="true"></i>
 											</a>
@@ -262,7 +255,7 @@ $template_header;
 			</div>
 		</div>
 	</div>
-	<div id="modal_state_order" class="modal">
+	<!-- <div id="modal_state_order" class="modal">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<?=form_open(base_url() . "admin/order_update_state", "method='POST'");?>
@@ -277,12 +270,9 @@ $template_header;
 						<div class="form-group">
 							<label>State:</label>
 							<select name="inp_state" class="form-control">
-								<option value="0">PENDING</option>
-								<option value="1">ACCEPTED / WAITING FOR PAYMENT</option>
-								<option value="2">IN PROGRESS</option>
-								<option value="3">SHIPPED</option>
-								<option value="4">RECEIVED</option>
-								<option value="5">CANCELLED</option>
+								<?php foreach ($states as $key => $val): ?>
+									<option value="<?=$key?>"><?=$val?></option>
+								<?php endforeach; ?>
 							</select>
 						</div>
 					</div>
@@ -292,13 +282,13 @@ $template_header;
 				<?=form_close()?>
 			</div>
 		</div>
-	</div>
+	</div> -->
 </body>
 <script type="text/javascript">
 	$(document).ready(function () {
-		$(".btn_state").on("click", function() {
-			$("#state_inp_id").val($(this).data("id"));
-		});
+		// $(".btn_state").on("click", function() {
+		// 	$("#state_inp_id").val($(this).data("id"));
+		// });
 		$(".btn_delete").on("click", function() {
 			$("#delete_id").text($(this).data("id"));
 			$("#delete_inp_id").val($(this).data("id"));

@@ -70,6 +70,7 @@ $route['account'] = 'E_controller_main/view_u_account';
 $route['account_details'] = 'E_controller_main/view_u_account_details';
 $route['my_orders'] = 'E_controller_main/view_u_my_orders';
 $route['my_order_details'] = 'E_controller_main/view_u_my_order_details';
+$route['my_order_payment'] = 'E_controller_main/view_u_my_order_payment';
 
 $route['submit_order'] = 'E_controller_main/view_u_submit_order';
 
@@ -87,6 +88,7 @@ $route['register_account'] = 'user/U_controller_create/user_account_register';
 
 $route['place_order'] = 'user/U_controller_create/new_order';
 $route['place_custom_order'] = 'user/U_controller_create/new_order_custom';
+$route['payment'] = 'user/U_controller_create/submit_payment';
 
 $route['update_personal_info'] = 'user/U_controller_update/user_details_update';
 $route['update_account_info'] = 'user/U_controller_update/user_account_update';
