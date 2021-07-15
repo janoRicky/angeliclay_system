@@ -5,3 +5,5 @@
 <script type="text/javascript" src="<?=base_url()?>assets/bootstrap-4.00-dist/js/bootstrap.min.js"></script>
 <!-- DATATABLES -->
 <script type="text/javascript" src="<?=base_url()?>assets/js/datatables.min.js"></script>
+
+<script type="text/javascript" src="<?=base_url()?>assets/js/admin.js"></script>

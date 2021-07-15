@@ -30,7 +30,7 @@
 		$head["title"] = "Home - Angeliclay Ordering System";
 		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
 
-		$data["tbl_types"] = $this->Model_read->get_types_user();
+		$data["tbl_types"] = $this->Model_read->get_types_featured();
 
 		$this->load->view("user/u_home", $data);
 	}
@@ -38,16 +38,19 @@
 		$search = $this->input->get("search");
 		$type = $this->input->get("type");
 		$page = intval($this->input->get("page"));
-		$page_no = (!is_null($page) ? $page : 0);
+		
+		$page_total = intval($this->Model_read->get_products_user()->num_rows() / 10) + 1;
+
+		$page_no = (!is_null($page) && $page >= 0 ? ($page > $page_total-1 ? $page_total-1 : $page) : 0);
 
 		$head["title"] = "Products - Angeliclay Ordering System";
 		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
-
 		$data["tbl_products"] = $this->Model_read->get_products_user_view($search, $type, $page_no);
-		foreach ($this->Model_read->get_types_user_view()->result_array() as $row) {
+		foreach ($this->Model_read->get_types_featured_view()->result_array() as $row) {
 			$data["types"][$row["type_id"]] = $row["name"];
 		}
 
+		$data["page_total"] = $page_total;
 		$data["page_no"] = $page_no;
 		$next_page = $this->Model_read->get_products_user_view($search, $type, $page_no + 1);
 		$data["page_limit"] = ($next_page->num_rows() > 0 ? FALSE : TRUE);
@@ -262,7 +265,7 @@
 			$data["user_id"] = $user_id;
 			$data["order_id"] = $id;
 
-			foreach ($this->Model_read->get_types()->result_array() as $row) {
+			foreach ($this->Model_read->get_types_user()->result_array() as $row) {
 				$data["types"][$row["type_id"]] = $row["name"];
 			}
 

@@ -2,126 +2,169 @@
 <?php
 $template_header;
 ?>
+<style type="text/css">
+	.item_img {
+		border: 0.25rem solid #ffc6dd;
+		border-radius: 10%;
 
-<style>
-	.product-inline-block {
-		background: #ededed;
-		padding: 15px;
-		margin: 10px 0;
-		min-height: 165px;
+		box-shadow: 0 0 1.2rem #fff;
+		width: 100%;
 	}
+	.custom_order {
+		color: #954123;
+		font-size: 2rem;
+		font-weight: bold;
 
-	.marginslim {
-		padding-left: 7px;
-		padding-right: 7px;
+		border: 0.5rem solid #dc8a6b;
+		border-width: 0 0.5rem;
+		border-radius: 3rem;
 	}
 </style>
-
-<body class="" style="background-color: rgba(241, 182, 171, 1);">
-	<?php $this->load->view("user/template/u_t_navbar"); ?>
-	<div class="container px-5 rounded pb-5" style="background-color: rgba(220, 138, 107, 0.40);">
-		<?=form_open(base_url() . "products", "method='GET'")?>
-			<div class="row mt-5 pt-5">
-				<div class="col-5">
-					<input id="search_value" class="w-100" type="text" name="search" value="<?=$this->input->get("search")?>">
-				</div>
-				<div class="col-4">
-					<select id="search_type" class="w-100" name="type">
-						<option value="">All</option>
-						<?php foreach ($types as $key => $val): ?>
-							<option value="<?=$key?>" <?=($this->input->get("type") == $key ? "selected" : "")?>><?=$val?></option>
-						<?php endforeach; ?>
-					</select>
-				</div>
-				<div class="col-1">
-					<button type="button" onclick="$('#search_type').val(''); $('#search_value').val('');">X</button>
-				</div>
-				<div class="col-2">
-					<input class="w-100" type="submit" value="Search" onclick="$('#page').val(0);">
-				</div>
-			</div>
-			<div class="row mt-5">
-				<div class="col-sm-12">
-					<a href="<?=base_url()?>custom" class="text-dark">
-						<div class="product-inline-block text-center p-5">
-							<span class="font-weight-bold"><h2>Place Custom Order</h2></span>
-						</div>
-					</a>
-				</div>
-			</div>
-			<div class="row mt-5">
-				<?php foreach ($tbl_products->result_array() as $row): ?>
-					<div class="col-md-6 col-sm-12 col-xs-12">
-						<a href="<?=base_url()?>product?id=<?=$row['product_id']?>" class="text-dark">
-							<div class="product-inline-block">
-								<div class="row">
-									<div class="col-md-5 col-sm-5 col-xs-5 marginslim">
-										<img class="img-fluid" src="<?php
-										if (!empty($row["img"])) {
-											echo base_url(). 'uploads/product_'. $row["product_id"] .'/'. explode("/", $row["img"])[0];
-										} else {
-											echo base_url(). "assets/img/no_img.png";
-										}
-										?>">
+<body>
+	<div class="wrapper bg">
+		<?php $this->load->view("user/template/u_t_navbar"); ?>
+		<div class="container-fluid">
+			<div class="row mb-4 mt-4">
+				<div class="col-0 col-lg-1"></div>
+				<div class="col-12 col-lg-10 content pt-4">
+					<div class="row">
+						<div class="col-12 banner text-center mt-4">
+							<?=form_open(base_url() . "products", "id='search_bar' method='GET'")?>
+								<input id="page" type="hidden" name="page" value="<?=$page_no?>">
+								<div class="row px-4">
+									<div class="col-5">
+										<input id="search_value" class="form-control" type="text" name="search" value="<?=$this->input->get("search")?>">
 									</div>
-									<div class="col-md-6 col-sm-6 col-xs-6 marginslim p-2">
-										<span class="font-weight-bold" style="font-size: 20px;"><?=$row["name"]?></span>
-										<div class="row mt-4">
-											<div class="col-md-12 marginslim ml-2">
-												<span class="font-italic"><?=$row["description"]?></span><br>
-												<span class="font-weight-bold">PHP <?=number_format($row["price"], 2)?></span>
-												<?php if ($row["qty"] < 1): ?>
-													<span class="font-weight-bold"><h5>SOLD OUT</h5></span>
-												<?php endif; ?>
-											</div>
-										</div>
+									<div class="col-4">
+										<select id="search_type" class="form-control" name="type">
+											<option value="">All</option>
+											<?php foreach ($types as $key => $val): ?>
+												<option value="<?=$key?>" <?=($this->input->get("type") == $key ? "selected" : "")?>><?=$val?></option>
+											<?php endforeach; ?>
+										</select>
+									</div>
+									<div class="col-1">
+										<button type="button" class="form-control" onclick="$('#search_type').val(''); $('#search_value').val('');">
+											<i class="fa fa-refresh" aria-hidden="true"></i>
+										</button>
+									</div>
+									<div class="col-2">
+										<button class="form-control" type="submit" onclick="$('#page').val(0);">
+											<i class="fa fa-search" aria-hidden="true"></i> Search
+										</button>
 									</div>
 								</div>
-							</div>
-						</a>
+							<?=form_close()?>
+						</div>
 					</div>
-				<?php endforeach; ?>
-			</div>
-			<div class="row mt-5 pt-5">
-				<div class="col-12 text-center">
-					<input id="page" type="hidden" name="page" value="<?=$page_no?>">
-					<input type="submit" value="PREV" onclick="$('#page').val(<?=$page_no - 1?>);" <?=($page_no < 1 ? "disabled" : NULL)?>>
-					<input type="submit" value="NEXT" onclick="$('#page').val(<?=$page_no + 1?>);" <?=($page_limit ? "disabled" : NULL)?>>
+					<div class="row mt-5">
+						<div class="col-0 col-md-3"></div>
+						<div class="col-12 col-md-6">
+							<a href="<?=base_url()?>custom" class="text-dark">
+								<div class="custom_order text-center p-3">
+									<span>Place Custom Order</span>
+								</div>
+							</a>
+						</div>
+						<div class="col-0 col-md-3"></div>
+					</div>
+					<div class="row mt-5">
+						<div class="col-1"></div>
+						<div class="col-10">
+							<div class="row align-items-center">
+								<?php foreach ($tbl_products->result_array() as $row): ?>
+									<div class="col-12 col-md-6 py-2">
+										<a href="<?=base_url()?>product?id=<?=$row['product_id']?>" class="text-dark">
+											<div class="row align-items-center item">
+												<div class="col-6">
+													<img class="img-responsive item_img" src="<?php
+													if (!empty($row["img"])) {
+														echo base_url(). 'uploads/product_'. $row["product_id"] .'/'. explode("/", $row["img"])[0];
+													} else {
+														echo base_url(). "assets/img/no_img.png";
+													}
+													?>">
+												</div>
+												<div class="col-6">
+													<!-- <h3 class="font-weight-bold" style="font-size: 20px;"><?=$row["name"]?></h3>
+													<div class="row mt-4">
+														<div class="col-md-12 marginslim ml-2">
+															<span class="font-italic"><?=$row["description"]?></span><br>
+															<span class="font-weight-bold">PHP <?=number_format($row["price"], 2)?></span>
+															<?php if ($row["qty"] < 1): ?>
+																<span class="font-weight-bold"><h5>SOLD OUT</h5></span>
+															<?php endif; ?>
+														</div>
+													</div> -->
+													<div class="row">
+														<div class="col-12">
+															<h4 class="font-weight-bold"><?=$row["name"]?></h4>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-12">
+															<h5 class="font-weight-light"><?=$row["description"]?></h5>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-1"></div>
+														<div class="col-12">
+															<h5 class="font-weight-bold">
+																PHP <?=number_format($row["price"], 2)?>
+															</h5>
+														</div>
+														<div class="col-1"></div>
+													</div>
+													<?php if ($row["qty"] < 1): ?>
+														<div class="row">
+															<div class="col-1"></div>
+															<div class="col-10 text-center">
+																<span class="font-weight-bold"><h5>SOLD OUT</h5></span>
+															</div>
+															<div class="col-1"></div>
+														</div>
+													<?php endif; ?>
+												</div>
+											</div>
+										</a>
+									</div>
+								<?php endforeach; ?>
+							</div>
+						</div>
+						<div class="col-1"></div>
+					</div>
+					<script type="text/javascript">
+						function page(pg) {
+							$('#page').val(pg);
+							$('#search_bar').submit();
+						}
+					</script>
+					<div class="row mt-4 pt-4 pb-4">
+						<div class="col-12 banner text-center mb-4">
+							<nav aria-label="..." class="m-1">
+								<ul class="pagination justify-content-center paging">
+									<li class="page-item <?=($page_no < 1 ? "disabled" : NULL)?>" onclick="page(<?=$page_no - 1?>)">
+										<span class="page-link"><i class="fa fa-angle-left font-weight-bold" aria-hidden="true"></i></span>
+									</li>
+									<?php for ($i = 1; $i <= $page_total; $i++): ?>
+										<li class="page-item <?=($page_no + 1 == $i ? "active" : NULL)?>" onclick="page(<?=$i - 1?>)">
+											<span class="page-link">
+												<?=$i?>
+											</span>
+										</li>
+									<?php endfor; ?>
+									<li class="page-item <?=($page_limit ? "disabled" : NULL)?>" onclick="page(<?=$page_no + 1?>)">
+										<span class="page-link"><i class="fa fa-angle-right font-weight-bold" aria-hidden="true"></i></span>
+									</li>
+								</ul>
+							</nav>
+						</div>
+					</div>
 				</div>
-			</div>
-		<?=form_close()?>
-	</div>
-	<footer style="background-color: white; height: auto;">
-		<div class="row mx-5 py-4">
-			<div class=" col">
-				<h6 class="mb-2">Links</h6>
-				<ul class="nav flex-column">
-					<li><a class="text-dark" href="#">FAQs</a></li>
-					<li><a class="text-dark" href="#">About Us</a></li>
-					<li><a class="text-dark" href="#">Contact Us</a></li>
-					<li><a class="text-dark" href="#">Terms of Service</a></li>
-					<li><a class="text-dark" href="#">Privacy Policy</a></li>
-				</ul>
-			</div>
-			<div class="col">
-				<h6>Our Location</h6>
-			</div>
-			<div class="col">
-				<h6>Follow us on</h6>
-				<ul class="nav">
-					<li>
-						<a href="#">
-							<i class="fa fa-facebook-official bg dark" aria-hidden="true"></i>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<i class="fa fa-facebook-official" aria-hidden="true"></i>
-						</a>
-					</li>
-				</ul>
+				<div class="col-0 col-lg-1"></div>
 			</div>
 		</div>
-	</footer>
+		<?php $this->load->view("user/template/u_t_footer"); ?>
+	</div>
 </body>
 </html>

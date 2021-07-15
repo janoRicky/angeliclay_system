@@ -30,146 +30,135 @@ $template_header;
 		color: red !important;
 	}
 </style>
-<body class="" style="background-color: rgba(241, 182, 171, 1);">
-	<?php $this->load->view("user/template/u_t_navbar"); ?>
-	<div class="container px-5 rounded pb-5" style="background-color: rgba(220, 138, 107, 0.40);">
-		<span>
-			<h1 class="m-0" style="padding-top: 60px;">Order Custom</h1>
-		</span>
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12 mt-md-0 mt-sm-4 p-5">
-				<?=form_open(base_url() . "place_custom_order", "method='POST' enctype='multipart/form-data'")?>
-					<div id="custom_product_details">
-						<div class="row mt-2">
-							<h5 class="font-weight-bold m-2 p-0">Description: </h5>
-							<textarea class="w-100" rows="5" style="resize: none;" name="inp_description" placeholder="e.g. based on [character], 2 pieces/copies, etc." maxlength="2040"></textarea>
-						</div>
-						<div class="row mt-2">
-							<div class="col-6">
-								<h5 class="font-weight-bold m-2 p-0">Type: </h5>
-								<select class="w-100" name="inp_type_id">
-									<?php foreach ($types as $key => $val): ?>
-										<option value="<?=$key?>"><?=$val?></option>
-									<?php endforeach; ?>
-								</select>
-							</div>
-							<div class="col-6">
-								<h5 class="font-weight-bold m-2 p-0">Size: </h5>
-								<input class="w-100" type="text" name="inp_size" placeholder="e.g. 12cm">
+<body>
+	<div class="wrapper bg">
+		<?php $this->load->view("user/template/u_t_navbar"); ?>
+		<div class="container-fluid">
+			<div class="row mb-4 mt-4">
+				<div class="col-0 col-lg-1"></div>
+				<div class="col-12 col-lg-10 content pt-4 pb-4">
+					<div class="row mt-4">
+						<div class="col-12 banner text-center">
+							<div class="banner_board">
+								<h3 class="font-weight-bold">Custom Product Details</h3>
 							</div>
 						</div>
-						<div class="row mt-2">
-							<div class="container">
-								<input id="img_count" type="hidden" name="inp_img_count" value="0">
-								<h5 class="font-weight-bold m-2 p-0">Image Reference/s: </h5>
-								<div class="img_container row">
-									<div class="col-3 img_box mb-3">
-										<input type="file" class="d-none img_input no_img" name="inp_img_1">
-										<img class="w-100 img_preview" src="<?=base_url()?>assets/img/no_img.png">
-										<div class="img_change w-100 h-100 p-3 text-center d-none">
-											Change Image
+					</div>
+					<div class="row">
+						<div class="col-12">
+							<?=form_open(base_url() . "place_custom_order", "method='POST' enctype='multipart/form-data'")?>
+							<div class="row">
+								<div class="col-1"></div>
+								<div class="col-10">
+									<div class="row mt-2">
+										<div class="col-12">
+											<h5 class="font-weight-bold m-2 p-0">Description: </h5>
 										</div>
-										<a class="img_remove">
-											<i class="fa fa-times" aria-hidden="true"></i>
-										</a>
-										<input type="hidden" class="img_check" name="inp_img_1_check">
+										<div class="col-12">
+											<textarea class="form-control" rows="5" style="resize: none;" name="inp_description" placeholder="e.g. based on [character], 2 pieces/copies, etc." maxlength="2040"></textarea>
+										</div>
+									</div>
+									<div class="row mt-2">
+										<div class="col-12 col-md-6">
+											<h5 class="font-weight-bold">Type: </h5>
+											<select class="form-control" name="inp_type_id">
+												<?php foreach ($types as $key => $val): ?>
+													<option value="<?=$key?>"><?=$val?></option>
+												<?php endforeach; ?>
+											</select>
+										</div>
+										<div class="col-12 col-md-6">
+											<h5 class="font-weight-bold">Size: </h5>
+											<input class="form-control" type="text" name="inp_size" placeholder="e.g. 12cm">
+										</div>
+									</div>
+									<div class="row mt-2">
+										<div class="col-12">
+											<input id="img_count" type="hidden" name="inp_img_count" value="0">
+											<h5 class="font-weight-bold">Image Reference/s: </h5>
+											<div class="img_container row">
+												<div class="col-3 img_box mb-3">
+													<input type="file" class="d-none img_input no_img" name="inp_img_1">
+													<img class="w-100 img_preview" src="<?=base_url()?>assets/img/no_img.png">
+													<div class="img_change w-100 h-100 p-3 text-center d-none">
+														Change Image
+													</div>
+													<a class="img_remove">
+														<i class="fa fa-times" aria-hidden="true"></i>
+													</a>
+													<input type="hidden" class="img_check" name="inp_img_1_check">
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="row mt-4">
-							<button id="btn_show_order_details" class="btn btn-outline-dark btn-block font-weight-bold" type="button">Order Details</button>
-						</div>
 					</div>
-
-					<div id="custom_order_details">
-						<div class="row mt-2">
-							<button id="btn_show_product_details" class="btn btn-outline-dark font-weight-bold" type="button">Back</button>
-						</div>
-						<div class="row mt-2">
-							<div class="col-3">
-								<h5 class="font-weight-normal m-0 p-0">Zip Code: </h5>
-							</div>
-							<div class="col-9">
-								<input type="text" name="inp_zip_code" placeholder="Zip Code" value="<?=$account_details['zip_code']?>" autocomplete="off">
-							</div>
-						</div>
-						<div class="row mt-2">
-							<div class="col-3">
-								<h5 class="font-weight-normal m-0 p-0">Country: </h5>
-							</div>
-							<div class="col-9">
-								<input type="text" name="inp_country" placeholder="Country" value="<?=$account_details['country']?>" autocomplete="off">
-							</div>
-						</div>
-						<div class="row mt-2">
-							<div class="col-3">
-								<h5 class="font-weight-normal m-0 p-0">Province: </h5>
-							</div>
-							<div class="col-9">
-								<input type="text" name="inp_province" placeholder="Province" value="<?=$account_details['province']?>" autocomplete="off">
-							</div>
-						</div>
-						<div class="row mt-2">
-							<div class="col-3">
-								<h5 class="font-weight-normal m-0 p-0">City: </h5>
-							</div>
-							<div class="col-9">
-								<input type="text" name="inp_city" placeholder="City" value="<?=$account_details['city']?>" autocomplete="off">
-							</div>
-						</div>
-						<div class="row mt-2">
-							<div class="col-3">
-								<h5 class="font-weight-normal m-0 p-0">Street/Road: </h5>
-							</div>
-							<div class="col-9">
-								<input type="text" name="inp_street" placeholder="Street/Road" value="<?=$account_details['street']?>" autocomplete="off">
-							</div>
-						</div>
-						<div class="row mt-2">
-							<div class="col-3">
-								<h5 class="font-weight-normal m-0 p-0">House Number/Floor/Bldg./etc.: </h5>
-							</div>
-							<div class="col-9">
-								<input type="text" name="inp_address" placeholder="House Number/Floor/Bldg./etc." value="<?=$account_details['address']?>" autocomplete="off">
-							</div>
-						</div>
-						<div class="row mt-2">
-							<div class="col-12">
-								<input type="submit" class="btn btn-outline-dark btn-block font-weight-bold"	 value="Place Order">
+					<div class="row mt-4 mb-4">
+						<div class="col-12 banner text-center">
+							<div class="banner_board">
+								<h3 class="font-weight-bold">Shipping Details</h3>
 							</div>
 						</div>
 					</div>
-				<?=form_close()?>
+					<div class="row">
+						<div class="col-12">
+							<div class="row">
+								<div class="col-1"></div>
+								<div class="col-10">
+									<div class="row mt-2 align-items-center">
+										<div class="col-4 col-md-2 my-3">
+											<h5 class="font-weight-bold">Zip Code: </h5>
+										</div>
+										<div class="col-8 col-md-4">
+											<input class="form-control" type="text" name="inp_zip_code" placeholder="Zip Code" value="<?=$account_details['zip_code']?>" autocomplete="off">
+										</div>
+										<div class="col-4 col-md-2 my-3">
+											<h5 class="font-weight-bold">Country: </h5>
+										</div>
+										<div class="col-8 col-md-4">
+											<input class="form-control" type="text" name="inp_country" placeholder="Country" value="<?=$account_details['country']?>" autocomplete="off">
+										</div>
+										<div class="col-4 col-md-2 my-3">
+											<h5 class="font-weight-bold">Province: </h5>
+										</div>
+										<div class="col-8 col-md-4">
+											<input class="form-control" type="text" name="inp_province" placeholder="Province" value="<?=$account_details['province']?>" autocomplete="off">
+										</div>
+										<div class="col-4 col-md-2 my-3">
+											<h5 class="font-weight-bold">City: </h5>
+										</div>
+										<div class="col-8 col-md-4">
+											<input class="form-control" type="text" name="inp_city" placeholder="City" value="<?=$account_details['city']?>" autocomplete="off">
+										</div>
+										<div class="col-4 col-md-2 my-3">
+											<h5 class="font-weight-bold">Street/Road: </h5>
+										</div>
+										<div class="col-8 col-md-4">
+											<input class="form-control" type="text" name="inp_street" placeholder="Street/Road" value="<?=$account_details['street']?>" autocomplete="off">
+										</div>
+										<div class="col-4 col-md-2 my-3">
+											<h5 class="font-weight-bold">House Number/Floor/Bldg./etc.: </h5>
+										</div>
+										<div class="col-8 col-md-4">
+											<input class="form-control" type="text" name="inp_address" placeholder="House Number/Floor/Bldg./etc." value="<?=$account_details['address']?>" autocomplete="off">
+										</div>
+										<div class="col-12">
+											<input class="form-control" type="submit" class="btn btn-success" value="Place Order">
+										</div>
+									</div>
+								</div>
+								<div class="col-1"></div>
+							</div>
+							<?=form_close()?>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
+		<?php $this->load->view("user/template/u_t_footer"); ?>
 	</div>
-	<footer style="background-color: white; height: auto;">
-		<div class="row mx-5 py-4">
-			<div class=" col">
-				<h6 class="mb-2">Links</h6>
-				<ul class="nav flex-column">
-					<li><a class="text-dark" href="#">FAQs</a></li>
-					<li><a class="text-dark" href="#">About Us</a></li>
-					<li><a class="text-dark" href="#">Contact Us</a></li>
-					<li><a class="text-dark" href="#">Terms of Service</a></li>
-					<li><a class="text-dark" href="#">Privacy Policy</a></li>
-				</ul>
-			</div>
-			<div class="col">
-				<h6>Our Location</h6>
-			</div>
-			<div class="col">
-				<h6>Follow us on</h6>
-				<ul class="nav">
-					<li><a href="#">
-						<i class="fa fa-facebook-official bg dark" aria-hidden="true"></i></a></li>
-					<li><a href="#">
-						<i class="fa fa-facebook-official" aria-hidden="true"></i></a></li>
-				</ul>
-			</div>
-		</div>
-	</footer>
 </body>
 <script type="text/javascript">
 	$(document).ready(function () {

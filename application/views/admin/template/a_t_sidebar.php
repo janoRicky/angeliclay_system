@@ -1,5 +1,5 @@
-<div class="sidebar h-100 position-fixed pb-4">
-	<img class="w-100 p-4" src="<?=base_url()?>assets/img/angeliclay_logo.png">
+<div id="sidebar" class="col-9 col-sm-5 col-lg-3 sidebar h-100 position-fixed" style="display: none;">
+	<!-- <img class="w-100 p-4" src="<?=base_url()?>assets/img/angeliclay_logo.png"> -->
 	<div class="list-group mt-2">
 		<a href="dashboard" class="list-group-item side_link">Dashboard</a>
 	</div>

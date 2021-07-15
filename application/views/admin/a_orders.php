@@ -5,100 +5,103 @@ $template_header;
 
 <body>
 	<div class="wrapper h-100">
-		<?php $this->load->view("admin/template/a_t_sidebar"); ?>
-		<div class="content text-center">
-			<?php $this->load->view("admin/template/a_t_navbar", $nav) ?>
-			<div class="container-fluid p-5">
-				<?php if ($this->session->flashdata("alert")): ?>
-					<?php $alert = $this->session->flashdata("alert"); ?>
-					<div class="alert alert-<?=$alert[0]?> alert-dismissible">
-						<?=$alert[1]?>
-						<button type="button" class="close" data-dismiss="alert">
-							&times;
-						</button>
-					</div>
-				<?php endif; ?>
-				<div class="row mb-3">
-					<div class="col-4 text-left">
-						<h2>Orders (<?=$tbl_orders->num_rows()?>)</h2>
-					</div>
-					<div class="col-4 text-center">
-						<div class="card text-center bg-dark text-light p-1">
-							<?=form_open(base_url() . "admin/orders", "method='GET'");?>
-								<?php $state = (isset($_GET["state"]) ? $_GET["state"] : "ALL"); ?>
-								<select id="state_sort" name="state" class="form-control">
-									<option value="ALL" <?=($state == "ALL" ? "selected" : "")?>>ALL</option>
-									<option value="0" <?=($state == "0" ? "selected" : "")?>><?=$states[0]?></option>
-									<option value="1" <?=($state == "1" ? "selected" : "")?>><?=$states[1]?></option>
-									<option value="2" <?=($state == "2" ? "selected" : "")?>><?=$states[2]?></option>
-									<option value="3" <?=($state == "3" ? "selected" : "")?>><?=$states[3]?></option>
-									<option value="4" <?=($state == "4" ? "selected" : "")?>><?=$states[4]?></option>
-									<option value="5" <?=($state == "5" ? "selected" : "")?>><?=$states[5]?></option>
-								</select>
-							<?=form_close()?>
+		<div class="container-fluid">
+			<div class="row">
+				<?php $this->load->view("admin/template/a_t_sidebar"); ?>
+				<?php $this->load->view("admin/template/a_t_navbar", $nav); ?>
+				<div class="col-12 text-center">
+					<div class="container-fluid p-5">
+						<?php if ($this->session->flashdata("alert")): ?>
+							<?php $alert = $this->session->flashdata("alert"); ?>
+							<div class="alert alert-<?=$alert[0]?> alert-dismissible">
+								<?=$alert[1]?>
+								<button type="button" class="close" data-dismiss="alert">
+									&times;
+								</button>
+							</div>
+						<?php endif; ?>
+						<div class="row mb-3">
+							<div class="col-4 text-left">
+								<h2>Orders (<?=$tbl_orders->num_rows()?>)</h2>
+							</div>
+							<div class="col-4 text-center">
+								<div class="card text-center bg-dark text-light p-1">
+									<?=form_open(base_url() . "admin/orders", "method='GET'");?>
+										<?php $state = (isset($_GET["state"]) ? $_GET["state"] : "ALL"); ?>
+										<select id="state_sort" name="state" class="form-control">
+											<option value="ALL" <?=($state == "ALL" ? "selected" : "")?>>ALL</option>
+											<option value="0" <?=($state == "0" ? "selected" : "")?>><?=$states[0]?></option>
+											<option value="1" <?=($state == "1" ? "selected" : "")?>><?=$states[1]?></option>
+											<option value="2" <?=($state == "2" ? "selected" : "")?>><?=$states[2]?></option>
+											<option value="3" <?=($state == "3" ? "selected" : "")?>><?=$states[3]?></option>
+											<option value="4" <?=($state == "4" ? "selected" : "")?>><?=$states[4]?></option>
+											<option value="5" <?=($state == "5" ? "selected" : "")?>><?=$states[5]?></option>
+										</select>
+									<?=form_close()?>
+								</div>
+							</div>
+							<div class="col-4 text-right">
+								<button class="btn btn-primary" data-toggle="modal" data-target="#modal_new_account">New Order</button>
+							</div>
 						</div>
-					</div>
-					<div class="col-4 text-right">
-						<button class="btn btn-primary" data-toggle="modal" data-target="#modal_new_account">New Order</button>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-12">
-						<table id="table_orders" class="table table-striped table-bordered">
-							<thead>
-								<tr>
-									<th>ID</th>
-									<th>User ID</th>
-									<th>Date / Time</th>
-									<th>Ordered Qty.</th>
-									<th>Ordered Price</th>
-									<th>State</th>
-									<th>Action</th>
-								</tr>
-							</thead>
-							<tbody>
-								<?php foreach ($tbl_orders->result_array() as $row): ?>
-									<?php
-									$total_qty = 0;
-									$total_price = 0;
-									foreach ($this->Model_read->get_order_items_qty_price_worder_id($row["order_id"])->result_array() as $item) {
-										$total_qty += $item["qty"];
-										$total_price += $item["qty"] * $item["price"];
-									}
-									?>
-									<tr class="text-center align-middle">
-										<td>
-											<?=$row["order_id"]?>
-										</td>
-										<td>
-											<?=$this->Model_read->get_user_acc_wid($row["user_id"])->row_array()["email"]?>
-										</td>
-										<td>
-											<?=date("Y-m-d / H:i:s A", strtotime($row["date_time"]))?>
-										</td>
-										<td>
-											<?=$total_qty?>
-										</td>
-										<td>
-											<?=$total_price?>
-										</td>
-										<td>
-											<?=$states[$row["state"]]?>
-										</td>
-										<td>
-											<!-- <button class="btn btn-primary btn-sm btn_state" data-toggle="modal" data-target="#modal_state_order" data-id="<?=$row['order_id']?>">State</button> -->
-											<a class="action_button" href="<?=base_url()?>admin/orders_view?id=<?=$row['order_id']?>">
-												<i class="fa fa-eye p-1" aria-hidden="true"></i>
-											</a>
-											<a class="action_button" href="<?=base_url();?>admin/orders_edit?id=<?=$row['order_id']?>">
-												<i class="fa fa-pencil p-1" aria-hidden="true"></i>
-											</a>
-											<i class="fa fa-trash p-1 btn_delete action_button" data-toggle="modal" data-target="#modal_delete_order" data-id="<?=$row['order_id']?>" aria-hidden="true"></i>
-										</td>
-									</tr>
-								<?php endforeach; ?>
-							</tbody>
-						</table>
+						<div class="row">
+							<div class="col-12">
+								<table id="table_orders" class="table table-striped table-bordered">
+									<thead>
+										<tr>
+											<th>ID</th>
+											<th>User ID</th>
+											<th>Date / Time</th>
+											<th>Ordered Qty.</th>
+											<th>Ordered Price</th>
+											<th>State</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php foreach ($tbl_orders->result_array() as $row): ?>
+											<?php
+											$total_qty = 0;
+											$total_price = 0;
+											foreach ($this->Model_read->get_order_items_qty_price_worder_id($row["order_id"])->result_array() as $item) {
+												$total_qty += $item["qty"];
+												$total_price += $item["qty"] * $item["price"];
+											}
+											?>
+											<tr class="text-center align-middle">
+												<td>
+													<?=$row["order_id"]?>
+												</td>
+												<td>
+													<?=$this->Model_read->get_user_acc_wid($row["user_id"])->row_array()["email"]?>
+												</td>
+												<td>
+													<?=date("Y-m-d / H:i:s A", strtotime($row["date_time"]))?>
+												</td>
+												<td>
+													<?=$total_qty?>
+												</td>
+												<td>
+													<?=$total_price?>
+												</td>
+												<td>
+													<?=$states[$row["state"]]?>
+												</td>
+												<td>
+													<a class="action_button" href="<?=base_url()?>admin/orders_view?id=<?=$row['order_id']?>">
+														<i class="fa fa-eye p-1" aria-hidden="true"></i>
+													</a>
+													<a class="action_button" href="<?=base_url();?>admin/orders_edit?id=<?=$row['order_id']?>">
+														<i class="fa fa-pencil p-1" aria-hidden="true"></i>
+													</a>
+													<i class="fa fa-trash p-1 btn_delete action_button" data-toggle="modal" data-target="#modal_delete_order" data-id="<?=$row['order_id']?>" aria-hidden="true"></i>
+												</td>
+											</tr>
+										<?php endforeach; ?>
+									</tbody>
+								</table>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -156,7 +159,7 @@ $template_header;
 							<label for="inp_address">House Number/Floor/Bldg./etc.:</label>
 							<input type="text" class="form-control" name="inp_address" placeholder="House Number/Floor/Bldg./etc." autocomplete="off">
 						</div>
-						<div class="form-group">
+						<div class="form-group m-0" style="overflow: auto;">
 							<label>Ordered Items:</label>
 							<input id="items_no" type="hidden" name="items_no" value="0">
 							<table id="table_items" class="table table-striped table-bordered">
@@ -255,46 +258,15 @@ $template_header;
 			</div>
 		</div>
 	</div>
-	<!-- <div id="modal_state_order" class="modal">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<?=form_open(base_url() . "admin/order_update_state", "method='POST'");?>
-					<input id="state_inp_id" type="hidden" name="inp_id">
-					<div class="modal-header">
-						<h4 class="modal-title">Change State</h4>
-						<button type="button" class="close" data-dismiss="modal">
-							&times;
-						</button>
-					</div>
-					<div class="modal-body">
-						<div class="form-group">
-							<label>State:</label>
-							<select name="inp_state" class="form-control">
-								<?php foreach ($states as $key => $val): ?>
-									<option value="<?=$key?>"><?=$val?></option>
-								<?php endforeach; ?>
-							</select>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<input type="submit" class="btn btn-primary" value="Update State">
-					</div>
-				<?=form_close()?>
-			</div>
-		</div>
-	</div> -->
 </body>
 <script type="text/javascript">
 	$(document).ready(function () {
-		// $(".btn_state").on("click", function() {
-		// 	$("#state_inp_id").val($(this).data("id"));
-		// });
 		$(".btn_delete").on("click", function() {
 			$("#delete_id").text($(this).data("id"));
 			$("#delete_inp_id").val($(this).data("id"));
 		});
 
-		$("#table_orders").DataTable();
+		$("#table_orders").DataTable({"scrollX": true});
 
 		$(".btn_add_to_items").on("click", function() {
 			var p_id = $(this).attr("data-id");
@@ -387,7 +359,7 @@ $template_header;
 			total();
 		});
 
-		$("#table_products").DataTable();
+		$("#table_products").DataTable({"scrollX": true});
 
 
 		// $("#user_email").on("keyup", function(e) {

@@ -69,8 +69,7 @@
 
 	public function new_order_custom() {
 		$user_id = ($this->session->has_userdata("user_id") ? $this->session->userdata("user_id") : NULL);
-		$date = date('Y-m-d');
-		$time = date('H:i');
+		$date_time = date("Y-m-d H:i:s");
 
 		$description = $this->input->post("inp_description");
 		$type_id = $this->input->post("inp_type_id");
@@ -94,8 +93,7 @@
 			} else {
 				$data = array(
 					"user_id" => $user_id,
-					"date" => $date,
-					"time" => $time,
+					"date_time" => $date_time,
 					"zip_code" => $zip_code,
 					"country" => $country,
 					"province" => $province,

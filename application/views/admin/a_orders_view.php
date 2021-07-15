@@ -13,151 +13,155 @@ $template_header;
 </style>
 <body>
 	<div class="wrapper h-100">
-		<?php $this->load->view("admin/template/a_t_sidebar"); ?>
-		<div class="content text-center">
-			<?php $this->load->view("admin/template/a_t_navbar", $nav) ?>
-			<div class="container-fluid p-5">
-				<?php if ($this->session->flashdata("alert")): ?>
-					<?php $alert = $this->session->flashdata("alert"); ?>
-					<div class="alert alert-<?=$alert[0]?> alert-dismissible">
-						<?=$alert[1]?>
-						<button type="button" class="close" data-dismiss="alert">
-							&times;
-						</button>
-					</div>
-				<?php endif; ?>
-				<div class="row">
-					<div class="col-12 text-left">
-						<h2>View Order #<?=$row_info["order_id"]?></h2>
-					</div>
-					<div class="col-12">
-						<div class="row mt-2">
-							<div class="col-12">
-								<h5>User Email:</h5>
+		<div class="container-fluid">
+			<div class="row">
+				<?php $this->load->view("admin/template/a_t_sidebar"); ?>
+				<?php $this->load->view("admin/template/a_t_navbar", $nav); ?>
+				<div class="col-12 text-center">
+					<div class="container-fluid p-5">
+						<?php if ($this->session->flashdata("alert")): ?>
+							<?php $alert = $this->session->flashdata("alert"); ?>
+							<div class="alert alert-<?=$alert[0]?> alert-dismissible">
+								<?=$alert[1]?>
+								<button type="button" class="close" data-dismiss="alert">
+									&times;
+								</button>
+							</div>
+						<?php endif; ?>
+						<div class="row">
+							<div class="col-12 text-left">
+								<h2>View Order #<?=$row_info["order_id"]?></h2>
 							</div>
 							<div class="col-12">
-								<?=$this->Model_read->get_user_acc_wid($row_info["user_id"])->row_array()["email"]?>
-							</div>
-						</div>
-						<div class="row mt-2">
-							<div class="col-12">
-								<h5>Description:</h5>
-							</div>
-							<div class="col-12">
-								<?=$row_info["description"]?>
-							</div>
-						</div>
-						<div class="row mt-2">
-							<div class="col-12">
-								<h5>Date / Time:</h5>
-							</div>
-							<div class="col-12">
-								<?=date("Y-m-d / H:i:s A", strtotime($row_info["date_time"]))?>
-							</div>
-						</div>
-						<div class="row mt-2">
-							<div class="col-12">
-								<h5>Full Address:</h5>
-							</div>
-							<div class="col-12">
-								<?=$row_info["zip_code"] ." / ". $row_info["country"] ." / ". $row_info["province"] ." / ". $row_info["city"] ." / ". $row_info["street"] ." / ". $row_info["address"]?>
-							</div>
-						</div>
+								<div class="row mt-2">
+									<div class="col-12">
+										<h5>User Email:</h5>
+									</div>
+									<div class="col-12">
+										<?=$this->Model_read->get_user_acc_wid($row_info["user_id"])->row_array()["email"]?>
+									</div>
+								</div>
+								<div class="row mt-2">
+									<div class="col-12">
+										<h5>Description:</h5>
+									</div>
+									<div class="col-12">
+										<?=$row_info["description"]?>
+									</div>
+								</div>
+								<div class="row mt-2">
+									<div class="col-12">
+										<h5>Date / Time:</h5>
+									</div>
+									<div class="col-12">
+										<?=date("Y-m-d / H:i:s A", strtotime($row_info["date_time"]))?>
+									</div>
+								</div>
+								<div class="row mt-2">
+									<div class="col-12">
+										<h5>Full Address:</h5>
+									</div>
+									<div class="col-12">
+										<?=$row_info["zip_code"] ." / ". $row_info["country"] ." / ". $row_info["province"] ." / ". $row_info["city"] ." / ". $row_info["street"] ." / ". $row_info["address"]?>
+									</div>
+								</div>
 
-						<div class="row mt-2">
-							<div class="col-12">
-								<h5>Ordered Items:</h5>
-							</div>
-							<div class="col-12">
-								<table id="table_items" class="table table-striped table-bordered">
-									<thead>
-										<tr>
-											<th>Item</th>
-											<th>Qty.</th>
-											<th>Unit Price</th>
-											<th>Total Price</th>
-											<th>Action</th>
-										</tr>
-									</thead>
-									<tbody>
-										<?php $total_qty = 0; $total_price = 0; ?>
-										<?php foreach ($tbl_order_items->result_array() as $row): ?>
-											<tr>
-												<td><?=$this->Model_read->get_product_wid($row["product_id"])->row_array()["name"]?></td>
-												<td><?=$row["qty"]?></td>
-												<?php $total_qty += $row["qty"]; ?>
-												<td><?=$row["price"]?></td>
-												<td class="total_price"><?=$row["qty"] * $row["price"]?></td>
-												<?php $total_price += $row["qty"] * $row["price"]; ?>
-												<td>
-													<a href="<?=base_url();?>admin/products_view?id=<?=$row['product_id']?>">
-														<button class="btn btn-sm btn-primary mb-1">View</button>
-													</a>
-												</td>
+								<div class="row mt-2">
+									<div class="col-12">
+										<h5>Ordered Items:</h5>
+									</div>
+									<div class="col-12">
+										<table id="table_items" class="table table-striped table-bordered">
+											<thead>
+												<tr>
+													<th>Item</th>
+													<th>Qty.</th>
+													<th>Unit Price</th>
+													<th>Total Price</th>
+													<th>Action</th>
+												</tr>
+											</thead>
+											<tbody>
+												<?php $total_qty = 0; $total_price = 0; ?>
+												<?php foreach ($tbl_order_items->result_array() as $row): ?>
+													<tr>
+														<td><?=$this->Model_read->get_product_wid($row["product_id"])->row_array()["name"]?></td>
+														<td><?=$row["qty"]?></td>
+														<?php $total_qty += $row["qty"]; ?>
+														<td><?=$row["price"]?></td>
+														<td class="total_price"><?=$row["qty"] * $row["price"]?></td>
+														<?php $total_price += $row["qty"] * $row["price"]; ?>
+														<td>
+															<a href="<?=base_url();?>admin/products_view?id=<?=$row['product_id']?>">
+																<button class="btn btn-sm btn-primary mb-1">View</button>
+															</a>
+														</td>
+													</tr>
+												<?php endforeach; ?>
+											</tbody>
+											<tr id="total_info">
+												<td>Total</td>
+												<td id="total_qty"><?=$total_qty?></td>
+												<td></td>
+												<td id="total_price"><?=$total_price?></td>
+												<td></td>
 											</tr>
-										<?php endforeach; ?>
-									</tbody>
-									<tr id="total_info">
-										<td>Total</td>
-										<td id="total_qty"><?=$total_qty?></td>
-										<td></td>
-										<td id="total_price"><?=$total_price?></td>
-										<td></td>
-									</tr>
-								</table>
-							</div>
-						</div>
-						<div class="row mt-2">
-							<div class="col-12">
-								<h5>Payments:</h5>
-							</div>
-							<div class="col-12">
-								<table id="table_payments" class="table table-striped table-bordered">
-									<thead>
-										<tr>
-											<th>ID</th>
-											<th>Img</th>
-											<th>Date / Time</th>
-											<th>Description</th>
-											<th>Amount</th>
-										</tr>
-									</thead>
-									<tbody>
-										<?php $total_payment = 0; ?>
-										<?php foreach ($tbl_payments->result_array() as $row): ?>
-											<tr>
-												<td><?=$row["payment_id"]?></td>
-												<td>
-													<?php if($row["img"] != NULL): ?>
-														<img class="img_preview" src="<?php
-														if (!empty($row["img"])) {
-															echo base_url(). 'uploads/users/user_'. $row_info["user_id"] .'/payments/order_'. $row_info["order_id"] .'/'. $row["img"];
-														} else {
-															echo base_url(). "assets/img/no_img.png";
-														}
-														?>">
-													<?php endif; ?>
-												</td>
-												<td><?=date("Y-m-d / H:i:s A", strtotime($row_info["date_time"]))?></td>
-												<td><?=$row["description"]?></td>
-												<td><?=$row["amount"]?></td>
-											</tr>
-										<?php endforeach; ?>
-									</tbody>
-								</table>
-							</div>
-						</div>
-						<div class="row mt-2">
-							<div class="col-12">
-								<h5>Order State:</h5>
-							</div>
-							<div class="col-12">
-								<?=$states[$row_info["state"]]?>
-							</div>
-						</div>
-						<div class="row mt-2">
-							<div class="col-12 text-center">
-								<button class="btn btn-primary btn-lg btn_state" data-toggle="modal" data-target="#modal_state_order" data-id="<?=$row_info['order_id']?>">State</button>
+										</table>
+									</div>
+								</div>
+								<div class="row mt-2">
+									<div class="col-12">
+										<h5>Payments:</h5>
+									</div>
+									<div class="col-12">
+										<table id="table_payments" class="table table-striped table-bordered">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>Img</th>
+													<th>Date / Time</th>
+													<th>Description</th>
+													<th>Amount</th>
+												</tr>
+											</thead>
+											<tbody>
+												<?php $total_payment = 0; ?>
+												<?php foreach ($tbl_payments->result_array() as $row): ?>
+													<tr>
+														<td><?=$row["payment_id"]?></td>
+														<td>
+															<?php if($row["img"] != NULL): ?>
+																<img class="img_preview" src="<?php
+																if (!empty($row["img"])) {
+																	echo base_url(). 'uploads/users/user_'. $row_info["user_id"] .'/payments/order_'. $row_info["order_id"] .'/'. $row["img"];
+																} else {
+																	echo base_url(). "assets/img/no_img.png";
+																}
+																?>">
+															<?php endif; ?>
+														</td>
+														<td><?=date("Y-m-d / H:i:s A", strtotime($row_info["date_time"]))?></td>
+														<td><?=$row["description"]?></td>
+														<td><?=$row["amount"]?></td>
+													</tr>
+												<?php endforeach; ?>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="row mt-2">
+									<div class="col-12">
+										<h5>Order State:</h5>
+									</div>
+									<div class="col-12">
+										<?=$states[$row_info["state"]]?>
+									</div>
+								</div>
+								<div class="row mt-2">
+									<div class="col-12 text-center">
+										<button class="btn btn-primary btn-lg btn_state" data-toggle="modal" data-target="#modal_state_order" data-id="<?=$row_info['order_id']?>">State</button>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -197,8 +201,8 @@ $template_header;
 <script type="text/javascript" src="<?=base_url()?>assets/js/sum().js"></script>
 <script type="text/javascript">
 	$(document).ready(function () {
-		$("#table_items").DataTable();
-		$("#table_payments").DataTable();
+		$("#table_items").DataTable({"scrollX": true});
+		$("#table_payments").DataTable({"scrollX": true});
 
 		$(".btn_state").on("click", function() {
 			$("#state_inp_id").val($(this).data("id"));

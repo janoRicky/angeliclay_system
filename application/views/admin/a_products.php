@@ -4,90 +4,96 @@ $template_header;
 ?>
 <body>
 	<div class="wrapper h-100">
-		<?php $this->load->view("admin/template/a_t_sidebar"); ?>
-		<div class="content text-center">
-			<?php $this->load->view("admin/template/a_t_navbar", $nav) ?>
-			<div class="container-fluid p-5">
-				<?php if ($this->session->flashdata("alert")): ?>
-					<?php $alert = $this->session->flashdata("alert"); ?>
-					<div class="alert alert-<?=$alert[0]?> alert-dismissible">
-						<?=$alert[1]?>
-						<button type="button" class="close" data-dismiss="alert">
-							&times;
-						</button>
-					</div>
-				<?php endif; ?>
-				<div class="row">
-					<div class="col-6 text-left">
-						<h2>Products (<?=$tbl_products->num_rows()?>)</h2>
-					</div>
-					<div class="col-6 text-right">
-						<button class="btn btn-primary" data-toggle="modal" data-target="#modal_new_product">New Product</button>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-12">
-						<table id="table_products" class="table table-striped table-bordered">
-							<thead>
-								<tr>
-									<th>ID</th>
-									<th>Name</th>
-									<th>Description</th>
-									<th>Type</th>
-									<th>Price</th>
-									<th>Qty.</th>
-									<th>Visible</th>
-									<th>Action</th>
-								</tr>
-							</thead>
-							<tbody>
-								<?php foreach ($tbl_products->result_array() as $row): ?>
-									<tr class="text-center align-middle">
-										<td>
-											<?=$row["product_id"]?>
-										</td>
-										<td>
-											<?=$row["name"]?>
-										</td>
-										<td>
-											<?=$row["description"]?>
-										</td>
-										<td>
-											<?php
-											if (isset($tbl_types[$row["type_id"]])) {
-												echo $tbl_types[$row["type_id"]];
-											} else {
-												echo "Deleted Type (Edit Required)";
-											}
-											?>
-										</td>
-										<td>
-											<?=$row["price"]?>
-										</td>
-										<td>
-											<?=$row["qty"]?>
-										</td>
-										<td>
-											<?=($row["visibility"] == 1 ? "YES" : "NO")?>
-										</td>
-										<td>
-											<button class="btn btn-primary btn-sm btn_visibility" data-toggle="modal" data-target="#modal_visibility" data-id="<?=$row['product_id']?>">Visibility</button>
-											<a class="action_button" href="<?=base_url();?>admin/products_view?id=<?=$row['product_id']?>">
-												<i class="fa fa-eye p-1" aria-hidden="true"></i>
-											</a>
-											<a class="action_button" href="<?=base_url();?>admin/products_edit?id=<?=$row['product_id']?>">
-												<i class="fa fa-pencil p-1" aria-hidden="true"></i>
-											</a>
-											<i class="fa fa-trash p-1 btn_delete action_button" data-toggle="modal" data-target="#modal_delete_product" data-id="<?=$row['product_id']?>" aria-hidden="true"></i>
-										</td>
-									</tr>
-								<?php endforeach; ?>
-							</tbody>
-						</table>
+		<div class="container-fluid">
+			<div class="row">
+				<?php $this->load->view("admin/template/a_t_sidebar"); ?>
+				<?php $this->load->view("admin/template/a_t_navbar", $nav); ?>
+				<div class="col-12 text-center">
+					<div class="container-fluid p-5">
+						<?php if ($this->session->flashdata("alert")): ?>
+							<?php $alert = $this->session->flashdata("alert"); ?>
+							<div class="alert alert-<?=$alert[0]?> alert-dismissible">
+								<?=$alert[1]?>
+								<button type="button" class="close" data-dismiss="alert">
+									&times;
+								</button>
+							</div>
+						<?php endif; ?>
+						<div class="row">
+							<div class="col-6 text-left">
+								<h2>Products (<?=$tbl_products->num_rows()?>)</h2>
+							</div>
+							<div class="col-6 text-right">
+								<button class="btn btn-primary" data-toggle="modal" data-target="#modal_new_product">New Product</button>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<table id="table_products" class="table table-striped table-bordered">
+									<thead>
+										<tr>
+											<th>ID</th>
+											<th>Name</th>
+											<th>Description</th>
+											<th>Type</th>
+											<th>Price</th>
+											<th>Qty.</th>
+											<th>Visible</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php foreach ($tbl_products->result_array() as $row): ?>
+											<tr class="text-center align-middle">
+												<td>
+													<?=$row["product_id"]?>
+												</td>
+												<td>
+													<?=$row["name"]?>
+												</td>
+												<td>
+													<?=$row["description"]?>
+												</td>
+												<td>
+													<?php
+													if (isset($tbl_types[$row["type_id"]])) {
+														echo $tbl_types[$row["type_id"]];
+													} else {
+														echo "Deleted Type (Edit Required)";
+													}
+													?>
+												</td>
+												<td>
+													<?=$row["price"]?>
+												</td>
+												<td>
+													<?=$row["qty"]?>
+												</td>
+												<td>
+													<?=($row["visibility"] == 1 ? "YES" : "NO")?>
+												</td>
+												<td>
+													<button class="btn btn-primary btn-sm btn_visibility" data-toggle="modal" data-target="#modal_visibility" data-id="<?=$row['product_id']?>">Visibility</button>
+													<a class="action_button" href="<?=base_url();?>admin/products_view?id=<?=$row['product_id']?>">
+														<i class="fa fa-eye p-1" aria-hidden="true"></i>
+													</a>
+													<a class="action_button" href="<?=base_url();?>admin/products_edit?id=<?=$row['product_id']?>">
+														<i class="fa fa-pencil p-1" aria-hidden="true"></i>
+													</a>
+													<i class="fa fa-trash p-1 btn_delete action_button" data-toggle="modal" data-target="#modal_delete_product" data-id="<?=$row['product_id']?>" aria-hidden="true"></i>
+												</td>
+											</tr>
+										<?php endforeach; ?>
+									</tbody>
+								</table>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
+</div>
 	</div>
 	<!-- bootstrap modals -->
 	<div id="modal_new_product" class="modal">
@@ -180,7 +186,6 @@ $template_header;
 		</div>
 	</div>
 </body>
-<?php $this->load->view("admin/template/a_t_scripts"); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
 		$(".btn_visibility").on("click", function() {
@@ -191,7 +196,7 @@ $template_header;
 			$("#delete_inp_id").val($(this).data("id"));
 		});
 
-		$("#table_products").DataTable();
+		$("#table_products").DataTable({"scrollX": true});
 
 
 		$(document).on("change", "#product_image", function() {

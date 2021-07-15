@@ -45,7 +45,7 @@ class Model_read extends CI_Model {
 		$search_query = (!is_null($type) && !empty($type) ? "AND type_id = '$type' " : "") . (!is_null($search) ? "AND (name LIKE '%$search%' OR description LIKE '%$search%') " : "");
 		$pg_no = (!is_null($page) && !empty($page) ? $page * 10 : 0);
 
-		$query = "SELECT * FROM products AS p WHERE status = '1' AND visibility = '1'$search_query AND EXISTS(SELECT * FROM types AS t WHERE p.type_id = t.type_id) ORDER BY p.date_added DESC LIMIT 10 OFFSET $pg_no";
+		$query = "SELECT * FROM products AS p WHERE status = '1' AND visibility = '1' $search_query AND EXISTS(SELECT * FROM types AS t WHERE p.type_id = t.type_id) ORDER BY p.date_added DESC LIMIT 10 OFFSET $pg_no";
 		return $this->db->query($query);
 	}
 	public function get_product_wid($id) {
@@ -66,15 +66,18 @@ class Model_read extends CI_Model {
 	public function get_types() {
 		return $this->db->get_where("types", array("status" => "1"));
 	}
-	public function get_types_user_view() {
+	public function get_types_featured_view() {
 		$query = "SELECT * FROM types AS t WHERE status = '1' AND EXISTS(SELECT * FROM products AS p WHERE t.type_id = p.type_id AND visibility = '1')";
 		return $this->db->query($query);
 	}
 	public function get_type_wid($id) {
 		return $this->db->get_where("types", array("type_id" => $id));
 	}
-	public function get_types_user() {
+	public function get_types_featured() {
 		return $this->db->get_where("types", array("status" => "1", "featured" => "1"));
+	}
+	public function get_types_user() {
+		return $this->db->get("types");
 	}
 
 	public function get_orders($state) {

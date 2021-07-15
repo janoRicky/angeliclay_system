@@ -20,6 +20,15 @@
 
 	<!-- PAGE ICON -->
 	<!-- <link rel="icon" href="<?=base_url()?>/favicon.ico" type="image/gif"> -->
+	<style type="text/css">
+		.banner {
+			background-position: center;
+			background-image: url("<?=base_url()?>assets/img/pink_stripes.png");
+			background-repeat: repeat-x;
+
+			background-size: contain;
+		}
+	</style>
 
 
 	<?php $this->load->view('user/template/u_t_scripts'); // include the scripts from the view folder ?>

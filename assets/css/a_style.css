@@ -4,9 +4,16 @@ html, body {
 	height: 100%;
 }
 
+.dataTables_scroll {
+	text-align: center;
+}
+
 .sidebar {
-	min-width: 15rem;
-	max-width: 15rem;
+	padding-bottom: 4rem;
+	padding-top: 4rem;
+	z-index: 99;
+	/*min-width: 15rem;*/
+	/*max-width: 15rem;*/
 	overflow-y: auto;
 
 	background-color: #72b1a1;
