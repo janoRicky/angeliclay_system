@@ -19,6 +19,22 @@ html, body {
 	background-color: #fffafc; border-radius: 3rem;
 }
 
+.notice {
+	border-radius: 3rem;
+}
+.notice button {
+	height: 100%;
+}
+.notice.n_all {
+	box-shadow: 0 0 1rem #fff;
+	max-width: 40%;
+	position: fixed;
+	top: 1rem;
+	right: 1rem;
+
+	z-index: 200;
+}
+
 .nav_title {
 	font-family: Lucida Handwriting, Brush Script MT, cursive;
 	font-size: 3rem;
@@ -109,19 +125,90 @@ html, body {
 	left: 0;
 }
 
-.paging span {
+.order {
+	border: 0.3rem solid #dc8a6b;
+	border-width: 0 0.5rem;
+	padding: 1rem;
+	border-radius: 0.8rem;
+
+	color: #70311a;
+}
+.order td {
+	border-width: 0;
+}
+.order div {
+	text-align: center;
+}
+
+.paging span, .pagination a  {
 	color: #954123;
 	background: linear-gradient(180deg, #fffafc 5%, #ffe7f8 50%, #fffafc 95%);
 	border-color: #dc8a6b !important;
 }
-.paging li span:hover {
+.paging li span:hover, .pagination li a:hover {
 	color: #000 !important;
 }
-.paging li.active span {
+.paging li.active span, .pagination li.active a {
 	font-weight: bold;
 	color: #70311a !important;
 }
 
+.button {
+	font-weight: bold;
+	cursor: pointer;
+	margin: 0.1rem;
+	border-width: 0;
+	padding: 0.5rem 0.8rem;
+	border-radius: 2rem;
+}
+.button.b_lg {
+	padding: 0.75rem 1.2rem;
+	font-size: 1.3rem;
+}
+.button.b_p, .button.b_n:hover {
+	background-color: #ffc6dd;
+	color: #70311a;
+}
+.button.b_n, .button.b_p:hover {
+	background-color: #dc8a6b;
+	color: #fff;
+}
+
+
+.custom_description {
+	border: 0.5rem solid #dc8a6b;
+	border-width: 0 0.5rem;
+	border-radius: 3rem;
+
+	padding: 1rem 1.5rem;
+	margin: 1rem 0;
+}
+.item_img {
+	border: 0.3rem solid #ffc6dd;
+	border-radius: 10%;
+
+	box-shadow: 0 0 1.2rem #fff;
+	width: 100%;
+}
+
+.img_u_box {
+	position: relative;
+}
+.img_u_change {
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	background-color: rgba(0,0,0,0.8);
+	color: #fff;
+	font-weight: bold;
+
+	cursor: pointer;
+}
+.img_u_preview {
+	max-width: 50%;
+	max-height: 80%;
+}
 /*
 .navbar.navbar-expand-lg {
 	padding: 15px 16px 8px 16px;

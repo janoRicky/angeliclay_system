@@ -1,38 +1,3 @@
-<!-- <nav class="navbar navbar-expand-sm navbar-expand-md navbar-expand-lg justify-content-end py-0 px-md-4 px-sm-4">
-	<div class="flex-wrap mx-5">
-		<ul class="navbar-nav">
-			<li class="nav-item px-2"><a class="nav-link text-uppercase py-0" href="home">
-				<small>Home</small></a></li>
-			<li class="nav-item px-2"><a class="nav-link text-uppercase py-0" href="products">
-				<small>Products</small></a></li>
-			<?php if ($this->session->userdata("user_in")): ?>
-				<li class="nav-item px-2"><a class="nav-link text-uppercase py-0" href="account">
-					<small>Account</small></a></li>
-				<li class="nav-item px-2"><a class="nav-link text-uppercase py-0" href="logout">
-					<small>Logout</small></a></li>
-			<?php else: ?>
-				<li class="nav-item px-2"><a class="nav-link text-uppercase py-0" href="login">
-					<small>Log-In</small></a></li>
-			<?php endif; ?>
-		</ul>
-	</div>
-</nav>
-<nav class="navbar navbar-expand-sm navbar-expand-md navbar-expand-lg pl-lg-5 pl-md-5 pl-sm-0 py-0">
-	<div class="navbar-header pr-3">
-		<h4 class="navbar-text">AngeliClay</h4>
-	</div>
-	<div class="col-lg-8">
-		<form class="input-group input-group-sm" action="">
-		   <input type="text" class="form-control" placeholder="Search" aria-label="Search" name="search">
-		   <div class="input-group-btn mr-sm-2">
-				<button class="btn btn-light btn-outline-secondary btn-sm my-0 my-sm-0 " type="submit">
-			   		<i class="fa fa-search" aria-hidden="true" style="color: white"></i>
-				</button>
-		   </div>
-		</form>
-	</div>
-</nav> -->
-
 <div class="container-fluid navbar_">
 	<div class="row p-4">
 		<div class="col-12 text-center">
@@ -90,9 +55,27 @@
 					background-size: contain;
 				}
 			</style>
-			<div class="awning">
-				
-			</div>
+			<div class="awning"></div>
 		</div>
 	</div>
 </div>
+
+<?php if ($this->session->flashdata("notice")): ?>
+	<?php $alert = $this->session->flashdata("notice"); ?>
+	<div class="notice n_all row my-4 alert alert-<?=$alert[0]?> alert-dismissible  mx-auto">
+		<div class="text-center w-100">
+			<?=$this->session->flashdata("notice")[1]?>
+		</div>
+		<button type="button" class="close" data-dismiss="alert">
+			&times;
+		</button>
+	</div>
+<?php endif; ?>
+
+<script type="text/javascript">
+	setTimeout(function() {
+		$(".notice").fadeOut(3000, function() {
+			$(this).remove();
+		});
+	}, 20000);
+</script>

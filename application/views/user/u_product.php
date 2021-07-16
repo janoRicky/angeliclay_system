@@ -2,22 +2,13 @@
 <?php
 $template_header;
 ?>
-<style type="text/css">
-	.item_img {
-		border: 0.35rem solid #ffc6dd;
-		border-radius: 10%;
-
-		box-shadow: 0 0 1.2rem #fff;
-		width: 100%;
-	}
-</style>
 <body>
 	<div class="wrapper bg">
 		<?php $this->load->view("user/template/u_t_navbar"); ?>
 		<div class="container-fluid">
 			<div class="row my-4">
-				<div class="col-0 col-lg-1"></div>
-				<div class="col-12 col-lg-10 content pt-4">
+				<div class="col-0 col-sm-1"></div>
+				<div class="col-12 col-sm-10 content pt-4">
 					<div class="row mt-4">
 						<div class="col-12 banner text-center">
 							<div class="banner_board">
@@ -26,7 +17,7 @@ $template_header;
 						</div>
 					</div>
 					<div class="row m-5">
-						<div class="col-6">
+						<div class="col-12 col-md-6">
 							<img class="img-responsive item_img" src="<?php
 							if (!empty($product_details["img"])) {
 								echo base_url(). 'uploads/product_'. $product_details["product_id"] .'/'. explode("/", $product_details["img"])[0];
@@ -35,7 +26,7 @@ $template_header;
 							}
 							?>">
 						</div>
-						<div class="col-6">
+						<div class="col-12 col-md-6">
 							<?php
 							$current_qty = $product_details["qty"];
 							if ($this->session->has_userdata("cart")) {
@@ -66,43 +57,48 @@ $template_header;
 							</div>
 							<div class="row mt-4">
 								<div class="col-4">
-									<h5 class="font-weight-bold">Available:</h5>
+									<h5 class="font-weight-bold">Avail:</h5>
 								</div>
 								<div class="col-8">
 									<h5><?=$current_qty?></h5>
 								</div>
 							</div>
 							<div class="row mt-4 mb-2">
-								<div class="col-1 col-md-3"></div>
-								<div class="col-10 col-md-6 text-center">
+								<div class="col-0 col-sm-3"></div>
+								<div class="col-12 col-sm-6 text-center">
 									<h3 class="font-weight-bold price">
 										PHP <?=number_format($product_details["price"], 2)?>
 									</h3>
 								</div>
-								<div class="col-1 col-md-3"></div>
+								<div class="col-0 col-sm-3"></div>
 							</div>
 							<?=form_open(base_url() . "to_cart", "method='GET'")?>
 								<input type="hidden" name="id" value="<?=$product_details['product_id']?>">
 								<div class="row">
-									<div class="col-12 col-md-3 text-center">
+									<div class="col-12 col-sm-3 text-center">
 										<h5 class="font-weight-normal m-0 p-0">Qty:</h5>
 									</div>
-									<div class="col-12 col-md-9">
+									<div class="col-12 col-sm-9">
 										<input class="form-control" type="number" name="amount" value="0" min="0" max="<?=$current_qty?>">
 									</div>
 								</div>
-								<div class="row mt-2">
-									<div class="col-6">
-										<input class="btn btn-outline-dark btn-block font-weight-bold" type="submit" name="submit" value="Add to Cart">
+								<div class="row mt-4">
+									<div class="col-6 text-center">
+										<button class="button b_p b_lg" type="submit" name="submit">
+											<i class="fa fa-shopping-cart" aria-hidden="true"></i> Add to Cart
+										</button>
 									</div>
-									<div class="col-6">
-										<input class="btn btn-outline-danger btn-block font-weight-bold" type="submit" name="submit" value="Buy Now">
+									<div class="col-6 text-center">
+										<button class="button b_p b_lg" type="submit" name="submit">
+											<i class="fa fa-money" aria-hidden="true"></i> Buy Now
+										</button>
 									</div>
 								</div>
 							<?=form_close()?>
 						</div>
 					</div>
 				</div>
+				<div class="col-0 col-sm-1"></div>
 			</div>
 		</div>
 		<?php $this->load->view("user/template/u_t_footer"); ?>

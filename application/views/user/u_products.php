@@ -3,13 +3,6 @@
 $template_header;
 ?>
 <style type="text/css">
-	.item_img {
-		border: 0.25rem solid #ffc6dd;
-		border-radius: 10%;
-
-		box-shadow: 0 0 1.2rem #fff;
-		width: 100%;
-	}
 	.custom_order {
 		color: #954123;
 		font-size: 2rem;
@@ -25,55 +18,61 @@ $template_header;
 		<?php $this->load->view("user/template/u_t_navbar"); ?>
 		<div class="container-fluid">
 			<div class="row mb-4 mt-4">
-				<div class="col-0 col-lg-1"></div>
-				<div class="col-12 col-lg-10 content pt-4">
+				<div class="col-0 col-sm-1"></div>
+				<div class="col-12 col-sm-10 content pt-4">
 					<div class="row">
 						<div class="col-12 banner text-center mt-4">
 							<?=form_open(base_url() . "products", "id='search_bar' method='GET'")?>
 								<input id="page" type="hidden" name="page" value="<?=$page_no?>">
-								<div class="row px-4">
-									<div class="col-5">
-										<input id="search_value" class="form-control" type="text" name="search" value="<?=$this->input->get("search")?>">
+								<div class="row">
+									<div class="col-0 col-sm-1"></div>
+									<div class="col-12 col-sm-10">
+										<div class="row px-3">
+											<div class="col-5 col-md-6">
+												<input id="search_value" class="form-control" type="text" name="search" value="<?=$this->input->get("search")?>" placeholder="Search">
+											</div>
+											<div class="col-3 col-md-4">
+												<select id="search_type" class="form-control" name="type">
+													<option value="">All</option>
+													<?php foreach ($types as $key => $val): ?>
+														<option value="<?=$key?>" <?=($this->input->get("type") == $key ? "selected" : "")?>><?=$val?></option>
+													<?php endforeach; ?>
+												</select>
+											</div>
+											<div class="col-2 col-md-1">
+												<button class="button" type="button" onclick="$('#search_type').val(''); $('#search_value').val('');">
+													<i class="fa fa-refresh" aria-hidden="true"></i>
+												</button>
+											</div>
+											<div class="col-2 col-md-1">
+												<button class="button" type="submit" onclick="$('#page').val(0);">
+													<i class="fa fa-search" aria-hidden="true"></i>
+												</button>
+											</div>
+										</div>
 									</div>
-									<div class="col-4">
-										<select id="search_type" class="form-control" name="type">
-											<option value="">All</option>
-											<?php foreach ($types as $key => $val): ?>
-												<option value="<?=$key?>" <?=($this->input->get("type") == $key ? "selected" : "")?>><?=$val?></option>
-											<?php endforeach; ?>
-										</select>
-									</div>
-									<div class="col-1">
-										<button type="button" class="form-control" onclick="$('#search_type').val(''); $('#search_value').val('');">
-											<i class="fa fa-refresh" aria-hidden="true"></i>
-										</button>
-									</div>
-									<div class="col-2">
-										<button class="form-control" type="submit" onclick="$('#page').val(0);">
-											<i class="fa fa-search" aria-hidden="true"></i> Search
-										</button>
-									</div>
+									<div class="col-0 col-sm-1"></div>
 								</div>
 							<?=form_close()?>
 						</div>
 					</div>
 					<div class="row mt-5">
-						<div class="col-0 col-md-3"></div>
-						<div class="col-12 col-md-6">
+						<div class="col-0 col-sm-3"></div>
+						<div class="col-12 col-sm-6">
 							<a href="<?=base_url()?>custom" class="text-dark">
 								<div class="custom_order text-center p-3">
 									<span>Place Custom Order</span>
 								</div>
 							</a>
 						</div>
-						<div class="col-0 col-md-3"></div>
+						<div class="col-0 col-sm-3"></div>
 					</div>
 					<div class="row mt-5">
 						<div class="col-1"></div>
 						<div class="col-10">
 							<div class="row align-items-center">
 								<?php foreach ($tbl_products->result_array() as $row): ?>
-									<div class="col-12 col-md-6 py-2">
+									<div class="col-12 col-sm-6 py-2">
 										<a href="<?=base_url()?>product?id=<?=$row['product_id']?>" class="text-dark">
 											<div class="row align-items-center item">
 												<div class="col-6">
@@ -86,16 +85,6 @@ $template_header;
 													?>">
 												</div>
 												<div class="col-6">
-													<!-- <h3 class="font-weight-bold" style="font-size: 20px;"><?=$row["name"]?></h3>
-													<div class="row mt-4">
-														<div class="col-md-12 marginslim ml-2">
-															<span class="font-italic"><?=$row["description"]?></span><br>
-															<span class="font-weight-bold">PHP <?=number_format($row["price"], 2)?></span>
-															<?php if ($row["qty"] < 1): ?>
-																<span class="font-weight-bold"><h5>SOLD OUT</h5></span>
-															<?php endif; ?>
-														</div>
-													</div> -->
 													<div class="row">
 														<div class="col-12">
 															<h4 class="font-weight-bold"><?=$row["name"]?></h4>
@@ -103,7 +92,7 @@ $template_header;
 													</div>
 													<div class="row">
 														<div class="col-12">
-															<h5 class="font-weight-light"><?=$row["description"]?></h5>
+															<h5 class="font-weight-light"><?=$types[$row["type_id"]]?></h5>
 														</div>
 													</div>
 													<div class="row">
@@ -161,7 +150,7 @@ $template_header;
 						</div>
 					</div>
 				</div>
-				<div class="col-0 col-lg-1"></div>
+				<div class="col-0 col-sm-1"></div>
 			</div>
 		</div>
 		<?php $this->load->view("user/template/u_t_footer"); ?>

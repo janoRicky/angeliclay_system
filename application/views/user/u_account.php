@@ -8,18 +8,18 @@ $template_header;
 		<?php $this->load->view("user/template/u_t_navbar"); ?>
 		<div class="container-fluid">
 			<div class="row mb-4 mt-4">
-				<div class="col-0 col-lg-1"></div>
-				<div class="col-12 col-lg-10 content pt-4">
+				<div class="col-0 col-sm-1"></div>
+				<div class="col-12 col-sm-10 content pt-4">
 					<div class="row mt-4">
 						<div class="col-12 banner text-center">
 							<div class="banner_board">
-								<h5 class="font-weight-bold">Account Details <a href="account_details"><i class="fa fa-pencil p-1" aria-hidden="true"></i></a></h5>
+								<h5 class="font-weight-bold">&bull; Account Details &bull;</h5>
 							</div>
 						</div>
 					</div>
 					<div class="row my-5">
-						<div class="col-1 col-md-3"></div>
-						<div class="col-10 col-md-6">
+						<div class="col-1 col-sm-3"></div>
+						<div class="col-10 col-sm-6">
 							<div class="row mt-2">
 								<div class="col-4">
 									<h5 class="font-weight-bold">Full Name: </h5>
@@ -60,10 +60,20 @@ $template_header;
 									<?=$account_details["contact_num"]?>
 								</div>
 							</div>
+							<div class="row mt-4">
+								<div class="col-12 text-center">
+									<a href="account_details">
+										<button class="button b_p b_lg">
+											<i class="fa fa-pencil" aria-hidden="true"></i> Update Personal Info
+										</button>
+									</a>
+								</div>
+							</div>
 						</div>
-						<div class="col-1 col-md-3"></div>
+						<div class="col-1 col-sm-3"></div>
 					</div>
 				</div>
+				<div class="col-0 col-sm-1"></div>
 			</div>
 		</div>
 		<?php $this->load->view("user/template/u_t_footer"); ?>

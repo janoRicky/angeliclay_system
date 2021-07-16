@@ -4,30 +4,16 @@ $template_header;
 ?>
 
 <style>
-	.img_box {
-		cursor: pointer;
-		margin: auto;
-	}
-	.img_change {
-		position: absolute;
-		top: 0;
-		left: 0;
-
-		background-color: rgba(0,0,0,0.8);
-		color: #fff;
-		font-weight: bold;
-	}
-	.img_preview {
-		object-fit: contain;
-		min-height: 10rem;
-		max-height: 12rem;
-		border: 1px solid #000;
-	}
 	.img_remove {
 		position: absolute;
 		top: 0;
 		right: 0;
-		color: red !important;
+		color: #ff0000 !important;
+		cursor: pointer;
+		padding: 1rem;
+	}
+	.img_remove:hover {
+		color: #ffc0c0 !important;
 	}
 </style>
 <body>
@@ -35,12 +21,12 @@ $template_header;
 		<?php $this->load->view("user/template/u_t_navbar"); ?>
 		<div class="container-fluid">
 			<div class="row mb-4 mt-4">
-				<div class="col-0 col-lg-1"></div>
-				<div class="col-12 col-lg-10 content pt-4 pb-4">
+				<div class="col-0 col-sm-1"></div>
+				<div class="col-12 col-sm-10 content pt-4 pb-4">
 					<div class="row mt-4">
 						<div class="col-12 banner text-center">
 							<div class="banner_board">
-								<h3 class="font-weight-bold">Custom Product Details</h3>
+								<h3 class="font-weight-bold">&bull; Custom Product Details &bull;</h3>
 							</div>
 						</div>
 					</div>
@@ -59,7 +45,7 @@ $template_header;
 										</div>
 									</div>
 									<div class="row mt-2">
-										<div class="col-12 col-md-6">
+										<div class="col-12 col-sm-6">
 											<h5 class="font-weight-bold">Type: </h5>
 											<select class="form-control" name="inp_type_id">
 												<?php foreach ($types as $key => $val): ?>
@@ -67,7 +53,7 @@ $template_header;
 												<?php endforeach; ?>
 											</select>
 										</div>
-										<div class="col-12 col-md-6">
+										<div class="col-12 col-sm-6">
 											<h5 class="font-weight-bold">Size: </h5>
 											<input class="form-control" type="text" name="inp_size" placeholder="e.g. 12cm">
 										</div>
@@ -77,16 +63,18 @@ $template_header;
 											<input id="img_count" type="hidden" name="inp_img_count" value="0">
 											<h5 class="font-weight-bold">Image Reference/s: </h5>
 											<div class="img_container row">
-												<div class="col-3 img_box mb-3">
-													<input type="file" class="d-none img_input no_img" name="inp_img_1">
-													<img class="w-100 img_preview" src="<?=base_url()?>assets/img/no_img.png">
-													<div class="img_change w-100 h-100 p-3 text-center d-none">
-														Change Image
+												<div class="col-4 img_box mb-3">
+													<div class="img_u_box">
+														<input type="file" class="d-none img_input no_img" name="inp_img_1">
+														<img class="item_img img_preview" src="<?=base_url()?>assets/img/no_img.png">
+														<div class="img_u_change item_img p-3 text-center d-none">
+															Change Image
+														</div>
+														<a class="img_remove">
+															<i class="fa fa-times fa-lg" aria-hidden="true"></i>
+														</a>
+														<input type="hidden" class="img_check" name="inp_img_1_check">
 													</div>
-													<a class="img_remove">
-														<i class="fa fa-times" aria-hidden="true"></i>
-													</a>
-													<input type="hidden" class="img_check" name="inp_img_1_check">
 												</div>
 											</div>
 										</div>
@@ -98,7 +86,7 @@ $template_header;
 					<div class="row mt-4 mb-4">
 						<div class="col-12 banner text-center">
 							<div class="banner_board">
-								<h3 class="font-weight-bold">Shipping Details</h3>
+								<h3 class="font-weight-bold">&bull; Shipping Details &bull;</h3>
 							</div>
 						</div>
 					</div>
@@ -133,19 +121,24 @@ $template_header;
 											<input class="form-control" type="text" name="inp_city" placeholder="City" value="<?=$account_details['city']?>" autocomplete="off">
 										</div>
 										<div class="col-4 col-md-2 my-3">
-											<h5 class="font-weight-bold">Street/Road: </h5>
+											<h5 class="font-weight-bold">Street / Road: </h5>
 										</div>
 										<div class="col-8 col-md-4">
 											<input class="form-control" type="text" name="inp_street" placeholder="Street/Road" value="<?=$account_details['street']?>" autocomplete="off">
 										</div>
 										<div class="col-4 col-md-2 my-3">
-											<h5 class="font-weight-bold">House Number/Floor/Bldg./etc.: </h5>
+											<h5 class="font-weight-bold">House Number / Floor / Bldg. / etc.: </h5>
 										</div>
 										<div class="col-8 col-md-4">
 											<input class="form-control" type="text" name="inp_address" placeholder="House Number/Floor/Bldg./etc." value="<?=$account_details['address']?>" autocomplete="off">
 										</div>
-										<div class="col-12">
-											<input class="form-control" type="submit" class="btn btn-success" value="Place Order">
+									</div>
+									<hr>
+									<div class="row mt-4 mb-3">
+										<div class="col-12 text-center">
+											<button class="button b_p b_lg" type="submit">
+												<i class="fa fa-send" aria-hidden="true"></i> Place Order
+											</button>
 										</div>
 									</div>
 								</div>
@@ -155,6 +148,7 @@ $template_header;
 						</div>
 					</div>
 				</div>
+				<div class="col-0 col-sm-1"></div>
 			</div>
 		</div>
 		<?php $this->load->view("user/template/u_t_footer"); ?>
@@ -163,14 +157,22 @@ $template_header;
 <script type="text/javascript">
 	$(document).ready(function () {
 		$(document).on("mouseenter", ".img_box", function() {
-			$(this).children(".img_change").removeClass("d-none");
+			var img_prev = $(this).children().children(".img_preview");
+			var img_change = $(this).children().children(".img_u_change");
+			img_change.removeClass("d-none");
+			img_change.css({
+				top: img_prev.position.top,
+				left: img_prev.position.left,
+				width: img_prev.outerWidth(),
+				height: img_prev.outerHeight()
+			});
 		}).on("mouseleave", ".img_box", function() {
-			$(this).children(".img_change").addClass("d-none");
+			$(this).children().children(".img_u_change").addClass("d-none");
 		});
-		$(document).on("click", ".img_change", function() {
+		$(document).on("click", ".img_u_change", function() {
 			$(this).siblings(".img_input").trigger("click");
 		});
-		
+
 		$(document).on("change", ".img_input", function(t) {
 			if (t.target.files && t.target.files[0]) {
 				var reader = new FileReader();
@@ -180,7 +182,7 @@ $template_header;
 				};
 
 				$(".img_box").each(function(index, el) {
-					$(this).children(".img_input").attr("name", "inp_img_" + (index + 1));
+					$(this).children().children(".img_input").attr("name", "inp_img_" + (index + 1));
 				});
 
 				// add new imgbox
@@ -188,19 +190,21 @@ $template_header;
 					$(t.target).removeClass("no_img");
 
 					$(".img_container").append($("<div>").attr({
-						class: "col-3 img_box mb-3"
+						class: "col-4 img_box mb-3"
+					}).append($("<div>").attr({
+						class: "img_u_box"
 					}).append($("<input>").attr({
 						type: "file",
 						class: "d-none img_input no_img",
 						name: "inp_img_" + ($(".img_box").length + 1)
 					})).append($("<img>").attr({
-						class: "w-100 img_preview",
+						class: "item_img img_preview",
 						src: "<?=base_url()?>assets/img/no_img.png"
 					})).append($("<div>").attr({
-						class: "img_change w-100 h-100 p-3 text-center d-none"
+						class: "img_u_change item_img p-3 text-center d-none"
 					}).html("Change Image")).append($("<a>").attr({
 						class: "img_remove"
-					}).append($("<i>").attr({ class: "fa fa-times", "aria-hidden": "true" }))));
+					}).append($("<i>").attr({ class: "fa fa-times fa-lg", "aria-hidden": "true" })))));
 					
 					$("#img_count").val($(".img_box").length);
 				}
@@ -209,10 +213,10 @@ $template_header;
 
 		$(document).on("click", ".img_remove", function(t) {
 			if ($(".img_box").length > 1 && !$(this).siblings(".img_input").hasClass("no_img")) {
-				$(this).parent().remove();
+				$(this).parent().parent().remove();
 			}
 			$(".img_box").each(function(index, el) {
-				$(this).children(".img_input").attr("name", "inp_img_" + (index + 1));
+				$(this).children().children(".img_input").attr("name", "inp_img_" + (index + 1));
 			});
 		});
 

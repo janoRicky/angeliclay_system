@@ -1,5 +1,4 @@
 <div id="sidebar" class="col-9 col-sm-5 col-lg-3 sidebar h-100 position-fixed" style="display: none;">
-	<!-- <img class="w-100 p-4" src="<?=base_url()?>assets/img/angeliclay_logo.png"> -->
 	<div class="list-group mt-2">
 		<a href="dashboard" class="list-group-item side_link">Dashboard</a>
 	</div>
@@ -15,3 +14,4 @@
 		<a href="logout" class="list-group-item side_link">Logout</a>
 	</div>
 </div>
+<div id="sidebar_out" class="col-12 h-100 position-fixed" style="display: none; z-index: 98; background-color: rgba(0, 0, 0, 0.5);"></div>

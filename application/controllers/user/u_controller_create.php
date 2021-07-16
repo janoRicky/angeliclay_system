@@ -162,7 +162,6 @@
 	public function new_order() {
 		$user_id = ($this->session->has_userdata("user_id") ? $this->session->userdata("user_id") : NULL);
 		$date_time = date('Y-m-d H:i:s');
-		$payment_method = $this->input->post("inp_payment_method");
 		$ref_no = $this->input->post("inp_ref_no");
 
 		$zip_code = $this->input->post("inp_zip_code");
@@ -176,7 +175,7 @@
 		$items = ($this->session->has_userdata("cart") ? $this->session->userdata("cart") : array());
 
 
-		if ($user_id == NULL || $date_time == NULL || $payment_method == NULL || $ref_no == NULL || count($items) < 1 || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL) {
+		if ($user_id == NULL || $date_time == NULL || $ref_no == NULL || count($items) < 1 || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL) {
 			$this->session->set_flashdata("notice", array("warning", "One or more inputs are empty."));
 		} else {
 			$user_info = $this->Model_read->get_user_acc_wid($user_id);
@@ -289,14 +288,13 @@
 		$order_id = $this->input->post("inp_order_id");
 		$user_id = ($this->session->has_userdata("user_id") ? $this->session->userdata("user_id") : NULL);
 		$date_time = date('Y-m-d H:i:s');
-		$payment_method = $this->input->post("inp_payment_method");
 		$ref_no = $this->input->post("inp_ref_no");
 
 		$order = $this->Model_read->get_order_custom_to_pay_wid_user_id($order_id, $user_id);
 		if ($order_id == NULL || $order->num_rows() < 1) {
 			$this->session->set_flashdata("notice", array("danger", "Something went wrong, please try again."));
 			redirect("home");
-		} elseif ($order_id == NULL || $user_id == NULL || $date_time == NULL || $payment_method == NULL || $ref_no == NULL) {
+		} elseif ($order_id == NULL || $user_id == NULL || $date_time == NULL || $ref_no == NULL) {
 			$this->session->set_flashdata("notice", array("warning", "One or more inputs are empty."));
 		} else {
 			$user_info = $this->Model_read->get_user_acc_wid($user_id);

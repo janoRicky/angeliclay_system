@@ -7,17 +7,8 @@ $template_header;
 		<?php $this->load->view("user/template/u_t_navbar"); ?>
 		<div class="container-fluid">
 			<div class="row mb-4" style="margin-top: 12rem;">
-				<div class="col-0 col-lg-1"></div>
-				<div class="col-12 col-lg-10 content">
-					<!-- <?php if ($this->session->flashdata("notice")): ?>
-						<?php $alert = $this->session->flashdata("notice"); ?>
-						<div class="alert alert-<?=$alert[0]?> alert-dismissible">
-							<?=$alert[1]?>
-							<button type="button" class="close" data-dismiss="alert">
-								&times;
-							</button>
-						</div>
-					<?php endif; ?> -->
+				<div class="col-0 col-sm-1"></div>
+				<div class="col-12 col-sm-10 content">
 					<div class="row mt-2">
 						<style type="text/css">
 							.feat_container {
@@ -31,7 +22,7 @@ $template_header;
 								box-shadow: 0 0 1.2rem #fff;
 							}
 						</style>
-						<div class="col-12 col-lg-12">
+						<div class="col-12 col-sm-12">
 							<div class="row feat_container align-items-center" style="height: 25rem;">
 								<div class="col-2 d-sm-none"></div>
 								<div class="col-8 col-sm-4 p-2 feat_item item_2">
@@ -50,20 +41,20 @@ $template_header;
 					<div class="row">
 						<div class="col-12 banner text-center">
 							<div class="banner_board">
-								<h5 class="font-weight-bold">Custom Order Types</h5>
+								<h5 class="font-weight-bold">&bull; Custom Order Types &bull;</h5>
 							</div>
 						</div>
 					</div>
 					<div class="row mt-5 mb-5">
 						<?php foreach ($tbl_types->result_array() as $key => $row): ?>
-							<div class="col-0 col-lg-2"></div>
-							<div class="col-12 col-lg-8">
+							<div class="col-0 col-sm-2"></div>
+							<div class="col-12 col-sm-8">
 								<div class="row align-items-center">
 									<?php if ($key % 2 == 0): ?>
 										<div class="col-7 marginslim p-2 text-right">
 											<span class="font-weight-bold" style="font-size: 20px;"><?=$row["name"]?></span>
 											<div class="row mt-4">
-												<div class="col-md-12 marginslim ml-2">
+												<div class="col-sm-12 marginslim ml-2">
 													<span class="font-italic"><?=$row["description"]?></span><br>
 													<span class="font-weight-bold">PHP <?=$row["price_range"]?></span>
 												</div>
@@ -83,7 +74,7 @@ $template_header;
 										<div class="col-7 marginslim p-2">
 											<span class="font-weight-bold" style="font-size: 20px;"><?=$row["name"]?></span>
 											<div class="row mt-4">
-												<div class="col-md-12 marginslim ml-2">
+												<div class="col-sm-12 marginslim ml-2">
 													<span class="font-italic"><?=$row["description"]?></span><br>
 													<span class="font-weight-bold">PHP <?=$row["price_range"]?></span>
 												</div>
@@ -92,11 +83,11 @@ $template_header;
 									<?php endif; ?>
 								</div>
 							</div>
-							<div class="col-0 col-lg-2"></div>
+							<div class="col-0 col-sm-2"></div>
 						<?php endforeach; ?>
 					</div>
 				</div>
-				<div class="col-0 col-lg-1"></div>
+				<div class="col-0 col-sm-1"></div>
 			</div>
 		</div>
 		<?php $this->load->view("user/template/u_t_footer"); ?>

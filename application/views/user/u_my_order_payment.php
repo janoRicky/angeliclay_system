@@ -27,12 +27,22 @@ $template_header;
 		<?php $this->load->view("user/template/u_t_navbar"); ?>
 		<div class="container-fluid">
 			<div class="row mb-4 mt-4">
-				<div class="col-0 col-lg-1"></div>
-				<div class="col-12 col-lg-10 content py-4">
+				<div class="col-0 col-sm-1"></div>
+				<div class="col-12 col-sm-10 content py-4">
+					<?php if ($order_payments->num_rows() > 0): ?>
+						<div class="notice row my-4 alert alert-warning alert-dismissible mx-auto" style="max-width: 80%;">
+							<div class="text-center w-100">
+								Payment has already been made.<br>Please wait for confirmation if you already paid the right amount.
+							</div>
+							<button type="button" class="close" data-dismiss="alert">
+								&times;
+							</button>
+						</div>
+					<?php endif; ?>
 					<div class="row mt-4">
 						<div class="col-12 banner text-center">
 							<div class="banner_board">
-								<h5 class="font-weight-bold">Custom Order Payment</h5>
+								<h5 class="font-weight-bold">&bull; Custom Order Payment &bull;</h5>
 							</div>
 						</div>
 					</div>
@@ -40,26 +50,26 @@ $template_header;
 						<div class="col-1"></div>
 						<div class="col-10">
 							<div class="row mt-2">
-								<div class="col-3">
-									<h5 class="font-weight-bold">Date/Time: </h5>
+								<div class="col-4 col-md-3">
+									<h5 class="font-weight-bold">Date / Time: </h5>
 								</div>
-								<div class="col-9">
+								<div class="col-8 col-md-9">
 									<?=date("Y-m-d / H:i:s A", strtotime($my_order["date_time"]))?>
 								</div>
 							</div>
 							<div class="row mt-2">
-								<div class="col-3">
+								<div class="col-4 col-md-3">
 									<h5 class="font-weight-bold">Full Address: </h5>
 								</div>
-								<div class="col-9">
+								<div class="col-8 col-md-9">
 									<?=$my_order["zip_code"] ." / ". $my_order["country"] ." / ". $my_order["province"] ." / ". $my_order["city"] ." / ". $my_order["street"] ." / ". $my_order["address"]?>
 								</div>
 							</div>
 							<div class="row mt-2">
-								<div class="col-3">
+								<div class="col-4 col-md-3">
 									<h5 class="font-weight-bold">Order State: </h5>
 								</div>
-								<div class="col-9">
+								<div class="col-8 col-md-9">
 									<?=$states[$my_order["state"]]?>
 								</div>
 							</div>
@@ -69,7 +79,7 @@ $template_header;
 					<div class="row mt-4">
 						<div class="col-12 banner text-center">
 							<div class="banner_board">
-								<h5 class="font-weight-bold">Custom Order Details</h5>
+								<h5 class="font-weight-bold">&bull; Custom Order Details &bull;</h5>
 							</div>
 						</div>
 					</div>
@@ -84,22 +94,19 @@ $template_header;
 								<div class="col-12">
 									<h5 class="font-weight-bold">Custom Description:</h5>
 								</div>
-								<div class="col-12" style="
-									border: 0.5rem solid #dc8a6b;
-									border-width: 0 0.5rem;
-									border-radius: 3rem;">
+								<div class="col-12 custom_description">
 									<?=$product_info["description"]?>
 								</div>
-								<div class="col-3 col-md-2">
+								<div class="col-3 col-sm-2">
 									<h5 class="font-weight-bold">Type:</h5>
 								</div>
-								<div class="col-9 col-md-4">
+								<div class="col-9 col-sm-4">
 									<?=$types[$product_info["type_id"]]?>
 								</div>
-								<div class="col-3 col-md-2">
+								<div class="col-3 col-sm-2">
 									<h5 class="font-weight-bold">Size:</h5>
 								</div>
-								<div class="col-9 col-md-4">
+								<div class="col-9 col-sm-4">
 									<?=$product_info["size"]?>
 								</div>
 								<div class="col-12">
@@ -109,23 +116,23 @@ $template_header;
 									<?php $imgs = explode("/", $product_info["img"]); ?>
 									<?php foreach ($imgs as $src): ?>
 										<?php if ($src != NULL): ?>
-											<div class="col-3 pb-3 mx-auto">
-												<img class="img_preview" src="
+											<div class="col-12 col-sm-6 col-md-4 pb-3 mx-auto">
+												<img class="item_img" src="
 												<?=base_url(). 'uploads/custom_'. $product_info["custom_id"] .'/'. $src?>">
 											</div>
 										<?php endif; ?>
 									<?php endforeach; ?>
 								</div>
-								<div class="col-3 col-md-2">
+								<div class="col-3 col-sm-2">
 									<h5 class="font-weight-bold">Qty:</h5>
 								</div>
-								<div class="col-9 col-md-4">
+								<div class="col-9 col-sm-4">
 									<?=$order_item["qty"]?>
 								</div>
-								<div class="col-3 col-md-2">
+								<div class="col-3 col-sm-2">
 									<h5 class="font-weight-bold">Price:</h5>
 								</div>
-								<div class="col-9 col-md-4">
+								<div class="col-9 col-sm-4">
 									<?=$order_item["price"]?>
 								</div>
 							</div>
@@ -135,7 +142,7 @@ $template_header;
 					<div class="row mt-4">
 						<div class="col-12 banner text-center">
 							<div class="banner_board">
-								<h5 class="font-weight-bold">Payment Details</h5>
+								<h5 class="font-weight-bold">&bull; Payment Details &bull;</h5>
 							</div>
 						</div>
 					</div>
@@ -144,47 +151,45 @@ $template_header;
 						<div class="col-10">
 							<?=form_open(base_url() . "payment", "method='POST' enctype='multipart/form-data'")?>
 								<input type="hidden" name="inp_order_id" value="<?=$order_id?>">
-								<!-- <div class="row mt-2">
-									<div class="col-9">
-										<select class="form-control" name="inp_payment_method">
-											<option value="gcash">GCash</option>
-										</select>
-									</div>
-								</div> -->
 								<div class="row mt-2">
 									<span>(Send Payment to GCash # 0999999999)</span>
 								</div>
 								<div class="row mt-2">
-									<div class="col-3">
+									<div class="col-4 col-md-3">
 										<h5 class="font-weight-bold">Ref No: </h5>
 									</div>
-									<div class="col-9">
-										<input type="text" name="inp_ref_no" placeholder="Ref No" autocomplete="off">
+									<div class="col-8 col-md-9">
+										<input class="form-control" type="text" name="inp_ref_no" placeholder="Ref No" autocomplete="off">
 									</div>
 								</div>
 								<div class="row mt-2">
-									<div class="col-3">
+									<div class="col-4 col-md-3">
 										<h5 class="font-weight-bold">Proof of Payment (Img / Screenshot): </h5>
 									</div>
-									<div class="col-9">
-										<div class="img_box">
-											<div class="img_change form-control h-100 p-3 text-center d-none">
+									<div class="col-8 col-md-9">
+										<div class="img_u_box">
+											<div class="img_u_change item_img p-3 text-center d-none">
 												Change Image
 											</div>
 											<input class="d-none img_input" id="product_image" type="file" name="inp_img">
-											<img class="form-control" id="image_preview" src="<?=base_url()?>assets/img/no_img.png" height="150" style="object-fit: contain;">
+											<img class="item_img img_u_preview" id="image_preview" src="<?=base_url()?>assets/img/no_img.png">
 										</div>
 									</div>
 								</div>
-								<div class="row mt-2">
-									<div class="col-12">
-										<input class="form-control" type="submit" value="Submit Payment">
+								<hr>
+								<div class="row mt-4 mb-3">
+									<div class="col-12 text-center">
+										<button class="button b_p b_lg" type="submit">
+											<i class="fa fa-money" aria-hidden="true"></i> Submit Payment
+										</button>
 									</div>
 								</div>
 							<?=form_close()?>
+						</div>
 						<div class="col-1"></div>
 					</div>
 				</div>
+				<div class="col-0 col-sm-1"></div>
 			</div>
 		</div>
 		<?php $this->load->view("user/template/u_t_footer"); ?>
@@ -192,12 +197,20 @@ $template_header;
 </body>
 <script type="text/javascript">
 	$(document).ready(function () {
-		$(document).on("mouseenter", ".img_box", function() {
-			$(this).children(".img_change").removeClass("d-none");
-		}).on("mouseleave", ".img_box", function() {
-			$(this).children(".img_change").addClass("d-none");
+		$(document).on("mouseenter", ".img_u_box", function() {
+			var img_prev = $(this).children("#image_preview");
+			var img_change = $(this).children(".img_u_change");
+			img_change.removeClass("d-none");
+			img_change.css({
+				top: img_prev.position.top,
+				left: img_prev.position.left,
+				width: img_prev.outerWidth(),
+				height: img_prev.outerHeight()
+			});
+		}).on("mouseleave", ".img_u_box", function() {
+			$(this).children(".img_u_change").addClass("d-none");
 		});
-		$(document).on("click", ".img_change", function() {
+		$(document).on("click", ".img_u_change", function() {
 			$(this).siblings(".img_input").trigger("click");
 		});
 
@@ -211,5 +224,6 @@ $template_header;
 			}
 		});
 	});
+
 </script>
 </html>

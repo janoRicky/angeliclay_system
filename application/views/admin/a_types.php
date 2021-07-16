@@ -30,7 +30,7 @@ $template_header;
 						</div>
 						<div class="row">
 							<div class="col-12">
-								<table id="table_types" class="table table-striped table-bordered">
+								<table id="table_types" class="table table-striped table-hover table-responsive-md table-bordered">
 									<thead>
 										<tr>
 											<th>ID</th>
@@ -165,7 +165,7 @@ $template_header;
 			$("#delete_inp_id").val($(this).data("id"));
 		});
 
-		$("#table_types").DataTable({"scrollX": true});
+		$("#table_types").DataTable();
 
 		$(document).on("change", "#type_image", function() {
 			if (this.files && this.files[0]) {

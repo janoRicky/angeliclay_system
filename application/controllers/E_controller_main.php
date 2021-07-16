@@ -144,7 +144,7 @@
 		$this->load->view("user/u_register", $data);
 	}
 	public function user_logout() {
-		session_destroy();
+		$this->session->unset_userdata(array("user_id", "user_name", "user_email", "user_in"));
 		redirect("login");
 	}
 	public function view_u_account() {
@@ -297,6 +297,7 @@
 				"RECEIVED", 
 				"CANCELLED"
 			);
+			$data["order_payments"] = $this->Model_read->get_order_payments_worder_id($id);
 
 			$data["order_id"] = $id;
 

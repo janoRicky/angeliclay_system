@@ -30,7 +30,7 @@ $template_header;
 						</div>
 						<div class="row">
 							<div class="col-12">
-								<table id="table_users" class="table table-striped table-bordered">
+								<table id="table_users" class="table table-striped table-hover table-responsive-md table-bordered">
 									<thead>
 										<tr>
 											<th>ID</th>
@@ -193,7 +193,7 @@ $template_header;
 			$("#delete_inp_id").val($(this).data("id"));
 		});
 
-		$("#table_users").DataTable({"scrollX": true});
+		$("#table_users").DataTable();
 	});
 </script>
 </html>

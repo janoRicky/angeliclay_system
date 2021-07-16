@@ -46,7 +46,7 @@ $template_header;
 						</div>
 						<div class="row">
 							<div class="col-12">
-								<table id="table_orders" class="table table-striped table-bordered">
+								<table id="table_orders" class="table table-striped table-hover table-responsive-md table-bordered">
 									<thead>
 										<tr>
 											<th>ID</th>
@@ -266,7 +266,7 @@ $template_header;
 			$("#delete_inp_id").val($(this).data("id"));
 		});
 
-		$("#table_orders").DataTable({"scrollX": true});
+		$("#table_orders").DataTable();
 
 		$(".btn_add_to_items").on("click", function() {
 			var p_id = $(this).attr("data-id");
