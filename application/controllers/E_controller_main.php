@@ -132,20 +132,30 @@
 		}
 	}
 	public function view_u_login() {
-		$head["title"] = "Login - Angeliclay Ordering System";
-		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
+		if ($this->session->has_userdata("user_in")) {
+			redirect("home");
+		} else {
+			$head["title"] = "Login - Angeliclay Ordering System";
+			$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
 
-		$this->load->view("user/u_login", $data);
+			$this->load->view("user/u_login", $data);
+		}
 	}
 	public function view_u_register() {
-		$head["title"] = "Register - Angeliclay Ordering System";
-		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
+		if ($this->session->has_userdata("user_in")) {
+			redirect("home");
+		} else {
+			$head["title"] = "Register - Angeliclay Ordering System";
+			$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
 
-		$this->load->view("user/u_register", $data);
+			$this->load->view("user/u_register", $data);
+		}
 	}
 	public function user_logout() {
-		$this->session->unset_userdata(array("user_id", "user_name", "user_email", "user_in"));
-		redirect("login");
+		if ($this->session->has_userdata("user_in")) {
+			$this->session->unset_userdata(array("user_id", "user_name", "user_email", "user_in"));
+			redirect("login");
+		}
 	}
 	public function view_u_account() {
 		$head["title"] = "Account - Angeliclay Ordering System";
@@ -309,22 +319,11 @@
 		}
 	}
 
-	public function test() {
-		$head["title"] = "test - Angeliclay Ordering System";
-		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
-
-		$this->load->view("user/test", $data);
-	}
-
-
-
-
 
 
 	// ADMIN
 	public function admin_logout() {
-		// destroy session values
-		session_destroy();
+		$this->session->unset_userdata(array("admin_id", "admin_name", "admin_email", "admin_in"));
 		redirect("admin");
 	}
 	public function admin_login_check() {
@@ -765,11 +764,24 @@
 			
 			$result = $this->Model_read->search_user_emails($search)->result_array();
 
+			$emails = array();
 			foreach ($result as $row) {
 				$emails[] = $row["email"];
 			}
 
 			echo json_encode($emails);
+		}
+	}
+	public function get_address() {
+		$this->admin_login_check();
+
+		$email = $this->input->get("email");
+
+		if (strlen($email) > 0) {
+			
+			$result = $this->Model_read->get_user_address_wemail($email)->row_array();
+
+			echo json_encode($result);
 		}
 	}
 }

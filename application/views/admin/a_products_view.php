@@ -23,16 +23,16 @@ $template_header;
 							<div class="col-12 text-left">
 								<h2>View Product #<?=$row_info["product_id"]?></h2>
 							</div>
-							<div class="col-3">
-								<img class="w-100" src="<?php
+							<div class="col-12 col-md-3">
+								<img class="img-responsive product_img" src="<?php
 								if (!empty($row_info["img"])) {
 									echo base_url(). 'uploads/product_'. $row_info["product_id"] .'/'. explode("/", $row_info["img"])[0];
 								} else {
 									echo base_url(). "assets/img/no_img.png";
 								}
-								?>" style="object-fit: contain; max-height: 500px;">
+								?>">
 							</div>
-							<div class="col-9">
+							<div class="col-12 col-md-9">
 								<div class="row mt-2">
 									<div class="col-6">
 										<div class="col-12">

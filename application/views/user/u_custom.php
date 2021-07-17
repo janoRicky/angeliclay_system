@@ -63,7 +63,7 @@ $template_header;
 											<input id="img_count" type="hidden" name="inp_img_count" value="0">
 											<h5 class="font-weight-bold">Image Reference/s: </h5>
 											<div class="img_container row">
-												<div class="col-4 img_box mb-3">
+												<div class="col-12 col-sm-6 col-md-4 img_box mb-3">
 													<div class="img_u_box">
 														<input type="file" class="d-none img_input no_img" name="inp_img_1">
 														<img class="item_img img_preview" src="<?=base_url()?>assets/img/no_img.png">
@@ -190,7 +190,7 @@ $template_header;
 					$(t.target).removeClass("no_img");
 
 					$(".img_container").append($("<div>").attr({
-						class: "col-4 img_box mb-3"
+						class: "col-12 col-sm-6 col-md-4 img_box mb-3"
 					}).append($("<div>").attr({
 						class: "img_u_box"
 					}).append($("<input>").attr({
@@ -218,16 +218,6 @@ $template_header;
 			$(".img_box").each(function(index, el) {
 				$(this).children().children(".img_input").attr("name", "inp_img_" + (index + 1));
 			});
-		});
-
-		$("#custom_order_details").hide();
-		$("#btn_show_order_details").on("click", function(e) {
-			$("#custom_product_details").hide("fast");
-			$("#custom_order_details").show("fast");
-		});
-		$("#btn_show_product_details").on("click", function(e) {
-			$("#custom_order_details").hide("fast");
-			$("#custom_product_details").show("fast");
 		});
 	});
 </script>

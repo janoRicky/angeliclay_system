@@ -28,9 +28,15 @@
 							<i class="fa fa-circle" aria-hidden="true" style="color: lime;"></i> <?=$this->session->userdata("user_name")?>
 						</a>
 						<div class="dropdown-menu dropdown_menu dropdown-menu-right">
-							<a class="dropdown-item" href="account"><i class="fa fa-user" aria-hidden="true"></i> My Account</a>
-							<a class="dropdown-item" href="my_orders"><i class="fa fa-list" aria-hidden="true"></i> My Orders</a>
-							<a class="dropdown-item" href="logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+							<a class="dropdown-item" href="account">
+								<i class="fa fa-user" aria-hidden="true"></i> My Account
+							</a>
+							<a class="dropdown-item" href="my_orders">
+								<i class="fa fa-list" aria-hidden="true"></i> My Orders
+							</a>
+							<a class="dropdown-item" href="logout">
+								<i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+							</a>
 						</div>
 					</li>
 				<?php else: ?>

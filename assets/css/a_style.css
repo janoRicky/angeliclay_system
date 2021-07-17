@@ -59,3 +59,57 @@ form label {
 	font-weight: bold;
 	font-size: 1.1rem;
 }
+
+
+.img_u_box {
+	position: relative;
+}
+.img_u_change {
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	background-color: rgba(0,0,0,0.8);
+	color: #fff;
+	font-weight: bold;
+
+	cursor: pointer;
+}
+.img_u_preview {
+	max-width: 80%;
+	max-height: 80%;
+}
+
+.product_img, .img_u_box img {
+	border: 0.2rem solid #000;
+	border-radius: 5%;
+
+	width: 100%;
+}
+.product_img {
+	cursor: zoom-in;
+	object-fit: contain;
+	max-height: 500px;
+}
+.img_zoom {
+	cursor: zoom-out;
+	z-index: 101;
+	background-color: rgba(0, 0, 0, 0.5);
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	padding: 12%;
+
+	text-align: center;
+}
+.img_zoom img {
+	max-width: 88%;
+	max-height: 88%;
+	border: 0.15rem solid #000;
+}
+
+.email_dropdown a {
+	cursor: pointer;
+}

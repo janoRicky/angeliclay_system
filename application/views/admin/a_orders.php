@@ -121,7 +121,8 @@ $template_header;
 					<div class="modal-body">
 						<div class="form-group">
 							<label for="inp_user_email">User Email:</label>
-							<input id="user_email" type="text" class="form-control" name="inp_user_email" placeholder="Email Address" autocomplete="off">
+							<input id="user_email" type="text" class="form-control" name="inp_user_email" placeholder="Email Address" autocomplete="off" data-toggle="dropdown">
+							<div class="dropdown-menu dropdown-menu-left email_dropdown"></div>
 						</div>
 						<div class="form-group">
 							<label for="inp_description">Description:</label>
@@ -137,27 +138,27 @@ $template_header;
 						</div>
 						<div class="form-group">
 							<label for="inp_zip_code">Zip Code:</label>
-							<input type="text" class="form-control" name="inp_zip_code" placeholder="Zip Code" autocomplete="off">
+							<input type="text" class="form-control" id="inp_zip_code" name="inp_zip_code" placeholder="Zip Code" autocomplete="off">
 						</div>
 						<div class="form-group">
 							<label for="inp_country">Country:</label>
-							<input type="text" class="form-control" name="inp_country" placeholder="Country" autocomplete="off">
+							<input type="text" class="form-control" id="inp_country" name="inp_country" placeholder="Country" autocomplete="off">
 						</div>
 						<div class="form-group">
 							<label for="inp_province">Province:</label>
-							<input type="text" class="form-control" name="inp_province" placeholder="Province" autocomplete="off">
+							<input type="text" class="form-control" id="inp_province" name="inp_province" placeholder="Province" autocomplete="off">
 						</div>
 						<div class="form-group">
 							<label for="inp_city">City:</label>
-							<input type="text" class="form-control" name="inp_city" placeholder="City" autocomplete="off">
+							<input type="text" class="form-control" id="inp_city" name="inp_city" placeholder="City" autocomplete="off">
 						</div>
 						<div class="form-group">
 							<label for="inp_street">Street/Road:</label>
-							<input type="text" class="form-control" name="inp_street" placeholder="Street/Road" autocomplete="off">
+							<input type="text" class="form-control" id="inp_street" name="inp_street" placeholder="Street/Road" autocomplete="off">
 						</div>
 						<div class="form-group">
 							<label for="inp_address">House Number/Floor/Bldg./etc.:</label>
-							<input type="text" class="form-control" name="inp_address" placeholder="House Number/Floor/Bldg./etc." autocomplete="off">
+							<input type="text" class="form-control" id="inp_address" name="inp_address" placeholder="House Number/Floor/Bldg./etc." autocomplete="off">
 						</div>
 						<div class="form-group m-0" style="overflow: auto;">
 							<label>Ordered Items:</label>
@@ -361,15 +362,39 @@ $template_header;
 
 		$("#table_products").DataTable({"scrollX": true});
 
-
-		// $("#user_email").on("keyup", function(e) {
-		// 	if ($(this).val().length > 0) {
-		// 		$.get('email_search', { search: $(this).val() })
-		// 		.done(function(data) {
-		// 			console.log(JSON.parse(data));
-		// 		});
-		// 	}
-		// });
+		$("#user_email").on("keyup", function(e) {
+			if ($(this).val().length > 0) {
+				if (!$(".email_dropdown").hasClass("show")) {
+					$("#user_email").dropdown("toggle");
+				}
+				$.get("email_search", { dataType: "json", search: $(this).val() })
+				.done(function(data) {
+					var emails = $.parseJSON(data);
+					$(".email_dropdown").html("");
+					$.each(emails, function(index, val) {
+						$(".email_dropdown").append($("<a>").attr({ class: "dropdown-item email_item" }).html(val));
+					});
+				});
+			} else {
+				if ($(".email_dropdown").hasClass("show")) {
+					$("#user_email").dropdown("toggle");
+				}
+			}
+		});
+		$(document).on("click", ".email_item", function(t) {
+			if ($(this).html().length > 0) {
+				$.get("address_get", { dataType: "json", email: $(this).html() })
+				.done(function(data) {
+					var address = $.parseJSON(data);
+					$("#inp_zip_code").val(address["zip_code"]);
+					$("#inp_country").val(address["country"]);
+					$("#inp_province").val(address["province"]);
+					$("#inp_city").val(address["city"]);
+					$("#inp_street").val(address["street"]);
+					$("#inp_address").val(address["address"]);
+				});
+			}
+		});
 
 		$(document).on("change", "#state_sort", function(e) {
 			$(this).parent().submit();

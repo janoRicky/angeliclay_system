@@ -1,120 +1,45 @@
 
 allow more photos?
 
-when user orders check if there is enough stock
-
-include product photos when changing order state
-
-suer email search on orders
-
-custom products - custom orders
-
-
-custom ordered products has 'type' of CUSTOM
-
-
-product search with dropdown and images
-
-
-
-revert product image function
-
-
-add error messages for user and in unauthorized access
-
-
 add flashdata
 
-add availability of products
-
-to pay
-to ship
-to receive
-to rate/review
-returns/cancellations
-
-status:
-DELETED = 0
-ACTIVE = 1
 
 
 user's orders has:
 placed orders		PENDING = 0
 to pay orders		ACCEPTED/WAITING FOR PAYMENT = 1
 in progress orders	IN PROGRESS = 2
+
 to receive orders	SHIPPED = 3
 to rate/review orders	RECEIVED = 4
 
 cancelled		CANCELLED = 5
 
 
-user places custom order
-admin checks custom orders
-admin sets price and completion time for custom order
-user accepts the set price, places order, and pays
-admin changes order state to accepted(?) and works on order
-admin updates state when product is complete and sent to
+TOTDODODODO
 
 
-ADMIN
-custom orders change state
-change to accepted = price and quantity of order item is added
-change to in progress = user has paid
+ALLOW ADMIN TO CREATE ORDER WITHOUT USER ACCOUNT
 
+image protection, controller access for image src
 
+add function for user to set an order to received
 
-
+DON'T ALLOW ADMINS TO REMOVE ALL ORDER ITEMS WHEN UPDATING
 
 deleting all order items of an order removes the order from the table
 
 
-birthday
-address
-region/city/district, input street/building name, unit/floor
-region(metro manila,sluzon,nluzon),province,city,barangay,zip code
-
-zip code, country, province, city, street/road, house number
-
-
-TOTDODODODO
-
-
-OPTIMIZE LOGOUT FUNCTIONS
-
-
-
-
-ADMIN / auto address when inputting email
-
-
-image protection, controller access for image src
-
-
-add function for user to set an order to received
-
-
-DON'T ALLOW ADMINS TO REMOVE ALL ORDER ITEMS WHEN UPDATING
-
-
 add shipping fee on order submit
 
+newest first on tables
 
-show order payment description and amount only when the admin has checked it
-	"description" => "User ordered a custom product, amounting to (". $order_item["price"] ."). [Payment Method: ". $payment_method ."][Ref No.: ". $ref_no ."]",
-	"description" => "User ordered a total of ". count($data_items) ." items, amounting to (". $total_amount ."). [Payment Method: ". $payment_method ."][Ref No.: ". $ref_no ."]",
+ADMIN SUBMIT PAYMENT
 
-
-
+ADD to ship? in STATES of ORDERS
 
 
-
-
-
-
-
-
-
-
+ADD function for admin to add orders of customers without accounts
 
 
 

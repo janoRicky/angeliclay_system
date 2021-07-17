@@ -4,30 +4,16 @@ $template_header;
 ?>
 
 <style>
-	.img_box {
-		cursor: pointer;
-		margin: auto;
-	}
-	.img_change {
-		position: absolute;
-		top: 0;
-		left: 0;
-
-		background-color: rgba(0,0,0,0.8);
-		color: #fff;
-		font-weight: bold;
-	}
-	.img_preview {
-		object-fit: contain;
-		min-height: 10rem;
-		max-height: 12rem;
-		border: 1px solid #000;
-	}
 	.img_remove {
 		position: absolute;
 		top: 0;
 		right: 0;
-		color: red !important;
+		color: #ff0000 !important;
+		cursor: pointer;
+		padding: 1rem;
+	}
+	.img_remove:hover {
+		color: #ffc0c0 !important;
 	}
 </style>
 <body>
@@ -136,7 +122,8 @@ $template_header;
 					<div class="modal-body">
 						<div class="form-group">
 							<label for="inp_user_email">User Email:</label>
-							<input id="user_email" type="text" class="form-control" name="inp_user_email" placeholder="Email Address" autocomplete="off">
+							<input id="user_email" type="text" class="form-control" name="inp_user_email" placeholder="Email Address" autocomplete="off" data-toggle="dropdown">
+							<div class="dropdown-menu dropdown-menu-left email_dropdown"></div>
 						</div>
 						<div class="form-group">
 							<label for="inp_description">Description:</label>
@@ -152,27 +139,27 @@ $template_header;
 						</div>
 						<div class="form-group">
 							<label for="inp_zip_code">Zip Code:</label>
-							<input type="text" class="form-control" name="inp_zip_code" placeholder="Zip Code" autocomplete="off">
+							<input type="text" class="form-control" id="inp_zip_code" name="inp_zip_code" placeholder="Zip Code" autocomplete="off">
 						</div>
 						<div class="form-group">
 							<label for="inp_country">Country:</label>
-							<input type="text" class="form-control" name="inp_country" placeholder="Country" autocomplete="off">
+							<input type="text" class="form-control" id="inp_country" name="inp_country" placeholder="Country" autocomplete="off">
 						</div>
 						<div class="form-group">
 							<label for="inp_province">Province:</label>
-							<input type="text" class="form-control" name="inp_province" placeholder="Province" autocomplete="off">
+							<input type="text" class="form-control" id="inp_province" name="inp_province" placeholder="Province" autocomplete="off">
 						</div>
 						<div class="form-group">
 							<label for="inp_city">City:</label>
-							<input type="text" class="form-control" name="inp_city" placeholder="City" autocomplete="off">
+							<input type="text" class="form-control" id="inp_city" name="inp_city" placeholder="City" autocomplete="off">
 						</div>
 						<div class="form-group">
 							<label for="inp_street">Street/Road:</label>
-							<input type="text" class="form-control" name="inp_street" placeholder="Street/Road" autocomplete="off">
+							<input type="text" class="form-control" id="inp_street" name="inp_street" placeholder="Street/Road" autocomplete="off">
 						</div>
 						<div class="form-group">
 							<label for="inp_address">House Number/Floor/Bldg./etc.:</label>
-							<input type="text" class="form-control" name="inp_address" placeholder="House Number/Floor/Bldg./etc." autocomplete="off">
+							<input type="text" class="form-control" id="inp_address" name="inp_address" placeholder="House Number/Floor/Bldg./etc." autocomplete="off">
 						</div>
 						<h4 class="pt-3">Custom Product Details</h4>
 						<div class="form-group">
@@ -195,15 +182,18 @@ $template_header;
 							<input id="img_count" type="hidden" name="inp_img_count" value="0">
 							<label for="inp_img">Images:</label>
 							<div class="img_container row">
-								<div class="col-12 col-lg-3 img_box mb-3">
-									<input type="file" class="d-none img_input no_img" name="inp_img_1">
-									<img class="w-100 img_preview" src="<?=base_url()?>assets/img/no_img.png">
-									<div class="img_change w-100 h-100 p-3 text-center d-none">
-										Change Image
+								<div class="col-6 col-md-4 img_box mb-3">
+									<div class="img_u_box">
+										<input type="file" class="d-none img_input no_img" name="inp_img_1">
+										<img class="item_img img_preview" src="<?=base_url()?>assets/img/no_img.png">
+										<div class="img_u_change item_img p-3 text-center d-none">
+											Change Image
+										</div>
+										<a class="img_remove">
+											<i class="fa fa-times fa-lg" aria-hidden="true"></i>
+										</a>
+										<input type="hidden" class="img_check" name="inp_img_1_check">
 									</div>
-									<a class="img_remove">
-										<i class="fa fa-times" aria-hidden="true"></i>
-									</a>
 								</div>
 							</div>
 						</div>
@@ -249,14 +239,22 @@ $template_header;
 
 
 		$(document).on("mouseenter", ".img_box", function() {
-			$(this).children(".img_change").removeClass("d-none");
+			var img_prev = $(this).children().children(".img_preview");
+			var img_change = $(this).children().children(".img_u_change");
+			img_change.removeClass("d-none");
+			img_change.css({
+				top: img_prev.position.top,
+				left: img_prev.position.left,
+				width: img_prev.outerWidth(),
+				height: img_prev.outerHeight()
+			});
 		}).on("mouseleave", ".img_box", function() {
-			$(this).children(".img_change").addClass("d-none");
-		})
-		$(document).on("click", ".img_change", function() {
+			$(this).children().children(".img_u_change").addClass("d-none");
+		});
+		$(document).on("click", ".img_u_change", function() {
 			$(this).siblings(".img_input").trigger("click");
 		});
-		
+
 		$(document).on("change", ".img_input", function(t) {
 			if (t.target.files && t.target.files[0]) {
 				var reader = new FileReader();
@@ -266,7 +264,7 @@ $template_header;
 				};
 
 				$(".img_box").each(function(index, el) {
-					$(this).children(".img_input").attr("name", "inp_img_" + (index + 1));
+					$(this).children().children(".img_input").attr("name", "inp_img_" + (index + 1));
 				});
 
 				// add new imgbox
@@ -274,19 +272,21 @@ $template_header;
 					$(t.target).removeClass("no_img");
 
 					$(".img_container").append($("<div>").attr({
-						class: "col-12 col-lg-3 img_box mb-3"
+						class: "col-6 col-md-4 img_box mb-3"
+					}).append($("<div>").attr({
+						class: "img_u_box"
 					}).append($("<input>").attr({
 						type: "file",
 						class: "d-none img_input no_img",
 						name: "inp_img_" + ($(".img_box").length + 1)
 					})).append($("<img>").attr({
-						class: "w-100 img_preview",
+						class: "item_img img_preview",
 						src: "<?=base_url()?>assets/img/no_img.png"
 					})).append($("<div>").attr({
-						class: "img_change w-100 h-100 p-3 text-center d-none"
+						class: "img_u_change item_img p-3 text-center d-none"
 					}).html("Change Image")).append($("<a>").attr({
 						class: "img_remove"
-					}).append($("<i>").attr({ class: "fa fa-times", "aria-hidden": "true" }))));
+					}).append($("<i>").attr({ class: "fa fa-times fa-lg", "aria-hidden": "true" })))));
 					
 					$("#img_count").val($(".img_box").length);
 				}
@@ -295,11 +295,45 @@ $template_header;
 
 		$(document).on("click", ".img_remove", function(t) {
 			if ($(".img_box").length > 1 && !$(this).siblings(".img_input").hasClass("no_img")) {
-				$(this).parent().remove();
+				$(this).parent().parent().remove();
 			}
 			$(".img_box").each(function(index, el) {
-				$(this).children(".img_input").attr("name", "inp_img_" + (index + 1));
+				$(this).children().children(".img_input").attr("name", "inp_img_" + (index + 1));
 			});
+		});
+
+		$("#user_email").on("keyup", function(e) {
+			if ($(this).val().length > 0) {
+				if (!$(".email_dropdown").hasClass("show")) {
+					$("#user_email").dropdown("toggle");
+				}
+				$.get("email_search", { dataType: "json", search: $(this).val() })
+				.done(function(data) {
+					var emails = $.parseJSON(data);
+					$(".email_dropdown").html("");
+					$.each(emails, function(index, val) {
+						$(".email_dropdown").append($("<a>").attr({ class: "dropdown-item email_item" }).html(val));
+					});
+				});
+			} else {
+				if ($(".email_dropdown").hasClass("show")) {
+					$("#user_email").dropdown("toggle");
+				}
+			}
+		});
+		$(document).on("click", ".email_item", function(t) {
+			if ($(this).html().length > 0) {
+				$.get("address_get", { dataType: "json", email: $(this).html() })
+				.done(function(data) {
+					var address = $.parseJSON(data);
+					$("#inp_zip_code").val(address["zip_code"]);
+					$("#inp_country").val(address["country"]);
+					$("#inp_province").val(address["province"]);
+					$("#inp_city").val(address["city"]);
+					$("#inp_street").val(address["street"]);
+					$("#inp_address").val(address["address"]);
+				});
+			}
 		});
 		
 		$(document).on("change", "#state_sort", function(e) {

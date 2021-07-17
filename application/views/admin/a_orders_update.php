@@ -28,7 +28,8 @@ $template_header;
 									<input id="update_inp_id" type="hidden" name="inp_id" value="<?=$row_info['order_id']?>">
 									<div class="form-group">
 										<label for="inp_user_email">User Email:</label>
-										<input type="text" class="form-control" name="inp_user_email" placeholder="Email Address" autocomplete="off" value="<?=$this->Model_read->get_user_acc_wid($row_info["user_id"])->row_array()["email"]?>">
+										<input id="user_email" type="text" class="form-control" name="inp_user_email" placeholder="Email Address" autocomplete="off" value="<?=$this->Model_read->get_user_acc_wid($row_info["user_id"])->row_array()["email"]?>" data-toggle="dropdown">
+										<div class="dropdown-menu dropdown-menu-left email_dropdown"></div>
 									</div>
 									<div class="form-group">
 										<label for="inp_description">Description:</label>
@@ -44,27 +45,27 @@ $template_header;
 									</div>
 									<div class="form-group">
 										<label for="inp_zip_code">Zip Code:</label>
-										<input type="text" class="form-control" name="inp_zip_code" placeholder="Zip Code" value="<?=$row_info['zip_code']?>" autocomplete="off">
+										<input type="text" class="form-control" id="inp_zip_code" name="inp_zip_code" placeholder="Zip Code" value="<?=$row_info['zip_code']?>" autocomplete="off">
 									</div>
 									<div class="form-group">
 										<label for="inp_country">Country:</label>
-										<input type="text" class="form-control" name="inp_country" placeholder="Country" value="<?=$row_info['country']?>" autocomplete="off">
+										<input type="text" class="form-control" id="inp_country" name="inp_country" placeholder="Country" value="<?=$row_info['country']?>" autocomplete="off">
 									</div>
 									<div class="form-group">
 										<label for="inp_province">Province:</label>
-										<input type="text" class="form-control" name="inp_province" placeholder="Province" value="<?=$row_info['province']?>" autocomplete="off">
+										<input type="text" class="form-control" id="inp_province" name="inp_province" placeholder="Province" value="<?=$row_info['province']?>" autocomplete="off">
 									</div>
 									<div class="form-group">
 										<label for="inp_city">City:</label>
-										<input type="text" class="form-control" name="inp_city" placeholder="City" value="<?=$row_info['city']?>" autocomplete="off">
+										<input type="text" class="form-control" id="inp_city" name="inp_city" placeholder="City" value="<?=$row_info['city']?>" autocomplete="off">
 									</div>
 									<div class="form-group">
 										<label for="inp_street">Street/Road:</label>
-										<input type="text" class="form-control" name="inp_street" placeholder="Street/Road" value="<?=$row_info['street']?>" autocomplete="off">
+										<input type="text" class="form-control" id="inp_street" name="inp_street" placeholder="Street/Road" value="<?=$row_info['street']?>" autocomplete="off">
 									</div>
 									<div class="form-group">
 										<label for="inp_address">House Number/Floor/Bldg./etc.:</label>
-										<input type="text" class="form-control" name="inp_address" placeholder="House Number/Floor/Bldg./etc." value="<?=$row_info['address']?>" autocomplete="off">
+										<input type="text" class="form-control" id="inp_address" name="inp_address" placeholder="House Number/Floor/Bldg./etc." value="<?=$row_info['address']?>" autocomplete="off">
 									</div>
 									<div class="form-group">
 										<label for="inp_time">Ordered Items:</label>
@@ -166,7 +167,6 @@ $template_header;
 		</div>
 	</div>
 </body>
-<?php $this->load->view("admin/template/a_t_scripts"); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
 
@@ -264,6 +264,40 @@ $template_header;
 		});
 
 		$("#table_products").DataTable();
+
+		$("#user_email").on("keyup", function(e) {
+			if ($(this).val().length > 0) {
+				if (!$(".email_dropdown").hasClass("show")) {
+					$("#user_email").dropdown("toggle");
+				}
+				$.get("email_search", { dataType: "json", search: $(this).val() })
+				.done(function(data) {
+					var emails = $.parseJSON(data);
+					$(".email_dropdown").html("");
+					$.each(emails, function(index, val) {
+						$(".email_dropdown").append($("<a>").attr({ class: "dropdown-item email_item" }).html(val));
+					});
+				});
+			} else {
+				if ($(".email_dropdown").hasClass("show")) {
+					$("#user_email").dropdown("toggle");
+				}
+			}
+		});
+		$(document).on("click", ".email_item", function(t) {
+			if ($(this).html().length > 0) {
+				$.get("address_get", { dataType: "json", email: $(this).html() })
+				.done(function(data) {
+					var address = $.parseJSON(data);
+					$("#inp_zip_code").val(address["zip_code"]);
+					$("#inp_country").val(address["country"]);
+					$("#inp_province").val(address["province"]);
+					$("#inp_city").val(address["city"]);
+					$("#inp_street").val(address["street"]);
+					$("#inp_address").val(address["address"]);
+				});
+			}
+		});
 	});
 </script>
 </html>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 06, 2021 at 12:41 PM
+-- Generation Time: Jul 17, 2021 at 07:37 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.1
 
@@ -118,9 +118,12 @@ INSERT INTO `orders` (`order_id`, `user_id`, `description`, `date_time`, `zip_co
 (48, '4', NULL, '2021-07-03 14:53:00', '1870', 'Philippines', 'Rizal', 'Antipolo', 'Aster', 'Blk 8 Lt.28', '0', '1'),
 (49, '4', NULL, '2021-07-03 14:55:40', '1870', 'Philippines', 'Rizal', 'Antipolo', 'Aster', 'Blk 8 Lt.28', '0', '1'),
 (50, '4', NULL, '2021-07-03 14:57:11', '1870', 'Philippines', 'Rizal', 'Antipolo', 'Aster', 'Blk 8 Lt.28', '0', '1'),
-(51, '4', NULL, '2021-07-05 14:03:34', '1870', 'Philippines', 'Rizal', 'Antipolo', 'Aster', 'Blk 8 Lt.28', '2', '1'),
+(51, '4', NULL, '2021-07-05 14:03:34', '1870', 'Philippines', 'Rizal', 'Antipolo', 'Aster', 'Blk 8 Lt.28', '1', '1'),
 (52, '4', NULL, '2021-07-05 15:33:36', '1870', 'Philippines', 'Rizal', 'Antipolo', 'Aster', 'Blk 8 Lt.28', '0', '1'),
-(53, '4', NULL, '2021-07-05 15:34:31', '1870', 'Philippines', 'Rizal', 'Antipolo', 'Aster', 'Blk 8 Lt.28', '0', '1');
+(53, '4', NULL, '2021-07-05 15:34:31', '1870', 'Philippines', 'Rizal', 'Antipolo', 'Aster', 'Blk 8 Lt.28', '0', '1'),
+(54, '4', NULL, '2021-07-10 11:12:06', '1870', 'Philippines', 'Rizal', 'Antipolo', 'Aster', 'Blk. 8 Lt.28', '0', '1'),
+(55, '4', NULL, '2021-07-10 11:12:32', '1870', 'Philippines', 'Rizal', 'Antipolo', 'Aster', 'Blk. 8 Lt.28', '0', '1'),
+(56, '4', NULL, '2021-07-15 15:32:14', '1870', 'Philippines', 'Rizal', 'Antipolo', 'Aster', 'Blk. 8 Lt.28', '0', '1');
 
 -- --------------------------------------------------------
 
@@ -194,12 +197,15 @@ INSERT INTO `orders_items` (`item_id`, `order_id`, `product_id`, `qty`, `price`,
 (97, '48', '1', '3', '23', 'NORMAL', NULL),
 (98, '49', '4', '3', '32', 'NORMAL', NULL),
 (99, '50', '4', '2', '32', 'NORMAL', NULL),
-(100, '51', '15', NULL, '659', 'CUSTOM', NULL),
+(100, '51', '15', '2', '659', 'CUSTOM', NULL),
 (101, '52', '1', '3', '23', 'NORMAL', NULL),
 (102, '53', '5', '3', '32', 'NORMAL', NULL),
 (103, '7', '4', '7', '1234', 'NORMAL', NULL),
 (104, '7', '3', '5', '11', 'NORMAL', NULL),
-(105, '7', '1', '3', '5.45', 'NORMAL', NULL);
+(105, '7', '1', '3', '5.45', 'NORMAL', NULL),
+(106, '54', '16', NULL, NULL, 'CUSTOM', NULL),
+(107, '55', '5', '5', '32', 'NORMAL', NULL),
+(108, '56', '17', NULL, NULL, 'CUSTOM', NULL);
 
 -- --------------------------------------------------------
 
@@ -232,7 +238,10 @@ INSERT INTO `orders_payments` (`payment_id`, `order_id`, `description`, `img`, `
 (8, '51', 'User ordered a custom product, amounting to (659). [Payment Method: gcash][Ref No.: tttrrryy23232]', '3107ff53dff1602d4ef2621796c6eb67.jpg', '2021-07-05 14:38:40', '659', '1'),
 (9, '51', 'User ordered a custom product, amounting to (659). [Payment Method: gcash][Ref No.: 23323]', '9ccbf024ceba00de1b8ccd12e58d4fc4.jpg', '2021-07-05 14:38:59', '659', '1'),
 (10, '52', NULL, NULL, '2021-07-05 15:33:36', NULL, '1'),
-(11, '53', NULL, 'b009685ad820094fd7740b269d5a6b31.jpg', '2021-07-05 15:34:31', NULL, '1');
+(11, '53', NULL, 'b009685ad820094fd7740b269d5a6b31.jpg', '2021-07-05 15:34:31', NULL, '1'),
+(12, '55', NULL, NULL, '2021-07-10 11:12:32', NULL, '1'),
+(13, '22', NULL, NULL, '2021-07-10 11:15:36', NULL, '1'),
+(14, '51', NULL, NULL, '2021-07-17 00:44:44', NULL, '1');
 
 -- --------------------------------------------------------
 
@@ -259,16 +268,17 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`product_id`, `img`, `name`, `type_id`, `description`, `price`, `qty`, `type`, `date_added`, `visibility`, `status`) VALUES
-(1, 'c14f3edc1f5aeaf147a35c09d045880f.jpg', 'Figure 1', '2', 'Desc 1', '23', '4', 'NORMAL', '2021-06-01 14:56:34', '1', '1'),
-(2, 'ebe49a8517d631d74c230d830bc7f4c8.jpg', 'Figure 3', '1', 'Desc 3', '555', '0', 'NORMAL', '2021-06-02 14:56:43', '1', '1'),
-(3, 'fdc0cf6ca69fa22e2959f70bcd6e931b.jpg', 'Test', '1', 'Desc', '622', '0', 'NORMAL', '2021-06-03 14:56:48', '1', '1'),
-(4, 'd69258a24ea68b4b31491657677b62f7.jpg', 'Testing', '2', 'test', '32', '15', 'NORMAL', '2021-06-06 14:57:01', '1', '1'),
-(5, '01a7cd4499f0aa19e06f440d9a028877.png', 'test', '3', 'test', '32', '15', 'NORMAL', '2021-06-04 14:56:53', '1', '1'),
-(6, '25b1478e92aebb5f5481b53b3eb610bd.jpg', 'test', '3', 'test', '234', '13', 'NORMAL', '2021-06-05 14:56:57', '0', '1'),
+(1, 'c14f3edc1f5aeaf147a35c09d045880f.jpg', 'Angel Character (Female) Figurine', '1', 'Figurine of an angel in casual clothing.', '350', '2', 'NORMAL', '2021-06-01 14:56:34', '1', '1'),
+(2, 'fb98e1d6a63eb2e45dbc27c3a636e922.jpg', 'sky', '1', 'Desc 3', '300', '5', 'NORMAL', '2021-06-02 14:56:43', '0', '1'),
+(3, 'fdc0cf6ca69fa22e2959f70bcd6e931b.jpg', 'Test', '1', 'Desc', '622', '0', 'NORMAL', '2021-06-03 14:56:48', '0', '1'),
+(4, 'd69258a24ea68b4b31491657677b62f7.jpg', 'Angel Character (Male) Figurine ', '2', 'Figurine of an angel in casual clothing. ', '32', '15', 'NORMAL', '2021-06-06 14:57:01', '1', '1'),
+(5, '01a7cd4499f0aa19e06f440d9a028877.png', 'test', '3', 'test', '32', '10', 'NORMAL', '2021-06-04 14:56:53', '0', '1'),
+(6, '25b1478e92aebb5f5481b53b3eb610bd.jpg', 'Princess Figurine', '1', 'Figurine of a princess in a purple dress.', '400', '1', 'NORMAL', '2021-06-05 14:56:57', '1', '1'),
 (7, '8b47a56592f8e13bd18f0672817b356c.jpg', 'newtest', '3', 'test', '534', '23', 'NORMAL', '2021-07-05 10:12:28', '0', '1'),
 (8, '1a395d7f28991dfee3c3dc50c4a61238.jpg', 'tsetsdggd', '1', 'sdgsdg', '325', '345', 'NORMAL', '2021-07-05 10:15:36', '0', '1'),
 (9, '9e11364106cd354baa09a3c768176944.jpg', 'sadsaf', '1', 'sad', '564', '76', 'NORMAL', '2021-07-05 16:16:35', '0', '1'),
-(10, '6df136da8a2a14d9a5fdbdd434ed29d7.jpg', 'test', '1', 'eee', '200', '10', 'NORMAL', '2021-07-06 17:22:46', '0', '1');
+(10, '6df136da8a2a14d9a5fdbdd434ed29d7.jpg', 'test', '1', 'eee', '200', '10', 'NORMAL', '2021-07-06 17:22:46', '0', '1'),
+(11, 'e7173c1130a35aa8e93da55f230d7aa1.png', 'test', '1', 'test', '234', '2', 'NORMAL', '2021-07-17 10:42:15', '0', '1');
 
 -- --------------------------------------------------------
 
@@ -305,7 +315,9 @@ INSERT INTO `products_custom` (`custom_id`, `description`, `type_id`, `size`, `i
 (12, 'test', '5', '2121', '1125d92878db8325f1eb294de4160320.jpg/1db91bddbe438cca0938154656ea8177.jpg/6998d259169db39be51219c285325c64.jpg/', NULL, '1'),
 (13, 'test', '1', '211221', 'a95be88de35b332876c7ed64cac2d567.jpg/', NULL, '1'),
 (14, '2ee2', '1', 'we22', 'ad9ab0b4477c0abc6ecd85405c9fa5f9.jpg/8aa93302bdc1db76b19a4c44e5763f96.jpg/d1025ff921178b94c1812bf64882db49.jpg/5e326cd29c83eccd8fd8ffc2dc6889f4.jpg/', NULL, '1'),
-(15, 'test', '1', '323', 'cac6b42d3fc8d5d034ce5747c11ad4be.jpg/c458eeb38bdb7208173cfbd730e0aaf0.jpg/92efa22908e8e91d4a91333e5398c3f3.jpg/', NULL, '1');
+(15, 'test', '1', '323', 'cac6b42d3fc8d5d034ce5747c11ad4be.jpg/c458eeb38bdb7208173cfbd730e0aaf0.jpg/92efa22908e8e91d4a91333e5398c3f3.jpg/', NULL, '1'),
+(16, 'gsdg', '1', 'fdsf', NULL, NULL, '1'),
+(17, 'sdasdasdas', '1', 'dsadsasadDSASsasadsadsaddadadA', NULL, NULL, '1');
 
 -- --------------------------------------------------------
 
@@ -437,31 +449,31 @@ ALTER TABLE `admin_accounts`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `orders_items`
 --
 ALTER TABLE `orders_items`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
 
 --
 -- AUTO_INCREMENT for table `orders_payments`
 --
 ALTER TABLE `orders_payments`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `products_custom`
 --
 ALTER TABLE `products_custom`
-  MODIFY `custom_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `custom_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `types`

@@ -130,6 +130,7 @@ $route['admin/login'] = 'admin/A_controller_login/admin_login_verification';
 $route['admin/logout'] = 'E_controller_main/admin_logout';
 
 $route['admin/email_search'] = 'E_controller_main/search_emails';
+$route['admin/address_get'] = 'E_controller_main/get_address';
 
 // - CREATE
 $route['admin/product_create'] = 'admin/A_controller_create/new_product';

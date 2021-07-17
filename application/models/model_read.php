@@ -126,12 +126,18 @@ class Model_read extends CI_Model {
 	public function get_user_acc_wemail($email) {
 		return $this->db->get_where("user_accounts", array("email" => $email, "status" => "1"));
 	}
-	public function search_user_emails($search) { // unused
+	public function search_user_emails($search) {
 		$this->db->select("email");
 		$this->db->from("user_accounts");
 		$this->db->where("status", "1");
 		$this->db->like("email", $search, "both");
 		$this->db->limit(5);
+		return $this->db->get();
+	}
+	public function get_user_address_wemail($email) {
+		$this->db->select("zip_code, country, province, city, street, address");
+		$this->db->from("user_accounts");
+		$this->db->where("email", $email);
 		return $this->db->get();
 	}
 

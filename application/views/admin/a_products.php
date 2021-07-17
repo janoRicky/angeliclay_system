@@ -33,10 +33,10 @@ $template_header;
 									<thead>
 										<tr>
 											<th>ID</th>
+											<th>Img</th>
 											<th>Name</th>
 											<th>Description</th>
 											<th>Type</th>
-											<th>Price</th>
 											<th>Qty.</th>
 											<th>Visible</th>
 											<th>Action</th>
@@ -47,6 +47,15 @@ $template_header;
 											<tr class="text-center align-middle">
 												<td>
 													<?=$row["product_id"]?>
+												</td>
+												<td>
+													<img class="img-responsive product_img" src="<?php
+													if (!empty($row["img"])) {
+														echo base_url(). 'uploads/product_'. $row["product_id"] .'/'. explode("/", $row["img"])[0];
+													} else {
+														echo base_url(). "assets/img/no_img.png";
+													}
+													?>">
 												</td>
 												<td>
 													<?=$row["name"]?>
@@ -62,9 +71,6 @@ $template_header;
 														echo "Deleted Type (Edit Required)";
 													}
 													?>
-												</td>
-												<td>
-													<?=$row["price"]?>
 												</td>
 												<td>
 													<?=$row["qty"]?>
