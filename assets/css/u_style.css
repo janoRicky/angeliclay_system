@@ -2,12 +2,17 @@
 html, body {
 	margin: 0;
 	height: 100%;
+	overflow: auto;
 }
 
 
 .bg {
 	background: rgb(253,121,173);
 	background: linear-gradient(180deg,rgb(253,121,173) 4%,rgb(255,188,198) 30%,rgb(241,228,230) 69%);
+	height: 100%;
+	overflow: auto;
+    display: flex;
+    flex-direction: column;
 }
 .content {
 	background-color: #fffafc; border-radius: 3rem;

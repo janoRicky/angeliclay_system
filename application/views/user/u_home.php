@@ -8,7 +8,7 @@ $template_header;
 		<div class="container-fluid">
 			<div class="row mb-4" style="margin-top: 12rem;">
 				<div class="col-0 col-sm-1"></div>
-				<div class="col-12 col-sm-10 content">
+				<div class="col-12 col-sm-10 content pt-4">
 					<div class="row mt-2">
 						<style type="text/css">
 							.feat_container {
@@ -38,7 +38,7 @@ $template_header;
 							</div>
 						</div>
 					</div>
-					<div class="row">
+					<div class="row mt-4">
 						<div class="col-12 banner text-center">
 							<div class="banner_board">
 								<h5 class="font-weight-bold">&bull; Custom Order Types &bull;</h5>
@@ -107,7 +107,6 @@ $template_header;
 					$(this).removeClass("d-none");
 				});
 			}
-			console.log($(window).width());
 		});
 		$(window).trigger("resize");
 		setInterval(function() {

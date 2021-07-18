@@ -109,6 +109,8 @@ $template_header;
 								<div class="col-9 col-sm-4">
 									<?=$product_info["size"]?>
 								</div>
+							</div>
+							<div class="row mt-1">
 								<div class="col-12">
 									<h5 class="font-weight-bold">Reference Images:</h5>
 								</div>
@@ -123,6 +125,8 @@ $template_header;
 										<?php endif; ?>
 									<?php endforeach; ?>
 								</div>
+							</div>
+							<div class="row mt-1">
 								<div class="col-3 col-sm-2">
 									<h5 class="font-weight-bold">Qty:</h5>
 								</div>

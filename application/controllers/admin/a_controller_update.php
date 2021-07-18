@@ -51,7 +51,9 @@
 					$this->session->set_flashdata("alert", array("warning", $this->upload->display_errors()));
 					redirect("admin/products");
 				} else {
-					unlink("./uploads/". $product_folder ."/". $row_info["img"]);
+				    if (isset($row_info["img"]) && !is_null($row_info["img"]) && $row_info["img"] != "") {
+				        unlink("./uploads/". $product_folder ."/". $row_info["img"]);
+				    }
 					$img = $this->upload->data("file_name");
 				}
 			}
@@ -313,7 +315,7 @@
 				if ($this->Model_update->update_order($order_id, $data)) {
 
 					$row_info = $this->Model_read->get_product_custom_wid($product_id)->row_array();
-
+					
 					$imgs = explode("/", $row_info["img"]);
 					$img = NULL;
 
@@ -334,22 +336,26 @@
 					}
 
 					for ($i = 1; $i <= $img_count; $i++) {
+					    $img_check = $this->input->post("inp_img_". $i ."_check");
+					    
 						if (!empty($_FILES["inp_img_". $i]["name"])) {
 							if (!$this->upload->do_upload("inp_img_". $i)) {
 								$this->session->set_flashdata("alert", array("warning", $this->upload->display_errors()));
 								redirect("admin/orders_custom");
 							} else {
-								if (isset($imgs[$i - 1])) {
+								if (isset($imgs[$i - 1]) && !is_null($imgs[$i - 1]) && $imgs[$i - 1] != "") {
 									unlink("./uploads/". $product_folder ."/". $imgs[$i - 1]);
 								}
 								$imgs[$i - 1] = $this->upload->data("file_name");
 							}
-						} elseif ($this->input->post("inp_img_". $i ."_check") == 0) {
-							$imgs[$i - 1] = "";
+						} elseif (isset($img_check) && !is_null($img_check) && $img_check != "") {
+						    $imgs[$i - 1] = $img_check;
+						} else {
+						    $imgs[$i - 1] = "";
 						}
 						// elseif the checker is 0, then remove the image from the list
 						// else there is no new changes don't change anything
-						$img .= ($imgs[$i - 1] != "" ? $imgs[$i - 1] : "") . (($i < $img_count && $imgs[$i - 1] != "") ? "/" : "");
+						$img .= $imgs[$i - 1] . (($i < $img_count && isset($imgs[$i])) ? "/" : "");
 					}
 
 					$data_product = array(
@@ -390,7 +396,7 @@
 			$product_info = $this->Model_read->get_product_wid($custom_product_info["product_id"]);
 			$order_info = $this->Model_read->get_order_custom_wid($order_id)->row_array();
 			$order_item_info = $this->Model_read->get_order_items_worder_id($order_id)->row_array();
-			if ($order_info["state"] > 4 && $state < 5) {
+			if ($order_info["state"] > 5 && $state < 6) {
 				$error = "Cancelled Orders can't be restored";
 			} elseif ($order_info["state"] > 2 && $state < 3) {
 				$error = "Order State can't be reverted";
@@ -425,7 +431,7 @@
 						} else {
 							$img = NULL;
 
-							$product_folder = "product_". $this->db->count_all("products") + 1;
+							$product_folder = "product_". (intval($this->db->count_all("products")) + 1);
 
 							$config["upload_path"] = "./uploads/". $product_folder;
 							$config["allowed_types"] = "gif|jpg|png";
@@ -469,7 +475,7 @@
 							}
 						}
 					}
-				} elseif ($state == 5 && $order_info["state"] > 2 && $custom_product_info["product_id"] != NULL) {
+				} elseif ($state == 6 && $order_info["state"] > 2 && $custom_product_info["product_id"] != NULL) {
 					$data = array(
 						"qty" => $order_item_info["qty"]
 					);
@@ -488,7 +494,7 @@
 					$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
 				}
 			} else {
-				$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again. [". $error ."]"));
+				$this->session->set_flashdata("alert", array("warning", "[". $error ."]"));
 			}
 			
 		}

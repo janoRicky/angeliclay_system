@@ -17,23 +17,24 @@ $template_header;
 							</div>
 						</div>
 					</div>
-					<div class="row my-3">
+					<div class="row my-4">
 						<div class="col-1 col-sm-2">
-							<a class="scroll left" onclick="$('.nav_order').scrollLeft($('.nav_order').scrollLeft() - 100);">
+							<a class="scroll left">
 								<i class="fa fa-caret-left p-1" aria-hidden="true"></i>
 							</a>
 						</div>
 						<class class="col-10 col-sm-8 nav_order justify-content-center">
-							<a href="my_orders">ALL (<?=array_sum($order_state_counts)?>)</a>
-							<a href="my_orders?state=0"><?=$states[0]?> (<?=$order_state_counts["0"]?>)</a>
-							<a href="my_orders?state=1"><?=$states[1]?> (<?=$order_state_counts["1"]?>)</a>
-							<a href="my_orders?state=2"><?=$states[2]?> (<?=$order_state_counts["2"]?>)</a>
-							<a href="my_orders?state=3"><?=$states[3]?> (<?=$order_state_counts["3"]?>)</a>
-							<a href="my_orders?state=4"><?=$states[4]?> (<?=$order_state_counts["4"]?>)</a>
-							<a href="my_orders?state=5"><?=$states[5]?> (<?=$order_state_counts["5"]?>)</a>
+							<a href="my_orders">ALL (<?=(isset($order_state_counts) ? array_sum($order_state_counts) : 0)?>)</a>
+							<a href="my_orders?state=0"><?=$states[0]?> (<?=(isset($order_state_counts[0]) ? $order_state_counts[0] : 0)?>)</a>
+							<a href="my_orders?state=1"><?=$states[1]?> (<?=(isset($order_state_counts[1]) ? $order_state_counts[1] : 0)?>)</a>
+							<a href="my_orders?state=2"><?=$states[2]?> (<?=(isset($order_state_counts[2]) ? $order_state_counts[2] : 0)?>)</a>
+							<a href="my_orders?state=3"><?=$states[3]?> (<?=(isset($order_state_counts[3]) ? $order_state_counts[3] : 0)?>)</a>
+							<a href="my_orders?state=4"><?=$states[4]?> (<?=(isset($order_state_counts[4]) ? $order_state_counts[4] : 0)?>)</a>
+							<a href="my_orders?state=5"><?=$states[5]?> (<?=(isset($order_state_counts[5]) ? $order_state_counts[5] : 0)?>)</a>
+							<a href="my_orders?state=6"><?=$states[6]?> (<?=(isset($order_state_counts[6]) ? $order_state_counts[6] : 0)?>)</a>
 						</class>
 						<div class="col-1 col-sm-2">
-							<a class="scroll right" onclick="$('.nav_order').scrollLeft($('.nav_order').scrollLeft() + 100);">
+							<a class="scroll right">
 								<i class="fa fa-caret-right p-1" aria-hidden="true"></i>
 							</a>
 						</div>
@@ -52,20 +53,26 @@ $template_header;
 										<tr>
 											<td>
 												<div class="row order">
-													<div class="col-12 col-sm-3 border p-3">
+													<div class="col-12 col-sm-6 col-lg-3 border p-3">
 														<?=date("Y-m-d / H:i:s A", strtotime($row["date_time"]))?>
 													</div>
-													<div class="col-12 col-sm-4 border p-3">
+													<div class="col-12 col-sm-6 col-lg-3 border p-3">
 														<?=$row["zip_code"] ." / ". $row["country"] ." / ". $row["province"] ." / ". $row["city"] ." / ". $row["street"] ." / ". $row["address"]?>
 													</div>
-													<div class="col-12 col-sm-3 border p-3">
+													<div class="col-12 col-sm-6 col-lg-3 border p-3">
 														<?=$states[$row["state"]]?>
 													</div>
-													<div class="col-12 col-sm-2 border p-3">
+													<div class="col-12 col-sm-6 col-lg-3 border p-3">
 														<?php if ($row["state"] == 1): ?>
 															<a href="my_order_payment?id=<?=$row["order_id"]?>">
 																<button class="button b_p">
 																	<i class="fa fa-money" aria-hidden="true"></i> Payment
+																</button>
+															</a>
+														<?php elseif ($row["state"] == 4): ?>
+															<a class="receive" href="order_receive?order_id=<?=$row['order_id']?>">
+																<button class="button b_p">
+																	<i class="fa fa-check" aria-hidden="true"></i> Received
 																</button>
 															</a>
 														<?php endif; ?>
@@ -100,6 +107,27 @@ $template_header;
 			},
 			fnDrawCallback: function() {
 				$("#table_my_orders thead").remove();
+			}
+		});
+		
+		$(document).on("mouseenter", ".scroll.left", function() {
+			timer_left = setInterval(function() {
+				$(".nav_order").scrollLeft($(".nav_order").scrollLeft() - 10);
+			}, 20);
+		}).on("mouseleave", ".scroll.left", function() {
+			clearInterval(timer_left);
+		});
+		$(document).on("mouseenter", ".scroll.right", function() {
+			timer_right = setInterval(function() {
+				$(".nav_order").scrollLeft($(".nav_order").scrollLeft() + 10);
+			}, 20);
+		}).on("mouseleave", ".scroll.right", function() {
+			clearInterval(timer_right);
+		});
+
+		$(document).on("click", ".receive", function(e) {
+			if (!confirm("Are you sure you want to set this order as RECEIVED?")) {
+				e.preventDefault();
 			}
 		});
 	});

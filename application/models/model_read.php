@@ -13,6 +13,10 @@ class Model_read extends CI_Model {
 		$query = "SELECT * FROM orders AS o WHERE order_id = '$id' AND status = '1' AND EXISTS(SELECT * FROM orders_items AS oi WHERE o.order_id = oi.order_id AND type = 'CUSTOM')";
 		return $this->db->query($query);
 	}
+	public function get_order_general_wid($id) {
+		$query = "SELECT * FROM orders AS o WHERE order_id = '$id' AND status = '1' AND EXISTS(SELECT * FROM orders_items AS oi WHERE o.order_id = oi.order_id)";
+		return $this->db->query($query);
+	}
 	public function get_order_custom_to_pay_wid_user_id($id, $user_id) {
 		$query = "SELECT * FROM orders AS o WHERE order_id = '$id' AND user_id = '$user_id' AND state = '1' AND status = '1' AND EXISTS(SELECT * FROM orders_items AS oi WHERE o.order_id = oi.order_id AND type = 'CUSTOM')";
 		return $this->db->query($query);

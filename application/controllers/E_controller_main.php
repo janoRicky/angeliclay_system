@@ -170,6 +170,7 @@
 				"PENDING", 
 				"WAITING FOR PAYMENT", 
 				"ACCEPTED / IN PROGRESS", 
+				"TO SHIP",
 				"SHIPPED", 
 				"RECEIVED", 
 				"CANCELLED"
@@ -220,6 +221,7 @@
 				"PENDING", 
 				"WAITING FOR PAYMENT", 
 				"ACCEPTED / IN PROGRESS", 
+				"TO SHIP",
 				"SHIPPED", 
 				"RECEIVED", 
 				"CANCELLED"
@@ -262,6 +264,7 @@
 				"PENDING", 
 				"WAITING FOR PAYMENT", 
 				"ACCEPTED / IN PROGRESS", 
+				"TO SHIP",
 				"SHIPPED", 
 				"RECEIVED", 
 				"CANCELLED"
@@ -303,6 +306,7 @@
 				"PENDING", 
 				"WAITING FOR PAYMENT", 
 				"ACCEPTED / IN PROGRESS", 
+				"TO SHIP",
 				"SHIPPED", 
 				"RECEIVED", 
 				"CANCELLED"
@@ -494,6 +498,7 @@
 			"PENDING", 
 			"WAITING FOR PAYMENT", 
 			"ACCEPTED / IN PROGRESS", 
+			"TO SHIP",
 			"SHIPPED", 
 			"RECEIVED", 
 			"CANCELLED"
@@ -523,6 +528,7 @@
 				"PENDING", 
 				"WAITING FOR PAYMENT", 
 				"ACCEPTED / IN PROGRESS", 
+				"TO SHIP",
 				"SHIPPED", 
 				"RECEIVED", 
 				"CANCELLED"
@@ -577,6 +583,7 @@
 			"PENDING", 
 			"WAITING FOR PAYMENT", 
 			"ACCEPTED / IN PROGRESS", 
+			"TO SHIP",
 			"SHIPPED", 
 			"RECEIVED", 
 			"CANCELLED"
@@ -613,6 +620,7 @@
 				"PENDING", 
 				"WAITING FOR PAYMENT", 
 				"ACCEPTED / IN PROGRESS", 
+				"TO SHIP",
 				"SHIPPED", 
 				"RECEIVED", 
 				"CANCELLED"

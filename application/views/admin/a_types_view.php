@@ -25,13 +25,17 @@ $template_header;
 							</div>
 							<div class="col-12">
 								<div class="row mt-2">
-									<img class="w-100" src="<?php
-									if (!empty($row_info["img"])) {
-										echo base_url(). 'assets/img/featured/type_'. $row_info["type_id"] .'/'. explode("/", $row_info["img"])[0];
-									} else {
-										echo base_url(). "assets/img/no_img.png";
-									}
-									?>" style="object-fit: contain; max-height: 500px;">
+									<div class="col-0 col-sm-2 col-md-3 col-lg-4"></div>
+									<div class="col-12 col-sm-8 col-md-6 col-lg-4">
+									    <img class="img-responsive product_img" src="<?php
+    									if (!empty($row_info["img"])) {
+    										echo base_url(). 'assets/img/featured/type_'. $row_info["type_id"] .'/'. explode("/", $row_info["img"])[0];
+    									} else {
+    										echo base_url(). "assets/img/no_img.png";
+    									}
+    									?>">
+									</div>
+									<div class="col-0 col-sm-2 col-md-3 col-lg-4"></div>
 								</div>
 								<div class="row mt-2">
 									<div class="col-12">

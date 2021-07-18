@@ -285,9 +285,11 @@ $template_header;
 			}
 		});
 		$(document).on("click", ".email_item", function(t) {
+		    var email = $(this).html();
 			if ($(this).html().length > 0) {
-				$.get("address_get", { dataType: "json", email: $(this).html() })
+				$.get("address_get", { dataType: "json", email: email })
 				.done(function(data) {
+				    $("#user_email").val(email);
 					var address = $.parseJSON(data);
 					$("#inp_zip_code").val(address["zip_code"]);
 					$("#inp_country").val(address["country"]);

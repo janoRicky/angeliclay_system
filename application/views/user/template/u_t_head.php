@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta charset="utf-8">
 	<title>
 		<?php
@@ -18,8 +19,6 @@
 	<!-- CUSTOM STYLE -->
 	<link rel="stylesheet" href="<?=base_url()?>assets/css/u_style.css">
 
-	<!-- PAGE ICON -->
-	<!-- <link rel="icon" href="<?=base_url()?>/favicon.ico" type="image/gif"> -->
 	<style type="text/css">
 		.banner {
 			background-position: center;

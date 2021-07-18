@@ -60,6 +60,7 @@ $template_header;
 									<?=$account_details["contact_num"]?>
 								</div>
 							</div>
+							<hr>
 							<div class="row mt-4">
 								<div class="col-12 text-center">
 									<a href="account_details">

@@ -12,7 +12,7 @@ $template_header;
 					<div class="row mt-4">
 						<div class="col-12 banner text-center">
 							<div class="banner_board">
-								<h5 class="font-weight-bold">Product Details</h5>
+								<h5 class="font-weight-bold">&bull; Product Details &bull;</h5>
 							</div>
 						</div>
 					</div>

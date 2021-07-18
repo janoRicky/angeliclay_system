@@ -3,14 +3,6 @@
 $template_header;
 ?>
 
-<style>
-	.img_preview {
-		object-fit: contain;
-		min-height: 10rem;
-		max-height: 12rem;
-		border: 1px solid #000;
-	}
-</style>
 <body>
 	<div class="wrapper h-100">
 		<div class="container-fluid">
@@ -120,7 +112,7 @@ $template_header;
 									<?php foreach ($imgs as $src): ?>
 										<?php if ($src != NULL): ?>
 											<div class="col-12 col-lg-3 pb-3 mx-auto">
-												<img class="img_preview" src="
+												<img class="img-responsive product_img" src="
 												<?=base_url(). 'uploads/custom_'. $product_info["custom_id"] .'/'. $src?>">
 											</div>
 										<?php endif; ?>
@@ -147,7 +139,7 @@ $template_header;
 										<h5>Payments:</h5>
 									</div>
 									<div class="col-12">
-										<table id="table_payments" class="table table-striped table-bordered">
+										<table id="table_payments" class="table table-striped table-hover table-responsive-md table-bordered">
 											<thead>
 												<tr>
 													<th>ID</th>
@@ -173,13 +165,20 @@ $template_header;
 																?>">
 															<?php endif; ?>
 														</td>
-														<td><?=date("Y-m-d / H:i:s A", strtotime($row_info["date_time"]))?></td>
+														<td><?=$row["date_time"]?></td>
 														<td><?=$row["description"]?></td>
 														<td><?=$row["amount"]?></td>
 													</tr>
 												<?php endforeach; ?>
 											</tbody>
 										</table>
+									</div>
+								</div>
+								<div class="row mt-2">
+									<div class="col-12 text-center">
+										<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal_payment" data-id="<?=$row_info['order_id']?>">
+											Add Payment
+										</button>
 									</div>
 								</div>
 								<div class="row mt-2">
@@ -199,6 +198,49 @@ $template_header;
 						</div>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+	<div id="modal_payment" class="modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<?=form_open(base_url() . "admin/order_add_payment", "method='POST' enctype='multipart/form-data'");?>
+					<input type="hidden" name="inp_id" value="<?=$row_info['order_id']?>">
+					<div class="modal-header">
+						<h4 class="modal-title">Add Payment</h4>
+						<button type="button" class="close" data-dismiss="modal">
+							&times;
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<div class="form-group">
+								<label>Description:</label>
+								<textarea class="form-control" rows="3" style="resize: none;" name="inp_description" maxlength="128"></textarea>
+							</div>
+							<div class="form-group">
+								<label>Proof of Purchase / Screenshot:</label>
+								<input id="proof_image" type="file" name="inp_img_proof">
+								<img class="w-100" id="proof_preview" src="<?=base_url()?>assets/img/no_img.png" height="150" style="object-fit: contain;">
+							</div>
+							<div class="form-group">
+								<label>Date:</label>
+								<input type="date" class="form-control" name="inp_date" autocomplete="off" value="<?=date('Y-m-d')?>">
+							</div>
+							<div class="form-group">
+								<label>Time:</label>
+								<input type="time" class="form-control" name="inp_time" autocomplete="off" value="<?=date('H:i')?>">
+							</div>
+							<div class="form-group">
+								<label>Amount:</label>
+								<input type="number" class="form-control" name="inp_amount" placeholder="Price" autocomplete="off" step="0.000001">
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<input type="submit" class="btn btn-primary" name="payment_submit" value="Submit Payment for Custom Order">
+					</div>
+				<?=form_close()?>
 			</div>
 		</div>
 	</div>
@@ -282,7 +324,7 @@ $template_header;
 </body>
 <script type="text/javascript">
 	$(document).ready(function () {
-		$("#table_payments").DataTable({"scrollX": true});
+		$("#table_payments").DataTable();
 
 		$(".btn_state").on("click", function() {
 			$("#state_change").trigger("change");
@@ -296,7 +338,7 @@ $template_header;
 				$(".state_waiting").removeClass("d-none");
 			} else if ($(this).val() == "3") {
 				$(".state_shipped").removeClass("d-none");
-			} else if ($(this).val() == "5") {
+			} else if ($(this).val() == "6") {
 				$(".state_cancelled").removeClass("d-none");
 			}
 		});
@@ -307,6 +349,16 @@ $template_header;
 				reader.readAsDataURL(this.files[0]);
 				reader.onload = function(e) {
 					$("#image_preview").attr("src", e.target.result);
+				};
+			}
+		});
+
+		$(document).on("change", "#proof_image", function() {
+			if (this.files && this.files[0]) {
+				var reader = new FileReader();
+				reader.readAsDataURL(this.files[0]);
+				reader.onload = function(e) {
+					$("#proof_preview").attr("src", e.target.result);
 				};
 			}
 		});

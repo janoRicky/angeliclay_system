@@ -25,7 +25,7 @@
 		} else {
 			$img = NULL;
 
-			$product_folder = "product_". $this->db->count_all("products") + 1;
+			$product_folder = "product_". (intval($this->db->count_all("products")) + 1);
 
 			$config["upload_path"] = "./uploads/". $product_folder;
 			$config["allowed_types"] = "gif|jpg|png";
@@ -76,7 +76,7 @@
 		} else {
 			$img = NULL;
 
-			$type_folder = "type_". $this->db->count_all("types") + 1;
+			$type_folder = "type_". (intval($this->db->count_all("types")) + 1);
 
 			$config["upload_path"] = "./assets/img/featured/". $type_folder;
 			$config["allowed_types"] = "gif|jpg|png";
@@ -144,7 +144,7 @@
 			}
 		}
 
-		if ($user_email == NULL || $description == NULL || $date == NULL || $time == NULL || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL || count($items) < 1) {
+		if ($user_email == NULL || $description == NULL || $date == NULL  || $time == NULL || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL || count($items) < 1) {
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
 		} else {
 			$user_info = $this->Model_read->get_user_acc_wemail($user_email);
@@ -155,8 +155,7 @@
 				$data = array(
 					"user_id" => $user_id,
 					"description" => $description,
-					"date" => $date,
-					"time" => $time,
+					"date_time" => $date ." ". $time,
 					"zip_code" => $zip_code,
 					"country" => $country,
 					"province" => $province,
@@ -207,7 +206,7 @@
 		$img_count = $this->input->post("inp_img_count");
 
 
-		if ($user_email == NULL || $description == NULL || $date == NULL || $time == NULL || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL || $custom_description == NULL || $type_id == NULL || $size == NULL) {
+		if ($user_email == NULL || $description == NULL || $date == NULL  || $time == NULL || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL || $custom_description == NULL || $type_id == NULL || $size == NULL) {
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
 		} else {
 			$user_info = $this->Model_read->get_user_acc_wemail($user_email);
@@ -218,8 +217,7 @@
 				$data = array(
 					"user_id" => $user_id,
 					"description" => $description,
-					"date" => $date,
-					"time" => $time,
+					"date_time" => $date ." ". $time,
 					"zip_code" => $zip_code,
 					"country" => $country,
 					"province" => $province,
@@ -234,7 +232,7 @@
 
 					$img = NULL;
 
-					$product_folder = "custom_". $this->db->count_all("products_custom") + 1;
+					$product_folder = "custom_". (intval($this->db->count_all("products_custom")) + 1);
 
 					$config["upload_path"] = "./uploads/". $product_folder;
 					$config["allowed_types"] = "gif|jpg|png";
@@ -283,6 +281,74 @@
 			}
 		}
 		redirect("admin/orders_custom");
+	}
+	// = = = ORDERS BOTH
+	public function new_order_payment() {
+		$order_id = $this->input->post("inp_id");
+		$description = $this->input->post("inp_description");
+		$date = $this->input->post("inp_date");
+		$time = $this->input->post("inp_time");
+		$amount = $this->input->post("inp_amount");
+
+		if ($order_id == NULL || $description == NULL || $date == NULL  || $time == NULL || $amount == NULL) {
+			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
+		} else {
+			$order = $this->Model_read->get_order_general_wid($order_id);
+
+			if ($order->num_rows() > 0) {
+				$order_info = $order->row_array();
+				$img = NULL;
+
+				$user_folder = "user_". $order_info["user_id"];
+				$payment_folder = "order_". $order_id;
+
+				$config["upload_path"] = "./uploads/users/". $user_folder ."/payments/". $payment_folder;
+				$config["allowed_types"] = "gif|jpg|png";
+				$config["max_size"] = 2000;
+				$config["encrypt_name"] = TRUE;
+
+				$this->load->library("upload", $config);
+				if (!is_dir("uploads/users/". $user_folder)) {
+					mkdir("./uploads/users/". $user_folder, 0777, TRUE);
+				}
+				if (!is_dir("uploads/users/". $user_folder ."/payments")) {
+					mkdir("./uploads/users/". $user_folder ."/payments", 0777, TRUE);
+				}
+				if (!is_dir("uploads/users/". $user_folder ."/payments/". $payment_folder)) {
+					mkdir("./uploads/users/". $user_folder ."/payments/". $payment_folder, 0777, TRUE);
+				}
+
+				if (isset($_FILES["inp_img_proof"])) {
+					if (!$this->upload->do_upload("inp_img_proof")) {
+						$this->session->set_flashdata("notice", array("warning", $this->upload->display_errors()));
+					} else {
+						$img = $this->upload->data("file_name");
+					}
+				}
+
+				$data = array(
+					"order_id" => $order_id,
+					"description" => $description,
+					"img" => $img,
+					"date_time" => $date ." ". $time,
+					"amount" => $amount,
+					"status" => "1"
+				);
+
+				if ($this->Model_create->create_order_payment($data)) {
+					$this->session->set_flashdata("alert", array("success", "Order Payment is successfully added."));
+				} else {
+					$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
+				}
+			} else {
+				$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again." ));
+			}
+		}
+		if ($this->input->post("payment_submit") == "Submit Payment for Order") {
+			redirect("admin/orders");
+		} else {
+			redirect("admin/orders_custom");
+		}
 	}
 	// = = = USERS
 	public function new_user_account() {

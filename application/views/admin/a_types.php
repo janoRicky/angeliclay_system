@@ -34,6 +34,7 @@ $template_header;
 									<thead>
 										<tr>
 											<th>ID</th>
+											<th>Img</th>
 											<th>Name</th>
 											<th>Price Range</th>
 											<th>Featured</th>
@@ -45,6 +46,15 @@ $template_header;
 											<tr class="text-center align-middle">
 												<td>
 													<?=$row["type_id"]?>
+												</td>
+												<td>
+            									    <img class="img-responsive product_img" src="<?php
+                									if (!empty($row["img"])) {
+                										echo base_url(). 'assets/img/featured/type_'. $row["type_id"] .'/'. explode("/", $row["img"])[0];
+                									} else {
+                										echo base_url(). "assets/img/no_img.png";
+                									}
+                									?>">
 												</td>
 												<td>
 													<?=$row["name"]?>

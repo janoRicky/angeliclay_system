@@ -20,7 +20,7 @@
 				$account_info = $account->row_array();
 				if (password_verify($password, $account_info["password"])) {
 					$data = array(
-						"admin_id" => $account_info["id"],
+						"admin_id" => $account_info["admin_id"],
 						"admin_name" => $account_info["name"],
 						"admin_email" => $account_info["email"],
 						"admin_in" => TRUE

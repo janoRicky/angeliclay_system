@@ -119,7 +119,7 @@ $template_header;
 															<a class="img_remove">
 																<i class="fa fa-times fa-lg" aria-hidden="true"></i>
 															</a>
-															<input type="hidden" class="img_check" name="inp_img_<?=$ctr?>_check">
+															<input type="hidden" class="img_check" name="inp_img_<?=$ctr?>_check" value="<?=$src?>">
 														</div>
 													</div>
 												<?php endif; ?>
@@ -135,7 +135,6 @@ $template_header;
 														<a class="img_remove">
 															<i class="fa fa-times fa-lg" aria-hidden="true"></i>
 														</a>
-														<input type="hidden" class="img_check" name="inp_img_<?=$ctr+1?>_check">
 													</div>
 												</div>
 											<?php endif; ?>
@@ -210,7 +209,11 @@ $template_header;
 						class: "img_u_change item_img p-3 text-center d-none"
 					}).html("Change Image")).append($("<a>").attr({
 						class: "img_remove"
-					}).append($("<i>").attr({ class: "fa fa-times fa-lg", "aria-hidden": "true" })))));
+					}).append($("<input>").attr({
+						type: "hidden",
+						class: "img_check",
+						name: "inp_img_" + ($(".img_box").length + 1) + "_check"
+					})).append($("<i>").attr({ class: "fa fa-times fa-lg", "aria-hidden": "true" })))));
 					
 					$("#img_count").val($(".img_box").length);
 				}
@@ -246,9 +249,11 @@ $template_header;
 			}
 		});
 		$(document).on("click", ".email_item", function(t) {
+		    var email = $(this).html();
 			if ($(this).html().length > 0) {
-				$.get("address_get", { dataType: "json", email: $(this).html() })
+				$.get("address_get", { dataType: "json", email: email })
 				.done(function(data) {
+				    $("#user_email").val(email);
 					var address = $.parseJSON(data);
 					$("#inp_zip_code").val(address["zip_code"]);
 					$("#inp_country").val(address["country"]);

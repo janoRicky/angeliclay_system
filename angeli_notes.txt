@@ -20,10 +20,11 @@ TOTDODODODO
 
 
 ALLOW ADMIN TO CREATE ORDER WITHOUT USER ACCOUNT
+ADD function for admin to add orders of customers without accounts
+
+
 
 image protection, controller access for image src
-
-add function for user to set an order to received
 
 DON'T ALLOW ADMINS TO REMOVE ALL ORDER ITEMS WHEN UPDATING
 
@@ -34,12 +35,7 @@ add shipping fee on order submit
 
 newest first on tables
 
-ADMIN SUBMIT PAYMENT
-
-ADD to ship? in STATES of ORDERS
-
-
-ADD function for admin to add orders of customers without accounts
+ADMIN PAYMENT UPDATE func
 
 
 

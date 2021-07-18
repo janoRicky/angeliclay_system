@@ -1,5 +1,5 @@
 
-<footer class="page-footer" style="background-color: #ffc6dd; height: auto;">
+<footer class="page-footer" style="background-color: #ffc6dd; height: auto; width: 100%; margin-top: auto;">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-1 col-sm-3"></div>

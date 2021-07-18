@@ -163,7 +163,7 @@ $template_header;
 						<div class="form-group m-0" style="overflow: auto;">
 							<label>Ordered Items:</label>
 							<input id="items_no" type="hidden" name="items_no" value="0">
-							<table id="table_items" class="table table-striped table-bordered">
+							<table id="table_items" class="table table-striped table-hover table-bordered">
 								<thead>
 									<tr>
 										<th>Item</th>
@@ -186,7 +186,7 @@ $template_header;
 						</div>
 						<div class="form-group">
 							<label>Products:</label>
-							<table id="table_products" class="table table-striped table-bordered">
+							<table id="table_products" class="table table-striped table-hover table-responsive-lg table-bordered">
 								<thead>
 									<tr>
 										<th>ID</th>
@@ -277,40 +277,42 @@ $template_header;
 				var ctr = parseInt($("#items_no").val()) + 1;
 				var $product = $("#product_" + p_id);
 
-				var $description = $("<td>").append($("<input>").attr({
-					type: "hidden",
-					name: "item_" + ctr + "_id",
-					value: $.trim(p_id)
-				})).append($product.children(".type").html() + "/" + $product.children(".description").html());
-				var $qty = $("<td>").append($("<input>").attr({
-					class: "item_qty",
-					type: "number",
-					name: "item_" + ctr + "_qty",
-					min: "1",
-					value: "1",
-					max: $.trim($product.children(".qty").html())
-				}));
-				var $price = $("<td>").append($("<input>").attr({
-					type: "hidden",
-					name: "item_" + ctr + "_price",
-					value: $.trim($product.children(".price").html())
-				})).append($("<span>")).attr("class", "item_price");
-				var $action = $("<td>").append($("<button>").attr({
-					type: "button",
-					class: "btn btn-sm btn-primary btn_remove_item"
-				}).html("Remove"));
-
-				$("#total_info").before($("<tr>")
-					.append($description)
-					.append($qty)
-					.append($price)
-					.append($action).attr({
-						id: "item_" + ctr,
-						class: "item_product_" + p_id + " order_row"
+				if ($.trim($product.children(".price").html()) < 1) {
+					var $description = $("<td>").append($("<input>").attr({
+						type: "hidden",
+						name: "item_" + ctr + "_id",
+						value: $.trim(p_id)
+					})).append($product.children(".type").html() + "/" + $product.children(".description").html());
+					var $qty = $("<td>").append($("<input>").attr({
+						class: "item_qty",
+						type: "number",
+						name: "item_" + ctr + "_qty",
+						min: "1",
+						value: "1",
+						max: $.trim($product.children(".qty").html())
 					}));
+					var $price = $("<td>").append($("<input>").attr({
+						type: "hidden",
+						name: "item_" + ctr + "_price",
+						value: $.trim($product.children(".price").html())
+					})).append($("<span>")).attr("class", "item_price");
+					var $action = $("<td>").append($("<button>").attr({
+						type: "button",
+						class: "btn btn-sm btn-primary btn_remove_item"
+					}).html("Remove"));
 
-				$("#items_no").val(ctr);
-				$(".item_product_" + p_id).find(".item_qty").trigger("change");
+					$("#total_info").before($("<tr>")
+						.append($description)
+						.append($qty)
+						.append($price)
+						.append($action).attr({
+							id: "item_" + ctr,
+							class: "item_product_" + p_id + " order_row"
+						}));
+
+					$("#items_no").val(ctr);
+					$(".item_product_" + p_id).find(".item_qty").trigger("change");
+				}
 			} else {
 				var item_qty = $item_product.find(".item_qty");
 				if (item_qty.val() < parseInt(item_qty.attr("max"))) {
@@ -360,7 +362,7 @@ $template_header;
 			total();
 		});
 
-		$("#table_products").DataTable({"scrollX": true});
+		$("#table_products").DataTable();
 
 		$("#user_email").on("keyup", function(e) {
 			if ($(this).val().length > 0) {
@@ -382,9 +384,11 @@ $template_header;
 			}
 		});
 		$(document).on("click", ".email_item", function(t) {
+			var email = $(this).html();
 			if ($(this).html().length > 0) {
-				$.get("address_get", { dataType: "json", email: $(this).html() })
+				$.get("address_get", { dataType: "json", email: email })
 				.done(function(data) {
+					$("#user_email").val(email);
 					var address = $.parseJSON(data);
 					$("#inp_zip_code").val(address["zip_code"]);
 					$("#inp_country").val(address["country"]);

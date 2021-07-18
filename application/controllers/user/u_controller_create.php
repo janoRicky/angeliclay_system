@@ -108,7 +108,7 @@
 
 					$img = NULL;
 
-					$product_folder = "custom_". $this->db->count_all("products_custom") + 1;
+					$product_folder = "custom_". (intval($this->db->count_all("products_custom")) + 1);
 
 					$config["upload_path"] = "./uploads/". $product_folder;
 					$config["allowed_types"] = "gif|jpg|png";

@@ -35,7 +35,7 @@
 								<i class="fa fa-list" aria-hidden="true"></i> My Orders
 							</a>
 							<a class="dropdown-item" href="logout">
-								<i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+								<i class="fa fa-sign-out" aria-hidden="true"></i> Log-Out
 							</a>
 						</div>
 					</li>

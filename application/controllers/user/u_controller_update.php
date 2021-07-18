@@ -106,21 +106,37 @@
 		if ($user_id == NULL || $contact_num == NULL) {
 			$this->session->set_flashdata("notice", array("warning", "One or more inputs are empty."));
 		} else {
-			$acc_info = $this->Model_read->get_user_acc_wid($user_id)->row_array();
-			if ($this->Model_read->get_user_acc_wemail($email)->num_rows() > 0 && $acc_info["email"] != $email) {
-				$this->session->set_flashdata("notice", array("warning", "Email has already been used."));
-			} else {
-				$data = array(
-					"contact_num" => $contact_num
-				);
+			$data = array(
+				"contact_num" => $contact_num
+			);
 
-				if ($this->Model_update->update_user_account($user_id, $data)) {
-					$this->session->set_flashdata("notice", array("success", "Contact info is successfully updated."));
-				} else {
-					$this->session->set_flashdata("notice", array("danger", "Something went wrong, please try again."));
-				}
+			if ($this->Model_update->update_user_account($user_id, $data)) {
+				$this->session->set_flashdata("notice", array("success", "Contact info is successfully updated."));
+			} else {
+				$this->session->set_flashdata("notice", array("danger", "Something went wrong, please try again."));
 			}
 		}
 		redirect("account");
+	}
+
+	public function user_order_receive() {
+		$user_id = ($this->session->has_userdata("user_id") ? $this->session->userdata("user_id") : NULL);
+
+		$order_id = $this->input->get("order_id");
+
+		if ($user_id == NULL || $order_id == NULL) {
+			$this->session->set_flashdata("notice", array("warning", "One or more inputs are empty."));
+		} else {
+			$data = array(
+				"state" => "5"
+			);
+
+			if ($this->Model_update->update_order_wuser_id($order_id, $user_id, $data)) {
+				$this->session->set_flashdata("notice", array("success", "Contact info is successfully updated."));
+			} else {
+				$this->session->set_flashdata("notice", array("danger", "Something went wrong, please try again."));
+			}
+		}
+		redirect("my_orders");
 	}
 }

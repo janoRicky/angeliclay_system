@@ -72,9 +72,8 @@ $route['my_orders'] = 'E_controller_main/view_u_my_orders';
 $route['my_order_details'] = 'E_controller_main/view_u_my_order_details';
 $route['my_order_payment'] = 'E_controller_main/view_u_my_order_payment';
 
-$route['submit_order'] = 'E_controller_main/view_u_submit_order';
 
-$route['test'] = 'E_controller_main/test'; // REMOVE
+
 
 // SESSION
 $route['to_cart'] = 'user/U_controller_session/to_cart';
@@ -94,6 +93,10 @@ $route['update_personal_info'] = 'user/U_controller_update/user_details_update';
 $route['update_account_info'] = 'user/U_controller_update/user_account_update';
 $route['update_address_info'] = 'user/U_controller_update/user_address_update';
 $route['update_contact_info'] = 'user/U_controller_update/user_contact_update';
+
+$route['submit_order'] = 'E_controller_main/view_u_submit_order';
+
+$route['order_receive'] = 'user/U_controller_update/user_order_receive';
 
 
 // PAGES - ADMIN
@@ -139,6 +142,8 @@ $route['admin/order_create'] = 'admin/A_controller_create/new_order';
 $route['admin/order_custom_create'] = 'admin/A_controller_create/new_order_custom';
 $route['admin/user_create'] = 'admin/A_controller_create/new_user_account';
 $route['admin/acc_create'] = 'admin/A_controller_create/new_admin_account';
+
+$route['admin/order_add_payment'] = 'admin/A_controller_create/new_order_payment';
 
 // - UPDATE
 $route['admin/product_update'] = 'admin/A_controller_update/edit_product';

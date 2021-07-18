@@ -107,7 +107,9 @@ $template_header;
 															<div class="col-1 col-sm-3"></div>
 															<div class="col-10 col-sm-6 text-center">
 																<a class="remove_item" href="<?=base_url()?>remove_from_cart?id=<?=$key?>">
-																	<button class="button b_n">Remove</button>
+																	<button class="button b_n">
+																		<i class="fa fa-trash" aria-hidden="true"></i> Remove
+																	</button>
 																</a>
 															</div>
 															<div class="col-1 col-sm-3"></div>
@@ -130,7 +132,9 @@ $template_header;
 										</div>
 										<div class="col-12 text-center mt-4">
 											<a <?=(count($cart) > 0 ? "href='submit_order?grand_total=". $grand_total ."'" : "")?>>
-												<button class="button b_p b_lg">Place Order</button>
+												<button class="button b_p b_lg">
+													<i class="fa fa-money" aria-hidden="true"></i> Place Order
+												</button>
 											</a>
 										</div>
 									</div>

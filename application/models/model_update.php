@@ -27,6 +27,11 @@ class Model_update extends CI_Model {
 		$this->db->where("order_id", $id);
 		return $this->db->update("orders", $data);
 	}
+	public function update_order_wuser_id($id, $user_id, $data) {
+		$this->db->where("order_id", $id);
+		$this->db->where("user_id", $user_id);
+		return $this->db->update("orders", $data);
+	}
 
 	public function update_user_account($id, $data) {
 		$this->db->where("user_id", $id);
