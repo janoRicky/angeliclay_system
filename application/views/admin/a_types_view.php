@@ -19,53 +19,35 @@ $template_header;
 								</button>
 							</div>
 						<?php endif; ?>
-						<div class="row">
+						<div class="row view_container">
 							<div class="col-12 text-left">
 								<h2>View Type #<?=$row_info["type_id"]?></h2>
 							</div>
-							<div class="col-12">
-								<div class="row mt-2">
-									<div class="col-0 col-sm-2 col-md-3 col-lg-4"></div>
-									<div class="col-12 col-sm-8 col-md-6 col-lg-4">
-									    <img class="img-responsive product_img" src="<?php
-    									if (!empty($row_info["img"])) {
-    										echo base_url(). 'assets/img/featured/type_'. $row_info["type_id"] .'/'. explode("/", $row_info["img"])[0];
-    									} else {
-    										echo base_url(). "assets/img/no_img.png";
-    									}
-    									?>">
-									</div>
-									<div class="col-0 col-sm-2 col-md-3 col-lg-4"></div>
-								</div>
+							<div class="col-12 col-md-3">
+								<img class="img-responsive img_view img_zoomable" src="<?php
+								if (!empty($row_info["img"])) {
+									echo base_url(). 'assets/img/featured/type_'. $row_info["type_id"] .'/'. explode("/", $row_info["img"])[0];
+								} else {
+									echo base_url(). "assets/img/no_img.png";
+								}
+								?>">
+							</div>
+							<div class="col-12 col-md-9">
 								<div class="row mt-2">
 									<div class="col-12">
-										<h5>Type Name:</h5>
-									</div>
-									<div class="col-12">
+										<label>Type Name:</label><br>
 										<?=$row_info["name"]?>
 									</div>
-								</div>
-								<div class="row mt-2">
 									<div class="col-12">
-										<h5>Description:</h5>
-									</div>
-									<div class="col-12">
+										<label>Description:</label><br>
 										<?=$row_info["description"]?>
 									</div>
-								</div>
-								<div class="row mt-2">
-									<div class="col-12">
-										<h5>Price Range:</h5>
+									<div class="col-12 col-md-6">
+										<label>Price Range:</label><br>
+										PHP <?=$row_info["price_range"]?>
 									</div>
-									<div class="col-12">
-										<?=$row_info["price_range"]?>
-									</div>
-								</div>
-								<div class="row mt-2">
-									<div class="col-12">
-										<h5>Featured:</h5>
-									</div>
-									<div class="col-12">
+									<div class="col-12 col-md-6">
+										<label>Featured:</label><br>
 										<?=($row_info["featured"] == 1 ? "YES" : "NO")?>
 									</div>
 								</div>

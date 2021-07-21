@@ -28,40 +28,40 @@ $template_header;
 									<input id="update_inp_id" type="hidden" name="inp_id" value="<?=$row_info['order_id']?>">
 									<div class="form-group">
 										<label for="inp_user_email">User Email:</label>
-										<input id="user_email" type="text" class="form-control" name="inp_user_email" placeholder="Email Address" autocomplete="off" value="<?=$this->Model_read->get_user_acc_wid($row_info["user_id"])->row_array()["email"]?>" data-toggle="dropdown">
+										<input id="user_email" type="text" class="form-control" name="inp_user_email" placeholder="Email Address" autocomplete="off" value="<?=$this->Model_read->get_user_acc_wid($row_info["user_id"])->row_array()["email"]?>" data-toggle="dropdown" required="">
 										<div class="dropdown-menu dropdown-menu-left email_dropdown"></div>
 									</div>
 									<div class="form-group">
 										<label for="inp_description">Description:</label>
-										<input type="text" class="form-control" name="inp_description" placeholder="Description" autocomplete="off" value="<?=$row_info['description']?>">
+										<input type="text" class="form-control" name="inp_description" placeholder="Description" autocomplete="off" value="<?=$row_info['description']?>" required="">
 									</div>
 									<div class="form-group">
 										<label for="inp_date">Date:</label>
-										<input type="date" class="form-control" name="inp_date" autocomplete="off" value="<?=date('Y-m-d', strtotime($row_info['date_time']))?>">
+										<input type="date" class="form-control" name="inp_date" autocomplete="off" value="<?=date('Y-m-d', strtotime($row_info['date_time']))?>" required="">
 									</div>
 									<div class="form-group">
 										<label for="inp_time">Time:</label>
-										<input type="time" class="form-control" name="inp_time" autocomplete="off" value="<?=date('H:i', strtotime($row_info['date_time']))?>">
+										<input type="time" class="form-control" name="inp_time" autocomplete="off" value="<?=date('H:i', strtotime($row_info['date_time']))?>" required="">
 									</div>
 									<div class="form-group">
 										<label for="inp_zip_code">Zip Code:</label>
-										<input type="text" class="form-control" id="inp_zip_code" name="inp_zip_code" placeholder="Zip Code" value="<?=$row_info['zip_code']?>" autocomplete="off">
+										<input type="text" class="form-control" id="inp_zip_code" name="inp_zip_code" placeholder="Zip Code" value="<?=$row_info['zip_code']?>" autocomplete="off" required="">
 									</div>
 									<div class="form-group">
 										<label for="inp_country">Country:</label>
-										<input type="text" class="form-control" id="inp_country" name="inp_country" placeholder="Country" value="<?=$row_info['country']?>" autocomplete="off">
+										<input type="text" class="form-control" id="inp_country" name="inp_country" placeholder="Country" value="<?=$row_info['country']?>" autocomplete="off" required="">
 									</div>
 									<div class="form-group">
 										<label for="inp_province">Province:</label>
-										<input type="text" class="form-control" id="inp_province" name="inp_province" placeholder="Province" value="<?=$row_info['province']?>" autocomplete="off">
+										<input type="text" class="form-control" id="inp_province" name="inp_province" placeholder="Province" value="<?=$row_info['province']?>" autocomplete="off" required="">
 									</div>
 									<div class="form-group">
 										<label for="inp_city">City:</label>
-										<input type="text" class="form-control" id="inp_city" name="inp_city" placeholder="City" value="<?=$row_info['city']?>" autocomplete="off">
+										<input type="text" class="form-control" id="inp_city" name="inp_city" placeholder="City" value="<?=$row_info['city']?>" autocomplete="off" required="">
 									</div>
 									<div class="form-group">
 										<label for="inp_street">Street/Road:</label>
-										<input type="text" class="form-control" id="inp_street" name="inp_street" placeholder="Street/Road" value="<?=$row_info['street']?>" autocomplete="off">
+										<input type="text" class="form-control" id="inp_street" name="inp_street" placeholder="Street/Road" value="<?=$row_info['street']?>" autocomplete="off" required="">
 									</div>
 									<div class="form-group">
 										<label for="inp_address">House Number/Floor/Bldg./etc.:</label>

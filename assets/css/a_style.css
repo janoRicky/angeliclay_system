@@ -51,8 +51,9 @@ html, body {
 	font-weight: bold;
 	font-size: 1.1rem;
 }
-.view_container .row {
+.view_container .row .col-12 {
 	border-top: 1px solid #000;
+	padding: 0.5rem;
 }
 
 form label {
@@ -61,6 +62,11 @@ form label {
 }
 
 
+.img_a_preview {
+	border-radius: 3px;
+	border: 1px solid #000;
+	max-width: 15rem;
+}
 .img_u_box {
 	position: relative;
 }
@@ -80,20 +86,35 @@ form label {
 	max-height: 80%;
 }
 
-.product_img, .img_u_box img {
+.img_row {
 	border: 0.2rem solid #000;
 	border-radius: 5%;
 
-	width: 100%;
+	max-width: 9rem;
+	max-height: 9rem;
 }
-.product_img {
-	cursor: zoom-in;
+
+.img_u_box img {
+	border: 0.2rem solid #000;
+	border-radius: 5%;
+
+	max-width: 15rem;
+	max-height: 15rem;
+}
+.img_view {
+	border: 0.2rem solid #000;
+	border-radius: 5%;
 	object-fit: contain;
-	max-height: 500px;
+	width: 100%;
+	max-width: 25rem;
+	max-height: 25rem;
+}
+.img_zoomable {
+	cursor: zoom-in;
 }
 .img_zoom {
 	cursor: zoom-out;
-	z-index: 101;
+	z-index: 9999;
 	background-color: rgba(0, 0, 0, 0.5);
 	position: fixed;
 	top: 0;

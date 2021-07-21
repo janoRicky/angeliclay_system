@@ -26,17 +26,24 @@ html, body {
 }
 .notice.n_all {
 	box-shadow: 0 0 1rem #fff;
-	max-width: 40%;
+	max-width: 75%;
 	position: fixed;
-	top: 1rem;
-	right: 1rem;
+	margin: 2% 3%;
+	top: 0;
+	right: 0;
 
 	z-index: 200;
+	cursor: pointer;
 }
 
 .nav_title {
 	font-family: Lucida Handwriting, Brush Script MT, cursive;
-	font-size: 3rem;
+
+	color: black !important;
+	text-decoration: none !important;
+}
+.nav_title h1 {
+	font-weight: bold;
 }
 .nav_link_bar {
 	background: linear-gradient(180deg, #ffc6dd 5%, #ffd6e7 50%, #ffc6dd 95%);
@@ -207,4 +214,30 @@ html, body {
 .img_u_preview {
 	max-width: 50%;
 	max-height: 80%;
+}
+
+
+
+
+/* 576 768 992 1200 */
+
+@media (min-width: 576px) {
+	.notice.n_all {
+		max-width: 65%;
+	}
+}
+@media (min-width: 768px) {
+	.notice.n_all {
+		max-width: 55%;
+	}
+}
+@media (min-width: 992px) {
+	.notice.n_all {
+		max-width: 45%;
+	}
+}
+@media (min-width: 1200px) {
+	.notice.n_all {
+		max-width: 35%;
+	}
 }

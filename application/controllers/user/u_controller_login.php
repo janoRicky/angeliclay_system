@@ -27,6 +27,7 @@
 						"user_in" => TRUE
 					);
 					$this->session->set_userdata($data);
+					$this->session->set_flashdata("notice", array("success", "Welcome ". $data["user_name"] ."!"));
 					redirect("home");
 				} else {
 					$this->session->set_flashdata("notice", array("warning", "Password is incorrect."));

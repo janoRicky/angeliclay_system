@@ -4,7 +4,7 @@ $(document).ready(function () {
 		$("#sidebar, #sidebar_out").fadeToggle(100);
 	});
 
-	$(document).on("click", ".product_img", function() {
+	$(document).on("click", ".img_zoomable", function() {
 		$("body").append($("<div>").attr({
 			class: "img_zoom"
 		}).append($("<img>").attr({

@@ -11,8 +11,8 @@ $template_header; // loads in the header of the page obtained from views/admin/t
 				</div> 
 			</div>
 			<div class="row">
-				<div class="col-md-4 col-1"></div> 
-				<div class="col-md-4 col-10">
+				<div class="col-1 col-sm-2 col-md-3 col-lg-4"></div> 
+				<div class="col-10 col-sm-8 col-md-6 col-lg-4">
 					<div class="card text-center mt-5">
 						<div class="card-header">
 							<h3>LOG-IN</h3>
@@ -30,18 +30,18 @@ $template_header; // loads in the header of the page obtained from views/admin/t
 							<?=form_open(base_url() . "admin/login", "method='POST'")?>
 								<div class="form-group">
 									<label for="inp_email">Email:</label>
-									<input type="email" class="form-control" name="inp_email" placeholder="Email Address">
+									<input type="email" class="form-control" name="inp_email" placeholder="Email Address" required="">
 								</div>
 								<div class="form-group">
 									<label for="inp_password">Password:</label>
-									<input type="password" class="form-control" name="inp_password" placeholder="Password">
+									<input type="password" class="form-control" name="inp_password" placeholder="Password" required="">
 								</div>
 								<input type="submit" class="btn btn-primary" value="Log-In">
 							<?=form_close()?>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4 col-1"></div>
+				<div class="col-1 col-sm-2 col-md-3 col-lg-4"></div>
 			</div>
 		</div>
 	</div>

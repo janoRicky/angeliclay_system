@@ -29,26 +29,26 @@ $template_header;
 									<div class="form-group">
 										<?php $images = explode("/", $row_info["img"]); ?>
 										<label>Image:</label>
-										<input id="type_image" type="file" name="inp_img">
-										<img class="w-100" id="image_preview" src="<?php
+										<input class="form-control mb-1" id="type_image" type="file" name="inp_img">
+										<img class="img-responsive img_view img_zoomable" id="image_preview" src="<?php
 										if (!empty($row_info["img"])) {
-											echo base_url(). 'assets/img/featured/type_'. $row_info["type_id"] .'/'. explode("/", $row_info["img"])[0];
+											echo base_url(). 'assets/img/featured/type_'. $row_info["type_id"] .'/'. $row_info["img"];
 										} else {
 											echo base_url(). "assets/img/no_img.png";
 										}
-										?>" height="300" style="object-fit: contain;">
+										?>">
 									</div>
 									<div class="form-group">
 										<label for="inp_type">Type Name:</label>
-										<input type="text" class="form-control" name="inp_name" placeholder="Type Name" value="<?=$row_info['name']?>" autocomplete="off">
+										<input type="text" class="form-control" name="inp_name" placeholder="*Type Name" value="<?=$row_info['name']?>" autocomplete="off" required="">
 									</div>
 									<div class="form-group">
 										<label for="inp_type">Description:</label>
-										<textarea class="form-control" name="inp_description" placeholder="Description"style="resize: none;"><?=$row_info['description']?></textarea>
+										<textarea class="form-control" name="inp_description" placeholder="*Description"style="resize: none;" required=""><?=$row_info['description']?></textarea>
 									</div>
 									<div class="form-group">
 										<label for="inp_type">Price Range:</label>
-										<input type="text" class="form-control" name="inp_price_range" placeholder="Price Range" value="<?=$row_info['price_range']?>" autocomplete="off">
+										<input type="text" class="form-control" name="inp_price_range" placeholder="*Price Range" value="<?=$row_info['price_range']?>" autocomplete="off" required="">
 									</div>
 									<input type="submit" class="btn btn-primary" value="Update">
 								<?=form_close(); ?>
@@ -60,7 +60,6 @@ $template_header;
 		</div>
 	</div>
 </body>
-<?php $this->load->view("admin/template/a_t_scripts"); ?>
 <script type="text/javascript">
 	$(document).ready(function () {
 

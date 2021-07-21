@@ -1,7 +1,9 @@
 <div class="container-fluid navbar_">
 	<div class="row p-4">
 		<div class="col-12 text-center">
-			<span class="nav_title">AngeliClay</span>
+			<a class="nav_title" href="home">
+				<h1>AngeliClay</h1>
+			</a>
 		</div>
 	</div>
 	<div class="row p-3 mt-2 nav_link_bar">
@@ -68,13 +70,10 @@
 
 <?php if ($this->session->flashdata("notice")): ?>
 	<?php $alert = $this->session->flashdata("notice"); ?>
-	<div class="notice n_all row my-4 alert alert-<?=$alert[0]?> alert-dismissible  mx-auto">
+	<div class="notice n_all row alert alert-<?=$alert[0]?>" data-dismiss="alert">
 		<div class="text-center w-100">
 			<?=$this->session->flashdata("notice")[1]?>
 		</div>
-		<button type="button" class="close" data-dismiss="alert">
-			&times;
-		</button>
 	</div>
 <?php endif; ?>
 
@@ -83,5 +82,5 @@
 		$(".notice").fadeOut(3000, function() {
 			$(this).remove();
 		});
-	}, 20000);
+	}, 30000);
 </script>

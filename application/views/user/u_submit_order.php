@@ -39,7 +39,7 @@ $template_header;
 										<h5 class="font-weight-bold">Ref No: </h5>
 									</div>
 									<div class="col-8 col-md-9">
-										<input class="form-control" type="text" name="inp_ref_no" placeholder="Ref No" autocomplete="off">
+										<input class="form-control" type="text" name="inp_ref_no" placeholder="*Ref No" autocomplete="off" required="">
 									</div>
 								</div>
 								<div class="row mt-2">
@@ -64,7 +64,7 @@ $template_header;
 										<h5 class="font-weight-bold">Zip Code: </h5>
 									</div>
 									<div class="col-8 col-md-9">
-										<input class="form-control" type="text" name="inp_zip_code" placeholder="Zip Code" value="<?=$account_details['zip_code']?>" autocomplete="off">
+										<input class="form-control" type="text" name="inp_zip_code" placeholder="*Zip Code" value="<?=$account_details['zip_code']?>" autocomplete="off" required="">
 									</div>
 								</div>
 								<div class="row mt-2">
@@ -72,7 +72,7 @@ $template_header;
 										<h5 class="font-weight-bold">Country: </h5>
 									</div>
 									<div class="col-8 col-md-9">
-										<input class="form-control" type="text" name="inp_country" placeholder="Country" value="<?=$account_details['country']?>" autocomplete="off">
+										<input class="form-control" type="text" name="inp_country" placeholder="*Country" value="<?=$account_details['country']?>" autocomplete="off" required="">
 									</div>
 								</div>
 								<div class="row mt-2">
@@ -80,7 +80,7 @@ $template_header;
 										<h5 class="font-weight-bold">Province: </h5>
 									</div>
 									<div class="col-8 col-md-9">
-										<input class="form-control" type="text" name="inp_province" placeholder="Province" value="<?=$account_details['province']?>" autocomplete="off">
+										<input class="form-control" type="text" name="inp_province" placeholder="*Province" value="<?=$account_details['province']?>" autocomplete="off" required="">
 									</div>
 								</div>
 								<div class="row mt-2">
@@ -88,7 +88,7 @@ $template_header;
 										<h5 class="font-weight-bold">City: </h5>
 									</div>
 									<div class="col-8 col-md-9">
-										<input class="form-control" type="text" name="inp_city" placeholder="City" value="<?=$account_details['city']?>" autocomplete="off">
+										<input class="form-control" type="text" name="inp_city" placeholder="*City" value="<?=$account_details['city']?>" autocomplete="off" required="">
 									</div>
 								</div>
 								<div class="row mt-2">
@@ -96,7 +96,7 @@ $template_header;
 										<h5 class="font-weight-bold">Street / Road: </h5>
 									</div>
 									<div class="col-8 col-md-9">
-										<input class="form-control" type="text" name="inp_street" placeholder="Street/Road" value="<?=$account_details['street']?>" autocomplete="off">
+										<input class="form-control" type="text" name="inp_street" placeholder="*Street/Road" value="<?=$account_details['street']?>" autocomplete="off" required="">
 									</div>
 								</div>
 								<div class="row mt-2">

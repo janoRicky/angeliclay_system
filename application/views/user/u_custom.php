@@ -38,16 +38,16 @@ $template_header;
 								<div class="col-10">
 									<div class="row mt-2">
 										<div class="col-12">
-											<h5 class="font-weight-bold m-2 p-0">Description: </h5>
+											<h5 class="font-weight-bold">Description: </h5>
 										</div>
 										<div class="col-12">
-											<textarea class="form-control" rows="5" style="resize: none;" name="inp_description" placeholder="e.g. based on [character], 2 pieces/copies, etc." maxlength="2040"></textarea>
+											<textarea class="form-control" rows="5" style="resize: none;" name="inp_description" placeholder="*e.g. based on [character], 2 pieces/copies, etc." maxlength="2040" required=""></textarea>
 										</div>
 									</div>
 									<div class="row mt-2">
 										<div class="col-12 col-sm-6">
 											<h5 class="font-weight-bold">Type: </h5>
-											<select class="form-control" name="inp_type_id">
+											<select class="form-control" name="inp_type_id" required="">
 												<?php foreach ($types as $key => $val): ?>
 													<option value="<?=$key?>"><?=$val?></option>
 												<?php endforeach; ?>
@@ -55,17 +55,17 @@ $template_header;
 										</div>
 										<div class="col-12 col-sm-6">
 											<h5 class="font-weight-bold">Size: </h5>
-											<input class="form-control" type="text" name="inp_size" placeholder="e.g. 12cm">
+											<input class="form-control" type="text" name="inp_size" placeholder="*e.g. 12cm" required="">
 										</div>
 									</div>
 									<div class="row mt-2">
 										<div class="col-12">
-											<input id="img_count" type="hidden" name="inp_img_count" value="0">
+											<input id="img_count" type="hidden" name="inp_img_count" value="0" required="">
 											<h5 class="font-weight-bold">Image Reference/s: </h5>
 											<div class="img_container row">
 												<div class="col-12 col-sm-6 col-md-4 img_box mb-3">
 													<div class="img_u_box">
-														<input type="file" class="d-none img_input no_img" name="inp_img_1">
+														<input type="file" class="d-none img_input no_img" name="inp_img_1" required="">
 														<img class="item_img img_preview" src="<?=base_url()?>assets/img/no_img.png">
 														<div class="img_u_change item_img p-3 text-center d-none">
 															Change Image
@@ -73,7 +73,7 @@ $template_header;
 														<a class="img_remove">
 															<i class="fa fa-times fa-lg" aria-hidden="true"></i>
 														</a>
-														<input type="hidden" class="img_check" name="inp_img_1_check">
+														<input type="hidden" class="img_check" name="inp_img_1_check" required="">
 													</div>
 												</div>
 											</div>
@@ -100,31 +100,31 @@ $template_header;
 											<h5 class="font-weight-bold">Zip Code: </h5>
 										</div>
 										<div class="col-8 col-md-4">
-											<input class="form-control" type="text" name="inp_zip_code" placeholder="Zip Code" value="<?=$account_details['zip_code']?>" autocomplete="off">
+											<input class="form-control" type="text" name="inp_zip_code" placeholder="*Zip Code" value="<?=$account_details['zip_code']?>" required="" autocomplete="off">
 										</div>
 										<div class="col-4 col-md-2 my-3">
 											<h5 class="font-weight-bold">Country: </h5>
 										</div>
 										<div class="col-8 col-md-4">
-											<input class="form-control" type="text" name="inp_country" placeholder="Country" value="<?=$account_details['country']?>" autocomplete="off">
+											<input class="form-control" type="text" name="inp_country" placeholder="*Country" value="<?=$account_details['country']?>" required="" autocomplete="off">
 										</div>
 										<div class="col-4 col-md-2 my-3">
 											<h5 class="font-weight-bold">Province: </h5>
 										</div>
 										<div class="col-8 col-md-4">
-											<input class="form-control" type="text" name="inp_province" placeholder="Province" value="<?=$account_details['province']?>" autocomplete="off">
+											<input class="form-control" type="text" name="inp_province" placeholder="*Province" value="<?=$account_details['province']?>" required="" autocomplete="off">
 										</div>
 										<div class="col-4 col-md-2 my-3">
 											<h5 class="font-weight-bold">City: </h5>
 										</div>
 										<div class="col-8 col-md-4">
-											<input class="form-control" type="text" name="inp_city" placeholder="City" value="<?=$account_details['city']?>" autocomplete="off">
+											<input class="form-control" type="text" name="inp_city" placeholder="*City" value="<?=$account_details['city']?>" autocomplet required=""e="off">
 										</div>
 										<div class="col-4 col-md-2 my-3">
 											<h5 class="font-weight-bold">Street / Road: </h5>
 										</div>
 										<div class="col-8 col-md-4">
-											<input class="form-control" type="text" name="inp_street" placeholder="Street/Road" value="<?=$account_details['street']?>" autocomplete="off">
+											<input class="form-control" type="text" name="inp_street" placeholder="*Street/Road" value="<?=$account_details['street']?>" required="" autocomplete="off">
 										</div>
 										<div class="col-4 col-md-2 my-3">
 											<h5 class="font-weight-bold">House Number / Floor / Bldg. / etc.: </h5>
@@ -179,6 +179,7 @@ $template_header;
 				reader.readAsDataURL(t.target.files[0]);
 				reader.onload = function(e) {
 					$(t.target).siblings(".img_preview").attr("src", e.target.result);
+					$(t.target).siblings(".img_u_change").addClass("d-none");
 				};
 
 				$(".img_box").each(function(index, el) {

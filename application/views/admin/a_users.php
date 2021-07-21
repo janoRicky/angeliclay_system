@@ -97,11 +97,11 @@ $template_header;
 					<div class="modal-body">
 						<div class="form-group">
 							<label for="inp_name_last">Last Name:</label>
-							<input type="text" class="form-control" name="inp_name_last" placeholder="Last Name" autocomplete="off">
+							<input type="text" class="form-control" name="inp_name_last" placeholder="Last Name" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_name_first">First Name:</label>
-							<input type="text" class="form-control" name="inp_name_first" placeholder="First Name" autocomplete="off">
+							<input type="text" class="form-control" name="inp_name_first" placeholder="First Name" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_name_middle">Middle Name:</label>
@@ -113,7 +113,7 @@ $template_header;
 						</div>
 						<div class="form-group">
 							<label for="inp_gender">Gender:</label>
-							<select name="inp_gender" class="form-control">
+							<select name="inp_gender" class="form-control" required="">
 								<option value="male" selected="">Male</option>
 								<option value="female">Female</option>
 								<option value="other">Other</option>
@@ -121,39 +121,39 @@ $template_header;
 						</div>
 						<div class="form-group">
 							<label for="inp_email">Email:</label>
-							<input type="email" class="form-control" name="inp_email" placeholder="Email Address" autocomplete="off">
+							<input type="email" class="form-control" name="inp_email" placeholder="Email Address" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
-							<label for="inp_contact_num">Contact Number:</label>
-							<input type="text" class="form-control" name="inp_contact_num" placeholder="Contact #" autocomplete="off">
+							<label for="inp_password">Password:</label>
+							<input type="password" class="form-control" name="inp_password" placeholder="Password" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_zip_code">Zip Code:</label>
-							<input type="text" class="form-control" name="inp_zip_code" placeholder="Zip Code" autocomplete="off">
+							<input type="text" class="form-control" name="inp_zip_code" placeholder="Zip Code" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_country">Country:</label>
-							<input type="text" class="form-control" name="inp_country" placeholder="Country" autocomplete="off">
+							<input type="text" class="form-control" name="inp_country" placeholder="Country" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_province">Province:</label>
-							<input type="text" class="form-control" name="inp_province" placeholder="Province" autocomplete="off">
+							<input type="text" class="form-control" name="inp_province" placeholder="Province" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_city">City:</label>
-							<input type="text" class="form-control" name="inp_city" placeholder="City" autocomplete="off">
+							<input type="text" class="form-control" name="inp_city" placeholder="City" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_street">Street/Road:</label>
-							<input type="text" class="form-control" name="inp_street" placeholder="Street/Road" autocomplete="off">
+							<input type="text" class="form-control" name="inp_street" placeholder="Street/Road" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_address">House Number/Floor/Bldg./etc.:</label>
 							<input type="text" class="form-control" name="inp_address" placeholder="House Number/Floor/Bldg./etc." autocomplete="off">
 						</div>
 						<div class="form-group">
-							<label for="inp_password">Password:</label>
-							<input type="password" class="form-control" name="inp_password" placeholder="Password" autocomplete="off">
+							<label for="inp_contact_num">Contact Number:</label>
+							<input type="text" class="form-control" name="inp_contact_num" placeholder="Contact #" autocomplete="off" required="">
 						</div>
 					</div>
 					<div class="modal-footer">

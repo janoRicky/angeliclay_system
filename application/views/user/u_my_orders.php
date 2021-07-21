@@ -3,6 +3,11 @@
 $template_header;
 ?>
 
+<style type="text/css">
+	.nav_order {
+	    overflow-x: scroll;
+	}
+</style>
 <body>
 	<div class="wrapper bg">
 		<?php $this->load->view("user/template/u_t_navbar"); ?>
@@ -19,8 +24,8 @@ $template_header;
 					</div>
 					<div class="row my-4">
 						<div class="col-1 col-sm-2">
-							<a class="scroll left">
-								<i class="fa fa-caret-left p-1" aria-hidden="true"></i>
+							<a class="scroll left w-100">
+								<i class="fa fa-caret-left p-1 pull-right" aria-hidden="true"></i>
 							</a>
 						</div>
 						<class class="col-10 col-sm-8 nav_order justify-content-center">
@@ -34,8 +39,8 @@ $template_header;
 							<a href="my_orders?state=6"><?=$states[6]?> (<?=(isset($order_state_counts[6]) ? $order_state_counts[6] : 0)?>)</a>
 						</class>
 						<div class="col-1 col-sm-2">
-							<a class="scroll right">
-								<i class="fa fa-caret-right p-1" aria-hidden="true"></i>
+							<a class="scroll right w-100">
+								<i class="fa fa-caret-right p-1 pull-left" aria-hidden="true"></i>
 							</a>
 						</div>
 					</div>

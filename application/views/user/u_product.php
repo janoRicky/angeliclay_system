@@ -74,22 +74,24 @@ $template_header;
 							</div>
 							<?=form_open(base_url() . "to_cart", "method='GET'")?>
 								<input type="hidden" name="id" value="<?=$product_details['product_id']?>">
-								<div class="row">
-									<div class="col-12 col-sm-3 text-center">
-										<h5 class="font-weight-normal m-0 p-0">Qty:</h5>
+								<?php if ($current_qty > 0): ?>
+									<div class="row">
+										<div class="col-12 col-sm-3 text-center">
+											<h5 class="font-weight-normal">Qty:</h5>
+										</div>
+										<div class="col-12 col-sm-9">
+											<input class="form-control" type="number" name="amount" value="1" min="1" max="<?=$current_qty?>" required="" placeholder="*Qty">
+										</div>
 									</div>
-									<div class="col-12 col-sm-9">
-										<input class="form-control" type="number" name="amount" value="0" min="0" max="<?=$current_qty?>">
-									</div>
-								</div>
+								<?php endif;?>
 								<div class="row mt-4">
 									<div class="col-6 text-center">
-										<button class="button b_p b_lg" type="submit" name="submit">
+										<button class="button b_p b_lg" type="submit" name="submit" value="AC">
 											<i class="fa fa-shopping-cart" aria-hidden="true"></i> Add to Cart
 										</button>
 									</div>
 									<div class="col-6 text-center">
-										<button class="button b_p b_lg" type="submit" name="submit">
+										<button class="button b_p b_lg" type="submit" name="submit" value="BN">
 											<i class="fa fa-money" aria-hidden="true"></i> Buy Now
 										</button>
 									</div>

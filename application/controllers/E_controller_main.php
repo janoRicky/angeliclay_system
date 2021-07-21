@@ -572,7 +572,7 @@
 
 		$head["title"] = "Custom Orders - Angeliclay Ordering System";
 		$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
-		$data["nav"] = array("text" => "Orders", "link" => "orders_custom");
+		$data["nav"] = array("text" => "Custom Orders", "link" => "orders_custom");
 
 		$data["tbl_orders_custom"] = $this->Model_read->get_orders_custom(!is_null($state) ? $state : "ALL");
 		foreach ($this->Model_read->get_types()->result_array() as $row) {
@@ -604,7 +604,7 @@
 		} else {
 			$head["title"] = "Custom Orders/View - Angeliclay Ordering System";
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
-			$data["nav"] = array("text" => "Orders/View", "link" => "orders_custom");
+			$data["nav"] = array("text" => "Custom Orders/View", "link" => "orders_custom");
 
 			$data["row_info"] = $row_info->row_array();
 			$data["order_item_info"] = $this->Model_read->get_order_items_worder_id($data["row_info"]["order_id"])->row_array();
@@ -644,7 +644,7 @@
 		} else {
 			$head["title"] = "Custom Orders/Edit - Angeliclay Ordering System";
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
-			$data["nav"] = array("text" => "Orders/Edit", "link" => "orders_custom");
+			$data["nav"] = array("text" => "Custom Orders/Edit", "link" => "orders_custom");
 
 			$data["row_info"] = $row_info->row_array();
 			$data["order_item_info"] = $this->Model_read->get_order_items_worder_id($data["row_info"]["order_id"])->row_array();

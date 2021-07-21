@@ -21,10 +21,15 @@ $template_header;
 							</div>
 						<?php endif; ?>
 						<div class="row mb-3">
-							<div class="col-4 text-left">
+							<div class="col-6 text-left">
 								<h2>Orders (<?=$tbl_orders->num_rows()?>)</h2>
 							</div>
-							<div class="col-4 text-center">
+							<div class="col-6 text-right">
+								<button class="btn btn-primary" data-toggle="modal" data-target="#modal_new_account">New Order</button>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<div class="col-12 col-sm-8 col-md-6 col-lg-4 text-center m-auto">
 								<div class="card text-center bg-dark text-light p-1">
 									<?=form_open(base_url() . "admin/orders", "method='GET'");?>
 										<?php $state = (isset($_GET["state"]) ? $_GET["state"] : "ALL"); ?>
@@ -39,9 +44,6 @@ $template_header;
 										</select>
 									<?=form_close()?>
 								</div>
-							</div>
-							<div class="col-4 text-right">
-								<button class="btn btn-primary" data-toggle="modal" data-target="#modal_new_account">New Order</button>
 							</div>
 						</div>
 						<div class="row">
@@ -78,7 +80,7 @@ $template_header;
 												<td>
 													<?=date("Y-m-d / H:i:s A", strtotime($row["date_time"]))?>
 												</td>
-												<td>
+												<td class="qty">
 													<?=$total_qty?>
 												</td>
 												<td>
@@ -121,76 +123,52 @@ $template_header;
 					<div class="modal-body">
 						<div class="form-group">
 							<label for="inp_user_email">User Email:</label>
-							<input id="user_email" type="text" class="form-control" name="inp_user_email" placeholder="Email Address" autocomplete="off" data-toggle="dropdown">
+							<input id="user_email" type="text" class="form-control" name="inp_user_email" placeholder="*Email Address" autocomplete="off" data-toggle="dropdown" required="">
 							<div class="dropdown-menu dropdown-menu-left email_dropdown"></div>
 						</div>
 						<div class="form-group">
 							<label for="inp_description">Description:</label>
-							<textarea class="form-control" name="inp_description" placeholder="Description"style="resize: none;" rows="5"></textarea>
+							<textarea class="form-control" name="inp_description" placeholder="*Description" style="resize: none;" rows="5" required=""></textarea>
 						</div>
 						<div class="form-group">
 							<label for="inp_date">Date:</label>
-							<input type="date" class="form-control" name="inp_date" autocomplete="off" value="<?=date('Y-m-d')?>">
+							<input type="date" class="form-control" name="inp_date" autocomplete="off" value="<?=date('Y-m-d')?>" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_time">Time:</label>
-							<input type="time" class="form-control" name="inp_time" autocomplete="off" value="<?=date('H:i')?>">
+							<input type="time" class="form-control" name="inp_time" autocomplete="off" value="<?=date('H:i')?>" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_zip_code">Zip Code:</label>
-							<input type="text" class="form-control" id="inp_zip_code" name="inp_zip_code" placeholder="Zip Code" autocomplete="off">
+							<input type="text" class="form-control" id="inp_zip_code" name="inp_zip_code" placeholder="*Zip Code" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_country">Country:</label>
-							<input type="text" class="form-control" id="inp_country" name="inp_country" placeholder="Country" autocomplete="off">
+							<input type="text" class="form-control" id="inp_country" name="inp_country" placeholder="*Country" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_province">Province:</label>
-							<input type="text" class="form-control" id="inp_province" name="inp_province" placeholder="Province" autocomplete="off">
+							<input type="text" class="form-control" id="inp_province" name="inp_province" placeholder="*Province" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_city">City:</label>
-							<input type="text" class="form-control" id="inp_city" name="inp_city" placeholder="City" autocomplete="off">
+							<input type="text" class="form-control" id="inp_city" name="inp_city" placeholder="*City" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_street">Street/Road:</label>
-							<input type="text" class="form-control" id="inp_street" name="inp_street" placeholder="Street/Road" autocomplete="off">
+							<input type="text" class="form-control" id="inp_street" name="inp_street" placeholder="*Street/Road" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_address">House Number/Floor/Bldg./etc.:</label>
 							<input type="text" class="form-control" id="inp_address" name="inp_address" placeholder="House Number/Floor/Bldg./etc." autocomplete="off">
 						</div>
-						<div class="form-group m-0" style="overflow: auto;">
-							<label>Ordered Items:</label>
-							<input id="items_no" type="hidden" name="items_no" value="0">
-							<table id="table_items" class="table table-striped table-hover table-bordered">
-								<thead>
-									<tr>
-										<th>Item</th>
-										<th>Qty.</th>
-										<th>Price</th>
-										<th>Action</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr id="total_info">
-										<td>Total</td>
-										<td id="total_qty">0</td>
-										<td id="total_price">0.00</td>
-										<td>
-											<button id="btn_remove_all" type="button" class="btn btn-sm btn-primary">Remove All</button>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<div class="form-group">
+						<div class="form-group border px-3 py-2" style="background-color: #f1f1f1">
 							<label>Products:</label>
 							<table id="table_products" class="table table-striped table-hover table-responsive-lg table-bordered">
 								<thead>
 									<tr>
-										<th>ID</th>
-										<th>Description</th>
+										<th>Name</th>
+										<th>Img</th>
 										<th>Type</th>
 										<th>Price</th>
 										<th>Qty. (Stock)</th>
@@ -200,13 +178,19 @@ $template_header;
 								<tbody>
 									<?php foreach ($tbl_products->result_array() as $row): ?>
 										<tr id="product_<?=$row["product_id"]?>" class="text-center align-middle" >
+											<td class="name">
+												<?=$row["name"]?>
+											</td>
 											<td>
-												<?=$row["product_id"]?>
+												<img class="img-responsive img_row img_zoomable" src="<?php
+												if (!empty($row["img"])) {
+													echo base_url(). 'uploads/product_'. $row["product_id"] .'/'. $row["img"];
+												} else {
+													echo base_url(). "assets/img/no_img.png";
+												}
+												?>">
 											</td>
-											<td class="description">
-												<?=$row["description"]?>
-											</td>
-											<td class="type">
+											<td>
 												<?php
 												if (isset($tbl_types[$row["type_id"]])) {
 													echo $tbl_types[$row["type_id"]];
@@ -229,9 +213,33 @@ $template_header;
 								</tbody>
 							</table>
 						</div>
+						<div class="form-group m-0" style="overflow: auto;">
+							<label>Ordered Items:</label>
+							<input id="items_no" type="hidden" name="items_no" value="0" required="">
+							<table id="table_items" class="table table-striped table-hover table-bordered">
+								<thead>
+									<tr>
+										<th>Item</th>
+										<th>Qty.</th>
+										<th>Price</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr id="total_info">
+										<td>Total</td>
+										<td id="total_qty">0</td>
+										<td id="total_price">0.00</td>
+										<td>
+											<button id="btn_remove_all" type="button" class="btn btn-sm btn-primary">Remove All</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
 					<div class="modal-footer">
-						<input type="submit" class="btn btn-primary" value="Add Order">
+						<input type="submit" class="btn btn-primary" value="Add Order" id="add_order">
 					</div>
 				<?=form_close()?>
 			</div>
@@ -277,12 +285,12 @@ $template_header;
 				var ctr = parseInt($("#items_no").val()) + 1;
 				var $product = $("#product_" + p_id);
 
-				if ($.trim($product.children(".price").html()) < 1) {
+				if (parseInt($product.children(".qty").html()) > 0) {
 					var $description = $("<td>").append($("<input>").attr({
 						type: "hidden",
 						name: "item_" + ctr + "_id",
 						value: $.trim(p_id)
-					})).append($product.children(".type").html() + "/" + $product.children(".description").html());
+					})).append($product.children(".name").html());
 					var $qty = $("<td>").append($("<input>").attr({
 						class: "item_qty",
 						type: "number",
@@ -402,6 +410,14 @@ $template_header;
 
 		$(document).on("change", "#state_sort", function(e) {
 			$(this).parent().submit();
+		});
+
+
+		$(document).on("click", "#add_order", function(e) {
+			if ($("#items_no").val() < 1 || $("#items_no").val() == null) {
+				alert("Missing Ordered Items.");
+				e.preventDefault();
+			}
 		});
 	});
 </script>

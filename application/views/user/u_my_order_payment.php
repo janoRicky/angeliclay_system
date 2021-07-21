@@ -154,7 +154,7 @@ $template_header;
 						<div class="col-1"></div>
 						<div class="col-10">
 							<?=form_open(base_url() . "payment", "method='POST' enctype='multipart/form-data'")?>
-								<input type="hidden" name="inp_order_id" value="<?=$order_id?>">
+								<input type="hidden" name="inp_order_id" value="<?=$order_id?>" required="">
 								<div class="row mt-2">
 									<span>(Send Payment to GCash # 0999999999)</span>
 								</div>
@@ -163,7 +163,7 @@ $template_header;
 										<h5 class="font-weight-bold">Ref No: </h5>
 									</div>
 									<div class="col-8 col-md-9">
-										<input class="form-control" type="text" name="inp_ref_no" placeholder="Ref No" autocomplete="off">
+										<input class="form-control" type="text" name="inp_ref_no" placeholder="*Ref No" autocomplete="off" required="">
 									</div>
 								</div>
 								<div class="row mt-2">
@@ -175,7 +175,7 @@ $template_header;
 											<div class="img_u_change item_img p-3 text-center d-none">
 												Change Image
 											</div>
-											<input class="d-none img_input" id="product_image" type="file" name="inp_img">
+											<input class="d-none img_input" id="product_image" type="file" name="inp_img" required="">
 											<img class="item_img img_u_preview" id="image_preview" src="<?=base_url()?>assets/img/no_img.png">
 										</div>
 									</div>

@@ -28,49 +28,31 @@ $template_header;
 								</button>
 							</div>
 						<?php endif; ?>
-						<div class="row">
+						<div class="row view_container">
 							<div class="col-12 text-left">
 								<h2>View Order #<?=$row_info["order_id"]?></h2>
 							</div>
 							<div class="col-12">
 								<div class="row mt-2">
 									<div class="col-12">
-										<h5>User Email:</h5>
-									</div>
-									<div class="col-12">
+										<label>User Email:</label><br>
 										<?=$this->Model_read->get_user_acc_wid($row_info["user_id"])->row_array()["email"]?>
 									</div>
-								</div>
-								<div class="row mt-2">
 									<div class="col-12">
-										<h5>Description:</h5>
-									</div>
-									<div class="col-12">
+										<label>Description:</label><br>
 										<?=$row_info["description"]?>
 									</div>
-								</div>
-								<div class="row mt-2">
 									<div class="col-12">
-										<h5>Date / Time:</h5>
-									</div>
-									<div class="col-12">
+										<label>Date / Time:</label><br>
 										<?=date("Y-m-d / H:i:s A", strtotime($row_info["date_time"]))?>
 									</div>
-								</div>
-								<div class="row mt-2">
 									<div class="col-12">
-										<h5>Full Address:</h5>
-									</div>
-									<div class="col-12">
+										<label>Full Address:</label><br>
 										<?=$row_info["zip_code"] ." / ". $row_info["country"] ." / ". $row_info["province"] ." / ". $row_info["city"] ." / ". $row_info["street"] ." / ". $row_info["address"]?>
 									</div>
-								</div>
 
-								<div class="row mt-2">
 									<div class="col-12">
-										<h5>Ordered Items:</h5>
-									</div>
-									<div class="col-12">
+										<label>Ordered Items:</label>
 										<table id="table_items" class="table table-striped table-hover table-responsive-md table-bordered">
 											<thead>
 												<tr>
@@ -108,12 +90,8 @@ $template_header;
 											</tr>
 										</table>
 									</div>
-								</div>
-								<div class="row mt-2">
 									<div class="col-12">
-										<h5>Payments:</h5>
-									</div>
-									<div class="col-12">
+										<label>Payments:</label>
 										<table id="table_payments" class="table table-striped table-hover table-responsive-md table-bordered">
 											<thead>
 												<tr>
@@ -147,26 +125,14 @@ $template_header;
 												<?php endforeach; ?>
 											</tbody>
 										</table>
-									</div>
-								</div>
-								<div class="row mt-2">
-									<div class="col-12 text-center">
-										<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal_payment" data-id="<?=$row_info['order_id']?>">
+										<button class="btn btn-primary btn-lg my-2" data-toggle="modal" data-target="#modal_payment" data-id="<?=$row_info['order_id']?>">
 											Add Payment
 										</button>
 									</div>
-								</div>
-								<div class="row mt-2">
 									<div class="col-12">
-										<h5>Order State:</h5>
-									</div>
-									<div class="col-12">
-										<?=$states[$row_info["state"]]?>
-									</div>
-								</div>
-								<div class="row mt-2">
-									<div class="col-12 text-center">
-										<button class="btn btn-primary btn-lg btn_state" data-toggle="modal" data-target="#modal_state_order" data-id="<?=$row_info['order_id']?>">State</button>
+										<label>Order State:</label><br>
+										<?=$states[$row_info["state"]]?><br>
+										<button class="btn btn-primary btn-lg btn_state my-2" data-toggle="modal" data-target="#modal_state_order" data-id="<?=$row_info['order_id']?>">State</button>
 									</div>
 								</div>
 							</div>
@@ -189,27 +155,25 @@ $template_header;
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<div class="form-group">
-								<label>Description:</label>
-								<textarea class="form-control" rows="3" style="resize: none;" name="inp_description" maxlength="128"></textarea>
-							</div>
-							<div class="form-group">
-								<label>Proof of Purchase / Screenshot:</label>
-								<input id="proof_image" type="file" name="inp_img_proof">
-								<img class="w-100" id="proof_preview" src="<?=base_url()?>assets/img/no_img.png" height="150" style="object-fit: contain;">
-							</div>
-							<div class="form-group">
-								<label>Date:</label>
-								<input type="date" class="form-control" name="inp_date" autocomplete="off" value="<?=date('Y-m-d')?>">
-							</div>
-							<div class="form-group">
-								<label>Time:</label>
-								<input type="time" class="form-control" name="inp_time" autocomplete="off" value="<?=date('H:i')?>">
-							</div>
-							<div class="form-group">
-								<label>Amount:</label>
-								<input type="number" class="form-control" name="inp_amount" placeholder="Price" autocomplete="off" step="0.000001">
-							</div>
+							<label>Payment Description:</label>
+							<textarea class="form-control" rows="3" style="resize: none;" name="inp_description" maxlength="128" placeholder="*" required=""></textarea>
+						</div>
+						<div class="form-group text-center">
+							<label>Proof of Purchase / Screenshot:</label>
+							<input class="form-control mb-1" id="proof_image" type="file" name="inp_img_proof">
+							<img class="img_a_preview img_zoomable" id="proof_preview" src="<?=base_url()?>assets/img/no_img.png">
+						</div>
+						<div class="form-group">
+							<label>Date:</label>
+							<input type="date" class="form-control" name="inp_date" autocomplete="off" value="<?=date('Y-m-d')?>" required="">
+						</div>
+						<div class="form-group">
+							<label>Time:</label>
+							<input type="time" class="form-control" name="inp_time" autocomplete="off" value="<?=date('H:i')?>" required="">
+						</div>
+						<div class="form-group">
+							<label>Amount:</label>
+							<input type="number" class="form-control" name="inp_amount" placeholder="*Price" autocomplete="off" required="" step="0.000001">
 						</div>
 					</div>
 					<div class="modal-footer">

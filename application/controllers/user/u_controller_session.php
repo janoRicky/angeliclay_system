@@ -23,11 +23,11 @@
 				$cart[$id] = $amount;
 				$data["cart"] = $cart;
 			}
+			$this->session->set_userdata($data);
 		}
 		
-		$this->session->set_userdata($data);
 
-		if ($submit == "Buy Now") {
+		if ($submit == "BN") {
 			redirect("cart");
 		} else {
 			redirect("products");

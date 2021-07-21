@@ -24,7 +24,7 @@ $template_header;
 								<h2>View Product #<?=$row_info["product_id"]?></h2>
 							</div>
 							<div class="col-12 col-md-3">
-								<img class="img-responsive product_img" src="<?php
+								<img class="img-responsive img_view img_zoomable" src="<?php
 								if (!empty($row_info["img"])) {
 									echo base_url(). 'uploads/product_'. $row_info["product_id"] .'/'. explode("/", $row_info["img"])[0];
 								} else {
@@ -34,61 +34,35 @@ $template_header;
 							</div>
 							<div class="col-12 col-md-9">
 								<div class="row mt-2">
-									<div class="col-6">
-										<div class="col-12">
-											<label>Name:</label>
-										</div>
-										<div class="col-12">
-											<?=$row_info["name"]?>
-										</div>
+									<div class="col-12 col-md-6">
+										<label>Name:</label><br>
+										<?=$row_info["name"]?>
 									</div>
-									<div class="col-6">
-										<div class="col-12">
-											<label>Type:</label>
-										</div>
-										<div class="col-12">
-											<?php
-											if ($row_info["type_name"] != NULL) {
-												echo $row_info["type_name"];
-											} else {
-												echo "Deleted Type (Edit Required)";
-											}
-											?>
-										</div>
-									</div>
-								</div>
-								<div class="row mt-2">
-									<div class="col-12">
-										<label>Description:</label>
+									<div class="col-12 col-md-6">
+										<label>Type:</label><br>
+										<?php
+										if ($row_info["type_name"] != NULL) {
+											echo $row_info["type_name"];
+										} else {
+											echo "Deleted Type (Edit Required)";
+										}
+										?>
 									</div>
 									<div class="col-12">
+										<label>Description:</label><br>
 										<?=$row_info["description"]?>
 									</div>
-								</div>
-								<div class="row mt-2">
 									<div class="col-12">
-										<label>Date Added:</label>
-									</div>
-									<div class="col-12">
+										<label>Date Added:</label><br>
 										<?=date("Y-m-d / H:i:s A", strtotime($row_info["date_added"]))?>
 									</div>
-								</div>
-								<div class="row mt-2">
-									<div class="col-6">
-										<div class="col-12">
-											<label>Price:</label>
-										</div>
-										<div class="col-12">
-											<?=$row_info["price"]?>
-										</div>
+									<div class="col-12 col-md-6">
+										<label>Price:</label><br>
+										PHP <?=$row_info["price"]?>
 									</div>
-									<div class="col-6">
-										<div class="col-12">
-											<label>Quantity:</label>
-										</div>
-										<div class="col-12">
-											<?=$row_info["qty"]?>
-										</div>
+									<div class="col-12 col-md-6">
+										<label>Quantity:</label><br>
+										<?=$row_info["qty"]?>
 									</div>
 								</div>
 							</div>

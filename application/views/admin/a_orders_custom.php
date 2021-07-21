@@ -122,40 +122,40 @@ $template_header;
 					<div class="modal-body">
 						<div class="form-group">
 							<label for="inp_user_email">User Email:</label>
-							<input id="user_email" type="text" class="form-control" name="inp_user_email" placeholder="Email Address" autocomplete="off" data-toggle="dropdown">
+							<input id="user_email" type="text" class="form-control" name="inp_user_email" placeholder="Email Address" autocomplete="off" data-toggle="dropdown" required="">
 							<div class="dropdown-menu dropdown-menu-left email_dropdown"></div>
 						</div>
 						<div class="form-group">
 							<label for="inp_description">Description:</label>
-							<textarea class="form-control" name="inp_description" placeholder="Description"style="resize: none;" rows="5"></textarea>
+							<textarea class="form-control" name="inp_description" placeholder="Description"style="resize: none;" rows="5" required=""></textarea>
 						</div>
 						<div class="form-group">
 							<label for="inp_date">Date:</label>
-							<input type="date" class="form-control" name="inp_date" autocomplete="off" value="<?=date('Y-m-d')?>">
+							<input type="date" class="form-control" name="inp_date" autocomplete="off" value="<?=date('Y-m-d')?>" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_time">Time:</label>
-							<input type="time" class="form-control" name="inp_time" autocomplete="off" value="<?=date('H:i')?>">
+							<input type="time" class="form-control" name="inp_time" autocomplete="off" value="<?=date('H:i')?>" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_zip_code">Zip Code:</label>
-							<input type="text" class="form-control" id="inp_zip_code" name="inp_zip_code" placeholder="Zip Code" autocomplete="off">
+							<input type="text" class="form-control" id="inp_zip_code" name="inp_zip_code" placeholder="Zip Code" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_country">Country:</label>
-							<input type="text" class="form-control" id="inp_country" name="inp_country" placeholder="Country" autocomplete="off">
+							<input type="text" class="form-control" id="inp_country" name="inp_country" placeholder="Country" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_province">Province:</label>
-							<input type="text" class="form-control" id="inp_province" name="inp_province" placeholder="Province" autocomplete="off">
+							<input type="text" class="form-control" id="inp_province" name="inp_province" placeholder="Province" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_city">City:</label>
-							<input type="text" class="form-control" id="inp_city" name="inp_city" placeholder="City" autocomplete="off">
+							<input type="text" class="form-control" id="inp_city" name="inp_city" placeholder="City" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_street">Street/Road:</label>
-							<input type="text" class="form-control" id="inp_street" name="inp_street" placeholder="Street/Road" autocomplete="off">
+							<input type="text" class="form-control" id="inp_street" name="inp_street" placeholder="Street/Road" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_address">House Number/Floor/Bldg./etc.:</label>
@@ -164,11 +164,11 @@ $template_header;
 						<h4 class="pt-3">Custom Product Details</h4>
 						<div class="form-group">
 							<label for="inp_custom_description">Custom Description:</label>
-							<textarea class="form-control" rows="5" style="resize: none;" name="inp_custom_description" maxlength="2040"></textarea>
+							<textarea class="form-control" rows="5" style="resize: none;" name="inp_custom_description" maxlength="2040" required=""></textarea>
 						</div>
 						<div class="form-group">
 							<label for="inp_type_id">Type:</label>
-							<select class="form-control" name="inp_type_id">
+							<select class="form-control" name="inp_type_id" required="">
 								<?php foreach ($tbl_types as $key => $val): ?>
 									<option value="<?=$key?>"><?=$val?></option>
 								<?php endforeach; ?>
@@ -176,10 +176,10 @@ $template_header;
 						</div>
 						<div class="form-group">
 							<label for="inp_size">Size:</label>
-							<input type="text" class="form-control" name="inp_size">
+							<input type="text" class="form-control" name="inp_size" required="">
 						</div>
 						<div class="form-group container">
-							<input id="img_count" type="hidden" name="inp_img_count" value="0">
+							<input id="img_count" type="hidden" name="inp_img_count" value="0" required="">
 							<label for="inp_img">Images:</label>
 							<div class="img_container row">
 								<div class="col-6 col-md-4 img_box mb-3">

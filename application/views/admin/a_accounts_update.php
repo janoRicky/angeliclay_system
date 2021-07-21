@@ -28,15 +28,15 @@ $template_header;
 									<input id="update_inp_id" type="hidden" name="inp_id" value="<?=$row_info["admin_id"]?>">
 									<div class="form-group">
 										<label for="inp_name">Name:</label>
-										<input type="text" class="form-control" name="inp_name" placeholder="Name" value="<?=$row_info['name']?>" autocomplete="off">
+										<input type="text" class="form-control" name="inp_name" placeholder="Name" value="<?=$row_info['name']?>" autocomplete="off" required="">
 									</div>
 									<div class="form-group">
 										<label for="inp_email">Email:</label>
-										<input type="email" class="form-control" name="inp_email" placeholder="Email Address" value="<?=$row_info['email']?>" autocomplete="off">
+										<input type="email" class="form-control" name="inp_email" placeholder="Email Address" value="<?=$row_info['email']?>" autocomplete="off" required="">
 									</div>
 									<div class="form-group">
 										<label for="inp_password">Password:</label>
-										<input type="password" class="form-control" name="inp_password" placeholder="Password" autocomplete="off">
+										<input type="password" class="form-control" name="inp_password" placeholder="Password" autocomplete="off" required="">
 									</div>
 									<input type="submit" class="btn btn-primary" value="Update">
 								<?=form_close(); ?>
@@ -48,7 +48,6 @@ $template_header;
 		</div>
 	</div>
 </body>
-<?php $this->load->view("admin/template/a_t_scripts"); ?>
 <script type="text/javascript">
 	
 </script>

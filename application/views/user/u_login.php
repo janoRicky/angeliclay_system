@@ -23,11 +23,11 @@ $template_header;
 							<?=form_open(base_url() . "login_verify", "method='POST'")?>
 								<div class="form-group">
 									<h5 class="font-weight-bold" for="inp_email">Email:</h5>
-									<input type="email" class="form-control" name="inp_email" placeholder="Email Address">
+									<input type="email" class="form-control" name="inp_email" placeholder="*Email Address" required="">
 								</div>
 								<div class="form-group">
 									<h5 class="font-weight-bold" for="inp_password">Password:</h5>
-									<input type="password" class="form-control" name="inp_password" placeholder="Password">
+									<input type="password" class="form-control" name="inp_password" placeholder="*Password" required="">
 								</div>
 								<button class="button b_p b_lg" type="submit">
 									<i class="fa fa-sign-in" aria-hidden="true"></i> Log-In

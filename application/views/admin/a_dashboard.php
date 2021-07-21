@@ -24,28 +24,28 @@ $template_header;
 							<div class="col-12">
 								<h2 class="p-3">Welcome <?=$this->session->userdata("admin_name")?>!</h2>
 							</div>
-							<div class="col-3">
+							<div class="col-12 col-md-6 col-lg-3 my-2">
 								<a href="accounts">
 									<div class="card text-center bg-dark text-light p-3">
 										ADMINS (<?=$this->db->count_all("admin_accounts")?>)
 									</div>
 								</a>
 							</div>
-							<div class="col-3">
+							<div class="col-12 col-md-6 col-lg-3 my-2">
 								<a href="products">
 									<div class="card text-center bg-dark text-light p-3">
 										PRODUCTS (<?=$this->db->count_all("products")?>)
 									</div>
 								</a>
 							</div>
-							<div class="col-3">
+							<div class="col-12 col-md-6 col-lg-3 my-2">
 								<a href="types">
 									<div class="card text-center bg-dark text-light p-3">
 										PRODUCT TYPES (<?=$this->db->count_all("types")?>)
 									</div>
 								</a>
 							</div>
-							<div class="col-3">
+							<div class="col-12 col-md-6 col-lg-3 my-2">
 								<a href="orders">
 									<div class="card text-center bg-dark text-light p-3">
 										ORDERS (<?=$this->db->count_all("orders")?>)

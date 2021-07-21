@@ -43,15 +43,32 @@ ADMIN PAYMENT UPDATE func
 
 
 
+Milasian Circa
+
+Light Purple to Pink (bottom to top)
+
+
+mobile img upload
+
+5mb limit image upload
+
+payments, add other to list of numbers, change ref id to transaction ID
+
+
+EMAIL
+ADMIN DESIGN
+
+slideshow images
 
 
 
+on img change upload hide img change div
 
 
+MESSAGING
+
+img zoom on user
 
 
-
-
-
-
-
+improve admin breadcrumbs
+improve redirect locations when successful/error (specific id #)

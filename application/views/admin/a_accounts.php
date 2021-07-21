@@ -85,15 +85,15 @@ $template_header;
 					<div class="modal-body">
 						<div class="form-group">
 							<label>Name:</label>
-							<input type="text" class="form-control" name="inp_name" placeholder="Name" autocomplete="off">
+							<input type="text" class="form-control" name="inp_name" placeholder="Name" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label>Email:</label>
-							<input type="email" class="form-control" name="inp_email" placeholder="Email Address" autocomplete="off">
+							<input type="email" class="form-control" name="inp_email" placeholder="Email Address" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label>Password:</label>
-							<input type="password" class="form-control" name="inp_password" placeholder="Password" autocomplete="off">
+							<input type="password" class="form-control" name="inp_password" placeholder="Password" autocomplete="off" required="">
 						</div>
 					</div>
 					<div class="modal-footer">

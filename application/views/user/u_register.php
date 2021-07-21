@@ -26,7 +26,7 @@ $template_header;
 									<h5 class="font-weight-bold">Last Name: </h5>
 								</div>
 								<div class="col-8 col-md-9">
-									<input class="form-control" type="text" name="inp_name_last" placeholder="Last Name" autocomplete="off">
+									<input class="form-control" type="text" name="inp_name_last" placeholder="*Last Name" autocomplete="off" required="">
 								</div>
 							</div>
 							<div class="row mt-2">
@@ -34,7 +34,7 @@ $template_header;
 									<h5 class="font-weight-bold">First Name: </h5>
 								</div>
 								<div class="col-8 col-md-9">
-									<input class="form-control" type="text" name="inp_name_first" placeholder="First Name" autocomplete="off">
+									<input class="form-control" type="text" name="inp_name_first" placeholder="*First Name" autocomplete="off" required="">
 								</div>
 							</div>
 							<div class="row mt-2">
@@ -70,7 +70,7 @@ $template_header;
 									<h5 class="font-weight-bold">Email: </h5>
 								</div>
 								<div class="col-8 col-md-9">
-									<input class="form-control" type="email" name="inp_email" placeholder="Email Address" autocomplete="off">
+									<input class="form-control" type="email" name="inp_email" placeholder="*Email Address" autocomplete="off" required="">
 								</div>
 							</div>
 							<div class="row mt-2">
@@ -78,7 +78,7 @@ $template_header;
 									<h5 class="font-weight-bold">Password: </h5>
 								</div>
 								<div class="col-8 col-md-9">
-									<input class="form-control" type="password" name="inp_password" placeholder="Password" autocomplete="off">
+									<input class="form-control" type="password" name="inp_password" placeholder="*Password" autocomplete="off" required="">
 								</div>
 							</div>
 							<div class="row mt-2">
@@ -86,7 +86,7 @@ $template_header;
 									<h5 class="font-weight-bold">Gender: </h5>
 								</div>
 								<div class="col-8 col-md-9">
-									<select class="form-control" name="inp_gender">
+									<select class="form-control" name="inp_gender" required="">
 										<option value="male">Male</option>
 										<option value="female">Female</option>
 										<option value="other">Other</option>
@@ -110,7 +110,7 @@ $template_header;
 									<h5 class="font-weight-bold">Zip Code: </h5>
 								</div>
 								<div class="col-8 col-md-9">
-									<input class="form-control" type="text" name="inp_zip_code" placeholder="Zip Code" autocomplete="off">
+									<input class="form-control" type="text" name="inp_zip_code" placeholder="*Zip Code" autocomplete="off" required="">
 								</div>
 							</div>
 							<div class="row mt-2">
@@ -118,7 +118,7 @@ $template_header;
 									<h5 class="font-weight-bold">Country: </h5>
 								</div>
 								<div class="col-8 col-md-9">
-									<input class="form-control" type="text" name="inp_country" placeholder="Country" autocomplete="off">
+									<input class="form-control" type="text" name="inp_country" placeholder="*Country" autocomplete="off" required="">
 								</div>
 							</div>
 							<div class="row mt-2">
@@ -126,7 +126,7 @@ $template_header;
 									<h5 class="font-weight-bold">Province: </h5>
 								</div>
 								<div class="col-8 col-md-9">
-									<input class="form-control" type="text" name="inp_province" placeholder="Province" autocomplete="off">
+									<input class="form-control" type="text" name="inp_province" placeholder="*Province" autocomplete="off" required="">
 								</div>
 							</div>
 							<div class="row mt-2">
@@ -134,7 +134,7 @@ $template_header;
 									<h5 class="font-weight-bold">City: </h5>
 								</div>
 								<div class="col-8 col-md-9">
-									<input class="form-control" type="text" name="inp_city" placeholder="City" autocomplete="off">
+									<input class="form-control" type="text" name="inp_city" placeholder="*City" autocomplete="off" required="">
 								</div>
 							</div>
 							<div class="row mt-2">
@@ -142,7 +142,7 @@ $template_header;
 									<h5 class="font-weight-bold">Street / Road: </h5>
 								</div>
 								<div class="col-8 col-md-9">
-									<input class="form-control" type="text" name="inp_street" placeholder="Street/Road" autocomplete="off">
+									<input class="form-control" type="text" name="inp_street" placeholder="*Street/Road" autocomplete="off" required="">
 								</div>
 							</div>
 							<div class="row mt-2">
@@ -170,7 +170,7 @@ $template_header;
 									<h5 class="font-weight-bold">Contact Num: </h5>
 								</div>
 								<div class="col-8 col-md-9">
-									<input class="form-control" type="text" name="inp_contact_num" placeholder="Contact #" autocomplete="off">
+									<input class="form-control" type="text" name="inp_contact_num" placeholder="*Contact #" autocomplete="off" required="">
 								</div>
 							</div>
 						</div>

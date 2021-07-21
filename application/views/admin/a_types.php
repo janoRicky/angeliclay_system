@@ -48,13 +48,13 @@ $template_header;
 													<?=$row["type_id"]?>
 												</td>
 												<td>
-            									    <img class="img-responsive product_img" src="<?php
-                									if (!empty($row["img"])) {
-                										echo base_url(). 'assets/img/featured/type_'. $row["type_id"] .'/'. explode("/", $row["img"])[0];
-                									} else {
-                										echo base_url(). "assets/img/no_img.png";
-                									}
-                									?>">
+													<img class="img-responsive img_row img_zoomable" src="<?php
+													if (!empty($row["img"])) {
+														echo base_url(). 'assets/img/featured/type_'. $row["type_id"] .'/'. $row["img"];
+													} else {
+														echo base_url(). "assets/img/no_img.png";
+													}
+													?>">
 												</td>
 												<td>
 													<?=$row["name"]?>
@@ -66,7 +66,7 @@ $template_header;
 													<?=($row["featured"] == 1 ? "YES" : "NO")?>
 												</td>
 												<td>
-													<button class="btn btn-primary btn-sm btn_featured" data-toggle="modal" data-target="#modal_featured" data-id="<?=$row['type_id']?>">Feature</button>
+													<button class="btn btn-primary btn-sm btn_featured" data-toggle="modal" data-target="#modal_featured" data-id="<?=$row['type_id']?>">Feature</button><br>
 													<a class="action_button" href="<?=base_url()?>admin/types_view?id=<?=$row['type_id']?>">
 														<i class="fa fa-eye p-1" aria-hidden="true"></i>
 													</a>
@@ -98,22 +98,22 @@ $template_header;
 						</button>
 					</div>
 					<div class="modal-body">
-						<div class="form-group">
+						<div class="form-group text-center">
 							<label>Image:</label>
-							<input id="type_image" type="file" name="inp_img">
-							<img class="w-100" id="image_preview" src="<?=base_url()?>assets/img/no_img.png" height="150" style="object-fit: contain;">
+							<input class="form-control mb-1" id="type_image" type="file" name="inp_img">
+							<img class="img_a_preview img_zoomable" id="image_preview" src="<?=base_url()?>assets/img/no_img.png">
 						</div>
 						<div class="form-group">
 							<label>Type Name:</label>
-							<input type="text" class="form-control" name="inp_name" placeholder="Type Name" autocomplete="off">
+							<input type="text" class="form-control" name="inp_name" placeholder="Type Name" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label>Description:</label>
-							<textarea class="form-control" name="inp_description" placeholder="Description"style="resize: none;"></textarea>
+							<textarea class="form-control" name="inp_description" placeholder="Description"style="resize: none;" required=""></textarea>
 						</div>
 						<div class="form-group">
 							<label>Price Range:</label>
-							<input type="text" class="form-control" name="inp_price_range" placeholder="Price Range" autocomplete="off">
+							<input type="text" class="form-control" name="inp_price_range" placeholder="Price Range" autocomplete="off" required="">
 						</div>
 					</div>
 					<div class="modal-footer">

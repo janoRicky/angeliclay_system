@@ -49,9 +49,9 @@ $template_header;
 													<?=$row["product_id"]?>
 												</td>
 												<td>
-													<img class="img-responsive product_img" src="<?php
+													<img class="img-responsive img_row img_zoomable" src="<?php
 													if (!empty($row["img"])) {
-														echo base_url(). 'uploads/product_'. $row["product_id"] .'/'. explode("/", $row["img"])[0];
+														echo base_url(). 'uploads/product_'. $row["product_id"] .'/'. $row["img"];
 													} else {
 														echo base_url(). "assets/img/no_img.png";
 													}
@@ -79,7 +79,7 @@ $template_header;
 													<?=($row["visibility"] == 1 ? "YES" : "NO")?>
 												</td>
 												<td>
-													<button class="btn btn-primary btn-sm btn_visibility" data-toggle="modal" data-target="#modal_visibility" data-id="<?=$row['product_id']?>">Visibility</button>
+													<button class="btn btn-primary btn-sm btn_visibility" data-toggle="modal" data-target="#modal_visibility" data-id="<?=$row['product_id']?>">Visibility</button><br>
 													<a class="action_button" href="<?=base_url();?>admin/products_view?id=<?=$row['product_id']?>">
 														<i class="fa fa-eye p-1" aria-hidden="true"></i>
 													</a>
@@ -113,22 +113,22 @@ $template_header;
 						</button>
 					</div>
 					<div class="modal-body">
-						<div class="form-group">
+						<div class="form-group text-center">
 							<label>Image:</label>
-							<input id="product_image" type="file" name="inp_img">
-							<img class="w-100" id="image_preview" src="<?=base_url()?>assets/img/no_img.png" height="150" style="object-fit: contain;">
+							<input class="form-control mb-1" id="product_image" type="file" name="inp_img">
+							<img class="img_a_preview img_zoomable" id="image_preview" src="<?=base_url()?>assets/img/no_img.png">
 						</div>
 						<div class="form-group">
 							<label>Name:</label>
-							<input type="text" class="form-control" name="inp_name" placeholder="Name" autocomplete="off">
+							<input type="text" class="form-control" name="inp_name" placeholder="*Name" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label>Description:</label>
-							<input type="text" class="form-control" name="inp_description" placeholder="Description" autocomplete="off">
+							<input type="text" class="form-control" name="inp_description" placeholder="*Description" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label>Type:</label>
-							<select name="inp_type_id" class="form-control">
+							<select name="inp_type_id" class="form-control" required="">
 								<?php foreach ($tbl_types as $key => $val): ?>
 									<option value="<?=$key?>"><?=$val?></option>
 								<?php endforeach; ?>
@@ -136,11 +136,11 @@ $template_header;
 						</div>
 						<div class="form-group">
 							<label>Price:</label>
-							<input type="number" class="form-control" name="inp_price" placeholder="Price" autocomplete="off" step="0.000001">
+							<input type="number" class="form-control" name="inp_price" placeholder="*Price" autocomplete="off" required="" step="0.000001">
 						</div>
 						<div class="form-group">
 							<label>Quantity:</label>
-							<input type="number" class="form-control" name="inp_qty" placeholder="Quantity" autocomplete="off">
+							<input type="number" class="form-control" name="inp_qty" placeholder="*Quantity" autocomplete="off" required="">
 						</div>
 					</div>
 					<div class="modal-footer">
