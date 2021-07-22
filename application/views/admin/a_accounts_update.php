@@ -28,17 +28,19 @@ $template_header;
 									<input id="update_inp_id" type="hidden" name="inp_id" value="<?=$row_info["admin_id"]?>">
 									<div class="form-group">
 										<label for="inp_name">Name:</label>
-										<input type="text" class="form-control" name="inp_name" placeholder="Name" value="<?=$row_info['name']?>" autocomplete="off" required="">
+										<input type="text" class="form-control" name="inp_name" placeholder="*Name" value="<?=$row_info['name']?>" autocomplete="off" required="">
 									</div>
 									<div class="form-group">
 										<label for="inp_email">Email:</label>
-										<input type="email" class="form-control" name="inp_email" placeholder="Email Address" value="<?=$row_info['email']?>" autocomplete="off" required="">
+										<input type="email" class="form-control" name="inp_email" placeholder="*Email Address" value="<?=$row_info['email']?>" autocomplete="off" required="">
 									</div>
 									<div class="form-group">
 										<label for="inp_password">Password:</label>
-										<input type="password" class="form-control" name="inp_password" placeholder="Password" autocomplete="off" required="">
+										<input type="password" class="form-control" name="inp_password" placeholder="*Password" autocomplete="off" required="">
 									</div>
-									<input type="submit" class="btn btn-primary" value="Update">
+									<div class="form-group">
+										<input type="submit" class="btn btn-primary" value="Update">
+									</div>
 								<?=form_close(); ?>
 							</div>
 						</div>

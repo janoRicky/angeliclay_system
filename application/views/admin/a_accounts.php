@@ -20,11 +20,11 @@ $template_header;
 								</button>
 							</div>
 						<?php endif; ?>
-						<div class="row">
-							<div class="col-6 text-left">
-								<h2>Accounts (<?=$tbl_accounts->num_rows()?>)</h2>
+						<div class="row py-3">
+							<div class="col-12 col-sm-6 text-left">
+								<h2 class="font-weight-bold">Accounts (<?=$tbl_accounts->num_rows()?>)</h2>
 							</div>
-							<div class="col-6 text-right">
+							<div class="col-12 col-sm-6 text-right">
 								<button class="btn btn-primary" data-toggle="modal" data-target="#modal_new_account">New Account</button>
 							</div>
 						</div>
@@ -85,15 +85,15 @@ $template_header;
 					<div class="modal-body">
 						<div class="form-group">
 							<label>Name:</label>
-							<input type="text" class="form-control" name="inp_name" placeholder="Name" autocomplete="off" required="">
+							<input type="text" class="form-control" name="inp_name" placeholder="*Name" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label>Email:</label>
-							<input type="email" class="form-control" name="inp_email" placeholder="Email Address" autocomplete="off" required="">
+							<input type="email" class="form-control" name="inp_email" placeholder="*Email Address" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label>Password:</label>
-							<input type="password" class="form-control" name="inp_password" placeholder="Password" autocomplete="off" required="">
+							<input type="password" class="form-control" name="inp_password" placeholder="*Password" autocomplete="off" required="">
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -133,7 +133,7 @@ $template_header;
 			$("#delete_inp_id").val($(this).data("id"));
 		});
 
-		$("#table_accounts").DataTable();
+		$("#table_accounts").DataTable({ "order": [[0, "desc"]] });
 	});
 </script>
 </html>

@@ -3,19 +3,6 @@
 $template_header;
 ?>
 
-<style>
-	.img_remove {
-		position: absolute;
-		top: 0;
-		right: 0;
-		color: #ff0000 !important;
-		cursor: pointer;
-		padding: 1rem;
-	}
-	.img_remove:hover {
-		color: #ffc0c0 !important;
-	}
-</style>
 <body>
 	<div class="wrapper h-100">
 		<div class="container-fluid">
@@ -42,12 +29,12 @@ $template_header;
 									<input type="hidden" name="inp_id" value="<?=$row_info['order_id']?>">
 									<div class="form-group">
 										<label for="inp_user_email">User Email:</label>
-										<input id="user_email" type="text" class="form-control" name="inp_user_email" placeholder="Email Address" autocomplete="off" value="<?=$this->Model_read->get_user_acc_wid($row_info["user_id"])->row_array()["email"]?>" data-toggle="dropdown" required="">
+										<input id="user_email" type="text" class="form-control" name="inp_user_email" placeholder="*Email Address" autocomplete="off" value="<?=$this->Model_read->get_user_acc_wid($row_info["user_id"])->row_array()["email"]?>" data-toggle="dropdown" required="">
 										<div class="dropdown-menu dropdown-menu-left email_dropdown"></div>
 									</div>
 									<div class="form-group">
 										<label for="inp_description">Description:</label>
-										<input type="text" class="form-control" name="inp_description" placeholder="Description" autocomplete="off" value="<?=$row_info['description']?>" required="">
+										<input type="text" class="form-control" name="inp_description" placeholder="*Description" autocomplete="off" value="<?=$row_info['description']?>" required="">
 									</div>
 									<div class="form-group">
 										<label for="inp_date">Date:</label>
@@ -59,33 +46,33 @@ $template_header;
 									</div>
 									<div class="form-group">
 										<label for="inp_zip_code">Zip Code:</label>
-										<input type="text" class="form-control" name="inp_zip_code" id="inp_zip_code" placeholder="Zip Code" value="<?=$row_info['zip_code']?>" autocomplete="off" required="">
+										<input type="text" class="form-control" name="inp_zip_code" id="inp_zip_code" placeholder="*Zip Code" value="<?=$row_info['zip_code']?>" autocomplete="off" required="">
 									</div>
 									<div class="form-group">
 										<label for="inp_country">Country:</label>
-										<input type="text" class="form-control" name="inp_country" id="inp_country" placeholder="Country" value="<?=$row_info['country']?>" autocomplete="off" required="">
+										<input type="text" class="form-control" name="inp_country" id="inp_country" placeholder="*Country" value="<?=$row_info['country']?>" autocomplete="off" required="">
 									</div>
 									<div class="form-group">
 										<label for="inp_province">Province:</label>
-										<input type="text" class="form-control" name="inp_province" id="inp_province" placeholder="Province" value="<?=$row_info['province']?>" autocomplete="off" required="">
+										<input type="text" class="form-control" name="inp_province" id="inp_province" placeholder="*Province" value="<?=$row_info['province']?>" autocomplete="off" required="">
 									</div>
 									<div class="form-group">
 										<label for="inp_city">City:</label>
-										<input type="text" class="form-control" name="inp_city" id="inp_city" placeholder="City" value="<?=$row_info['city']?>" autocomplete="off" required="">
+										<input type="text" class="form-control" name="inp_city" id="inp_city" placeholder="*City" value="<?=$row_info['city']?>" autocomplete="off" required="">
 									</div>
 									<div class="form-group">
 										<label for="inp_street">Street/Road:</label>
-										<input type="text" class="form-control" name="inp_street" id="inp_street" placeholder="Street/Road" value="<?=$row_info['street']?>" autocomplete="off" required="">
+										<input type="text" class="form-control" name="inp_street" id="inp_street" placeholder="*Street/Road" value="<?=$row_info['street']?>" autocomplete="off" required="">
 									</div>
 									<div class="form-group">
 										<label for="inp_address">House Number/Floor/Bldg./etc.:</label>
 										<input type="text" class="form-control" name="inp_address" id="inp_address" placeholder="House Number/Floor/Bldg./etc." value="<?=$row_info['address']?>" autocomplete="off">
 									</div>
-
+									<h4 class="pt-3 text-center font-weight-bold">&bull; Custom Product Details &bull;</h4>
 									<input type="hidden" name="inp_product_id" value="<?=$product_info['custom_id']?>">
 									<div class="form-group">
 										<label for="inp_custom_description">Custom Description:</label>
-										<textarea class="form-control" rows="5" style="resize: none;" name="inp_custom_description" maxlength="2040" required=""><?=$product_info["description"]?></textarea>
+										<textarea class="form-control" rows="5" style="resize: none;" name="inp_custom_description" placeholder="*" maxlength="2040" required=""><?=$product_info["description"]?></textarea>
 									</div>
 									<div class="form-group">
 										<label for="inp_type_id">Type:</label>
@@ -97,7 +84,7 @@ $template_header;
 									</div>
 									<div class="form-group">
 										<label for="inp_size">Size:</label>
-										<input type="text" class="form-control" name="inp_size" value="<?=$product_info['size']?>" required="">
+										<input type="text" class="form-control" name="inp_size" placeholder="*e.g. 12cm" value="<?=$product_info['size']?>" required="">
 									</div>
 									<div class="form-group container">
 										<label for="inp_img">Images:</label>
@@ -109,14 +96,14 @@ $template_header;
 											<?php foreach ($imgs as $src): ?>
 												<?php if ($src != NULL): ?>
 													<?php $ctr++; ?>
-													<div class="col-6 col-md-4 img_box mb-3">
-														<div class="img_u_box">
+													<div class="col-12 col-sm-6 col-md-4 col-lg-3 img_box mb-3">
+														<div class="img_m_box">
 															<input type="file" class="d-none img_input" name="inp_img_<?=$ctr?>">
-															<img class="item_img img_preview" src="<?=base_url(). 'uploads/custom_'. $product_info["custom_id"] .'/'. $src?>">
-															<div class="img_u_change item_img p-3 text-center d-none">
+															<img class="img_m_preview" src="<?=base_url(). 'uploads/custom_'. $product_info["custom_id"] .'/'. $src?>">
+															<div class="img_m_change p-3 text-center d-none">
 																Change Image
 															</div>
-															<a class="img_remove">
+															<a class="img_m_remove">
 																<i class="fa fa-times fa-lg" aria-hidden="true"></i>
 															</a>
 															<input type="hidden" class="img_check" name="inp_img_<?=$ctr?>_check" value="<?=$src?>">
@@ -125,16 +112,17 @@ $template_header;
 												<?php endif; ?>
 											<?php endforeach; ?>
 											<?php if ($ctr < 10): ?>
-												<div class="col-6 col-md-4 img_box mb-3">
-													<div class="img_u_box">
-														<input type="file" class="d-none img_input no_img" name="inp_img_<?=$ctr+1?>">
-														<img class="item_img img_preview" src="<?=base_url()?>assets/img/no_img.png">
-														<div class="img_u_change item_img p-3 text-center d-none">
+												<div class="col-12 col-sm-6 col-md-4 col-lg-3 img_box mb-3">
+													<div class="img_m_box">
+														<input type="file" class="d-none img_input no_img" name="inp_img_<?=$ctr + 1?>">
+														<img class="img_m_preview" src="<?=base_url()?>assets/img/no_img.png">
+														<div class="img_m_change p-3 text-center d-none">
 															Change Image
 														</div>
-														<a class="img_remove">
+														<a class="img_m_remove">
 															<i class="fa fa-times fa-lg" aria-hidden="true"></i>
 														</a>
+														<input type="hidden" class="img_check" name="inp_img_<?=$ctr + 1?>_check" value="<?=$src?>">
 													</div>
 												</div>
 											<?php endif; ?>
@@ -143,13 +131,15 @@ $template_header;
 									</div>
 									<div class="form-group">
 										<label for="inp_qty">Ordered Qty:</label>
-										<input type="number" class="form-control" name="inp_qty" value="<?=$order_item_info['qty']?>">
+										<input type="number" class="form-control" name="inp_qty" placeholder="" value="<?=$order_item_info['qty']?>">
 									</div>
 									<div class="form-group">
 										<label for="inp_price">Unit Price:</label>
-										<input type="number" class="form-control" name="inp_price" step="0.000001"value="<?=$order_item_info['price']?>">
+										<input type="number" class="form-control" name="inp_price" placeholder="" step="0.000001" value="<?=$order_item_info['price']?>">
 									</div>
-									<input type="submit" class="btn btn-primary" value="Update">
+									<div class="form-group">
+										<input type="submit" class="btn btn-primary" value="Update">
+									</div>
 								<?=form_close()?>
 							</div>
 						</div>
@@ -162,8 +152,8 @@ $template_header;
 <script type="text/javascript">
 	$(document).ready(function () {
 		$(document).on("mouseenter", ".img_box", function() {
-			var img_prev = $(this).children().children(".img_preview");
-			var img_change = $(this).children().children(".img_u_change");
+			var img_prev = $(this).children().children(".img_m_preview");
+			var img_change = $(this).children().children(".img_m_change");
 			img_change.removeClass("d-none");
 			img_change.css({
 				top: img_prev.position.top,
@@ -172,9 +162,9 @@ $template_header;
 				height: img_prev.outerHeight()
 			});
 		}).on("mouseleave", ".img_box", function() {
-			$(this).children().children(".img_u_change").addClass("d-none");
+			$(this).children().children(".img_m_change").addClass("d-none");
 		});
-		$(document).on("click", ".img_u_change", function() {
+		$(document).on("click", ".img_m_change", function() {
 			$(this).siblings(".img_input").trigger("click");
 		});
 
@@ -183,7 +173,7 @@ $template_header;
 				var reader = new FileReader();
 				reader.readAsDataURL(t.target.files[0]);
 				reader.onload = function(e) {
-					$(t.target).siblings(".img_preview").attr("src", e.target.result);
+					$(t.target).siblings(".img_m_preview").attr("src", e.target.result);
 				};
 
 				$(".img_box").each(function(index, el) {
@@ -195,20 +185,20 @@ $template_header;
 					$(t.target).removeClass("no_img");
 
 					$(".img_container").append($("<div>").attr({
-						class: "col-6 col-md-4 img_box mb-3"
+						class: "col-12 col-sm-6 col-md-4 col-lg-3 img_box mb-3"
 					}).append($("<div>").attr({
-						class: "img_u_box"
+						class: "img_m_box"
 					}).append($("<input>").attr({
 						type: "file",
 						class: "d-none img_input no_img",
 						name: "inp_img_" + ($(".img_box").length + 1)
 					})).append($("<img>").attr({
-						class: "item_img img_preview",
+						class: "img_m_preview",
 						src: "<?=base_url()?>assets/img/no_img.png"
 					})).append($("<div>").attr({
-						class: "img_u_change item_img p-3 text-center d-none"
+						class: "img_m_change p-3 text-center d-none"
 					}).html("Change Image")).append($("<a>").attr({
-						class: "img_remove"
+						class: "img_m_remove"
 					}).append($("<input>").attr({
 						type: "hidden",
 						class: "img_check",
@@ -220,7 +210,7 @@ $template_header;
 			}
 		});
 
-		$(document).on("click", ".img_remove", function(t) {
+		$(document).on("click", ".img_m_remove", function(t) {
 			if ($(".img_box").length > 1 && !$(this).siblings(".img_input").hasClass("no_img")) {
 				$(this).parent().parent().remove();
 			}

@@ -62,15 +62,30 @@ form label {
 }
 
 
-.img_a_preview {
+.img_m_preview {
 	border-radius: 3px;
 	border: 1px solid #000;
-	max-width: 15rem;
+	width: 100%;
+	max-width: 9rem;
+	max-height: 9rem;
+
+	float: left;
 }
-.img_u_box {
+.img_m_box {
 	position: relative;
 }
-.img_u_change {
+.img_m_box img {
+	border: 0.2rem solid #000;
+	border-radius: 5%;
+	width: 100%;
+	max-width: 15rem;
+	max-height: 15rem;
+
+	float: left;
+}
+.img_m_change {
+	border: 0.2rem solid #000;
+	border-radius: 5%;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -81,9 +96,26 @@ form label {
 
 	cursor: pointer;
 }
-.img_u_preview {
-	max-width: 80%;
-	max-height: 80%;
+.img_m_view {
+	border-width: 0 !important;
+}
+.img_m_view img {
+	border: 0.2rem solid #000;
+	border-radius: 5%;
+	width: 100%;
+	max-width: 15rem;
+	max-height: 15rem;
+}
+.img_m_remove {
+	position: absolute;
+	top: 0;
+	left: 0;
+	color: #ff0000 !important;
+	cursor: pointer;
+	padding: 1rem;
+}
+.img_m_remove:hover {
+	color: #ffc0c0 !important;
 }
 
 .img_row {
@@ -94,17 +126,9 @@ form label {
 	max-height: 9rem;
 }
 
-.img_u_box img {
-	border: 0.2rem solid #000;
-	border-radius: 5%;
-
-	max-width: 15rem;
-	max-height: 15rem;
-}
 .img_view {
 	border: 0.2rem solid #000;
 	border-radius: 5%;
-	object-fit: contain;
 	width: 100%;
 	max-width: 25rem;
 	max-height: 25rem;
@@ -133,4 +157,10 @@ form label {
 
 .email_dropdown a {
 	cursor: pointer;
+}
+
+
+form .form-group {
+	border-top: 1px solid #999;
+	padding-top: 0.5rem;
 }

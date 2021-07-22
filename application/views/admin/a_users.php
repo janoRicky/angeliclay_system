@@ -20,11 +20,11 @@ $template_header;
 								</button>
 							</div>
 						<?php endif; ?>
-						<div class="row">
-							<div class="col-6 text-left">
-								<h2>Users (<?=$tbl_users->num_rows()?>)</h2>
+						<div class="row py-3">
+							<div class="col-12 col-sm-6 text-left">
+								<h2 class="font-weight-bold">Users (<?=$tbl_users->num_rows()?>)</h2>
 							</div>
-							<div class="col-6 text-right">
+							<div class="col-12 col-sm-6 text-right">
 								<button class="btn btn-primary" data-toggle="modal" data-target="#modal_new_account">New User</button>
 							</div>
 						</div>
@@ -96,12 +96,20 @@ $template_header;
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
+							<label for="inp_email">Email:</label>
+							<input type="email" class="form-control" name="inp_email" placeholder="*Email Address" autocomplete="off" required="">
+						</div>
+						<div class="form-group">
+							<label for="inp_password">Password:</label>
+							<input type="password" class="form-control" name="inp_password" placeholder="*Password" autocomplete="off" required="">
+						</div>
+						<div class="form-group">
 							<label for="inp_name_last">Last Name:</label>
-							<input type="text" class="form-control" name="inp_name_last" placeholder="Last Name" autocomplete="off" required="">
+							<input type="text" class="form-control" name="inp_name_last" placeholder="*Last Name" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_name_first">First Name:</label>
-							<input type="text" class="form-control" name="inp_name_first" placeholder="First Name" autocomplete="off" required="">
+							<input type="text" class="form-control" name="inp_name_first" placeholder="*First Name" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_name_middle">Middle Name:</label>
@@ -120,32 +128,24 @@ $template_header;
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="inp_email">Email:</label>
-							<input type="email" class="form-control" name="inp_email" placeholder="Email Address" autocomplete="off" required="">
-						</div>
-						<div class="form-group">
-							<label for="inp_password">Password:</label>
-							<input type="password" class="form-control" name="inp_password" placeholder="Password" autocomplete="off" required="">
-						</div>
-						<div class="form-group">
 							<label for="inp_zip_code">Zip Code:</label>
-							<input type="text" class="form-control" name="inp_zip_code" placeholder="Zip Code" autocomplete="off" required="">
+							<input type="text" class="form-control" name="inp_zip_code" placeholder="*Zip Code" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_country">Country:</label>
-							<input type="text" class="form-control" name="inp_country" placeholder="Country" autocomplete="off" required="">
+							<input type="text" class="form-control" name="inp_country" placeholder="*Country" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_province">Province:</label>
-							<input type="text" class="form-control" name="inp_province" placeholder="Province" autocomplete="off" required="">
+							<input type="text" class="form-control" name="inp_province" placeholder="*Province" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_city">City:</label>
-							<input type="text" class="form-control" name="inp_city" placeholder="City" autocomplete="off" required="">
+							<input type="text" class="form-control" name="inp_city" placeholder="*City" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_street">Street/Road:</label>
-							<input type="text" class="form-control" name="inp_street" placeholder="Street/Road" autocomplete="off" required="">
+							<input type="text" class="form-control" name="inp_street" placeholder="*Street/Road" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_address">House Number/Floor/Bldg./etc.:</label>
@@ -153,7 +153,7 @@ $template_header;
 						</div>
 						<div class="form-group">
 							<label for="inp_contact_num">Contact Number:</label>
-							<input type="text" class="form-control" name="inp_contact_num" placeholder="Contact #" autocomplete="off" required="">
+							<input type="text" class="form-control" name="inp_contact_num" placeholder="*Contact #" autocomplete="off" required="">
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -193,7 +193,7 @@ $template_header;
 			$("#delete_inp_id").val($(this).data("id"));
 		});
 
-		$("#table_users").DataTable();
+		$("#table_users").DataTable({ "order": [[0, "desc"]] });
 	});
 </script>
 </html>

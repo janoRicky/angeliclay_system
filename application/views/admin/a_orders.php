@@ -20,15 +20,15 @@ $template_header;
 								</button>
 							</div>
 						<?php endif; ?>
-						<div class="row mb-3">
-							<div class="col-6 text-left">
-								<h2>Orders (<?=$tbl_orders->num_rows()?>)</h2>
+						<div class="row pt-3 pb-1">
+							<div class="col-12 col-sm-6 text-left">
+								<h2 class="font-weight-bold">Orders (<?=$tbl_orders->num_rows()?>)</h2>
 							</div>
-							<div class="col-6 text-right">
+							<div class="col-12 col-sm-6 text-right">
 								<button class="btn btn-primary" data-toggle="modal" data-target="#modal_new_account">New Order</button>
 							</div>
 						</div>
-						<div class="row mb-3">
+						<div class="row pb-3">
 							<div class="col-12 col-sm-8 col-md-6 col-lg-4 text-center m-auto">
 								<div class="card text-center bg-dark text-light p-1">
 									<?=form_open(base_url() . "admin/orders", "method='GET'");?>
@@ -162,6 +162,30 @@ $template_header;
 							<label for="inp_address">House Number/Floor/Bldg./etc.:</label>
 							<input type="text" class="form-control" id="inp_address" name="inp_address" placeholder="House Number/Floor/Bldg./etc." autocomplete="off">
 						</div>
+						<div class="form-group">
+							<label>Ordered Items:</label>
+							<input id="items_no" type="hidden" name="items_no" value="0" required="">
+							<table id="table_items" class="table table-striped table-hover table-responsive-md table-bordered">
+								<thead>
+									<tr>
+										<th>Item</th>
+										<th>Qty.</th>
+										<th>Price</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr id="total_info">
+										<td>Total</td>
+										<td id="total_qty">0</td>
+										<td id="total_price">0.00</td>
+										<td>
+											<button id="btn_remove_all" type="button" class="btn btn-sm btn-primary">Remove All</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 						<div class="form-group border px-3 py-2" style="background-color: #f1f1f1">
 							<label>Products:</label>
 							<table id="table_products" class="table table-striped table-hover table-responsive-lg table-bordered">
@@ -213,30 +237,6 @@ $template_header;
 								</tbody>
 							</table>
 						</div>
-						<div class="form-group m-0" style="overflow: auto;">
-							<label>Ordered Items:</label>
-							<input id="items_no" type="hidden" name="items_no" value="0" required="">
-							<table id="table_items" class="table table-striped table-hover table-bordered">
-								<thead>
-									<tr>
-										<th>Item</th>
-										<th>Qty.</th>
-										<th>Price</th>
-										<th>Action</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr id="total_info">
-										<td>Total</td>
-										<td id="total_qty">0</td>
-										<td id="total_price">0.00</td>
-										<td>
-											<button id="btn_remove_all" type="button" class="btn btn-sm btn-primary">Remove All</button>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
 					</div>
 					<div class="modal-footer">
 						<input type="submit" class="btn btn-primary" value="Add Order" id="add_order">
@@ -275,7 +275,7 @@ $template_header;
 			$("#delete_inp_id").val($(this).data("id"));
 		});
 
-		$("#table_orders").DataTable();
+		$("#table_orders").DataTable({ "order": [[0, "desc"]] });
 
 		$(".btn_add_to_items").on("click", function() {
 			var p_id = $(this).attr("data-id");

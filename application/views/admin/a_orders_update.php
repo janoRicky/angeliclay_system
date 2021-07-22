@@ -28,12 +28,12 @@ $template_header;
 									<input id="update_inp_id" type="hidden" name="inp_id" value="<?=$row_info['order_id']?>">
 									<div class="form-group">
 										<label for="inp_user_email">User Email:</label>
-										<input id="user_email" type="text" class="form-control" name="inp_user_email" placeholder="Email Address" autocomplete="off" value="<?=$this->Model_read->get_user_acc_wid($row_info["user_id"])->row_array()["email"]?>" data-toggle="dropdown" required="">
+										<input id="user_email" type="text" class="form-control" name="inp_user_email" placeholder="*Email Address" autocomplete="off" value="<?=$this->Model_read->get_user_acc_wid($row_info["user_id"])->row_array()["email"]?>" data-toggle="dropdown" required="">
 										<div class="dropdown-menu dropdown-menu-left email_dropdown"></div>
 									</div>
 									<div class="form-group">
 										<label for="inp_description">Description:</label>
-										<input type="text" class="form-control" name="inp_description" placeholder="Description" autocomplete="off" value="<?=$row_info['description']?>" required="">
+										<input type="text" class="form-control" name="inp_description" placeholder="*Description" autocomplete="off" value="<?=$row_info['description']?>" required="">
 									</div>
 									<div class="form-group">
 										<label for="inp_date">Date:</label>
@@ -45,23 +45,23 @@ $template_header;
 									</div>
 									<div class="form-group">
 										<label for="inp_zip_code">Zip Code:</label>
-										<input type="text" class="form-control" id="inp_zip_code" name="inp_zip_code" placeholder="Zip Code" value="<?=$row_info['zip_code']?>" autocomplete="off" required="">
+										<input type="text" class="form-control" id="inp_zip_code" name="inp_zip_code" placeholder="*Zip Code" value="<?=$row_info['zip_code']?>" autocomplete="off" required="">
 									</div>
 									<div class="form-group">
 										<label for="inp_country">Country:</label>
-										<input type="text" class="form-control" id="inp_country" name="inp_country" placeholder="Country" value="<?=$row_info['country']?>" autocomplete="off" required="">
+										<input type="text" class="form-control" id="inp_country" name="inp_country" placeholder="*Country" value="<?=$row_info['country']?>" autocomplete="off" required="">
 									</div>
 									<div class="form-group">
 										<label for="inp_province">Province:</label>
-										<input type="text" class="form-control" id="inp_province" name="inp_province" placeholder="Province" value="<?=$row_info['province']?>" autocomplete="off" required="">
+										<input type="text" class="form-control" id="inp_province" name="inp_province" placeholder="*Province" value="<?=$row_info['province']?>" autocomplete="off" required="">
 									</div>
 									<div class="form-group">
 										<label for="inp_city">City:</label>
-										<input type="text" class="form-control" id="inp_city" name="inp_city" placeholder="City" value="<?=$row_info['city']?>" autocomplete="off" required="">
+										<input type="text" class="form-control" id="inp_city" name="inp_city" placeholder="*City" value="<?=$row_info['city']?>" autocomplete="off" required="">
 									</div>
 									<div class="form-group">
 										<label for="inp_street">Street/Road:</label>
-										<input type="text" class="form-control" id="inp_street" name="inp_street" placeholder="Street/Road" value="<?=$row_info['street']?>" autocomplete="off" required="">
+										<input type="text" class="form-control" id="inp_street" name="inp_street" placeholder="*Street/Road" value="<?=$row_info['street']?>" autocomplete="off" required="">
 									</div>
 									<div class="form-group">
 										<label for="inp_address">House Number/Floor/Bldg./etc.:</label>
@@ -69,8 +69,8 @@ $template_header;
 									</div>
 									<div class="form-group">
 										<label for="inp_time">Ordered Items:</label>
-										<input id="items_no" type="hidden" name="items_no" value="<?=$tbl_order_items->num_rows()?>">
-										<table id="table_items" class="table table-striped table-bordered">
+										<input id="items_no" type="hidden" name="items_no" value="<?=$tbl_order_items->num_rows()?>" required="">
+										<table id="table_items" class="table table-striped table-hover table-responsive-md table-bordered">
 											<thead>
 												<tr>
 													<th>Item</th>
@@ -81,13 +81,13 @@ $template_header;
 											</thead>
 											<tbody>
 												<?php foreach ($tbl_order_items->result_array() as $key => $row): ?>
-													<tr class="order_row">
+													<tr class="order_row item_product_<?=$row["product_id"]?>">
 														<?php
 														$product = $this->Model_read->get_product_wid($row["product_id"])->row_array();
 														?>
-														<td>
+														<td class="name">
 															<input type="hidden" name="item_<?=$key + 1?>_id" value="<?=$row["product_id"]?>">
-															<?=($product["type_id"] == NULL ? "(No Type)" : $tbl_types[$product["type_id"]]). "/" .$product["description"]?>
+															<?=$product["name"]?>
 														</td>
 														<td>
 															<input class="item_qty" type="number" name="item_<?=$key + 1?>_qty" min="1" value="<?=$row["qty"]?>" max="<?=$product["qty"] + $row["qty"]?>">
@@ -112,13 +112,13 @@ $template_header;
 											</tbody>
 										</table>
 									</div>
-									<div class="form-group">
+									<div class="form-group border px-3 py-2" style="background-color: #f1f1f1">
 										<label for="inp_time">Products:</label>
-										<table id="table_products" class="table table-striped table-bordered">
+										<table id="table_products" class="table table-striped table-hover table-responsive-md table-bordered">
 											<thead>
 												<tr>
-													<th>ID</th>
-													<th>Description</th>
+													<th>Name</th>
+													<th>Image</th>
 													<th>Type</th>
 													<th>Price</th>
 													<th>Qty. (Stock)</th>
@@ -127,12 +127,18 @@ $template_header;
 											</thead>
 											<tbody>
 												<?php foreach ($tbl_products->result_array() as $row): ?>
-													<tr id="product_<?=$row["product_id"]?>" class="text-center align-middle" >
-														<td>
-															<?=$row["product_id"]?>
+													<tr id="product_<?=$row["product_id"]?>" class="text-center align-middle">
+														<td class="name">
+															<?=$row["name"]?>
 														</td>
-														<td class="description">
-															<?=$row["description"]?>
+														<td>
+															<img class="img-responsive img_row img_zoomable" src="<?php
+															if (!empty($row["img"])) {
+																echo base_url(). 'uploads/product_'. $row["product_id"] .'/'. $row["img"];
+															} else {
+																echo base_url(). "assets/img/no_img.png";
+															}
+															?>">
 														</td>
 														<td class="type">
 															<?php
@@ -157,7 +163,9 @@ $template_header;
 											</tbody>
 										</table>
 									</div>
-									<input type="submit" class="btn btn-primary" value="Update">
+									<div class="form-group">
+										<input type="submit" class="btn btn-primary" value="Update" id="update_order">
+									</div>
 								<?=form_close(); ?>
 							</div>
 						</div>
@@ -180,40 +188,42 @@ $template_header;
 				var ctr = parseInt($("#items_no").val()) + 1;
 				var $product = $("#product_" + p_id);
 
-				var $description = $("<td>").append($("<input>").attr({
-					type: "hidden",
-					name: "item_" + ctr + "_id",
-					value: $.trim(p_id)
-				})).append($product.children(".type").html() + "/" + $product.children(".description").html());
-				var $qty = $("<td>").append($("<input>").attr({
-					class: "item_qty",
-					type: "number",
-					name: "item_" + ctr + "_qty",
-					min: "1",
-					value: "1",
-					max: $.trim($product.children(".qty").html())
-				}));
-				var $price = $("<td>").append($("<input>").attr({
-					type: "hidden",
-					name: "item_" + ctr + "_price",
-					value: $.trim($product.children(".price").html())
-				})).append($("<span>")).attr("class", "item_price");
-				var $action = $("<td>").append($("<button>").attr({
-					type: "button",
-					class: "btn btn-sm btn-primary btn_remove_item"
-				}).html("Remove"));
-
-				$("#total_info").before($("<tr>")
-					.append($description)
-					.append($qty)
-					.append($price)
-					.append($action).attr({
-						id: "item_" + ctr,
-						class: "item_product_" + p_id + " order_row"
+				if (parseInt($product.children(".qty").html()) > 0) {
+					var $description = $("<td>").append($("<input>").attr({
+						type: "hidden",
+						name: "item_" + ctr + "_id",
+						value: $.trim(p_id)
+					})).append($product.children(".name").html());
+					var $qty = $("<td>").append($("<input>").attr({
+						class: "item_qty",
+						type: "number",
+						name: "item_" + ctr + "_qty",
+						min: "1",
+						value: "1",
+						max: $.trim($product.children(".qty").html())
 					}));
+					var $price = $("<td>").append($("<input>").attr({
+						type: "hidden",
+						name: "item_" + ctr + "_price",
+						value: $.trim($product.children(".price").html())
+					})).append($("<span>")).attr("class", "item_price");
+					var $action = $("<td>").append($("<button>").attr({
+						type: "button",
+						class: "btn btn-sm btn-primary btn_remove_item"
+					}).html("Remove"));
 
-				$("#items_no").val(ctr);
-				$(".item_product_" + p_id).find(".item_qty").trigger("change");
+					$("#total_info").before($("<tr>")
+						.append($description)
+						.append($qty)
+						.append($price)
+						.append($action).attr({
+							id: "item_" + ctr,
+							class: "item_product_" + p_id + " order_row"
+						}));
+
+					$("#items_no").val(ctr);
+					$(".item_product_" + p_id).find(".item_qty").trigger("change");
+				}
 			} else {
 				var item_qty = $item_product.find(".item_qty");
 				if (item_qty.val() < parseInt(item_qty.attr("max"))) {
@@ -298,6 +308,14 @@ $template_header;
 					$("#inp_street").val(address["street"]);
 					$("#inp_address").val(address["address"]);
 				});
+			}
+		});
+
+
+		$(document).on("click", "#update_order", function(e) {
+			if ($("#items_no").val() < 1 || $("#items_no").val() == null) {
+				alert("Missing Ordered Items.");
+				e.preventDefault();
 			}
 		});
 	});

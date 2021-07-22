@@ -109,7 +109,7 @@ $template_header;
 														<td><?=$row["payment_id"]?></td>
 														<td>
 															<?php if($row["img"] != NULL): ?>
-																<img class="img_preview" src="<?php
+																<img class="img-responsive img_row img_zoomable" src="<?php
 																if (!empty($row["img"])) {
 																	echo base_url(). 'uploads/users/user_'. $row_info["user_id"] .'/payments/order_'. $row_info["order_id"] .'/'. $row["img"];
 																} else {
@@ -161,7 +161,7 @@ $template_header;
 						<div class="form-group text-center">
 							<label>Proof of Purchase / Screenshot:</label>
 							<input class="form-control mb-1" id="proof_image" type="file" name="inp_img_proof">
-							<img class="img_a_preview img_zoomable" id="proof_preview" src="<?=base_url()?>assets/img/no_img.png">
+							<img class="img_view img_zoomable" id="proof_preview" src="<?=base_url()?>assets/img/no_img.png">
 						</div>
 						<div class="form-group">
 							<label>Date:</label>

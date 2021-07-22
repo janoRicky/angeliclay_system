@@ -358,7 +358,7 @@
 		$head["title"] = "Dashboard - Angeliclay Ordering System";
 		$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
 		// used in navbar
-		$data["nav"] = array("text" => "Dashboard", "link" => "dashboard");
+		$data["nav"] = array(array("text" => "Dashboard", "link" => "dashboard"));
 
 		// data array values can be used as variables on the php page
 		// $data["nav"] can be used in a_dashboard as $nav
@@ -371,7 +371,7 @@
 
 		$head["title"] = "Products - Angeliclay Ordering System";
 		$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
-		$data["nav"] = array("text" => "Products", "link" => "products");
+		$data["nav"] = array(array("text" => "Products", "link" => "products"));
 
 		$data["tbl_products"] = $this->Model_read->get_products();
 		foreach ($this->Model_read->get_types()->result_array() as $row) {
@@ -393,7 +393,10 @@
 		} else {
 			$head["title"] = "Products/View - Angeliclay Ordering System";
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
-			$data["nav"] = array("text" => "Products/View", "link" => "products");
+			$data["nav"] = array(
+				array("text" => "Products", "link" => "products"),
+				array("text" => "View Product #". $id, "link" => "products_view?id=". $id)
+			);
 
 			$data["row_info"] = $row_info->row_array();
 			
@@ -416,7 +419,10 @@
 		} else {
 			$head["title"] = "Products/Edit - Angeliclay Ordering System";
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
-			$data["nav"] = array("text" => "Products/Edit", "link" => "products");
+			$data["nav"] = array(
+				array("text" => "Products", "link" => "products"),
+				array("text" => "Edit Product #". $id, "link" => "products_edit?id=". $id)
+			);
 
 			$data["row_info"] = $row_info->row_array();
 			foreach ($this->Model_read->get_types()->result_array() as $row) {
@@ -432,7 +438,7 @@
 
 		$head["title"] = "Types - Angeliclay Ordering System";
 		$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
-		$data["nav"] = array("text" => "Types", "link" => "types");
+		$data["nav"] = array(array("text" => "Types", "link" => "types"));
 
 		$data["tbl_types"] = $this->Model_read->get_types();
 
@@ -451,7 +457,10 @@
 		} else {
 			$head["title"] = "Types/View - Angeliclay Ordering System";
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
-			$data["nav"] = array("text" => "Types/View", "link" => "types");
+			$data["nav"] = array(
+				array("text" => "Types", "link" => "types"),
+				array("text" => "View Type #". $id, "link" => "types_view?id=". $id)
+			);
 
 			$data["row_info"] = $row_info->row_array();
 
@@ -471,7 +480,10 @@
 		} else {
 			$head["title"] = "Types/Edit - Angeliclay Ordering System";
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
-			$data["nav"] = array("text" => "Types/Edit", "link" => "types");
+			$data["nav"] = array(
+				array("text" => "Types", "link" => "types"),
+				array("text" => "Edit Type #". $id, "link" => "types_edit?id=". $id)
+			);
 
 			$data["row_info"] = $row_info->row_array();
 
@@ -486,7 +498,7 @@
 
 		$head["title"] = "Orders - Angeliclay Ordering System";
 		$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
-		$data["nav"] = array("text" => "Orders", "link" => "orders");
+		$data["nav"] = array(array("text" => "Orders", "link" => "orders"));
 
 		$data["tbl_orders"] = $this->Model_read->get_orders(!is_null($state) ? $state : "ALL");
 		$data["tbl_products"] = $this->Model_read->get_products_user();
@@ -519,7 +531,10 @@
 		} else {
 			$head["title"] = "Orders/View - Angeliclay Ordering System";
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
-			$data["nav"] = array("text" => "Orders/View", "link" => "orders");
+			$data["nav"] = array(
+				array("text" => "Orders", "link" => "orders"),
+				array("text" => "View Order #". $id, "link" => "orders_view?id=". $id)
+			);
 
 			$data["row_info"] = $row_info->row_array();
 			$data["tbl_order_items"] = $this->Model_read->get_order_items_worder_id($id);
@@ -552,7 +567,10 @@
 		} else {
 			$head["title"] = "Orders/Edit - Angeliclay Ordering System";
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
-			$data["nav"] = array("text" => "Orders/Edit", "link" => "orders");
+			$data["nav"] = array(
+				array("text" => "Orders", "link" => "orders"),
+				array("text" => "Edit Order #". $id, "link" => "orders_edit?id=". $id)
+			);
 
 			$data["row_info"] = $row_info->row_array();
 			$data["tbl_order_items"] = $this->Model_read->get_order_items_worder_id($id);
@@ -572,7 +590,7 @@
 
 		$head["title"] = "Custom Orders - Angeliclay Ordering System";
 		$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
-		$data["nav"] = array("text" => "Custom Orders", "link" => "orders_custom");
+		$data["nav"] = array(array("text" => "Custom Orders", "link" => "orders_custom"));
 
 		$data["tbl_orders_custom"] = $this->Model_read->get_orders_custom(!is_null($state) ? $state : "ALL");
 		foreach ($this->Model_read->get_types()->result_array() as $row) {
@@ -605,6 +623,10 @@
 			$head["title"] = "Custom Orders/View - Angeliclay Ordering System";
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
 			$data["nav"] = array("text" => "Custom Orders/View", "link" => "orders_custom");
+			$data["nav"] = array(
+				array("text" => "Custom Orders", "link" => "orders_custom"),
+				array("text" => "View Custom Order #". $id, "link" => "orders_custom_view?id=". $id)
+			);
 
 			$data["row_info"] = $row_info->row_array();
 			$data["order_item_info"] = $this->Model_read->get_order_items_worder_id($data["row_info"]["order_id"])->row_array();
@@ -644,7 +666,10 @@
 		} else {
 			$head["title"] = "Custom Orders/Edit - Angeliclay Ordering System";
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
-			$data["nav"] = array("text" => "Custom Orders/Edit", "link" => "orders_custom");
+			$data["nav"] = array(
+				array("text" => "Custom Orders", "link" => "orders_custom"),
+				array("text" => "Edit Custom Order #". $id, "link" => "orders_custom_edit?id=". $id)
+			);
 
 			$data["row_info"] = $row_info->row_array();
 			$data["order_item_info"] = $this->Model_read->get_order_items_worder_id($data["row_info"]["order_id"])->row_array();
@@ -662,7 +687,7 @@
 
 		$head["title"] = "Users - Angeliclay Ordering System";
 		$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
-		$data["nav"] = array("text" => "Users", "link" => "users");
+		$data["nav"] = array(array("text" => "Users", "link" => "users"));
 
 		$data["tbl_users"] = $this->Model_read->get_user_accounts();
 
@@ -682,6 +707,10 @@
 			$head["title"] = "Users/View - Angeliclay Ordering System";
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
 			$data["nav"] = array("text" => "Users/View", "link" => "users");
+			$data["nav"] = array(
+				array("text" => "Users", "link" => "users"),
+				array("text" => "View User #". $id, "link" => "users_view?id=". $id)
+			);
 
 			$data["row_info"] = $row_info->row_array();
 
@@ -701,7 +730,10 @@
 		} else {
 			$head["title"] = "Users/Edit - Angeliclay Ordering System";
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
-			$data["nav"] = array("text" => "Users/Edit", "link" => "users");
+			$data["nav"] = array(
+				array("text" => "Users", "link" => "users"),
+				array("text" => "Edit User #". $id, "link" => "users_edit?id=". $id)
+			);
 
 			$data["row_info"] = $row_info->row_array();
 
@@ -714,7 +746,7 @@
 
 		$head["title"] = "Accounts - Angeliclay Ordering System";
 		$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
-		$data["nav"] = array("text" => "Accounts", "link" => "accounts");
+		$data["nav"] = array(array("text" => "Accounts", "link" => "accounts"));
 
 		$data["tbl_accounts"] = $this->Model_read->get_adm_accounts();
 
@@ -733,7 +765,10 @@
 		} else {
 			$head["title"] = "Accounts/View - Angeliclay Ordering System";
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
-			$data["nav"] = array("text" => "Accounts/View", "link" => "accounts");
+			$data["nav"] = array(
+				array("text" => "Accounts", "link" => "accounts"),
+				array("text" => "View Account #". $id, "link" => "accounts_view?id=". $id)
+			);
 
 			$data["row_info"] = $row_info->row_array();
 
@@ -754,7 +789,10 @@
 		} else {
 			$head["title"] = "Accounts/Edit - Angeliclay Ordering System";
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
-			$data["nav"] = array("text" => "Accounts/Edit", "link" => "accounts");
+			$data["nav"] = array(
+				array("text" => "Accounts", "link" => "accounts"),
+				array("text" => "Edit Account #". $id, "link" => "accounts_edit?id=". $id)
+			);
 
 			$data["row_info"] = $row_info->row_array();
 

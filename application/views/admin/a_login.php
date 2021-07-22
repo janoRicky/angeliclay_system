@@ -30,13 +30,15 @@ $template_header; // loads in the header of the page obtained from views/admin/t
 							<?=form_open(base_url() . "admin/login", "method='POST'")?>
 								<div class="form-group">
 									<label for="inp_email">Email:</label>
-									<input type="email" class="form-control" name="inp_email" placeholder="Email Address" required="">
+									<input type="email" class="form-control" name="inp_email" placeholder="*Email Address" required="">
 								</div>
 								<div class="form-group">
 									<label for="inp_password">Password:</label>
-									<input type="password" class="form-control" name="inp_password" placeholder="Password" required="">
+									<input type="password" class="form-control" name="inp_password" placeholder="*Password" required="">
 								</div>
-								<input type="submit" class="btn btn-primary" value="Log-In">
+								<button type="submit" class="btn btn-primary">
+									<i class="fa fa-sign-in" aria-hidden="true"></i> Sign-In
+								</button>
 							<?=form_close()?>
 						</div>
 					</div>

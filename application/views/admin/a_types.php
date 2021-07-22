@@ -20,11 +20,11 @@ $template_header;
 								</button>
 							</div>
 						<?php endif; ?>
-						<div class="row">
-							<div class="col-6 text-left">
-								<h2>Types (<?=$tbl_types->num_rows()?>)</h2>
+						<div class="row py-3">
+							<div class="col-12 col-sm-6 text-left">
+								<h2 class="font-weight-bold">Types (<?=$tbl_types->num_rows()?>)</h2>
 							</div>
-							<div class="col-6 text-right">
+							<div class="col-12 col-sm-6 text-right">
 								<button class="btn btn-primary" data-toggle="modal" data-target="#modal_new_type">New Type</button>
 							</div>
 						</div>
@@ -101,19 +101,19 @@ $template_header;
 						<div class="form-group text-center">
 							<label>Image:</label>
 							<input class="form-control mb-1" id="type_image" type="file" name="inp_img">
-							<img class="img_a_preview img_zoomable" id="image_preview" src="<?=base_url()?>assets/img/no_img.png">
+							<img class="img_view img_zoomable" id="image_preview" src="<?=base_url()?>assets/img/no_img.png">
 						</div>
 						<div class="form-group">
 							<label>Type Name:</label>
-							<input type="text" class="form-control" name="inp_name" placeholder="Type Name" autocomplete="off" required="">
+							<input type="text" class="form-control" name="inp_name" placeholder="*Type Name" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label>Description:</label>
-							<textarea class="form-control" name="inp_description" placeholder="Description"style="resize: none;" required=""></textarea>
+							<textarea class="form-control" name="inp_description" placeholder="*Description"style="resize: none;" required=""></textarea>
 						</div>
 						<div class="form-group">
 							<label>Price Range:</label>
-							<input type="text" class="form-control" name="inp_price_range" placeholder="Price Range" autocomplete="off" required="">
+							<input type="text" class="form-control" name="inp_price_range" placeholder="*Price Range" autocomplete="off" required="">
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -175,7 +175,7 @@ $template_header;
 			$("#delete_inp_id").val($(this).data("id"));
 		});
 
-		$("#table_types").DataTable();
+		$("#table_types").DataTable({ "order": [[0, "desc"]] });
 
 		$(document).on("change", "#type_image", function() {
 			if (this.files && this.files[0]) {

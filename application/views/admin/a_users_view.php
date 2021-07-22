@@ -20,48 +20,30 @@ $template_header;
 								</button>
 							</div>
 						<?php endif; ?>
-						<div class="row">
+						<div class="row view_container">
 							<div class="col-12 text-left">
 								<h2>View User #<?=$row_info["user_id"]?></h2>
 							</div>
 							<div class="col-12">
 								<div class="row mt-2">
-									<div class="col-12">
-										<h5>Full Name:</h5>
-									</div>
-									<div class="col-12">
-										<?=$row_info["name_last"] .", ". $row_info["name_first"] ." ". $row_info["name_middle"] ." ". $row_info["name_extension"]?>
-									</div>
-								</div>
-								<div class="row mt-2">
-									<div class="col-12">
-										<h5>Gender:</h5>
-									</div>
-									<div class="col-12">
-										<?=$row_info["gender"]?>
-									</div>
-								</div>
-								<div class="row mt-2">
-									<div class="col-12">
-										<h5>Email:</h5>
-									</div>
-									<div class="col-12">
+									<div class="col-12 col-md-6">
+										<label>Email:</label><br>
 										<?=$row_info["email"]?>
 									</div>
-								</div>
-								<div class="row mt-2">
-									<div class="col-12">
-										<h5>Contact #:</h5>
+									<div class="col-12 col-md-6">
+										<label>Full Name:</label><br>
+										<?=$row_info["name_last"] .", ". $row_info["name_first"] ." ". $row_info["name_middle"] ." ". $row_info["name_extension"]?>
 									</div>
-									<div class="col-12">
+									<div class="col-12 col-md-6">
+										<label>Gender:</label><br>
+										<?=$row_info["gender"]?>
+									</div>
+									<div class="col-12 col-md-6">
+										<label>Contact #:</label><br>
 										<?=$row_info["contact_num"]?>
 									</div>
-								</div>
-								<div class="row mt-2">
 									<div class="col-12">
-										<h5>Full Address:</h5>
-									</div>
-									<div class="col-12">
+										<label>Full Address:</label><br>
 										<?=$row_info["zip_code"] ." / ". $row_info["country"] ." / ". $row_info["province"] ." / ". $row_info["city"] ." / ". $row_info["street"] ." / ". $row_info["address"]?>
 									</div>
 								</div>

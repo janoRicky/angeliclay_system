@@ -3,19 +3,6 @@
 $template_header;
 ?>
 
-<style>
-	.img_remove {
-		position: absolute;
-		top: 0;
-		right: 0;
-		color: #ff0000 !important;
-		cursor: pointer;
-		padding: 1rem;
-	}
-	.img_remove:hover {
-		color: #ffc0c0 !important;
-	}
-</style>
 <body>
 	<div class="wrapper h-100">
 		<div class="container-fluid">
@@ -33,28 +20,30 @@ $template_header;
 								</button>
 							</div>
 						<?php endif; ?>
-						<div class="row mb-3">
-							<div class="col-4 text-left">
-								<h2>Custom Orders (<?=$tbl_orders_custom->num_rows()?>)</h2>
+						<div class="row pt-3 pb-1">
+							<div class="col-12 col-sm-6 text-left">
+								<h2 class="font-weight-bold">Custom Orders (<?=$tbl_orders_custom->num_rows()?>)</h2>
 							</div>
-							<div class="col-4 text-center">
+							<div class="col-12 col-sm-6 text-right">
+								<button class="btn btn-primary" data-toggle="modal" data-target="#modal_new_account">New Custom Order</button>
+							</div>
+						</div>
+						<div class="row pb-3">
+							<div class="col-12 col-sm-8 col-md-6 col-lg-4 text-center m-auto">
 								<div class="card text-center bg-dark text-light p-1">
-									<?=form_open(base_url() . "admin/orders_custom", "method='GET'");?>
+									<?=form_open(base_url() . "admin/orders", "method='GET'");?>
 										<?php $state = (isset($_GET["state"]) ? $_GET["state"] : "ALL"); ?>
 										<select id="state_sort" name="state" class="form-control">
 											<option value="ALL" <?=($state == "ALL" ? "selected" : "")?>>ALL</option>
-											<option value="0" <?=($state == "0" ? "selected" : "")?>>PENDING</option>
-											<option value="1" <?=($state == "1" ? "selected" : "")?>>ACCEPTED / WAITING FOR PAYMENT</option>
-											<option value="2" <?=($state == "2" ? "selected" : "")?>>IN PROGRESS</option>
-											<option value="3" <?=($state == "3" ? "selected" : "")?>>SHIPPED</option>
-											<option value="4" <?=($state == "4" ? "selected" : "")?>>RECEIVED</option>
-											<option value="5" <?=($state == "5" ? "selected" : "")?>>CANCELLED</option>
+											<option value="0" <?=($state == "0" ? "selected" : "")?>><?=$states[0]?></option>
+											<option value="1" <?=($state == "1" ? "selected" : "")?>><?=$states[1]?></option>
+											<option value="2" <?=($state == "2" ? "selected" : "")?>><?=$states[2]?></option>
+											<option value="3" <?=($state == "3" ? "selected" : "")?>><?=$states[3]?></option>
+											<option value="4" <?=($state == "4" ? "selected" : "")?>><?=$states[4]?></option>
+											<option value="5" <?=($state == "5" ? "selected" : "")?>><?=$states[5]?></option>
 										</select>
 									<?=form_close()?>
 								</div>
-							</div>
-							<div class="col-4 text-right">
-								<button class="btn btn-primary" data-toggle="modal" data-target="#modal_new_account">New Custom Order</button>
 							</div>
 						</div>
 						<div class="row">
@@ -122,12 +111,12 @@ $template_header;
 					<div class="modal-body">
 						<div class="form-group">
 							<label for="inp_user_email">User Email:</label>
-							<input id="user_email" type="text" class="form-control" name="inp_user_email" placeholder="Email Address" autocomplete="off" data-toggle="dropdown" required="">
+							<input id="user_email" type="text" class="form-control" name="inp_user_email" placeholder="*Email Address" autocomplete="off" data-toggle="dropdown" required="">
 							<div class="dropdown-menu dropdown-menu-left email_dropdown"></div>
 						</div>
 						<div class="form-group">
 							<label for="inp_description">Description:</label>
-							<textarea class="form-control" name="inp_description" placeholder="Description"style="resize: none;" rows="5" required=""></textarea>
+							<textarea class="form-control" name="inp_description" placeholder="*Description" style="resize: none;" rows="5" required=""></textarea>
 						</div>
 						<div class="form-group">
 							<label for="inp_date">Date:</label>
@@ -139,32 +128,32 @@ $template_header;
 						</div>
 						<div class="form-group">
 							<label for="inp_zip_code">Zip Code:</label>
-							<input type="text" class="form-control" id="inp_zip_code" name="inp_zip_code" placeholder="Zip Code" autocomplete="off" required="">
+							<input type="text" class="form-control" id="inp_zip_code" name="inp_zip_code" placeholder="*Zip Code" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_country">Country:</label>
-							<input type="text" class="form-control" id="inp_country" name="inp_country" placeholder="Country" autocomplete="off" required="">
+							<input type="text" class="form-control" id="inp_country" name="inp_country" placeholder="*Country" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_province">Province:</label>
-							<input type="text" class="form-control" id="inp_province" name="inp_province" placeholder="Province" autocomplete="off" required="">
+							<input type="text" class="form-control" id="inp_province" name="inp_province" placeholder="*Province" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_city">City:</label>
-							<input type="text" class="form-control" id="inp_city" name="inp_city" placeholder="City" autocomplete="off" required="">
+							<input type="text" class="form-control" id="inp_city" name="inp_city" placeholder="*City" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_street">Street/Road:</label>
-							<input type="text" class="form-control" id="inp_street" name="inp_street" placeholder="Street/Road" autocomplete="off" required="">
+							<input type="text" class="form-control" id="inp_street" name="inp_street" placeholder="*Street/Road" autocomplete="off" required="">
 						</div>
 						<div class="form-group">
 							<label for="inp_address">House Number/Floor/Bldg./etc.:</label>
 							<input type="text" class="form-control" id="inp_address" name="inp_address" placeholder="House Number/Floor/Bldg./etc." autocomplete="off">
 						</div>
-						<h4 class="pt-3">Custom Product Details</h4>
+						<h4 class="pt-3 text-center font-weight-bold">&bull; Custom Product Details &bull;</h4>
 						<div class="form-group">
 							<label for="inp_custom_description">Custom Description:</label>
-							<textarea class="form-control" rows="5" style="resize: none;" name="inp_custom_description" maxlength="2040" required=""></textarea>
+							<textarea class="form-control" rows="5" style="resize: none;" name="inp_custom_description" placeholder="*" maxlength="2040" required=""></textarea>
 						</div>
 						<div class="form-group">
 							<label for="inp_type_id">Type:</label>
@@ -176,23 +165,22 @@ $template_header;
 						</div>
 						<div class="form-group">
 							<label for="inp_size">Size:</label>
-							<input type="text" class="form-control" name="inp_size" required="">
+							<input type="text" class="form-control" name="inp_size" placeholder="*e.g. 12cm" required="">
 						</div>
 						<div class="form-group container">
 							<input id="img_count" type="hidden" name="inp_img_count" value="0" required="">
 							<label for="inp_img">Images:</label>
 							<div class="img_container row">
-								<div class="col-6 col-md-4 img_box mb-3">
-									<div class="img_u_box">
+								<div class="col-12 col-sm-6 col-md-4 img_box mb-3">
+									<div class="img_m_box">
 										<input type="file" class="d-none img_input no_img" name="inp_img_1">
-										<img class="item_img img_preview" src="<?=base_url()?>assets/img/no_img.png">
-										<div class="img_u_change item_img p-3 text-center d-none">
+										<img class="img_m_preview" src="<?=base_url()?>assets/img/no_img.png">
+										<div class="img_m_change p-3 text-center d-none">
 											Change Image
 										</div>
-										<a class="img_remove">
+										<a class="img_m_remove">
 											<i class="fa fa-times fa-lg" aria-hidden="true"></i>
 										</a>
-										<input type="hidden" class="img_check" name="inp_img_1_check">
 									</div>
 								</div>
 							</div>
@@ -235,12 +223,12 @@ $template_header;
 			$("#delete_inp_id").val($(this).data("id"));
 		});
 
-		$("#table_orders").DataTable();
+		$("#table_orders").DataTable({ "order": [[0, "desc"]] });
 
 
 		$(document).on("mouseenter", ".img_box", function() {
-			var img_prev = $(this).children().children(".img_preview");
-			var img_change = $(this).children().children(".img_u_change");
+			var img_prev = $(this).children().children(".img_m_preview");
+			var img_change = $(this).children().children(".img_m_change");
 			img_change.removeClass("d-none");
 			img_change.css({
 				top: img_prev.position.top,
@@ -249,9 +237,9 @@ $template_header;
 				height: img_prev.outerHeight()
 			});
 		}).on("mouseleave", ".img_box", function() {
-			$(this).children().children(".img_u_change").addClass("d-none");
+			$(this).children().children(".img_m_change").addClass("d-none");
 		});
-		$(document).on("click", ".img_u_change", function() {
+		$(document).on("click", ".img_m_change", function() {
 			$(this).siblings(".img_input").trigger("click");
 		});
 
@@ -260,7 +248,7 @@ $template_header;
 				var reader = new FileReader();
 				reader.readAsDataURL(t.target.files[0]);
 				reader.onload = function(e) {
-					$(t.target).siblings(".img_preview").attr("src", e.target.result);
+					$(t.target).siblings(".img_m_preview").attr("src", e.target.result);
 				};
 
 				$(".img_box").each(function(index, el) {
@@ -272,20 +260,20 @@ $template_header;
 					$(t.target).removeClass("no_img");
 
 					$(".img_container").append($("<div>").attr({
-						class: "col-6 col-md-4 img_box mb-3"
+						class: "col-12 col-sm-6 col-md-4 img_box mb-3"
 					}).append($("<div>").attr({
-						class: "img_u_box"
+						class: "img_m_box"
 					}).append($("<input>").attr({
 						type: "file",
 						class: "d-none img_input no_img",
 						name: "inp_img_" + ($(".img_box").length + 1)
 					})).append($("<img>").attr({
-						class: "item_img img_preview",
+						class: "img_m_preview",
 						src: "<?=base_url()?>assets/img/no_img.png"
 					})).append($("<div>").attr({
-						class: "img_u_change item_img p-3 text-center d-none"
+						class: "img_m_change p-3 text-center d-none"
 					}).html("Change Image")).append($("<a>").attr({
-						class: "img_remove"
+						class: "img_m_remove"
 					}).append($("<i>").attr({ class: "fa fa-times fa-lg", "aria-hidden": "true" })))));
 					
 					$("#img_count").val($(".img_box").length);
@@ -293,7 +281,7 @@ $template_header;
 			}
 		});
 
-		$(document).on("click", ".img_remove", function(t) {
+		$(document).on("click", ".img_m_remove", function(t) {
 			if ($(".img_box").length > 1 && !$(this).siblings(".img_input").hasClass("no_img")) {
 				$(this).parent().parent().remove();
 			}

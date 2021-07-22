@@ -2,6 +2,7 @@
 <?php
 $template_header;
 ?>
+
 <body>
 	<div class="wrapper h-100">
 		<div class="container-fluid">
@@ -19,11 +20,11 @@ $template_header;
 								</button>
 							</div>
 						<?php endif; ?>
-						<div class="row">
-							<div class="col-6 text-left">
-								<h2>Products (<?=$tbl_products->num_rows()?>)</h2>
+						<div class="row py-3">
+							<div class="col-12 col-sm-6 text-left">
+								<h2 class="font-weight-bold">Products (<?=$tbl_products->num_rows()?>)</h2>
 							</div>
-							<div class="col-6 text-right">
+							<div class="col-12 col-sm-6 text-right">
 								<button class="btn btn-primary" data-toggle="modal" data-target="#modal_new_product">New Product</button>
 							</div>
 						</div>
@@ -116,7 +117,7 @@ $template_header;
 						<div class="form-group text-center">
 							<label>Image:</label>
 							<input class="form-control mb-1" id="product_image" type="file" name="inp_img">
-							<img class="img_a_preview img_zoomable" id="image_preview" src="<?=base_url()?>assets/img/no_img.png">
+							<img class="img_view img_zoomable" id="image_preview" src="<?=base_url()?>assets/img/no_img.png">
 						</div>
 						<div class="form-group">
 							<label>Name:</label>
@@ -202,7 +203,7 @@ $template_header;
 			$("#delete_inp_id").val($(this).data("id"));
 		});
 
-		$("#table_products").DataTable();
+		$("#table_products").DataTable({ "order": [[0, "desc"]] });
 
 
 		$(document).on("change", "#product_image", function() {

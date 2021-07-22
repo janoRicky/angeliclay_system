@@ -22,7 +22,7 @@ $template_header;
 						<?php endif; ?>
 						<div class="row">
 							<div class="col-12">
-								<h2 class="p-3">Welcome <?=$this->session->userdata("admin_name")?>!</h2>
+								<h2 class="font-weight-bold" class="p-3">Welcome Admin <?=$this->session->userdata("admin_name")?>!</h2>
 							</div>
 							<div class="col-12 col-md-6 col-lg-3 my-2">
 								<a href="accounts">

@@ -50,7 +50,9 @@ $template_header;
 										<label for="inp_type">Price Range:</label>
 										<input type="text" class="form-control" name="inp_price_range" placeholder="*Price Range" value="<?=$row_info['price_range']?>" autocomplete="off" required="">
 									</div>
-									<input type="submit" class="btn btn-primary" value="Update">
+									<div class="form-group">
+										<input type="submit" class="btn btn-primary" value="Update">
+									</div>
 								<?=form_close(); ?>
 							</div>
 						</div>

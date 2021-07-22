@@ -61,7 +61,9 @@ $template_header;
 										<label>Quantity:</label>
 										<input type="number" class="form-control" name="inp_qty" placeholder="*Quantity" value="<?=$row_info['qty']?>" autocomplete="off" required="">
 									</div>
-									<input type="submit" class="btn btn-primary" value="Update">
+									<div class="form-group">
+										<input type="submit" class="btn btn-primary" value="Update">
+									</div>
 								<?=form_close(); ?>
 							</div>
 						</div>
