@@ -36,7 +36,9 @@ $template_header;
 								<div class="row mt-2">
 									<div class="col-12">
 										<label>User Email:</label><br>
-										<?=$this->Model_read->get_user_acc_wid($row_info["user_id"])->row_array()["email"]?>
+										<a href="<?=base_url();?>admin/users_view?id=<?=$row_info["user_id"]?>">
+											<i class="fa fa-eye p-1" aria-hidden="true"> <?=$this->Model_read->get_user_acc_wid($row_info["user_id"])->row_array()["email"]?> [User #<?=$row_info["user_id"]?>]</i>
+										</a>
 									</div>
 									<div class="col-12">
 										<label>Description:</label><br>
@@ -70,8 +72,12 @@ $template_header;
 														<td><?=$this->Model_read->get_product_wid($row["product_id"])->row_array()["name"]?></td>
 														<td><?=$row["qty"]?></td>
 														<?php $total_qty += $row["qty"]; ?>
-														<td><?=$row["price"]?></td>
-														<td class="total_price"><?=$row["qty"] * $row["price"]?></td>
+														<td>
+															PHP <?=number_format($row["price"], 2)?>
+														</td>
+														<td class="total_price">
+															PHP <?=number_format($row["qty"] * $row["price"], 2)?>
+														</td>
 														<?php $total_price += $row["qty"] * $row["price"]; ?>
 														<td>
 															<a href="<?=base_url();?>admin/products_view?id=<?=$row['product_id']?>">
@@ -83,9 +89,13 @@ $template_header;
 											</tbody>
 											<tr id="total_info">
 												<td>Total</td>
-												<td id="total_qty"><?=$total_qty?></td>
+												<td id="total_qty">
+													<?=$total_qty?>
+												</td>
 												<td></td>
-												<td id="total_price"><?=$total_price?></td>
+												<td id="total_price">
+													PHP <?=number_format($total_price, 2)?>
+												</td>
 												<td></td>
 											</tr>
 										</table>
@@ -100,13 +110,14 @@ $template_header;
 													<th>Date / Time</th>
 													<th>Description</th>
 													<th>Amount</th>
+													<th>Action</th>
 												</tr>
 											</thead>
 											<tbody>
 												<?php $total_payment = 0; ?>
 												<?php foreach ($tbl_payments->result_array() as $row): ?>
 													<tr>
-														<td><?=$row["payment_id"]?></td>
+														<td class="id"><?=$row["payment_id"]?></td>
 														<td>
 															<?php if($row["img"] != NULL): ?>
 																<img class="img-responsive img_row img_zoomable" src="<?php
@@ -118,9 +129,16 @@ $template_header;
 																?>">
 															<?php endif; ?>
 														</td>
-														<td><?=$row["date_time"]?></td>
-														<td><?=$row["description"]?></td>
-														<td><?=$row["amount"]?></td>
+														<td class="date_time"><?=$row["date_time"]?></td>
+														<td class="description"><?=$row["description"]?></td>
+														<td class="amount">
+															PHP <span><?=number_format($row["amount"], 2)?></span>
+														</td>
+														<td>
+															<button class="btn btn-primary btn-sm btn_update_payment my-2" data-toggle="modal" data-target="#modal_payment_update" data-id="<?=$row['payment_id']?>">
+																Update
+															</button>
+														</td>
 													</tr>
 												<?php endforeach; ?>
 											</tbody>
@@ -156,7 +174,7 @@ $template_header;
 					<div class="modal-body">
 						<div class="form-group">
 							<label>Payment Description:</label>
-							<textarea class="form-control" rows="3" style="resize: none;" name="inp_description" maxlength="128" placeholder="*" required=""></textarea>
+							<textarea class="form-control" rows="3" style="resize: none;" name="inp_description" maxlength="128" placeholder="Description"></textarea>
 						</div>
 						<div class="form-group text-center">
 							<label>Proof of Purchase / Screenshot:</label>
@@ -178,6 +196,43 @@ $template_header;
 					</div>
 					<div class="modal-footer">
 						<input type="submit" class="btn btn-primary" name="payment_submit" value="Submit Payment for Order">
+					</div>
+				<?=form_close()?>
+			</div>
+		</div>
+	</div>
+	<div id="modal_payment_update" class="modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<?=form_open(base_url() . "admin/order_update_payment", "method='POST' enctype='multipart/form-data'");?>
+					<input type="hidden" name="inp_id" value="<?=$row_info['order_id']?>">
+					<input class="payment_u_id" type="hidden" name="inp_payment_id">
+					<div class="modal-header">
+						<h4 class="modal-title">Update Payment</h4>
+						<button type="button" class="close" data-dismiss="modal">
+							&times;
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label>Payment Description:</label>
+							<textarea class="form-control payment_u_description" rows="3" style="resize: none;" name="inp_description" maxlength="128" placeholder="Description"></textarea>
+						</div>
+						<div class="form-group">
+							<label>Date:</label>
+							<input type="date" class="form-control payment_u_date" name="inp_date" autocomplete="off" value="<?=date('Y-m-d')?>" required="">
+						</div>
+						<div class="form-group">
+							<label>Time:</label>
+							<input type="time" class="form-control payment_u_time" name="inp_time" autocomplete="off" value="<?=date('H:i')?>" required="">
+						</div>
+						<div class="form-group">
+							<label>Amount:</label>
+							<input type="number" class="form-control payment_u_amount" name="inp_amount" placeholder="*Amount" autocomplete="off" required="" step="0.000001">
+						</div>
+					</div>
+					<div class="modal-footer">
+						<input type="submit" class="btn btn-primary" name="payment_submit" value="Update Payment for Order">
 					</div>
 				<?=form_close()?>
 			</div>
@@ -230,6 +285,17 @@ $template_header;
 					$("#proof_preview").attr("src", e.target.result);
 				};
 			}
+		});
+
+		$(document).on("click", ".btn_update_payment", function() {
+			var cell = $(this).parent();
+			$(".payment_u_id").val(cell.siblings(".id").html());
+			$(".payment_u_description").val(cell.siblings(".description").html());
+			var date_time = cell.siblings(".date_time").html().split(" ");
+			$(".payment_u_date").val(date_time[0]);
+			var time = date_time[1].split(":");
+			$(".payment_u_time").val(time[0] +":"+ time[1] +":00");
+			$(".payment_u_amount").val(cell.siblings(".amount").children("span").html());
 		});
 	});
 </script>

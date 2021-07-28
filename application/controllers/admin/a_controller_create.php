@@ -29,7 +29,7 @@
 
 			$config["upload_path"] = "./uploads/". $product_folder;
 			$config["allowed_types"] = "gif|jpg|png";
-			$config["max_size"] = 2000;
+			$config["max_size"] = 5000;
 			$config["encrypt_name"] = TRUE;
 
 			$this->load->library("upload", $config);
@@ -58,12 +58,13 @@
 				"status" => "1"
 			);
 			if ($this->Model_create->create_product($data)) {
+				$item_id = $this->db->insert_id();
 				$this->session->set_flashdata("alert", array("success", "Product is successfully added."));
 			} else {
 				$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
 			}
 		}
-		redirect("admin/products");
+		redirect("admin/products". (isset($item_id) ? "_view?id=". $item_id : ""));
 	}
 	// = = = TYPES
 	public function new_type() {
@@ -80,7 +81,7 @@
 
 			$config["upload_path"] = "./assets/img/featured/". $type_folder;
 			$config["allowed_types"] = "gif|jpg|png";
-			$config["max_size"] = 2000;
+			$config["max_size"] = 5000;
 			$config["encrypt_name"] = TRUE;
 
 			$this->load->library("upload", $config);
@@ -106,12 +107,13 @@
 				"status" => "1"
 			);
 			if ($this->Model_create->create_type($data)) {
+				$item_id = $this->db->insert_id();
 				$this->session->set_flashdata("alert", array("success", "Type is successfully added."));
 			} else {
 				$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
 			}
 		}
-		redirect("admin/types");
+		redirect("admin/types". (isset($item_id) ? "_view?id=". $item_id : ""));
 	}
 	// = = = ORDERS
 	public function new_order() {
@@ -166,14 +168,14 @@
 					"status" => "1"
 				);
 				if ($this->Model_create->create_order($data)) {
-					$order_id = $this->db->insert_id();
+					$item_id = $this->db->insert_id();
 
 					foreach ($items as $row) {
 						$product_info = $this->Model_read->get_product_wid($row["product_id"])->row_array();
 						$data_product["qty"] = $product_info["qty"] - $row["qty"];
 						$this->Model_update->update_product($row["product_id"], $data_product);
 
-						$row["order_id"] = $order_id;
+						$row["order_id"] = $item_id;
 						$row["type"] = "NORMAL";
 						$this->Model_create->create_order_item($row);
 					}
@@ -184,7 +186,7 @@
 				}
 			}
 		}
-		redirect("admin/orders");
+		redirect("admin/orders". (isset($item_id) ? "_view?id=". $item_id : ""));
 	}
 	// = = = ORDERS CUSTOM
 	public function new_order_custom() {
@@ -236,7 +238,7 @@
 
 					$config["upload_path"] = "./uploads/". $product_folder;
 					$config["allowed_types"] = "gif|jpg|png";
-					$config["max_size"] = 2000;
+					$config["max_size"] = 5000;
 					$config["encrypt_name"] = TRUE;
 
 					$this->load->library("upload", $config);
@@ -280,7 +282,7 @@
 				}
 			}
 		}
-		redirect("admin/orders_custom");
+		redirect("admin/orders_custom". (isset($order_id) ? "_view?id=". $order_id : ""));
 	}
 	// = = = ORDERS BOTH
 	public function new_order_payment() {
@@ -290,7 +292,7 @@
 		$time = $this->input->post("inp_time");
 		$amount = $this->input->post("inp_amount");
 
-		if ($order_id == NULL || $description == NULL || $date == NULL  || $time == NULL || $amount == NULL) {
+		if ($order_id == NULL || $date == NULL  || $time == NULL || $amount == NULL) {
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
 		} else {
 			$order = $this->Model_read->get_order_general_wid($order_id);
@@ -304,7 +306,7 @@
 
 				$config["upload_path"] = "./uploads/users/". $user_folder ."/payments/". $payment_folder;
 				$config["allowed_types"] = "gif|jpg|png";
-				$config["max_size"] = 2000;
+				$config["max_size"] = 5000;
 				$config["encrypt_name"] = TRUE;
 
 				$this->load->library("upload", $config);
@@ -345,9 +347,9 @@
 			}
 		}
 		if ($this->input->post("payment_submit") == "Submit Payment for Order") {
-			redirect("admin/orders");
+			redirect("admin/orders". (isset($order_id) ? "_view?id=". $order_id : ""));
 		} else {
-			redirect("admin/orders_custom");
+			redirect("admin/orders_custom". (isset($order_id) ? "_view?id=". $order_id : ""));
 		}
 	}
 	// = = = USERS
@@ -397,13 +399,14 @@
 					"status" => "1"
 				);
 				if ($this->Model_create->create_user_account($data)) {
+					$item_id = $this->db->insert_id();
 					$this->session->set_flashdata("alert", array("success", "User is successfully added."));
 				} else {
 					$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
 				}
 			}
 		}
-		redirect("admin/users");
+		redirect("admin/users". (isset($item_id) ? "_view?id=". $item_id : ""));
 	}
 	// = = = ADMINS
 	public function new_admin_account() {
@@ -424,13 +427,14 @@
 					"status" => "1"
 				);
 				if ($this->Model_create->create_adm_account($data)) {
+					$item_id = $this->db->insert_id();
 					$this->session->set_flashdata("alert", array("success", "Account is successfully added."));
 				} else {
 					$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
 				}
 			}
 		}
-		redirect("admin/accounts");
+		redirect("admin/accounts". (isset($item_id) ? "_view?id=". $item_id : ""));
 	}
 
 }

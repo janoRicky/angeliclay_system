@@ -28,7 +28,9 @@ $template_header;
 								<div class="row mt-2">
 									<div class="col-12">
 										<label>User Email:</label><br>
-										<?=$this->Model_read->get_user_acc_wid($row_info["user_id"])->row_array()["email"]?>
+										<a href="<?=base_url();?>admin/users_view?id=<?=$row_info["user_id"]?>">
+											<i class="fa fa-eye p-1" aria-hidden="true"> <?=$this->Model_read->get_user_acc_wid($row_info["user_id"])->row_array()["email"]?> [User #<?=$row_info["user_id"]?>]</i>
+										</a>
 									</div>
 									<div class="col-12">
 										<label>Order Description:</label><br>
@@ -73,25 +75,27 @@ $template_header;
 									<div class="col-12">
 										<label>Reference Images:</label>
 									</div>
-									<?php $imgs = explode("/", $product_info["img"]); ?>
-									<?php foreach ($imgs as $src): ?>
-										<?php if ($src != NULL): ?>
-											<div class="col-12 col-sm-6 col-md-4 col-lg-3 pb-3 mx-auto img_m_view">
-												<img class="img-responsive img_zoomable" src="
-												<?=base_url(). 'uploads/custom_'. $product_info["custom_id"] .'/'. $src?>">
-											</div>
-										<?php endif; ?>
-									<?php endforeach; ?>
+									<div class="col-12">
+										<?php $imgs = explode("/", $product_info["img"]); ?>
+										<?php foreach ($imgs as $src): ?>
+											<?php if ($src != NULL): ?>
+												<div class="col-12 col-sm-6 col-md-4 col-lg-3 pb-3 mx-auto img_m_view">
+													<img class="img-responsive img_zoomable" src="
+													<?=base_url(). 'uploads/custom_'. $product_info["custom_id"] .'/'. $src?>">
+												</div>
+											<?php endif; ?>
+										<?php endforeach; ?>
+									</div>
 									<div class="col-12 col-md-6">
 										<label>Qty:</label><br>
 										<?=$order_item_info["qty"]?>
 									</div>
 									<div class="col-12 col-md-6">
 										<label>Price:</label><br>
-										<?=$order_item_info["price"]?>
+										PHP <?=number_format($order_item_info["price"], 2)?>
 									</div>
 									<div class="col-12">
-										<label>Payments:</label><br>
+										<label>Payments:</label>
 										<table id="table_payments" class="table table-striped table-hover table-responsive-md table-bordered">
 											<thead>
 												<tr>
@@ -100,13 +104,14 @@ $template_header;
 													<th>Date / Time</th>
 													<th>Description</th>
 													<th>Amount</th>
+													<th>Action</th>
 												</tr>
 											</thead>
 											<tbody>
 												<?php $total_payment = 0; ?>
 												<?php foreach ($tbl_payments->result_array() as $row): ?>
 													<tr>
-														<td><?=$row["payment_id"]?></td>
+														<td class="id"><?=$row["payment_id"]?></td>
 														<td>
 															<?php if($row["img"] != NULL): ?>
 																<img class="img-responsive img_row img_zoomable" src="<?php
@@ -118,14 +123,21 @@ $template_header;
 																?>">
 															<?php endif; ?>
 														</td>
-														<td><?=$row["date_time"]?></td>
-														<td><?=$row["description"]?></td>
-														<td><?=$row["amount"]?></td>
+														<td class="date_time"><?=$row["date_time"]?></td>
+														<td class="description"><?=$row["description"]?></td>
+														<td class="amount">
+															PHP <span><?=number_format($row["amount"], 2)?></span>
+														</td>
+														<td>
+															<button class="btn btn-primary btn-sm btn_update_payment my-2" data-toggle="modal" data-target="#modal_payment_update" data-id="<?=$row['payment_id']?>">
+																Update
+															</button>
+														</td>
 													</tr>
 												<?php endforeach; ?>
 											</tbody>
 										</table>
-										<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modal_payment" data-id="<?=$row_info['order_id']?>">
+										<button class="btn btn-primary btn-lg my-2" data-toggle="modal" data-target="#modal_payment" data-id="<?=$row_info['order_id']?>">
 											Add Payment
 										</button>
 									</div>
@@ -156,7 +168,7 @@ $template_header;
 					<div class="modal-body">
 						<div class="form-group">
 							<label>Payment Description:</label>
-							<textarea class="form-control" rows="3" style="resize: none;" name="inp_description" maxlength="128" placeholder="*" required=""></textarea>
+							<textarea class="form-control" rows="3" style="resize: none;" name="inp_description" maxlength="128" placeholder="Description"></textarea>
 						</div>
 						<div class="form-group text-center">
 							<label>Proof of Purchase / Screenshot:</label>
@@ -173,11 +185,48 @@ $template_header;
 						</div>
 						<div class="form-group">
 							<label>Amount:</label>
-							<input type="number" class="form-control" name="inp_amount" placeholder="*Price" autocomplete="off" required="" step="0.000001">
+							<input type="number" class="form-control" name="inp_amount" placeholder="*Amount" autocomplete="off" required="" step="0.000001">
 						</div>
 					</div>
 					<div class="modal-footer">
 						<input type="submit" class="btn btn-primary" name="payment_submit" value="Submit Payment for Custom Order">
+					</div>
+				<?=form_close()?>
+			</div>
+		</div>
+	</div>
+	<div id="modal_payment_update" class="modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<?=form_open(base_url() . "admin/order_update_payment", "method='POST' enctype='multipart/form-data'");?>
+					<input type="hidden" name="inp_id" value="<?=$row_info['order_id']?>">
+					<input class="payment_u_id" type="hidden" name="inp_payment_id">
+					<div class="modal-header">
+						<h4 class="modal-title">Update Payment</h4>
+						<button type="button" class="close" data-dismiss="modal">
+							&times;
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label>Payment Description:</label>
+							<textarea class="form-control payment_u_description" rows="3" style="resize: none;" name="inp_description" maxlength="128" placeholder="Description"></textarea>
+						</div>
+						<div class="form-group">
+							<label>Date:</label>
+							<input type="date" class="form-control payment_u_date" name="inp_date" autocomplete="off" value="<?=date('Y-m-d')?>" required="">
+						</div>
+						<div class="form-group">
+							<label>Time:</label>
+							<input type="time" class="form-control payment_u_time" name="inp_time" autocomplete="off" value="<?=date('H:i')?>" required="">
+						</div>
+						<div class="form-group">
+							<label>Amount:</label>
+							<input type="number" class="form-control payment_u_amount" name="inp_amount" placeholder="*Price" autocomplete="off" required="" step="0.000001">
+						</div>
+					</div>
+					<div class="modal-footer">
+						<input type="submit" class="btn btn-primary" name="payment_submit" value="Update Payment for Custom Order">
 					</div>
 				<?=form_close()?>
 			</div>
@@ -200,21 +249,23 @@ $template_header;
 							<label>State:</label>
 							<select id="state_change" class="form-control" name="inp_state">
 								<?php foreach ($states as $key => $val): ?>
-									<option value="<?=$key?>" <?=($row_info["state"] == $key ? "selected" : "")?>><?=$val?></option>
+									<?php if ((($row_info["state"] == 0 || $row_info["state"] == 1) && ($key < 2 || $key > 5)) || (($row_info["state"] == 1 || $row_info["state"] == 2) && ($key < 4 || $key > 5)) || (($row_info["state"] > 2))): ?>
+										<option value="<?=$key?>" <?=($row_info["state"] == $key ? "selected" : "")?>><?=$val?></option>
+									<?php endif; ?>
 								<?php endforeach; ?>
 							</select>
 						</div>
 						<div class="state_waiting d-none">
 							<div class="form-group">
 								<label>Quantity:</label>
-								<input type="number" class="form-control" name="inp_qty_pw" placeholder="*Quantity" autocomplete="off" value="<?=$order_item_info['qty']?>" required="">
+								<input type="number" class="form-control state_wp_inp" name="inp_qty_pw" placeholder="*Quantity" autocomplete="off" value="<?=$order_item_info['qty']?>" required="">
 							</div>
 							<div class="form-group">
 								<label>Price:</label>
-								<input type="number" class="form-control" name="inp_price_pw" placeholder="*Price" autocomplete="off" step="0.000001" value="<?=$order_item_info['price']?>" required="">
+								<input type="number" class="form-control state_wp_inp" name="inp_price_pw" placeholder="*Price" autocomplete="off" step="0.000001" value="<?=$order_item_info['price']?>" required="">
 							</div>
 						</div>
-						<?php if ($product_info["product_id"] == NULL): ?>
+						<?php if ($product_info["product_id"] == NULL && $order_item_info['qty'] != "" && $order_item_info['price'] != ""): ?>
 							<div class="state_shipped d-none">
 								<div class="form-group text-center">
 									<label>Image:</label>
@@ -223,15 +274,15 @@ $template_header;
 								</div>
 								<div class="form-group">
 									<label>Name:</label>
-									<input type="text" class="form-control" name="inp_name" placeholder="*Name" autocomplete="off" required="">
+									<input type="text" class="form-control state_ts_inp" name="inp_name" placeholder="*Name" autocomplete="off" required="">
 								</div>
 								<div class="form-group">
 									<label>Description:</label>
-									<input type="text" class="form-control" name="inp_description" placeholder="*Description" autocomplete="off" required="">
+									<input type="text" class="form-control state_ts_inp" name="inp_description" placeholder="*Description" autocomplete="off" required="">
 								</div>
 								<div class="form-group">
 									<label>Type:</label>
-									<select name="inp_type_id" class="form-control" required="">
+									<select name="inp_type_id" class="form-control state_ts_inp" required="">
 										<?php foreach ($tbl_types as $key => $val): ?>
 											<option value="<?=$key?>"><?=$val?></option>
 										<?php endforeach; ?>
@@ -239,7 +290,7 @@ $template_header;
 								</div>
 								<div class="form-group">
 									<label>Price:</label>
-									<input type="number" class="form-control" name="inp_price_ps" placeholder="*Price" autocomplete="off" step="0.000001" value="<?=$order_item_info['price']?>" required="">
+									<input type="number" class="form-control state_ts_inp" name="inp_price_ps" placeholder="*Price" autocomplete="off" step="0.000001" value="<?=$order_item_info['price']?>" required="">
 								</div>
 							</div>
 						<?php endif; ?>
@@ -271,10 +322,14 @@ $template_header;
 			$(".state_waiting").addClass("d-none");
 			$(".state_shipped").addClass("d-none");
 			$(".state_cancelled").addClass("d-none");
+			$(".state_ts_inp").removeAttr("required");
+			$(".state_wp_inp").removeAttr("required");
 			if ($(this).val() == "1") {
 				$(".state_waiting").removeClass("d-none");
+				$(".state_wp_inp").attr("required", "");
 			} else if ($(this).val() == "3") {
 				$(".state_shipped").removeClass("d-none");
+				$(".state_ts_inp").attr("required", "");
 			} else if ($(this).val() == "6") {
 				$(".state_cancelled").removeClass("d-none");
 			}
@@ -298,6 +353,17 @@ $template_header;
 					$("#proof_preview").attr("src", e.target.result);
 				};
 			}
+		});
+
+		$(document).on("click", ".btn_update_payment", function() {
+			var cell = $(this).parent();
+			$(".payment_u_id").val(cell.siblings(".id").html());
+			$(".payment_u_description").val(cell.siblings(".description").html());
+			var date_time = cell.siblings(".date_time").html().split(" ");
+			$(".payment_u_date").val(date_time[0]);
+			var time = date_time[1].split(":");
+			$(".payment_u_time").val(time[0] +":"+ time[1] +":00");
+			$(".payment_u_amount").val(cell.siblings(".amount").children("span").html().replace(",", ""));
 		});
 	});
 </script>

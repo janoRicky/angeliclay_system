@@ -1,46 +1,17 @@
 
 allow more photos?
 
-add flashdata
-
-
-
-user's orders has:
-placed orders		PENDING = 0
-to pay orders		ACCEPTED/WAITING FOR PAYMENT = 1
-in progress orders	IN PROGRESS = 2
-
-to receive orders	SHIPPED = 3
-to rate/review orders	RECEIVED = 4
-
-cancelled		CANCELLED = 5
-
-
-TOTDODODODO
-
 
 ALLOW ADMIN TO CREATE ORDER WITHOUT USER ACCOUNT
-ADD function for admin to add orders of customers without accounts
-
+(create new row in user accounts but without email and pass)
+- allow admin to choose if a buyer has an account when adding orders, then show a list where admin can choose from the list of no-account customers
 
 
 image protection, controller access for image src
 
-DON'T ALLOW ADMINS TO REMOVE ALL ORDER ITEMS WHEN UPDATING
-
-deleting all order items of an order removes the order from the table
-
-
 add shipping fee on order submit
 
-newest first on tables
-
 ADMIN PAYMENT UPDATE func
-
-
-
-
-
 
 
 Milasian Circa
@@ -50,25 +21,34 @@ Light Purple to Pink (bottom to top)
 
 mobile img upload
 
-5mb limit image upload
-
 payments, add other to list of numbers, change ref id to transaction ID
 
 
 EMAIL
-ADMIN DESIGN
 
-slideshow images
-
+slideshow images, allow featured products
 
 
-on img change upload hide img change div
+on img change upload, hide img change div
 
 
 MESSAGING
 
-img zoom on user
+img zoom on user side
 
 
-improve admin breadcrumbs
-improve redirect locations when successful/error (specific id #)
+show reviews on home page
+
+custom order emailed
+
+
+show user orders on view
+
+show admin log on view
+
+
+
+
+
+
+

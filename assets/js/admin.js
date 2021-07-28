@@ -12,6 +12,8 @@ $(document).ready(function () {
 		})));
 	});
 	$(document).on("click", ".img_zoom", function() {
-		$(".img_zoom").remove();
+		$(".img_zoom").fadeOut(200, function() {
+			$(".img_zoom").remove()
+		});;
 	});
 });

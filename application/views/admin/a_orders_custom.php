@@ -249,6 +249,7 @@ $template_header;
 				reader.readAsDataURL(t.target.files[0]);
 				reader.onload = function(e) {
 					$(t.target).siblings(".img_m_preview").attr("src", e.target.result);
+					$(t.target).siblings(".img_m_change").addClass("d-none");
 				};
 
 				$(".img_box").each(function(index, el) {

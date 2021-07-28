@@ -23,6 +23,9 @@
 		<a href="accounts" class="list-group-item side_link">
 			<i class="fa fa-user-secret" aria-hidden="true"></i> Admin Accounts
 		</a>
+		<a href="config" class="list-group-item side_link">
+			<i class="fa fa-gear" aria-hidden="true"></i> Config
+		</a>
 	</div>
 	<div class="list-group mt-4">
 		<a href="logout" class="list-group-item side_link">

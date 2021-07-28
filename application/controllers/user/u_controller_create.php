@@ -10,6 +10,14 @@
  		$this->load->model("Model_update");
 
  		date_default_timezone_set('Asia/Manila');
+
+		$this->load->library("email", array(
+			"protocol" => "smtp",
+			"smtp_host" => "ssl://smtp.googlemail.com",
+			"smtp_port" => 465,
+			"smtp_user" => $this->Model_read->get_config_wkey("smtp_user"), 
+			"smtp_pass" => $this->Model_read->get_config_wkey("smtp_pass")
+		));
  	}
 
 	public function user_account_register() {
@@ -112,7 +120,7 @@
 
 					$config["upload_path"] = "./uploads/". $product_folder;
 					$config["allowed_types"] = "gif|jpg|png";
-					$config["max_size"] = 2000;
+					$config["max_size"] = 5000;
 					$config["encrypt_name"] = TRUE;
 
 					$this->load->library("upload", $config);
@@ -147,6 +155,16 @@
 							"type" => "CUSTOM"
 						);
 						$this->Model_create->create_order_item($data_item);
+
+						$this->email->set_newline("\r\n");
+						$this->email->clear();
+						$this->email->from("angeliclay.ordering@gmail.com");
+						$this->email->to($user_info["email"]);
+						$this->email->subject("New Custom Order!");
+						$this->email->message(
+							"A new custom order has been placed by ". $user_info["email"] ."[user_id: ". $user_id ."] at ". $date_time
+						);
+						$this->email->send();
 
 						$this->session->set_flashdata("notice", array("success", "Order is successfully added."));
 					} else {
@@ -239,7 +257,7 @@
 
 						$config["upload_path"] = "./uploads/users/". $user_folder ."/payments/". $payment_folder;
 						$config["allowed_types"] = "gif|jpg|png";
-						$config["max_size"] = 2000;
+						$config["max_size"] = 5000;
 						$config["encrypt_name"] = TRUE;
 
 						$this->load->library("upload", $config);
@@ -309,7 +327,7 @@
 
 				$config["upload_path"] = "./uploads/users/". $user_folder ."/payments/". $payment_folder;
 				$config["allowed_types"] = "gif|jpg|png";
-				$config["max_size"] = 2000;
+				$config["max_size"] = 5000;
 				$config["encrypt_name"] = TRUE;
 
 				$this->load->library("upload", $config);

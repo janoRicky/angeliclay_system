@@ -84,7 +84,7 @@ $template_header;
 													<?=$total_qty?>
 												</td>
 												<td>
-													<?=$total_price?>
+													PHP <?=number_format($total_price, 2)?>
 												</td>
 												<td>
 													<?=$states[$row["state"]]?>

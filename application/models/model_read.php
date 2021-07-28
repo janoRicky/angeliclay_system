@@ -34,18 +34,6 @@ class Model_read extends CI_Model {
 		return $this->db->query($query);
 	}
 	public function get_products_user_view($search, $type, $page) {
-		// $this->db->select("*");
-		// $this->db->from("products AS p");
-		// $this->db->where("EXISTS(SELECT * FROM types AS t WHERE p.type_id = t.type_id)", NULL, FALSE);
-		// $this->db->where(array(
-		// 	"status" => "1",
-		// 	"visibility" => "1"
-		// ));
-		// $this->db->like("name", $search);
-		// $this->db->or_like("description", $search);
-		// $this->db->order_by("date_added", "DESC");
-		// $this->db->limit(10);
-		// return $this->db->get();
 		$search_query = (!is_null($type) && !empty($type) ? "AND type_id = '$type' " : "") . (!is_null($search) ? "AND (name LIKE '%$search%' OR description LIKE '%$search%') " : "");
 		$pg_no = (!is_null($page) && !empty($page) ? $page * 10 : 0);
 
@@ -120,6 +108,9 @@ class Model_read extends CI_Model {
 	public function get_order_payments_worder_id($order_id) {
 		return $this->db->get_where("orders_payments", array("order_id" => $order_id));
 	}
+	public function get_order_payment_wid($payment_id) {
+		return $this->db->get_where("orders_payments", array("payment_id" => $payment_id));
+	}
 
 	public function get_user_accounts() {
 		return $this->db->get_where("user_accounts", array("status" => "1"));
@@ -153,5 +144,12 @@ class Model_read extends CI_Model {
 	}
 	public function get_adm_acc_wemail($email) {
 		return $this->db->get_where("admin_accounts", array("email" => $email));
+	}
+
+	public function get_config() {
+		return $this->db->get("config");
+	}
+	public function get_config_wkey($key) {
+		return $this->db->get_where("config", array("c_key" => $key))->row_array()["c_val"];
 	}
 }

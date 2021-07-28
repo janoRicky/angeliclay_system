@@ -102,6 +102,7 @@ $route['order_receive'] = 'user/U_controller_update/user_order_receive';
 // PAGES - ADMIN
 $route['admin'] = 'E_controller_main/view_a_login';
 $route['admin/dashboard'] = 'E_controller_main/view_a_dashboard';
+$route['admin/config'] = 'E_controller_main/view_a_config';
 
 $route['admin/products'] = 'E_controller_main/view_a_products';
 $route['admin/products_view'] = 'E_controller_main/view_a_products_view';
@@ -157,6 +158,9 @@ $route['admin/type_update_featured'] = 'admin/A_controller_update/edit_type_feat
 $route['admin/product_update_visibility'] = 'admin/A_controller_update/edit_product_visibility';
 $route['admin/order_update_state'] = 'admin/A_controller_update/edit_order_state';
 $route['admin/order_update_state_custom'] = 'admin/A_controller_update/edit_order_state_custom';
+$route['admin/order_update_payment'] = 'admin/A_controller_update/edit_order_payment';
+
+$route['admin/config_update'] = 'admin/A_controller_update/edit_config';
 
 // - DELETE
 $route['admin/product_delete'] = 'admin/A_controller_delete/delete_product';

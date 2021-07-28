@@ -218,12 +218,13 @@ $template_header;
 			$(this).siblings(".img_input").trigger("click");
 		});
 
-		$(document).on("change", "#product_image", function() {
+		$(document).on("change", "#product_image", function(t) {
 			if (this.files && this.files[0]) {
 				var reader = new FileReader();
 				reader.readAsDataURL(this.files[0]);
 				reader.onload = function(e) {
 					$("#image_preview").attr("src", e.target.result);
+					$(t.target).siblings(".img_u_change").addClass("d-none");
 				};
 			}
 		});

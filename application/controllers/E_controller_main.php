@@ -799,6 +799,18 @@
 			$this->load->view("admin/a_accounts_update", $data);
 		}
 	}
+// = = = CONFIG
+	public function view_a_config() {
+		$this->admin_login_check();
+
+		$head["title"] = "Config - Angeliclay Ordering System";
+		$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
+		$data["nav"] = array(array("text" => "Config", "link" => "config"));
+
+		$data["tbl_config"] = $this->Model_read->get_config();
+
+		$this->load->view("admin/a_config", $data);
+	}
 
 	// UTILITY
 	public function search_emails() {

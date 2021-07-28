@@ -34,7 +34,7 @@
 
 			$config["upload_path"] = "./uploads/". $product_folder;
 			$config["allowed_types"] = "gif|jpg|png";
-			$config["max_size"] = 2000;
+			$config["max_size"] = 5000;
 			$config["encrypt_name"] = TRUE;
 
 			$this->load->library("upload", $config);
@@ -73,7 +73,7 @@
 				$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
 			}
 		}
-		redirect("admin/products");
+		redirect("admin/products". (isset($product_id) ? "_view?id=". $product_id : ""));
 	}
 	public function edit_product_visibility() {
 		$product_id = $this->input->post("inp_id");
@@ -114,7 +114,7 @@
 
 			$config["upload_path"] = "./assets/img/featured/". $type_folder;
 			$config["allowed_types"] = "gif|jpg|png";
-			$config["max_size"] = 2000;
+			$config["max_size"] = 5000;
 			$config["encrypt_name"] = TRUE;
 
 			$this->load->library("upload", $config);
@@ -148,7 +148,7 @@
 				$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
 			}
 		}
-		redirect("admin/types");
+		redirect("admin/types". (isset($type_id) ? "_view?id=". $type_id : ""));
 	}
 	public function edit_type_featured() {
 		$type_id = $this->input->post("inp_id");
@@ -247,7 +247,7 @@
 				}
 			}
 		}
-		redirect("admin/orders");
+		redirect("admin/orders". (isset($order_id) ? "_view?id=". $order_id : ""));
 	}
 	public function edit_order_state() {
 		$order_id = $this->input->post("inp_id");
@@ -323,7 +323,7 @@
 
 					$config["upload_path"] = "./uploads/". $product_folder;
 					$config["allowed_types"] = "gif|jpg|png";
-					$config["max_size"] = 2000;
+					$config["max_size"] = 5000;
 					$config["encrypt_name"] = TRUE;
 
 					$this->load->library("upload", $config);
@@ -380,7 +380,7 @@
 				}
 			}
 		}
-		redirect("admin/orders_custom");
+		redirect("admin/orders_custom". (isset($order_id) ? "_view?id=". $order_id : ""));
 	}
 	public function edit_order_state_custom() {
 		$custom_id = $this->input->post("inp_custom_id");
@@ -424,7 +424,7 @@
 						$description = $this->input->post("inp_description");
 						$type_id = $this->input->post("inp_type_id");
 						$price = $this->input->post("inp_price_ps");
-						$qty = $this->input->post("inp_qty_ps");
+						$qty = $order_item_info["qty"];
 
 						if ($name == NULL || $type_id == NULL || $description == NULL || $price == NULL || $qty == NULL) {
 							$error = "One or more inputs are empty.";
@@ -435,7 +435,7 @@
 
 							$config["upload_path"] = "./uploads/". $product_folder;
 							$config["allowed_types"] = "gif|jpg|png";
-							$config["max_size"] = 2000;
+							$config["max_size"] = 5000;
 							$config["encrypt_name"] = TRUE;
 
 							$this->load->library("upload", $config);
@@ -457,7 +457,7 @@
 								"type_id" => $type_id,
 								"description" => $description,
 								"price" => $price,
-								"qty" => "0",
+								"qty" => $qty,
 								"type" => "NORMAL",
 								"date_added" => date("Y-m-d H:i:s"),
 								"visibility" => "0",
@@ -498,7 +498,47 @@
 			}
 			
 		}
-		redirect("admin/orders_custom");
+		redirect("admin/orders_custom". (isset($order_id) ? "_view?id=". $order_id : ""));
+	}
+	// = = = ORDERS BOTH
+	public function edit_order_payment() {
+		$order_id = $this->input->post("inp_id");
+		$payment_id = $this->input->post("inp_payment_id");
+		$description = $this->input->post("inp_description");
+		$date = $this->input->post("inp_date");
+		$time = $this->input->post("inp_time");
+		$amount = $this->input->post("inp_amount");
+
+		if ($order_id == NULL || $payment_id == NULL || $date == NULL  || $time == NULL || $amount == NULL) {
+			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
+		} else {
+			$payment = $this->Model_read->get_order_payment_wid($payment_id);
+			if ($payment->num_rows() > 0) {
+				$payment_info = $payment->row_array();
+				if ($payment_info["order_id"] == $order_id) {
+					$data = array(
+						"description" => $description,
+						"date_time" => $date ." ". $time,
+						"amount" => $amount
+					);
+
+					if ($this->Model_update->update_order_payment($payment_id, $data)) {
+						$this->session->set_flashdata("alert", array("success", "Order Payment is successfully updated."));
+					} else {
+						$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again.1"));
+					}
+				} else {
+					$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again.2"));
+				}
+			} else {
+				$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again.3" ));
+			}
+		}
+		if ($this->input->post("payment_submit") == "Update Payment for Order") {
+			redirect("admin/orders". (isset($order_id) ? "_view?id=". $order_id : ""));
+		} else {
+			redirect("admin/orders_custom". (isset($order_id) ? "_view?id=". $order_id : ""));
+		}
 	}
 	// = = = USERS
 	public function edit_user_account() {
@@ -558,7 +598,7 @@
 				}
 			}
 		}
-		redirect("admin/users");
+		redirect("admin/users". (isset($user_id) ? "_view?id=". $user_id : ""));
 	}
 	// = = = ADMINS
 	public function edit_admin_account() {
@@ -596,7 +636,30 @@
 				}
 			}
 		}
-		redirect("admin/accounts");
+		redirect("admin/accounts". (isset($admin_id) ? "_view?id=". $admin_id : ""));
 	}
+	// = = = CONFIG
+	public function edit_config() {
+		$configs = $this->Model_read->get_config()->result_array();
 
+		foreach ($configs as $row) {
+			$val_new = $this->input->post("inp_". $row["c_key"]);
+
+			if ($val_new == NULL) {
+				$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
+				break;
+			} else {
+				$data = array(
+					"c_val" => $val_new
+				);
+				if ($this->Model_update->update_config_wkey($row["c_key"], $data)) {
+					$this->session->set_flashdata("alert", array("success", "Config is successfully updated."));
+				} else {
+					$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
+				}
+			}
+		}
+
+		redirect("admin/config");
+	}
 }
