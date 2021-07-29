@@ -95,8 +95,8 @@
 		if ($user_id == NULL || $description == NULL || $type_id == NULL || $size == NULL || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL) {
 			$this->session->set_flashdata("notice", array("warning", "One or more inputs are empty."));
 		} else {
-			$user_info = $this->Model_read->get_user_acc_wid($user_id);
-			if ($user_info->num_rows() < 1) {
+			$user = $this->Model_read->get_user_acc_wid($user_id);
+			if ($user->num_rows() < 1) {
 				$this->session->set_flashdata("notice", array("warning", "User does not exist."));
 			} else {
 				$data = array(
@@ -156,13 +156,15 @@
 						);
 						$this->Model_create->create_order_item($data_item);
 
+						$user_info = $user->row_array();
+
 						$this->email->set_newline("\r\n");
 						$this->email->clear();
 						$this->email->from("angeliclay.ordering@gmail.com");
-						$this->email->to($user_info["email"]);
+						$this->email->to($this->Model_read->get_config_wkey("alerts_email_send_to"));
 						$this->email->subject("New Custom Order!");
 						$this->email->message(
-							"A new custom order has been placed by ". $user_info["email"] ."[user_id: ". $user_id ."] at ". $date_time
+							"A new custom order has been placed by ". $user_info["email"] ."[user #". $user_id ."] at ". $date_time
 						);
 						$this->email->send();
 
@@ -196,8 +198,8 @@
 		if ($user_id == NULL || $date_time == NULL || $ref_no == NULL || count($items) < 1 || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL) {
 			$this->session->set_flashdata("notice", array("warning", "One or more inputs are empty."));
 		} else {
-			$user_info = $this->Model_read->get_user_acc_wid($user_id);
-			if ($user_info->num_rows() < 1) {
+			$user = $this->Model_read->get_user_acc_wid($user_id);
+			if ($user->num_rows() < 1) {
 				$this->session->set_flashdata("notice", array("warning", "User does not exist."));
 			} else {
 				$data_products = array();
@@ -287,6 +289,18 @@
 						);
 
 						if ($this->Model_create->create_order_payment($data)) {
+							$user_info = $user->row_array();
+
+							$this->email->set_newline("\r\n");
+							$this->email->clear();
+							$this->email->from("angeliclay.ordering@gmail.com");
+							$this->email->to($this->Model_read->get_config_wkey("alerts_email_send_to"));
+							$this->email->subject("New Order!");
+							$this->email->message(
+								"A new order has been placed by ". $user_info["email"] ."[user #". $user_id ."] at ". $date_time
+							);
+							$this->email->send();
+
 							$this->session->set_flashdata("notice", array("success", "Order is successfully added."));
 						} else {
 							$this->session->set_flashdata("notice", array("danger", "Something went wrong, please try again."));
@@ -315,8 +329,8 @@
 		} elseif ($order_id == NULL || $user_id == NULL || $date_time == NULL || $ref_no == NULL) {
 			$this->session->set_flashdata("notice", array("warning", "One or more inputs are empty."));
 		} else {
-			$user_info = $this->Model_read->get_user_acc_wid($user_id);
-			if ($user_info->num_rows() < 1) {
+			$user = $this->Model_read->get_user_acc_wid($user_id);
+			if ($user->num_rows() < 1) {
 				$this->session->set_flashdata("notice", array("warning", "User does not exist."));
 			} else {
 				// insert order payment
@@ -357,6 +371,17 @@
 				);
 
 				if ($this->Model_create->create_order_payment($data)) {
+					$user_info = $user->row_array();
+
+					$this->email->set_newline("\r\n");
+					$this->email->clear();
+					$this->email->from("angeliclay.ordering@gmail.com");
+					$this->email->to($this->Model_read->get_config_wkey("alerts_email_send_to"));
+					$this->email->subject("Payment for Custom Order has been made!");
+					$this->email->message(
+						"Payment for a custom order [custom order #". $order_id ."] has been made by ". $user_info["email"] ."[user_id: ". $user_id ."] at ". $date_time
+					);
+					$this->email->send();
 					$this->session->set_flashdata("notice", array("success", "Payment is successfully sent."));
 				} else {
 					$this->session->set_flashdata("notice", array("danger", "Something went wrong, please try again."));

@@ -30,6 +30,7 @@
 		$head["title"] = "Home - Angeliclay Ordering System";
 		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
 
+		$data["tbl_products"] = $this->Model_read->get_products_featured();
 		$data["tbl_types"] = $this->Model_read->get_types_featured();
 
 		$this->load->view("user/u_home", $data);
@@ -712,6 +713,18 @@
 				array("text" => "View User #". $id, "link" => "users_view?id=". $id)
 			);
 
+			$data["tbl_orders"] = $this->Model_read->get_order_wuser_id($id, "ALL");
+
+			$data["states"] = array(
+				"PENDING", 
+				"WAITING FOR PAYMENT", 
+				"ACCEPTED / IN PROGRESS", 
+				"TO SHIP",
+				"SHIPPED", 
+				"RECEIVED", 
+				"CANCELLED"
+			);
+
 			$data["row_info"] = $row_info->row_array();
 
 			$this->load->view("admin/a_users_view", $data);
@@ -818,26 +831,54 @@
 
 		$search = $this->input->get("search");
 
-		if (strlen($search) > 0) {
-			
-			$result = $this->Model_read->search_user_emails($search)->result_array();
+		$result = $this->Model_read->search_user_emails($search)->result_array();
 
-			$emails = array();
-			foreach ($result as $row) {
-				$emails[] = $row["email"];
+		$emails = array();
+		foreach ($result as $row) {
+			if ($row["email"] != NULL) {
+				$emails[$row["user_id"]] = "[". $row["user_id"] ."] ". $row["email"] ." - ". $row["name_last"] .", ". $row["name_first"];
 			}
-
-			echo json_encode($emails);
 		}
+
+		echo json_encode($emails);
 	}
 	public function get_address() {
 		$this->admin_login_check();
 
-		$email = $this->input->get("email");
+		$id = $this->input->get("user_id");
 
-		if (strlen($email) > 0) {
+		if (strlen($id) > 0) {
 			
-			$result = $this->Model_read->get_user_address_wemail($email)->row_array();
+			$result = $this->Model_read->get_user_address_wid($id)->row_array();
+
+			echo json_encode($result);
+		}
+	}
+
+	public function search_names() {
+		$this->admin_login_check();
+
+		$search = $this->input->get("search");
+
+		$result = $this->Model_read->search_user_names($search)->result_array();
+
+		$names = array();
+		foreach ($result as $row) {
+			if ($row["email"] == NULL) {
+				$names[$row["user_id"]] = "[". $row["user_id"] ."] ". $row["name_last"] .", ". $row["name_first"] ." ". $row["name_middle"] ." ". $row["name_extension"];
+			}
+		}
+
+		echo json_encode($names);
+	}
+	public function get_info() {
+		$this->admin_login_check();
+
+		$id = $this->input->get("user_id");
+
+		if (strlen($id) > 0) {
+			
+			$result = $this->Model_read->get_user_info_wid($id)->row_array();
 
 			echo json_encode($result);
 		}

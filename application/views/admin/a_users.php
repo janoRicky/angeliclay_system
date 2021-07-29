@@ -55,7 +55,11 @@ $template_header;
 													<?=$row["gender"]?>
 												</td>
 												<td>
-													<?=$row["email"]?>
+													<?php if ($row["email"] == NULL): ?>
+														[NO ACCOUNT]
+													<?php else: ?>
+														<?=$row["email"]?>
+													<?php endif; ?>
 												</td>
 												<td>
 													<?=$row["contact_num"]?>

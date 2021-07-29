@@ -25,7 +25,6 @@
 		if ($product_id == NULL || $name == NULL || $type_id == NULL || $description == NULL || $price == NULL || $qty == NULL) {
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
 		} else {
-
 			$row_info = $this->Model_read->get_product_wid($product_id)->row_array();
 
 			$img = $row_info["img"];
@@ -74,6 +73,29 @@
 			}
 		}
 		redirect("admin/products". (isset($product_id) ? "_view?id=". $product_id : ""));
+	}
+	public function edit_product_featured() {
+		$product_id = $this->input->post("inp_id");
+		$featured_no = $this->input->post("inp_featured_no");
+
+		if ($product_id == NULL || $featured_no == NULL) {
+			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
+		} else {
+			$data = array(
+				"featured" => $featured_no
+			);
+			$featured_prev = $this->Model_read->get_product_featured_wno($featured_no)->row_array();
+			$data_prev = array(
+				"featured" => NULL
+			);
+
+			if ($this->Model_update->update_product($featured_prev["product_id"], $data_prev) && $this->Model_update->update_product($product_id, $data)) {
+				$this->session->set_flashdata("alert", array("success", "Product featured is successfully updated."));
+			} else {
+				$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
+			}
+		}
+		redirect("admin/products");
 	}
 	public function edit_product_visibility() {
 		$product_id = $this->input->post("inp_id");
@@ -163,7 +185,7 @@
 			);
 
 			if ($this->Model_update->update_type($type_id, $data)) {
-				$this->session->set_flashdata("alert", array("success", "Product featured is successfully updated."));
+				$this->session->set_flashdata("alert", array("success", "Type featured is successfully updated."));
 			} else {
 				$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
 			}

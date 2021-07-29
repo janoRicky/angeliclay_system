@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 28, 2021 at 10:38 AM
+-- Generation Time: Jul 29, 2021 at 08:04 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 7.4.21
 
@@ -61,9 +61,40 @@ CREATE TABLE `config` (
 --
 
 INSERT INTO `config` (`config_id`, `c_key`, `c_val`, `status`) VALUES
-(1, 'smtp_user', 'angeliclay.ordering@gmail.com_', NULL),
-(2, 'smtp_pass', 'qmozloihhnugmaqd_', NULL),
-(3, 'mail_sender', 'angeliclay.ordering@gmail.com_', NULL);
+(1, 'smtp_user', 'angeliclay.ordering@gmail.com', NULL),
+(2, 'smtp_pass', 'qmozloihhnugmaqd', NULL),
+(3, 'mail_sender', 'angeliclay.ordering@gmail.com', NULL),
+(4, 'alerts_email_send_to', 'pogbobo@gmail.com', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `logs`
+--
+
+CREATE TABLE `logs` (
+  `log_id` int(11) NOT NULL,
+  `actor_id` int(11) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `link` varchar(127) DEFAULT NULL,
+  `type` int(31) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `messages`
+--
+
+CREATE TABLE `messages` (
+  `message_id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `admin_id` int(11) DEFAULT NULL,
+  `message` varchar(1019) DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -94,7 +125,14 @@ INSERT INTO `orders` (`order_id`, `user_id`, `description`, `date_time`, `zip_co
 (1, '1', 'Test', '2021-07-22 02:01:00', '1870', 'Philippines', 'Rizal', 'Antipolo', 'Rd', '828', '0', '1'),
 (2, '1', 'Test', '2021-07-27 21:28:35', '1870', 'Philippines', 'Rizal', 'Antipolo', 'Rd', '828', '5', '1'),
 (3, '2', 'Try', '2021-07-27 21:32:00', '1234', 'Yes', 'No', 'Maybe', 'Idunno', 'Try', '3', '1'),
-(4, '1', NULL, '2021-07-28 14:17:23', '1870', 'Philippines', 'Rizal', 'Antipolo', 'Rd', '828', '0', '1');
+(4, '1', NULL, '2021-07-28 14:17:23', '1870', 'Philippines', 'Rizal', 'Antipolo', 'Rd', '828', '1', '1'),
+(5, '1', 'test', '2021-07-30 00:36:00', '1870', 'Philippines', 'Rizal', 'Antipolo', 'Rd', '828', '0', '1'),
+(6, '2', 'tst', '2021-07-30 00:37:00', '1234', 'Yes', 'No', 'Maybe', 'Idunno', '', '0', '1'),
+(7, '3', 'test', '2021-07-30 01:10:00', '1234', 'Ctr', 'Prv', 'Ct', 'StRd', '', '0', '1'),
+(8, '3', 'try', '2021-07-30 01:21:00', '1234', 'Ctr', 'Prv', 'Ct', 'StRd', '', '0', '1'),
+(9, '1', 'test', '2021-07-30 01:41:00', '1870', 'Philippines', 'Rizal', 'Antipolo', 'Rd', '828', '0', '1'),
+(10, '3', 'test', '2021-07-30 01:42:00', '1234', 'Ctr', 'Prv', 'Ct', 'StRd', '', '0', '1'),
+(11, '4', 'Test', '2021-07-30 01:42:00', '1234', 'Ctr', 'Pro', 'Cty', 'Strd', '', '0', '1');
 
 -- --------------------------------------------------------
 
@@ -121,7 +159,15 @@ INSERT INTO `orders_items` (`item_id`, `order_id`, `product_id`, `qty`, `price`,
 (2, '1', '1', '1', '200', 'NORMAL', NULL),
 (3, '2', '1', '1', '250', 'CUSTOM', NULL),
 (4, '3', '2', '1', '250', 'CUSTOM', NULL),
-(5, '4', '2', '1', '200', 'NORMAL', NULL);
+(5, '4', '2', '1', '200', 'NORMAL', NULL),
+(6, '5', '1', '2', '200', 'NORMAL', NULL),
+(7, '6', '4', '2', '250', 'NORMAL', NULL),
+(8, '6', '2', '2', '200', 'NORMAL', NULL),
+(9, '7', '2', '3', '200', 'NORMAL', NULL),
+(10, '8', '4', '3', '250', 'NORMAL', NULL),
+(11, '9', '3', NULL, NULL, 'CUSTOM', NULL),
+(12, '10', '4', NULL, NULL, 'CUSTOM', NULL),
+(13, '11', '5', NULL, NULL, 'CUSTOM', NULL);
 
 -- --------------------------------------------------------
 
@@ -167,6 +213,7 @@ CREATE TABLE `products` (
   `type` varchar(16) DEFAULT NULL,
   `date_added` datetime DEFAULT NULL,
   `visibility` varchar(11) DEFAULT NULL,
+  `featured` int(2) DEFAULT NULL,
   `status` varchar(16) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -174,11 +221,11 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`product_id`, `img`, `name`, `type_id`, `description`, `price`, `qty`, `type`, `date_added`, `visibility`, `status`) VALUES
-(1, '3808feda972c31891c1c9ab60fe0e6f8.jpg', 'Angel Figure (Female)', '1', 'A female angel in casual clothing.', '200', '2', 'NORMAL', '2021-07-22 00:42:08', '1', '1'),
-(2, '4ca225f151b79e909e574157fd58c318.jpg', 'Angel Figure (Male)', '1', 'A male angel in casual clothing. ', '200', '1', 'NORMAL', '2021-07-22 01:16:47', '1', '1'),
-(3, 'c599b6db33a13adcdd1e5c0e0c48031d.jpg', 'Test', '1', 'Test', '250', '0', 'NORMAL', '2021-07-27 22:15:23', '0', '1'),
-(4, '27df0ec9579647df58cb58ae463d6c28.jpg', 'Test', '1', 'Test', '250', '1', 'NORMAL', '2021-07-27 22:34:43', '0', '1');
+INSERT INTO `products` (`product_id`, `img`, `name`, `type_id`, `description`, `price`, `qty`, `type`, `date_added`, `visibility`, `featured`, `status`) VALUES
+(1, '3808feda972c31891c1c9ab60fe0e6f8.jpg', 'Angel Figure (Female)', '1', 'A female angel in casual clothing.', '200', '10', 'NORMAL', '2021-07-22 00:42:08', '1', 2, '1'),
+(2, '4ca225f151b79e909e574157fd58c318.jpg', 'Angel Figure (Male)', '1', 'A male angel in casual clothing. ', '200', '10', 'NORMAL', '2021-07-22 01:16:47', '1', NULL, '1'),
+(3, 'c599b6db33a13adcdd1e5c0e0c48031d.jpg', 'Test', '1', 'Test', '250', '0', 'NORMAL', '2021-07-27 22:15:23', '0', 1, '1'),
+(4, '27df0ec9579647df58cb58ae463d6c28.jpg', 'Test', '1', 'Test', '250', '15', 'NORMAL', '2021-07-27 22:34:43', '1', 3, '1');
 
 -- --------------------------------------------------------
 
@@ -202,7 +249,10 @@ CREATE TABLE `products_custom` (
 
 INSERT INTO `products_custom` (`custom_id`, `description`, `type_id`, `size`, `img`, `product_id`, `status`) VALUES
 (1, 'Try', '1', '12cm', '41b6181ccbcc62466fc84377244795fe.jpg', '4', '1'),
-(2, 'Tries', '1', '12cm', '5d03eedaca767f7bf76c079aabb02369.jpg/', '3', '1');
+(2, 'Tries', '1', '12cm', '5d03eedaca767f7bf76c079aabb02369.jpg/', '3', '1'),
+(3, 'try', '1', '12', 'ce1f2ecea2f24c1d2ab5336b9db4643a.png/', NULL, '1'),
+(4, 'try', '1', '12', 'a9c4cceac8b0c46d5aaecc6b31ce55d4.png/', NULL, '1'),
+(5, 'tres', '1', '12', 'd3760832d75033f8583969791d78ed4d.png/', NULL, '1');
 
 -- --------------------------------------------------------
 
@@ -258,8 +308,10 @@ CREATE TABLE `user_accounts` (
 --
 
 INSERT INTO `user_accounts` (`user_id`, `email`, `password`, `name_last`, `name_first`, `name_middle`, `name_extension`, `zip_code`, `country`, `province`, `city`, `street`, `address`, `gender`, `contact_num`, `status`) VALUES
-(1, 'jano@email.com', '$2y$10$asSRBESRalqhSJFBVFJxdevg6wxruzGGfpcQvVx9En8khpcs9HBTe', 'Jano', 'Ricky John', '', '', '1870', 'Philippines', 'Rizal', 'Antipolo', 'Rd', '828', 'male', '09123456789', '1'),
-(2, 'tester@email.com', '$2y$10$b/uh6qZi.Td1QGR52aNCVuaLdTqPZN6OeqfNvcKfDj8AC.AGB2UPO', 'Test', 'Ter', '', '', '1234', 'Yes', 'No', 'Maybe', 'Idunno', '', 'male', '123456789', '1');
+(1, 'jano@email.com', '$2y$10$asSRBESRalqhSJFBVFJxdevg6wxruzGGfpcQvVx9En8khpcs9HBTe', 'Jano', 'Ricky John', '', '', '1870', 'Philippines', 'Rizal', 'Antipolo', 'Rd', '828', 'female', '09123456789', '1'),
+(2, 'tester@email.com', '$2y$10$b/uh6qZi.Td1QGR52aNCVuaLdTqPZN6OeqfNvcKfDj8AC.AGB2UPO', 'Test', 'Ter', '', '', '1234', 'Yes', 'No', 'Maybe', 'Idunno', '', 'male', '123456789', '1'),
+(3, NULL, NULL, 'Jano', 'Ricky', '', '', '1234', 'Ctr', 'Prv', 'Ct', 'StRd', '', 'male', '123456789', '1'),
+(4, NULL, NULL, 'Test', 'Try', '', '', '1234', 'Ctr', 'Pro', 'Cty', 'Strd', '', 'female', '123456789', '1');
 
 --
 -- Indexes for dumped tables
@@ -276,6 +328,18 @@ ALTER TABLE `admin_accounts`
 --
 ALTER TABLE `config`
   ADD PRIMARY KEY (`config_id`);
+
+--
+-- Indexes for table `logs`
+--
+ALTER TABLE `logs`
+  ADD PRIMARY KEY (`log_id`);
+
+--
+-- Indexes for table `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`message_id`);
 
 --
 -- Indexes for table `orders`
@@ -333,19 +397,31 @@ ALTER TABLE `admin_accounts`
 -- AUTO_INCREMENT for table `config`
 --
 ALTER TABLE `config`
-  MODIFY `config_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `config_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `logs`
+--
+ALTER TABLE `logs`
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `messages`
+--
+ALTER TABLE `messages`
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `orders_items`
 --
 ALTER TABLE `orders_items`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `orders_payments`
@@ -363,7 +439,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `products_custom`
 --
 ALTER TABLE `products_custom`
-  MODIFY `custom_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `custom_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `types`
@@ -375,7 +451,7 @@ ALTER TABLE `types`
 -- AUTO_INCREMENT for table `user_accounts`
 --
 ALTER TABLE `user_accounts`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

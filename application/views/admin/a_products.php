@@ -40,6 +40,7 @@ $template_header;
 											<th>Type</th>
 											<th>Qty.</th>
 											<th>Visible</th>
+											<th>Featured</th>
 											<th>Action</th>
 										</tr>
 									</thead>
@@ -80,7 +81,11 @@ $template_header;
 													<?=($row["visibility"] == 1 ? "YES" : "NO")?>
 												</td>
 												<td>
-													<button class="btn btn-primary btn-sm btn_visibility" data-toggle="modal" data-target="#modal_visibility" data-id="<?=$row['product_id']?>">Visibility</button><br>
+													<?=($row["featured"] != NULL ? $row["featured"] : "NO")?>
+												</td>
+												<td>
+													<button class="btn btn-primary btn-sm btn_featured" data-toggle="modal" data-target="#modal_featured" data-id="<?=$row['product_id']?>">Feature</button><br>
+													<button class="btn btn-primary btn-sm mt-1 btn_visibility" data-toggle="modal" data-target="#modal_visibility" data-id="<?=$row['product_id']?>">Visibility</button><br>
 													<a class="action_button" href="<?=base_url();?>admin/products_view?id=<?=$row['product_id']?>">
 														<i class="fa fa-eye p-1" aria-hidden="true"></i>
 													</a>
@@ -173,6 +178,34 @@ $template_header;
 			</div>
 		</div>
 	</div>
+	<div id="modal_featured" class="modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<?=form_open(base_url() . "admin/product_update_featured", "method='POST'");?>
+					<input id="featured_inp_id" type="hidden" name="inp_id">
+					<div class="modal-header">
+						<h4 class="modal-title">Feature Product</h4>
+						<button type="button" class="close" data-dismiss="modal">
+							&times;
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label>Featured:</label>
+							<select name="inp_featured_no" class="form-control" required="">
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+							</select>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<input type="submit" class="btn btn-primary" value="Feature">
+					</div>
+				<?=form_close()?>
+			</div>
+		</div>
+	</div>
 	<div id="modal_visibility" class="modal">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -195,6 +228,9 @@ $template_header;
 </body>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$(".btn_featured").on("click", function() {
+			$("#featured_inp_id").val($(this).data("id"));
+		});
 		$(".btn_visibility").on("click", function() {
 			$("#visibility_inp_id").val($(this).data("id"));
 		});

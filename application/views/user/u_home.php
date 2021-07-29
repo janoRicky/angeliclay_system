@@ -24,15 +24,36 @@ $template_header;
 						</style>
 						<div class="col-12 col-sm-12">
 							<div class="row feat_container align-items-center" style="height: 25rem;">
+								<?php
+								$f_products = $tbl_products->result_array();
+								?>
 								<div class="col-2 d-sm-none"></div>
 								<div class="col-8 col-sm-4 p-2 feat_item item_2">
-									<img class="feat_img" src="<?=base_url()?>assets/img/sample1.jpg" style="width: 75%; float: right;">
+									<img class="feat_img" src="<?php
+									if (!empty($f_products[0]["img"])) {
+										echo base_url(). 'uploads/product_'. $f_products[0]["product_id"] .'/'. $f_products[0]["img"];
+									} else {
+										echo base_url(). "assets/img/no_img.png";
+									}
+									?>" style="width: 75%; float: right;">
 								</div>
 								<div class="col-8 col-sm-4 p-2 feat_item item_3">
-									<img class="feat_img" src="<?=base_url()?>assets/img/sample2.jpg" style="width: 100%; float: center;">
+									<img class="feat_img" src="<?php
+									if (!empty($f_products[1]["img"])) {
+										echo base_url(). 'uploads/product_'. $f_products[1]["product_id"] .'/'. $f_products[1]["img"];
+									} else {
+										echo base_url(). "assets/img/no_img.png";
+									}
+									?>" style="width: 100%; float: center;">
 								</div>
 								<div class="col-8 col-sm-4 p-2 feat_item item_1">
-									<img class="feat_img" src="<?=base_url()?>assets/img/sample3.jpg" style="width: 75%; float: left;">
+									<img class="feat_img" src="<?php
+									if (!empty($f_products[2]["img"])) {
+										echo base_url(). 'uploads/product_'. $f_products[2]["product_id"] .'/'. $f_products[2]["img"];
+									} else {
+										echo base_url(). "assets/img/no_img.png";
+									}
+									?>" style="width: 75%; float: left;">
 								</div>
 								<div class="col-2 d-sm-none"></div>
 							</div>

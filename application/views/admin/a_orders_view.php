@@ -35,10 +35,20 @@ $template_header;
 							<div class="col-12">
 								<div class="row mt-2">
 									<div class="col-12">
-										<label>User Email:</label><br>
-										<a href="<?=base_url();?>admin/users_view?id=<?=$row_info["user_id"]?>">
-											<i class="fa fa-eye p-1" aria-hidden="true"> <?=$this->Model_read->get_user_acc_wid($row_info["user_id"])->row_array()["email"]?> [User #<?=$row_info["user_id"]?>]</i>
-										</a>
+										<?php
+										$user_info = $this->Model_read->get_user_acc_wid($row_info["user_id"])->row_array();
+										?>
+										<?php if ($user_info["email"] == NULL): ?>
+											<label>No Account:</label><br>
+											<a href="<?=base_url();?>admin/users_view?id=<?=$row_info["user_id"]?>">
+												<i class="fa fa-eye p-1" aria-hidden="true"></i><?=$user_info["name_last"] .", ". $user_info["name_first"] ." ". $user_info["name_middle"] ." ". $user_info["name_extension"]?> [User #<?=$row_info["user_id"]?>]
+											</a>
+										<?php else: ?>
+											<label>User Email:</label><br>
+											<a href="<?=base_url();?>admin/users_view?id=<?=$row_info["user_id"]?>">
+												<i class="fa fa-eye p-1" aria-hidden="true"></i><?=$user_info["email"]?> [User #<?=$row_info["user_id"]?>]
+											</a>
+										<?php endif; ?>
 									</div>
 									<div class="col-12">
 										<label>Description:</label><br>

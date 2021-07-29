@@ -136,6 +136,9 @@ $route['admin/logout'] = 'E_controller_main/admin_logout';
 $route['admin/email_search'] = 'E_controller_main/search_emails';
 $route['admin/address_get'] = 'E_controller_main/get_address';
 
+$route['admin/name_search'] = 'E_controller_main/search_names';
+$route['admin/info_get'] = 'E_controller_main/get_info';
+
 // - CREATE
 $route['admin/product_create'] = 'admin/A_controller_create/new_product';
 $route['admin/type_create'] = 'admin/A_controller_create/new_type';
@@ -154,6 +157,7 @@ $route['admin/order_custom_update'] = 'admin/A_controller_update/edit_order_cust
 $route['admin/user_update'] = 'admin/A_controller_update/edit_user_account';
 $route['admin/acc_update'] = 'admin/A_controller_update/edit_admin_account';
 
+$route['admin/product_update_featured'] = 'admin/A_controller_update/edit_product_featured';
 $route['admin/type_update_featured'] = 'admin/A_controller_update/edit_type_featured';
 $route['admin/product_update_visibility'] = 'admin/A_controller_update/edit_product_visibility';
 $route['admin/order_update_state'] = 'admin/A_controller_update/edit_order_state';

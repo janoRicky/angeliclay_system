@@ -16,4 +16,15 @@ $(document).ready(function () {
 			$(".img_zoom").remove()
 		});;
 	});
+
+	$(document).on("focus change paste keyup", "input", function() {
+		var attr = $(this).attr("required");
+		if (typeof attr !== "undefined" && attr !== false) {
+			if ($(this).val().length < 1) {
+				$(this).css("box-shadow", "0 0 0.3rem red");
+			} else {
+				$(this).css("box-shadow", "0 0 0");
+			}
+		}
+	});
 });

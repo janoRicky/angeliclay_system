@@ -52,7 +52,7 @@ $template_header;
 									<thead>
 										<tr>
 											<th>ID</th>
-											<th>User ID</th>
+											<th>User</th>
 											<th>Date / Time</th>
 											<th>Ordered Qty.</th>
 											<th>Ordered Price</th>
@@ -75,7 +75,18 @@ $template_header;
 													<?=$row["order_id"]?>
 												</td>
 												<td>
-													<?=$this->Model_read->get_user_acc_wid($row["user_id"])->row_array()["email"]?>
+													<?php
+													$user_info = $this->Model_read->get_user_acc_wid($row["user_id"])->row_array();
+													?>
+													<?php if ($user_info["email"] == NULL): ?>
+														<a href="<?=base_url();?>admin/users_view?id=<?=$row["user_id"]?>">
+															<i class="fa fa-eye p-1" aria-hidden="true"></i><?=$user_info["name_last"] .", ". $user_info["name_first"] ." ". $user_info["name_middle"] ." ". $user_info["name_extension"]?> [User #<?=$row["user_id"]?>]
+														</a>
+													<?php else: ?>
+														<a href="<?=base_url();?>admin/users_view?id=<?=$row["user_id"]?>">
+															<i class="fa fa-eye p-1" aria-hidden="true"></i><?=$user_info["email"]?> [User #<?=$row["user_id"]?>]
+														</a>
+													<?php endif; ?>
 												</td>
 												<td>
 													<?=date("Y-m-d / H:i:s A", strtotime($row["date_time"]))?>
@@ -114,6 +125,7 @@ $template_header;
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<?=form_open(base_url() . "admin/order_create", "method='POST'");?>
+					<input id="inp_user_id" type="hidden" name="inp_user_id" required="">
 					<div class="modal-header">
 						<h4 class="modal-title">New Order</h4>
 						<button type="button" class="close" data-dismiss="modal">
@@ -123,8 +135,50 @@ $template_header;
 					<div class="modal-body">
 						<div class="form-group">
 							<label for="inp_user_email">User Email:</label>
-							<input id="user_email" type="text" class="form-control" name="inp_user_email" placeholder="*Email Address" autocomplete="off" data-toggle="dropdown" required="">
-							<div class="dropdown-menu dropdown-menu-left email_dropdown"></div>
+							<div class="input-group">
+								<input type="text" class="form-control user_email" name="inp_user_email" placeholder="*Email Address" autocomplete="off" data-toggle="dropdown" required="">
+								<div class="dropdown-menu dropdown-menu-left email_dropdown w-100"></div>
+								<span class="input-group-append">
+									<button class="btn btn-secondary btn_no_account" type="button">
+										<i class="fa fa-times" aria-hidden="true"></i> No Account
+									</button>
+								</span>
+								<div class="dropdown-menu dropdown_sc w-100"></div>
+							</div>
+						</div>
+						<div class="no_account_details" style="display: none;">
+							<div id="no_account" class="alert alert-warning text-center">
+								Create New Buyer Record
+							</div>
+							<div class="form-group w-100">
+								<label for="inp_name_last">Last Name:</label>
+								<input id="inp_name_last" type="text" class="form-control no_account_last_name required" name="inp_name_last" placeholder="*Last Name" autocomplete="off" data-toggle="dropdown">
+								<div class="dropdown-menu dropdown-menu-left no_account_dropdown w-100"></div>
+							</div>
+							<div class="form-group">
+								<label for="inp_name_first">First Name:</label>
+								<input id="inp_name_first" type="text" class="form-control required" name="inp_name_first" placeholder="*First Name" autocomplete="off">
+							</div>
+							<div class="form-group">
+								<label for="inp_name_middle">Middle Name:</label>
+								<input id="inp_name_middle" type="text" class="form-control" name="inp_name_middle" placeholder="Middle Name" autocomplete="off">
+							</div>
+							<div class="form-group">
+								<label for="inp_name_extension">Name Extension:</label>
+								<input id="inp_name_extension" type="text" class="form-control" name="inp_name_extension" placeholder="Name Extension" autocomplete="off">
+							</div>
+							<div class="form-group">
+								<label for="inp_gender">Gender:</label>
+								<select id="inp_gender" name="inp_gender" class="form-control required">
+									<option value="male" selected="">Male</option>
+									<option value="female">Female</option>
+									<option value="other">Other</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="inp_contact_num">Contact Number:</label>
+								<input id="inp_contact_num" type="text" class="form-control required" name="inp_contact_num" placeholder="*Contact #" autocomplete="off">
+							</div>
 						</div>
 						<div class="form-group">
 							<label for="inp_description">Description:</label>
@@ -277,7 +331,44 @@ $template_header;
 
 		$("#table_orders").DataTable({ "order": [[0, "desc"]] });
 
-		$(".btn_add_to_items").on("click", function() {
+		$(document).on("click", ".btn_no_account", function() {
+			if ($(this).hasClass("w-100")) {
+				$(this).parent().removeClass("w-100");
+				$(this).removeClass("w-100");
+				$(this).removeClass("btn-primary");
+				$(this).addClass("btn-secondary");
+				$(this).parent().siblings("input").show();
+				$(".user_email").attr("required", true);
+				$(this).parents(".input-group").siblings("label").show();
+				$(".no_account_details").hide("100");
+				$(".no_account_details .required").removeAttr("required");
+
+				$(this).children("i").removeClass("fa-check");
+				$(this).children("i").addClass("fa-times");
+
+				if ($(".btn_new_buyer").length) {
+					$(".btn_new_buyer").trigger("click");
+				}
+				$("#inp_user_id").val("");
+			} else {
+				$(this).parent().addClass("w-100");
+				$(this).addClass("w-100");
+				$(this).removeClass("btn-secondary");
+				$(this).addClass("btn-primary");
+				$(this).parent().siblings("input").hide();
+				$(".user_email").removeAttr("required");
+				$(this).parents(".input-group").siblings("label").hide();
+				$(".no_account_details").show("100");
+				$(".no_account_details .required").attr("required", true);
+
+				$(this).children("i").removeClass("fa-times");
+				$(this).children("i").addClass("fa-check");
+
+				$("#inp_user_id").val("0");
+			}
+		});
+		
+		$(document).on("click", ".btn_add_to_items", function() {
 			var p_id = $(this).attr("data-id");
 			var $item_product = $(".item_product_" + p_id);
 			
@@ -372,46 +463,110 @@ $template_header;
 
 		$("#table_products").DataTable();
 
-		$("#user_email").on("keyup", function(e) {
+		$(".user_email").on("keyup", function(e) {
 			if ($(this).val().length > 0) {
 				if (!$(".email_dropdown").hasClass("show")) {
-					$("#user_email").dropdown("toggle");
+					$(".user_email").dropdown("toggle");
 				}
 				$.get("email_search", { dataType: "json", search: $(this).val() })
 				.done(function(data) {
 					var emails = $.parseJSON(data);
 					$(".email_dropdown").html("");
 					$.each(emails, function(index, val) {
-						$(".email_dropdown").append($("<a>").attr({ class: "dropdown-item email_item" }).html(val));
+						$(".email_dropdown").append($("<a>").attr({ class: "dropdown-item email_item", "user-id": index }).html(val));
 					});
 				});
 			} else {
 				if ($(".email_dropdown").hasClass("show")) {
-					$("#user_email").dropdown("toggle");
+					$(".user_email").dropdown("toggle");
 				}
 			}
 		});
 		$(document).on("click", ".email_item", function(t) {
-			var email = $(this).html();
+			var id = $(this).attr("user-id");
 			if ($(this).html().length > 0) {
-				$.get("address_get", { dataType: "json", email: email })
+				$.get("address_get", { dataType: "json", user_id: id })
 				.done(function(data) {
-					$("#user_email").val(email);
-					var address = $.parseJSON(data);
-					$("#inp_zip_code").val(address["zip_code"]);
-					$("#inp_country").val(address["country"]);
-					$("#inp_province").val(address["province"]);
-					$("#inp_city").val(address["city"]);
-					$("#inp_street").val(address["street"]);
-					$("#inp_address").val(address["address"]);
+					var u_info = $.parseJSON(data);
+					$(".user_email").val(u_info["email"]);
+					$("#inp_zip_code").val(u_info["zip_code"]);
+					$("#inp_country").val(u_info["country"]);
+					$("#inp_province").val(u_info["province"]);
+					$("#inp_city").val(u_info["city"]);
+					$("#inp_street").val(u_info["street"]);
+					$("#inp_address").val(u_info["address"]);
+
+					$("#inp_user_id").val(id);
 				});
 			}
+		});
+
+		$(document).on("focus keyup", ".no_account_last_name", function() {
+			$.get("name_search", { dataType: "json", search: $(this).val() })
+			.done(function(data) {
+				var names = $.parseJSON(data);
+				$(".no_account_dropdown").html("");
+				$.each(names, function(index, val) {
+					$(".no_account_dropdown").append($("<a>").attr({ class: "dropdown-item no_account_item", "user-id": index }).html(val));
+				});
+			});
+		});
+		$(".no_account_last_name").on("keydown", function(e) {
+			if (!$(".no_account_dropdown").hasClass("show")) {
+				$(".no_account_last_name").dropdown("toggle");
+			}
+		});
+		$(document).on("click", ".no_account_item", function(t) {
+			var id = $(this).attr("user-id");
+			if ($(this).html().length > 0) {
+				$.get("info_get", { dataType: "json", user_id: id })
+				.done(function(data) {
+					var u_info = $.parseJSON(data);
+					$(".no_account_last_name").val(u_info["name_last"]).attr("disabled", true);
+					$("#inp_name_first").val(u_info["name_first"]).attr("disabled", true);
+					$("#inp_name_middle").val(u_info["name_middle"]).attr("disabled", true);
+					$("#inp_name_extension").val(u_info["name_extension"]).attr("disabled", true);
+					$("#inp_gender option[value="+ u_info["gender"] +"]").prop("selected", true);
+					$("#inp_gender").attr("disabled", true);
+					$("#inp_contact_num").val(u_info["contact_num"]).attr("disabled", true);
+
+					$("#inp_zip_code").val(u_info["zip_code"]);
+					$("#inp_country").val(u_info["country"]);
+					$("#inp_province").val(u_info["province"]);
+					$("#inp_city").val(u_info["city"]);
+					$("#inp_street").val(u_info["street"]);
+					$("#inp_address").val(u_info["address"]);
+
+					$("#no_account").removeClass("alert-warning");
+					$("#no_account").addClass("alert-success");
+					$("#no_account").html("Existing Buyer record").append($("<br>")).append($("<button>").attr({
+						type: "button",
+						class: "btn btn-warning btn-sm btn_new_buyer mt-1"
+					}).html("New Buyer"));
+					$("#modal_new_account input[required]").trigger("change");
+					$("#inp_user_id").val(id);
+				});
+			}
+		});
+
+		$(document).on("click", ".btn_new_buyer", function(t) {
+			$(".no_account_last_name").val("").removeAttr("disabled");
+			$("#inp_name_first").val("").removeAttr("disabled");
+			$("#inp_name_middle").val("").removeAttr("disabled");
+			$("#inp_name_extension").val("").removeAttr("disabled");
+			$("#inp_gender option[value=male]").prop("selected", true);
+			$("#inp_gender").removeAttr("disabled");
+			$("#inp_contact_num").val("").removeAttr("disabled");
+
+			$("#no_account").removeClass("alert-success");
+			$("#no_account").addClass("alert-warning");
+			$("#no_account").html("Create New Buyer Record");
+			$("#inp_user_id").val("0");
 		});
 
 		$(document).on("change", "#state_sort", function(e) {
 			$(this).parent().submit();
 		});
-
 
 		$(document).on("click", "#add_order", function(e) {
 			if ($("#items_no").val() < 1 || $("#items_no").val() == null) {

@@ -155,8 +155,12 @@ form label {
 	border: 0.15rem solid #000;
 }
 
-.email_dropdown a {
+.email_dropdown a, .no_account_dropdown a {
 	cursor: pointer;
+}
+
+input[required] {
+	box-shadow: 0 0 0;
 }
 
 

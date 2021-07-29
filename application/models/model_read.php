@@ -54,11 +54,17 @@ class Model_read extends CI_Model {
 	public function get_product_wtype($id) {
 		return $this->db->get_where("products", array("type_id" => $id));
 	}
+	public function get_products_featured() {
+		return $this->db->get_where("products", array("featured !=" => "NULL"));
+	}
+	public function get_product_featured_wno($no) {
+		return $this->db->get_where("products", array("featured" => $no));
+	}
 
 	public function get_types() {
 		return $this->db->get_where("types", array("status" => "1"));
 	}
-	public function get_types_featured_view() {
+	public function get_types_featured_view() { // showw types with products that are available for purchase
 		$query = "SELECT * FROM types AS t WHERE status = '1' AND EXISTS(SELECT * FROM products AS p WHERE t.type_id = p.type_id AND visibility = '1')";
 		return $this->db->query($query);
 	}
@@ -122,17 +128,46 @@ class Model_read extends CI_Model {
 		return $this->db->get_where("user_accounts", array("email" => $email, "status" => "1"));
 	}
 	public function search_user_emails($search) {
-		$this->db->select("email");
+		$this->db->select("user_id, email, name_last, name_first, name_middle, name_extension");
 		$this->db->from("user_accounts");
-		$this->db->where("status", "1");
-		$this->db->like("email", $search, "both");
-		$this->db->limit(5);
+		$this->db->where(array(
+			"status" => "1"
+		));
+		$this->db->like("email", $search);
+		$this->db->or_like(array(
+			"user_id" => $search,
+			"name_last" => $search,
+			"name_first" => $search
+		));
+		$this->db->limit(8);
 		return $this->db->get();
 	}
-	public function get_user_address_wemail($email) {
-		$this->db->select("zip_code, country, province, city, street, address");
+	public function get_user_address_wid($id) {
+		$this->db->select("email, zip_code, country, province, city, street, address");
 		$this->db->from("user_accounts");
-		$this->db->where("email", $email);
+		$this->db->where("user_id", $id);
+		return $this->db->get();
+	}
+	public function search_user_names($search) {
+		$this->db->select("user_id, email, name_last, name_first, name_middle, name_extension");
+		$this->db->from("user_accounts");
+		$this->db->where(array(
+			"status" => "1"
+		));
+		$this->db->like("user_id", $search);
+		$this->db->or_like(array(
+			"name_last" => $search,
+			"name_first" => $search,
+			"name_middle" => $search,
+			"name_extension" => $search
+		));
+		$this->db->limit(8);
+		return $this->db->get();
+	}
+	public function get_user_info_wid($id) {
+		$this->db->select("name_last, name_first, name_middle, name_extension, gender, contact_num, zip_code, country, province, city, street, address");
+		$this->db->from("user_accounts");
+		$this->db->where("user_id", $id);
 		return $this->db->get();
 	}
 
@@ -151,5 +186,10 @@ class Model_read extends CI_Model {
 	}
 	public function get_config_wkey($key) {
 		return $this->db->get_where("config", array("c_key" => $key))->row_array()["c_val"];
+	}
+
+
+	public function is_order_custom($id) {
+		return ($this->db->get_where("orders_items", array("order_id" => $id, "type" => "CUSTOM"))->num_rows() > 0);
 	}
 }

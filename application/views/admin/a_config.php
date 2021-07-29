@@ -39,7 +39,7 @@ $template_header;
 											</div>
 										</div>
 									<?php endforeach; ?>
-									<button class="btn btn-primary form-control">
+									<button type="submit" class="btn btn-primary form-control my-3">
 										Update Config
 									</button>
 								<?=form_close()?>

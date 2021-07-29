@@ -61,13 +61,16 @@ $template_header;
 													<div class="col-12 col-sm-6 col-lg-3 border p-3">
 														<?=date("Y-m-d / H:i:s A", strtotime($row["date_time"]))?>
 													</div>
-													<div class="col-12 col-sm-6 col-lg-3 border p-3">
+													<div class="col-12 col-sm-6 col-lg-2 border p-3">
+														<?=($this->Model_read->is_order_custom($row["order_id"]) ? "CUSTOM" : "NORMAL")?>
+													</div>
+													<div class="col-12 col-sm-12 col-lg-3 border p-3">
 														<?=$row["zip_code"] ." / ". $row["country"] ." / ". $row["province"] ." / ". $row["city"] ." / ". $row["street"] ." / ". $row["address"]?>
 													</div>
-													<div class="col-12 col-sm-6 col-lg-3 border p-3">
+													<div class="col-12 col-sm-6 col-lg-2 border p-3">
 														<?=$states[$row["state"]]?>
 													</div>
-													<div class="col-12 col-sm-6 col-lg-3 border p-3">
+													<div class="col-12 col-sm-6 col-lg-2 border p-3">
 														<?php if ($row["state"] == 1): ?>
 															<a href="my_order_payment?id=<?=$row["order_id"]?>">
 																<button class="button b_p">

@@ -1,21 +1,23 @@
 
-allow more photos?
+EMAIL = order, custom order, custom order payment, state received
 
+make DASHBOARD
 
-ALLOW ADMIN TO CREATE ORDER WITHOUT USER ACCOUNT
-(create new row in user accounts but without email and pass)
-- allow admin to choose if a buyer has an account when adding orders, then show a list where admin can choose from the list of no-account customers
+user+admin logs
+
+MESSAGING - when changing states send a message to the user
+
+allow user to make additional payment for normal orders?
+if there are more than 1 product on a custom order, add the ability for the admin to add multiple products to custom order
+- add product in custom order view
+
 
 
 image protection, controller access for image src
 
 add shipping fee on order submit
 
-ADMIN PAYMENT UPDATE func
-
-
 Milasian Circa
-
 Light Purple to Pink (bottom to top)
 
 
@@ -23,28 +25,21 @@ mobile img upload
 
 payments, add other to list of numbers, change ref id to transaction ID
 
-
-EMAIL
-
-slideshow images, allow featured products
-
-
-on img change upload, hide img change div
-
-
-MESSAGING
-
 img zoom on user side
-
 
 show reviews on home page
 
-custom order emailed
 
 
-show user orders on view
 
-show admin log on view
+
+
+
+
+
+
+
+
 
 
 
