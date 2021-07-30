@@ -16,11 +16,13 @@
 	<link rel="stylesheet" href="<?=base_url()?>assets/bootstrap-4.00-dist/css/bootstrap.min.css">
 	<!-- DATATABLES -->
 	<link rel="stylesheet" href="<?=base_url()?>assets/css/datatables.min.css">
+	
+	<link rel="stylesheet" href="<?=base_url()?>assets/mdb.min.css">
 	<!-- CUSTOM STYLE -->
 	<link rel="stylesheet" href="<?=base_url()?>assets/css/a_style.css">
 
 	<!-- PAGE ICON -->
-	<!-- <link rel="icon" href="<?=base_url()?>/favicon.ico" type="image/gif"> -->
+	<link rel="icon" href="<?=base_url()?>/favicon.ico" type="image/gif">
 
 
 	<?php $this->load->view('admin/template/a_t_scripts'); // include the scripts from the view folder ?>

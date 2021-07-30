@@ -29,6 +29,8 @@
 		}
 	</style>
 
+	<!-- PAGE ICON -->
+	<link rel="icon" href="<?=base_url()?>/favicon.ico" type="image/gif">
 
 	<?php $this->load->view('user/template/u_t_scripts'); // include the scripts from the view folder ?>
 

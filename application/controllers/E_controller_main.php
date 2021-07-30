@@ -352,18 +352,21 @@
 		}
 	}
 	public function view_a_dashboard() {
-		// check if user is logged in
 		$this->admin_login_check();
 
-		// used in admin/template/a_t_head
 		$head["title"] = "Dashboard - Angeliclay Ordering System";
 		$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
-		// used in navbar
 		$data["nav"] = array(array("text" => "Dashboard", "link" => "dashboard"));
 
-		// data array values can be used as variables on the php page
-		// $data["nav"] can be used in a_dashboard as $nav
-		// $nav will have the value array("text" => "Dashboard", "link" => "dashboard")
+		$data["tbl_custom"] = $this->Model_read->get_orders_custom_w_date("ALL", date("Y-m"));
+		$data["tbl_regular"] = $this->Model_read->get_orders_w_date("ALL", date("Y-m"));
+
+
+		$data["custom_count_0"] = $this->Model_read->get_orders_custom("0")->num_rows();
+		$data["regular_count_0"] = $this->Model_read->get_orders("0")->num_rows();
+		$data["custom_count_1"] = $this->Model_read->get_orders_custom("1")->num_rows();
+		$data["regular_count_1"] = $this->Model_read->get_orders("1")->num_rows();
+
 		$this->load->view("admin/a_dashboard", $data);
 	}
 // = = = PRODUCTS
