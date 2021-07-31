@@ -1,5 +1,9 @@
 
+update of orders with no accounts, (remove the ability to change the buyer?)
+
+
 EMAIL = order, custom order, custom order payment, state received
+-also email users on important state changes
 
 make DASHBOARD
 
@@ -10,6 +14,11 @@ MESSAGING - when changing states send a message to the user
 allow user to make additional payment for normal orders?
 if there are more than 1 product on a custom order, add the ability for the admin to add multiple products to custom order
 - add product in custom order view
+
+archives
+
+
+
 
 
 

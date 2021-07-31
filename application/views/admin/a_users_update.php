@@ -9,7 +9,7 @@ $template_header;
 				<?php $this->load->view("admin/template/a_t_sidebar"); ?>
 				<?php $this->load->view("admin/template/a_t_navbar", $nav); ?>
 				<div class="col-12 text-center">
-					<div class="container-fluid p-5">
+					<div class="container-fluid p-2 py-5 p-sm-5">
 						<?php if ($this->session->flashdata("alert")): ?>
 							<?php $alert = $this->session->flashdata("alert"); ?>
 							<div class="alert alert-<?=$alert[0]?> alert-dismissible">

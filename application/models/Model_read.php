@@ -192,4 +192,20 @@ class Model_read extends CI_Model {
 	public function is_order_custom($id) {
 		return ($this->db->get_where("orders_items", array("order_id" => $id, "type" => "CUSTOM"))->num_rows() > 0);
 	}
+
+
+	public function get_orders_custom_w_date($state, $date) {
+		$date_from = date("Y-m-01", strtotime($date));
+		$date_to = date("Y-m-t", strtotime($date));
+		$where_state = ($state != "ALL" ? "AND state = '$state'" : "");
+		$query = "SELECT date_time FROM orders AS o WHERE status = '1' $where_state AND EXISTS(SELECT * FROM orders_items AS oi WHERE o.order_id = oi.order_id AND type = 'CUSTOM') AND date_time BETWEEN '$date_from' AND '$date_to'";
+		return $this->db->query($query);
+	}
+	public function get_orders_w_date($state, $date) {
+		$date_from = date("Y-m-01", strtotime($date));
+		$date_to = date("Y-m-t", strtotime($date));
+		$where_state = ($state != "ALL" ? "AND state = '$state'" : "");
+		$query = "SELECT date_time FROM orders AS o WHERE status = '1' $where_state AND EXISTS(SELECT * FROM orders_items AS oi WHERE o.order_id = oi.order_id AND type = 'NORMAL') AND date_time BETWEEN '$date_from' AND '$date_to'";
+		return $this->db->query($query);
+	}
 }
