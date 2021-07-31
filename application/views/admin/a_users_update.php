@@ -21,19 +21,21 @@ $template_header;
 						<?php endif; ?>
 						<div class="row">
 							<div class="col-12 text-left">
-								<h2>Update User #<?=$row_info["user_id"]?></h2>
+								<h2>Update User #<?=$row_info["user_id"]?> <?=($row_info["email"] == NULL ? "[NO ACCOUNT]" : "")?></h2>
 							</div>
 							<div class="col-12">
 								<?=form_open(base_url() . "admin/user_update", "method='POST'"); ?>
 									<input id="update_inp_id" type="hidden" name="inp_id" value="<?=$row_info["user_id"]?>">
-									<div class="form-group">
-										<label for="inp_email">Email:</label>
-										<input type="email" class="form-control" name="inp_email" placeholder="*Email Address" value="<?=$row_info['email']?>" autocomplete="off" required="">
-									</div>
-									<div class="form-group">
-										<label for="inp_password">Password:</label>
-										<input type="password" class="form-control" name="inp_password" placeholder="*Password" autocomplete="off" required="">
-									</div>
+									<?php if ($row_info["email"] != NULL): ?>
+										<div class="form-group">
+											<label for="inp_email">Email:</label>
+											<input type="email" class="form-control" name="inp_email" placeholder="*Email Address" value="<?=$row_info['email']?>" autocomplete="off" required="">
+										</div>
+										<div class="form-group">
+											<label for="inp_password">Password:</label>
+											<input type="password" class="form-control" name="inp_password" placeholder="Password" autocomplete="off">
+										</div>
+									<?php endif; ?>
 									<div class="form-group">
 										<label for="inp_name_last">Last Name:</label>
 										<input type="text" class="form-control" name="inp_name_last" placeholder="*Last Name" value="<?=$row_info['name_last']?>" autocomplete="off" required="">

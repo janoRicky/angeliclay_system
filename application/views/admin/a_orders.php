@@ -143,7 +143,6 @@ $template_header;
 										<i class="fa fa-times" aria-hidden="true"></i> No Account
 									</button>
 								</span>
-								<div class="dropdown-menu dropdown_sc w-100"></div>
 							</div>
 						</div>
 						<div class="no_account_details" style="display: none;">

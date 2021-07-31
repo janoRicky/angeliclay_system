@@ -25,11 +25,22 @@ $template_header;
 							</div>
 							<div class="col-12">
 								<?=form_open(base_url() . "admin/order_update", "method='POST'"); ?>
-									<input id="update_inp_id" type="hidden" name="inp_id" value="<?=$row_info['order_id']?>">
+									<input type="hidden" name="inp_id" value="<?=$row_info['order_id']?>">
+									<input id="inp_user_id" type="hidden" name="inp_user_id" value="<?=$row_info['user_id']?>">
 									<div class="form-group">
-										<label for="inp_user_email">User Email:</label>
-										<input id="user_email" type="text" class="form-control" name="inp_user_email" placeholder="*Email Address" autocomplete="off" value="<?=$this->Model_read->get_user_acc_wid($row_info["user_id"])->row_array()["email"]?>" data-toggle="dropdown" required="">
-										<div class="dropdown-menu dropdown-menu-left email_dropdown"></div>
+										<?php $user_info = $this->Model_read->get_user_acc_wid($row_info["user_id"])->row_array(); ?>
+										<label for="inp_user_acc">
+											<i id="user_acc_label" class="fa fa-check text-success" aria-hidden="true">[<?=$row_info["user_id"]?>]</i> User Account:
+										</label>
+										<div class="input-group">
+											<input id="user_acc" type="text" class="form-control" name="inp_user_acc" placeholder="User" autocomplete="off" value="[<?=$user_info['user_id']?>] <?=$user_info['name_last']?>, <?=$user_info['name_first']?> <?=($user_info['email'] == NULL ? '(NO ACCOUNT)' : '('. $user_info['email'] .')')?>" data-toggle="dropdown" required="">
+											<div class="dropdown-menu dropdown-menu-left user_dropdown w-100"></div>
+											<span class="input-group-append">
+												<button class="btn btn-secondary btn_clear_acc" type="button">
+													<i class="fa fa-times" aria-hidden="true"></i>
+												</button>
+											</span>
+										</div>
 									</div>
 									<div class="form-group">
 										<label for="inp_description">Description:</label>
@@ -275,46 +286,64 @@ $template_header;
 
 		$("#table_products").DataTable();
 
-		$("#user_email").on("keyup", function(e) {
+		$("#user_acc").on("keyup focus", function(e) {
 			if ($(this).val().length > 0) {
-				if (!$(".email_dropdown").hasClass("show")) {
-					$("#user_email").dropdown("toggle");
+				if (!$(".user_dropdown").hasClass("show")) {
+					$("#user_acc").dropdown("toggle");
 				}
-				$.get("email_search", { dataType: "json", search: $(this).val() })
+				$.get("user_search", { dataType: "json", search: $(this).val() })
 				.done(function(data) {
-					var emails = $.parseJSON(data);
-					$(".email_dropdown").html("");
-					$.each(emails, function(index, val) {
-						$(".email_dropdown").append($("<a>").attr({ class: "dropdown-item email_item" }).html(val));
+					var users = $.parseJSON(data);
+					$(".user_dropdown").html("");
+					$.each(users, function(index, val) {
+						$(".user_dropdown").append($("<a>").attr({ class: "dropdown-item user_item", "user-id": index }).html(val));
 					});
 				});
 			} else {
-				if ($(".email_dropdown").hasClass("show")) {
-					$("#user_email").dropdown("toggle");
+				if ($(".user_dropdown").hasClass("show")) {
+					$("#user_acc").dropdown("toggle");
 				}
+				$("#inp_user_id").val(null);
+
+				$("#user_acc_label").removeClass("fa-check");
+				$("#user_acc_label").addClass("fa-times");
+				$("#user_acc_label").removeClass("text-success");
+				$("#user_acc_label").addClass("text-danger");
+				$("#user_acc_label").html("");
 			}
 		});
-		$(document).on("click", ".email_item", function(t) {
-		    var email = $(this).html();
+		$(document).on("click", ".user_item", function(t) {
+			var id = $(this).attr("user-id");
 			if ($(this).html().length > 0) {
-				$.get("address_get", { dataType: "json", email: email })
-				.done(function(data) {
-				    $("#user_email").val(email);
-					var address = $.parseJSON(data);
-					$("#inp_zip_code").val(address["zip_code"]);
-					$("#inp_country").val(address["country"]);
-					$("#inp_province").val(address["province"]);
-					$("#inp_city").val(address["city"]);
-					$("#inp_street").val(address["street"]);
-					$("#inp_address").val(address["address"]);
-				});
+				$("#user_acc").val($(this).html());
+				$("#inp_user_id").val(id);
+
+				$("#user_acc_label").removeClass("fa-times");
+				$("#user_acc_label").addClass("fa-check");
+				$("#user_acc_label").removeClass("text-danger");
+				$("#user_acc_label").addClass("text-success");
+				$("#user_acc_label").html("["+ id +"]");
 			}
 		});
 
+		$(document).on("click", ".btn_clear_acc", function(t) {
+			$("#user_acc").val(null);
+			$("#inp_user_id").val(null);
+
+			$("#user_acc_label").removeClass("fa-check");
+			$("#user_acc_label").addClass("fa-times");
+			$("#user_acc_label").removeClass("text-success");
+			$("#user_acc_label").addClass("text-danger");
+			$("#user_acc_label").html("");
+		});
 
 		$(document).on("click", "#update_order", function(e) {
-			if ($("#items_no").val() < 1 || $("#items_no").val() == null) {
+			if ($("#items_no").val() < 1 || $("#items_no").val().length < 1) {
 				alert("Missing Ordered Items.");
+				e.preventDefault();
+			}
+			if ($("#inp_user_id").val().length < 1) {
+				alert("Missing User Account ID.");
 				e.preventDefault();
 			}
 		});

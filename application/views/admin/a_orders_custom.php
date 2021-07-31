@@ -54,6 +54,8 @@ $template_header;
 											<th>ID</th>
 											<th>User</th>
 											<th>Description</th>
+											<th>Qty</th>
+											<th>Price</th>
 											<th>Date / Time</th>
 											<th>State</th>
 											<th>Action</th>
@@ -61,6 +63,7 @@ $template_header;
 									</thead>
 									<tbody>
 										<?php foreach ($tbl_orders_custom->result_array() as $row): ?>
+											<?php $order_item_info = $this->Model_read->get_order_items_worder_id($row["order_id"])->row_array(); ?>
 											<tr class="text-center align-middle">
 												<td>
 													<?=$row["order_id"]?>
@@ -81,6 +84,12 @@ $template_header;
 												</td>
 												<td>
 													<?=$row["description"]?>
+												</td>
+												<td>
+													<?=($order_item_info["qty"] != NULL ? $order_item_info["qty"] : "NONE")?>
+												</td>
+												<td>
+													<?=($order_item_info["price"] != NULL ? "PHP ". number_format($order_item_info["price"], 2) : "NONE")?>
 												</td>
 												<td>
 													<?=date("Y-m-d / H:i:s A", strtotime($row["date_time"]))?>
@@ -131,7 +140,6 @@ $template_header;
 										<i class="fa fa-times" aria-hidden="true"></i> No Account
 									</button>
 								</span>
-								<div class="dropdown-menu dropdown_sc w-100"></div>
 							</div>
 						</div>
 						<div class="no_account_details" style="display: none;">

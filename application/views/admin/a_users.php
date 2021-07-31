@@ -93,19 +93,26 @@ $template_header;
 			<div class="modal-content">
 				<?=form_open(base_url() . "admin/user_create", "method='POST'");?>
 					<div class="modal-header">
-						<h4 class="modal-title">New Account</h4>
+						<h4 class="modal-title">New User</h4>
 						<button type="button" class="close" data-dismiss="modal">
 							&times;
 						</button>
 					</div>
 					<div class="modal-body">
 						<div class="form-group">
-							<label for="inp_email">Email:</label>
-							<input type="email" class="form-control" name="inp_email" placeholder="*Email Address" autocomplete="off" required="">
+							<button class="btn btn-secondary btn_no_account w-100" type="button">
+								<i class="fa fa-times" aria-hidden="true"></i> No Account
+							</button>
 						</div>
-						<div class="form-group">
-							<label for="inp_password">Password:</label>
-							<input type="password" class="form-control" name="inp_password" placeholder="*Password" autocomplete="off" required="">
+						<div class="a_info">
+							<div class="form-group">
+								<label for="inp_email">Email:</label>
+								<input type="email" class="form-control user_email" name="inp_email" placeholder="*Email Address" autocomplete="off" required="">
+							</div>
+							<div class="form-group">
+								<label for="inp_password">Password:</label>
+								<input type="password" class="form-control user_password" name="inp_password" placeholder="*Password" autocomplete="off" required="">
+							</div>
 						</div>
 						<div class="form-group">
 							<label for="inp_name_last">Last Name:</label>
@@ -198,6 +205,27 @@ $template_header;
 		});
 
 		$("#table_users").DataTable({ "order": [[0, "desc"]] });
+
+		$(".btn_no_account").on("click", function() {
+			if ($(".a_info").is(":visible")) {
+				$(".user_email").removeAttr("required");
+				$(".user_password").removeAttr("required");
+				$(this).removeClass("btn-secondary");
+				$(this).addClass("btn-primary");
+				$(this).children("i").removeClass("fa-times");
+				$(this).children("i").addClass("fa-check");
+				$(".a_info").hide("100");
+			} else {
+				$(".user_email").attr("required", true);
+				$(".user_password").attr("required", true);
+				$(this).removeClass("btn-primary");
+				$(this).addClass("btn-secondary");
+				$(this).children("i").removeClass("fa-check");
+				$(this).children("i").addClass("fa-times");
+				$(".a_info").show("100");
+			}
+			
+		});
 	});
 </script>
 </html>

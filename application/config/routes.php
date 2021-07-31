@@ -139,6 +139,8 @@ $route['admin/address_get'] = 'E_controller_main/get_address';
 $route['admin/name_search'] = 'E_controller_main/search_names';
 $route['admin/info_get'] = 'E_controller_main/get_info';
 
+$route['admin/user_search'] = 'E_controller_main/search_users';
+
 // - CREATE
 $route['admin/product_create'] = 'admin/A_controller_create/new_product';
 $route['admin/type_create'] = 'admin/A_controller_create/new_type';
