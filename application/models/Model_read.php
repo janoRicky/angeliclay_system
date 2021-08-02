@@ -156,6 +156,7 @@ class Model_read extends CI_Model {
 		));
 		$this->db->like("user_id", $search);
 		$this->db->or_like(array(
+			"email" => $search,
 			"name_last" => $search,
 			"name_first" => $search,
 			"name_middle" => $search,

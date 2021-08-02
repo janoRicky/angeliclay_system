@@ -98,11 +98,11 @@ $template_header;
 									</div>
 									<div class="col-12 col-md-6">
 										<label>Qty:</label><br>
-										<?=$order_item_info["qty"]?>
+										<?=($order_item_info["qty"] != NULL ? $order_item_info["qty"] : "NONE")?>
 									</div>
 									<div class="col-12 col-md-6">
 										<label>Price:</label><br>
-										PHP <?=number_format($order_item_info["price"], 2)?>
+										<?=($order_item_info["price"] != NULL ? "PHP ". number_format($order_item_info["price"], 2) : "NONE")?>
 									</div>
 									<div class="col-12">
 										<label>Payments:</label>

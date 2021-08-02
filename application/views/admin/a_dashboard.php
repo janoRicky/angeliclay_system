@@ -26,16 +26,6 @@ $template_header;
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-12 col-md-10 col-lg-7 mx-auto">
-								<canvas id="lineChart" height="200"></canvas>
-							</div>
-							<div class="col-12 border-bottom">
-								<h5 class="font-weight-bold">
-									Total New Orders This Month (<?=date("M")?>)
-								</h5>
-							</div>
-						</div>
-						<div class="row">
 							<div class="col-12 col-md-6 mt-2">
 								<div class="row align-items-center">
 									<div class="col-12 border-bottom">
@@ -85,6 +75,16 @@ $template_header;
 										</a>
 									</div>
 								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12 border-bottom border-top pt-3">
+								<h5 class="font-weight-bold">
+									Total New Orders This Month (<?=date("M")?>)
+								</h5>
+							</div>
+							<div class="col-12 col-md-10 col-lg-7 mx-auto">
+								<canvas id="lineChart" height="200"></canvas>
 							</div>
 						</div>
 					</div>

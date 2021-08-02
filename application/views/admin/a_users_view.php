@@ -67,13 +67,17 @@ $template_header;
 											<tbody>
 												<?php foreach ($tbl_orders->result_array() as $row): ?>
 													<?php
-													$total_qty = 0;
-													$total_price = 0;
-													foreach ($this->Model_read->get_order_items_qty_price_worder_id($row["order_id"])->result_array() as $item) {
-														$total_qty += $item["qty"];
-														$total_price += $item["qty"] * $item["price"];
-													}
 													$order_type = ($this->Model_read->is_order_custom($row["order_id"]) ? "CUSTOM" : "NORMAL");
+													if ($order_type == "NORMAL") {
+														$total_qty = 0;
+														$total_price = 0;
+														foreach ($this->Model_read->get_order_items_qty_price_worder_id($row["order_id"])->result_array() as $item) {
+															$total_qty += $item["qty"];
+															$total_price += $item["qty"] * $item["price"];
+														}
+													} else {
+														$order_item_info = $this->Model_read->get_order_items_worder_id($row["order_id"])->row_array();
+													}
 													?>
 													<tr class="text-center align-middle">
 														<td>
@@ -86,10 +90,18 @@ $template_header;
 															<?=$order_type?>
 														</td>
 														<td class="qty">
-															<?=$total_qty?>
+															<?php if ($order_type == "NORMAL"): ?>
+																<?=$total_qty?>
+															<?php else: ?>
+																<?=($order_item_info["qty"] != NULL ? $order_item_info["qty"] : "NONE")?>
+															<?php endif; ?>
 														</td>
 														<td>
-															PHP <?=number_format($total_price, 2)?>
+															<?php if ($order_type == "NORMAL"): ?>
+																PHP <?=number_format($total_price, 2)?>
+															<?php else: ?>
+																<?=($order_item_info["price"] != NULL ? "PHP ". number_format($order_item_info["price"], 2) : "NONE")?>
+															<?php endif; ?>
 														</td>
 														<td>
 															<?=$states[$row["state"]]?>

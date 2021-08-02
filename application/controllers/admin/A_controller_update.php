@@ -195,7 +195,8 @@
 	// = = = ORDERS
 	public function edit_order() {
 		$order_id = $this->input->post("inp_id");
-		$user_email = $this->input->post("inp_user_email");
+		$user_id = $this->input->post("inp_user_id");
+
 		$description = $this->input->post("inp_description");
 		$date = $this->input->post("inp_date");
 		$time = $this->input->post("inp_time");
@@ -224,14 +225,13 @@
 			}
 		}
 
-		if ($user_email == NULL || $description == NULL || $date == NULL || $time == NULL || count($items) < 1 || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL) {
+		if ($order_id == NULL || $user_id == NULL || $description == NULL || $date == NULL || $time == NULL || count($items) < 1 || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL) {
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
 		} else {
-			$user_info = $this->Model_read->get_user_acc_wemail($user_email);
-			if ($user_info->num_rows() < 1) {
-				$this->session->set_flashdata("alert", array("warning", "User Email does not exist."));
+			$user = $this->Model_read->get_user_acc_wid($user_id);
+			if ($user->num_rows() < 1 && $user_id != 0) {
+				$this->session->set_flashdata("alert", array("warning", "User ID does not exist."));
 			} else {
-				$user_id = $user_info->row_array()["user_id"];
 				$data = array(
 					"user_id" => $user_id,
 					"description" => $description,
@@ -292,7 +292,8 @@
 	// = = = ORDERS CUSTOM
 	public function edit_order_custom() {
 		$order_id = $this->input->post("inp_id");
-		$user_email = $this->input->post("inp_user_email");
+		$user_id = $this->input->post("inp_user_id");
+		
 		$description = $this->input->post("inp_description");
 		$date = $this->input->post("inp_date");
 		$time = $this->input->post("inp_time");
@@ -315,14 +316,13 @@
 		$price = $this->input->post("inp_price");
 
 
-		if ($user_email == NULL || $description == NULL || $date == NULL || $time == NULL || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL) {
+		if ($order_id == NULL || $user_id == NULL || $description == NULL || $date == NULL || $time == NULL || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL) {
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
 		} else {
-			$user_info = $this->Model_read->get_user_acc_wemail($user_email);
-			if ($user_info->num_rows() < 1) {
-				$this->session->set_flashdata("alert", array("warning", "User Email does not exist."));
+			$user = $this->Model_read->get_user_acc_wid($user_id);
+			if ($user->num_rows() < 1 && $user_id != 0) {
+				$this->session->set_flashdata("alert", array("warning", "User ID does not exist."));
 			} else {
-				$user_id = $user_info->row_array()["user_id"];
 				$data = array(
 					"user_id" => $user_id,
 					"description" => $description,
@@ -566,14 +566,14 @@
 	public function edit_user_account() {
 		$user_id = $this->input->post("inp_id");
 
+		$email = $this->input->post("inp_email");
+		$password = $this->input->post("inp_password");
+
 		$name_last = $this->input->post("inp_name_last");
 		$name_first = $this->input->post("inp_name_first");
 		$name_middle = $this->input->post("inp_name_middle");
 		$name_extension = $this->input->post("inp_name_extension");
-
 		$gender = $this->input->post("inp_gender");
-		$email = $this->input->post("inp_email");
-		$contact_num = $this->input->post("inp_contact_num");
 
 		$zip_code = $this->input->post("inp_zip_code");
 		$country = $this->input->post("inp_country");
@@ -582,36 +582,40 @@
 		$street = $this->input->post("inp_street");
 		$address = $this->input->post("inp_address");
 
-		$password = $this->input->post("inp_password");
+		$contact_num = $this->input->post("inp_contact_num");
 
 
-		if ($user_id == NULL || $name_last == NULL || $name_first == NULL || $gender == NULL || $email == NULL || $contact_num == NULL || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL) {
+		if ($user_id == NULL || $name_last == NULL || $name_first == NULL || $gender == NULL || $contact_num == NULL || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL) {
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
 		} else {
-			$acc_info = $this->Model_read->get_user_acc_wid($user_id)->row_array();
-			if ($this->Model_read->get_user_acc_wemail($email)->num_rows() > 0 && $acc_info["email"] != $email) {
+			$user_info = $this->Model_read->get_user_acc_wid($user_id)->row_array();
+			if ($user_info["email"] != NULL && $this->Model_read->get_user_acc_wemail($email)->num_rows() > 0 && $user_info["email"] != $email) {
 				$this->session->set_flashdata("alert", array("warning", "Email has already been used."));
+			} elseif ($user_info["email"] != NULL && $email == NULL) {
+				$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
 			} else {
 				$data = array(
 					"name_last" => $name_last,
 					"name_first" => $name_first,
 					"name_middle" => $name_middle,
 					"name_extension" => $name_extension,
-					
 					"gender" => $gender,
-					"email" => $email,
-					"contact_num" => $contact_num,
 
 					"zip_code" => $zip_code,
 					"country" => $country,
 					"province" => $province,
 					"city" => $city,
 					"street" => $street,
-					"address" => $address
+					"address" => $address,
+					
+					"contact_num" => $contact_num
 				);
-				if ($password != NULL) {
+				if ($user_info["email"] != NULL) {
+					$data["email"] = $email;
+				} 
+				if ($user_info["password"] != NULL && $password != NULL) {
 					$data["password"] = password_hash($password, PASSWORD_BCRYPT);
-				}
+				} 
 
 				if ($this->Model_update->update_user_account($user_id, $data)) {
 					$this->session->set_flashdata("alert", array("success", "Account info is successfully updated."));

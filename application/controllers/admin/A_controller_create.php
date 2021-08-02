@@ -464,21 +464,28 @@
 
 		$password = $this->input->post("inp_password");
 
-		if ($name_last == NULL || $name_first == NULL || $gender == NULL || $email == NULL || $contact_num == NULL || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL || $password == NULL) {
+		if ($name_last == NULL || $name_first == NULL || $gender == NULL || $contact_num == NULL || $zip_code == NULL || $country == NULL || $province == NULL || $city == NULL || $street == NULL) {
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
 		} else {
-			if ($this->Model_read->get_user_acc_wemail($email)->num_rows() > 0) {
+			if ($email == NULL || $password == NULL) {
+				$new_email = NULL;
+				$new_password = NULL;
+			} else {
+				$new_email = $email;
+				$new_password = password_hash($password, PASSWORD_BCRYPT);
+			}
+			if ($this->Model_read->get_user_acc_wemail($new_email)->num_rows() > 0) {
 				$this->session->set_flashdata("alert", array("warning", "Email is aready registered."));
 			} else {
 				$data = array(
+					"email" => $new_email,
+					"password" => $new_password,
+
 					"name_last" => $name_last,
 					"name_first" => $name_first,
 					"name_middle" => $name_middle,
 					"name_extension" => $name_extension,
-					
 					"gender" => $gender,
-					"email" => $email,
-					"contact_num" => $contact_num,
 
 					"zip_code" => $zip_code,
 					"country" => $country,
@@ -487,7 +494,8 @@
 					"street" => $street,
 					"address" => $address,
 
-					"password" => password_hash($password, PASSWORD_BCRYPT),
+					"contact_num" => $contact_num,
+
 					"status" => "1"
 				);
 				if ($this->Model_create->create_user_account($data)) {

@@ -1,11 +1,8 @@
 
-update of orders with no accounts, (remove the ability to change the buyer?)
-
-
 EMAIL = order, custom order, custom order payment, state received
 -also email users on important state changes
 
-make DASHBOARD
+make DASHBOARD - notifications/logs
 
 user+admin logs
 
@@ -16,6 +13,8 @@ if there are more than 1 product on a custom order, add the ability for the admi
 - add product in custom order view
 
 archives
+
+add add/update buttons on item views
 
 
 

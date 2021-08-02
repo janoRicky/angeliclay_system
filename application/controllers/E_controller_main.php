@@ -886,4 +886,19 @@
 			echo json_encode($result);
 		}
 	}
+
+	public function search_users() {
+		$this->admin_login_check();
+
+		$search = $this->input->get("search");
+
+		$result = $this->Model_read->search_user_names($search)->result_array();
+
+		$names = array();
+		foreach ($result as $row) {
+			$names[$row["user_id"]] = "[". $row["user_id"] ."] ". $row["name_last"] .", ". $row["name_first"] . ($row["name_middle"] != NULL ? " ". $row["name_middle"] : "") . ($row["name_extension"] != NULL ? " ". $row["name_extension"] : "") . ($row["email"] == NULL ? " (NO ACCOUNT)" : " (". $row["email"] .")");
+		}
+
+		echo json_encode($names);
+	}
 }
