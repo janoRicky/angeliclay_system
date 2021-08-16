@@ -29,6 +29,9 @@ class Model_create extends CI_Model {
 	public function create_user_account($data) {
 		return $this->db->insert("user_accounts", $data);
 	}
+	public function create_message($data) {
+		return $this->db->insert("messages", $data);
+	}
 
 	public function create_adm_account($data) {
 		return $this->db->insert("admin_accounts", $data);

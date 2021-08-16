@@ -50,7 +50,7 @@ $template_header;
 												<td>
 													<img class="img-responsive img_row img_zoomable" src="<?php
 													if (!empty($row["img"])) {
-														echo base_url(). 'assets/img/featured/type_'. $row["type_id"] .'/'. $row["img"];
+														echo base_url(). 'uploads/types/type_'. $row["type_id"] .'/'. $row["img"];
 													} else {
 														echo base_url(). "assets/img/no_img.png";
 													}
@@ -113,7 +113,7 @@ $template_header;
 						</div>
 						<div class="form-group">
 							<label>Price Range:</label>
-							<input type="text" class="form-control" name="inp_price_range" placeholder="*Price Range" autocomplete="off" required="">
+							<input type="text" class="form-control" name="inp_price_range" placeholder="*e.g. 150.00 - 200.00" autocomplete="off" required="">
 						</div>
 					</div>
 					<div class="modal-footer">

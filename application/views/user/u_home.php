@@ -29,29 +29,23 @@ $template_header;
 								?>
 								<div class="col-2 d-sm-none"></div>
 								<div class="col-8 col-sm-4 p-2 feat_item item_2">
-									<img class="feat_img" src="<?php
-									if (!empty($f_products[0]["img"])) {
-										echo base_url(). 'uploads/product_'. $f_products[0]["product_id"] .'/'. $f_products[0]["img"];
-									} else {
-										echo base_url(). "assets/img/no_img.png";
-									}
-									?>" style="width: 75%; float: right;">
+									<img class="feat_img" src="img?t=0&i=<?=$f_products[0]['product_id']?>" style="width: 75%; float: right;">
 								</div>
 								<div class="col-8 col-sm-4 p-2 feat_item item_3">
 									<img class="feat_img" src="<?php
-									if (!empty($f_products[1]["img"])) {
-										echo base_url(). 'uploads/product_'. $f_products[1]["product_id"] .'/'. $f_products[1]["img"];
+									if (!empty($f_products[1]['img'])) {
+										echo base_url(). 'uploads/products/product_'. $f_products[1]['product_id'] .'/'. $f_products[1]['img'];
 									} else {
-										echo base_url(). "assets/img/no_img.png";
+										echo base_url(). 'assets/img/no_img.png';
 									}
 									?>" style="width: 100%; float: center;">
 								</div>
 								<div class="col-8 col-sm-4 p-2 feat_item item_1">
 									<img class="feat_img" src="<?php
-									if (!empty($f_products[2]["img"])) {
-										echo base_url(). 'uploads/product_'. $f_products[2]["product_id"] .'/'. $f_products[2]["img"];
+									if (!empty($f_products[2]['img'])) {
+										echo base_url(). 'uploads/products/product_'. $f_products[2]['product_id'] .'/'. $f_products[2]['img'];
 									} else {
-										echo base_url(). "assets/img/no_img.png";
+										echo base_url(). 'assets/img/no_img.png';
 									}
 									?>" style="width: 75%; float: left;">
 								</div>
@@ -84,10 +78,10 @@ $template_header;
 									<?php endif; ?>
 									<div class="col-5 marginslim">
 										<img class="feat_img img-fluid" src="<?php
-										if (!empty($row["img"])) {
-											echo base_url(). 'assets/img/featured/type_'. $row["type_id"] .'/'. explode("/", $row["img"])[0];
+										if (!empty($row['img'])) {
+											echo base_url(). 'uploads/types/type_'. $row["type_id"] .'/'. $row["img"];
 										} else {
-											echo base_url(). "assets/img/no_img.png";
+											echo base_url(). 'assets/img/no_img.png';
 										}
 										?>">
 									</div>

@@ -68,7 +68,7 @@ $template_header;
 														<a href="<?=base_url()?>product?id=<?=$item_info['product_id']?>" class="text-dark">
 															<img class="img-responsive item_img" src="<?php
 															if (!empty($item_info["img"])) {
-																echo base_url(). 'uploads/product_'. $item_info["product_id"] .'/'. explode("/", $item_info["img"])[0];
+																echo base_url(). 'uploads/products/product_'. $item_info["product_id"] .'/'. explode("/", $item_info["img"])[0];
 															} else {
 																echo base_url(). "assets/img/no_img.png";
 															}

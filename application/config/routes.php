@@ -123,6 +123,7 @@ $route['admin/orders_custom_edit'] = 'E_controller_main/view_a_orders_custom_edi
 $route['admin/users'] = 'E_controller_main/view_a_users';
 $route['admin/users_view'] = 'E_controller_main/view_a_users_view';
 $route['admin/users_edit'] = 'E_controller_main/view_a_users_edit';
+$route['admin/users_messaging'] = 'E_controller_main/view_a_users_messaging';
 
 $route['admin/accounts'] = 'E_controller_main/view_a_accounts';
 $route['admin/accounts_view'] = 'E_controller_main/view_a_accounts_view';
@@ -150,6 +151,7 @@ $route['admin/user_create'] = 'admin/A_controller_create/new_user_account';
 $route['admin/acc_create'] = 'admin/A_controller_create/new_admin_account';
 
 $route['admin/order_add_payment'] = 'admin/A_controller_create/new_order_payment';
+$route['admin/message_send'] = 'admin/A_controller_create/new_message';
 
 // - UPDATE
 $route['admin/product_update'] = 'admin/A_controller_update/edit_product';

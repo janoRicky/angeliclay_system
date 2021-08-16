@@ -27,14 +27,14 @@
 
 			$product_folder = "product_". (intval($this->db->count_all("products")) + 1);
 
-			$config["upload_path"] = "./uploads/". $product_folder;
+			$config["upload_path"] = "./uploads/products/". $product_folder;
 			$config["allowed_types"] = "gif|jpg|png";
 			$config["max_size"] = 5000;
 			$config["encrypt_name"] = TRUE;
 
 			$this->load->library("upload", $config);
-			if (!is_dir("uploads/". $product_folder)) {
-				mkdir("./uploads/". $product_folder, 0777, TRUE);
+			if (!is_dir("uploads/products/". $product_folder)) {
+				mkdir("./uploads/products/". $product_folder, 0777, TRUE);
 			}
 
 			if (isset($_FILES["inp_img"])) {
@@ -79,15 +79,15 @@
 
 			$type_folder = "type_". (intval($this->db->count_all("types")) + 1);
 
-			$config["upload_path"] = "./assets/img/featured/". $type_folder;
+			$config["upload_path"] = "./uploads/types/". $type_folder;
 			$config["allowed_types"] = "gif|jpg|png";
 			$config["max_size"] = 5000;
 			$config["encrypt_name"] = TRUE;
 
 			$this->load->library("upload", $config);
 
-			if (!is_dir("assets/img/featured/". $type_folder)) {
-				mkdir("./assets/img/featured/". $type_folder, 0777, TRUE);
+			if (!is_dir("uploads/types/". $type_folder)) {
+				mkdir("./uploads/types/". $type_folder, 0777, TRUE);
 			}
 
 			if (isset($_FILES["inp_img"])) {
@@ -327,14 +327,14 @@
 
 						$product_folder = "custom_". (intval($this->db->count_all("products_custom")) + 1);
 
-						$config["upload_path"] = "./uploads/". $product_folder;
+						$config["upload_path"] = "./uploads/custom/". $product_folder;
 						$config["allowed_types"] = "gif|jpg|png";
 						$config["max_size"] = 5000;
 						$config["encrypt_name"] = TRUE;
 
 						$this->load->library("upload", $config);
-						if (!is_dir("uploads/". $product_folder)) {
-							mkdir("./uploads/". $product_folder, 0777, TRUE);
+						if (!is_dir("uploads/custom/". $product_folder)) {
+							mkdir("./uploads/custom/". $product_folder, 0777, TRUE);
 						}
 
 						for ($i = 1; $i <= $img_count; $i++) {
@@ -536,5 +536,35 @@
 		}
 		redirect("admin/accounts". (isset($item_id) ? "_view?id=". $item_id : ""));
 	}
+	// = = = MESSAGES
+	public function new_message() {
+		$user_id = $this->input->post("inp_user_id");
+		$admin_id = $this->session->userdata("admin_id");
+		$message = $this->input->post("inp_message");
+		$type = $this->input->post("inp_to");
 
+		if ($user_id == NULL || $admin_id == NULL || $message == NULL) {
+			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
+		} else {
+			$user = $this->Model_read->get_user_wacc_wid($user_id);
+			if ($user->num_rows() < 1 && $user_id != 0) {
+				$this->session->set_flashdata("alert", array("warning", "User ID does not exist."));
+			} else {
+				$data = array(
+					"user_id" => $user_id,
+					"admin_id" => $admin_id,
+					"message" => $message,
+					"type" => $type,
+
+					"status" => "1"
+				);
+				if ($this->Model_create->create_message($data)) {
+					$this->session->set_flashdata("alert", array("success", "Message is successfully sent."));
+				} else {
+					$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
+				}
+			}
+		}
+		redirect("admin/users". (isset($user_id) ? "_messaging?id=". $user_id : ""));
+	}
 }

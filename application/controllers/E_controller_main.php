@@ -11,15 +11,34 @@
 	}
 
 	public function view_image() { // <img src="img">
-		$name = $this->input->get("name");
+		// $name = base_url() . $this->input->get("name");
+		$name = NULL;
+		$type = $this->input->get("t");
+		$id = $this->input->get("i");
 
-		$test = imagecreatefromjpeg(base_url()."assets/img/sample2.jpg");
+		switch ($type) {
+			case "0":
+				$product = $this->Model_read->get_product_wid($id)->row_array();
+				$name = base_url(). "uploads/products/product_". $product["product_id"] ."/". $product["img"];
+				break;
+		}
 
-		header("Content-type: image/jpg");
-		imagejpeg($test);
+		// if (pathinfo($name, PATHINFO_EXTENSION) == "png") {
+		// 	$image_png = imagecreatefrompng($name);
 
-		imagedestroy($test);
+		// 	header("Content-type: image/png");
+		// 	imagepng($image_png);
 
+		// 	imagedestroy($image_png);
+		// } elseif (pathinfo($name, PATHINFO_EXTENSION) == "jpeg") {
+		// 	$image_jpeg = imagecreatefromjpeg($name);
+
+		// 	header("Content-type: image/jpg");
+		// 	imagejpeg($image_jpeg);
+
+		// 	imagedestroy($image_jpeg);
+		// }
+		redirect($name);
 	}
 
 	public function index() {
@@ -626,7 +645,6 @@
 		} else {
 			$head["title"] = "Custom Orders/View - Angeliclay Ordering System";
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
-			$data["nav"] = array("text" => "Custom Orders/View", "link" => "orders_custom");
 			$data["nav"] = array(
 				array("text" => "Custom Orders", "link" => "orders_custom"),
 				array("text" => "View Custom Order #". $id, "link" => "orders_custom_view?id=". $id)
@@ -710,7 +728,6 @@
 		} else {
 			$head["title"] = "Users/View - Angeliclay Ordering System";
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
-			$data["nav"] = array("text" => "Users/View", "link" => "users");
 			$data["nav"] = array(
 				array("text" => "Users", "link" => "users"),
 				array("text" => "View User #". $id, "link" => "users_view?id=". $id)
@@ -754,6 +771,32 @@
 			$data["row_info"] = $row_info->row_array();
 
 			$this->load->view("admin/a_users_update", $data);
+		}
+	}
+	public function view_a_users_messaging() {
+		$this->admin_login_check();
+
+		$id = $this->input->get("id");
+
+		$row_info = $this->Model_read->get_user_wacc_wid($id);
+
+		if ($id == NULL || $row_info->num_rows() < 1) {
+			$this->session->set_flashdata("alert", array("warning", "User ID does not exist."));
+			redirect("admin/users");
+		} else {
+			$head["title"] = "Users/View - Angeliclay Ordering System";
+			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
+			$data["nav"] = array(
+				array("text" => "Users", "link" => "users"),
+				array("text" => "View User", "link" => "users_view?id=". $id),
+				array("text" => "Message User #". $id, "link" => "users_messaging?id=". $id)
+			);
+
+			$data["tbl_messages"] = $this->Model_read->get_user_messages_wid($id);
+
+			$data["row_info"] = $row_info->row_array();
+
+			$this->load->view("admin/a_users_messaging", $data);
 		}
 	}
 // = = = ADMINS

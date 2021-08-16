@@ -124,6 +124,9 @@ class Model_read extends CI_Model {
 	public function get_user_acc_wid($id) {
 		return $this->db->get_where("user_accounts", array("user_id" => $id));
 	}
+	public function get_user_wacc_wid($id) {
+		return $this->db->get_where("user_accounts", array("email !=" => "NULL", "user_id" => $id));
+	}
 	public function get_user_acc_wemail($email) {
 		return $this->db->get_where("user_accounts", array("email" => $email, "status" => "1"));
 	}
@@ -170,6 +173,9 @@ class Model_read extends CI_Model {
 		$this->db->from("user_accounts");
 		$this->db->where("user_id", $id);
 		return $this->db->get();
+	}
+	public function get_user_messages_wid($id) {
+		return $this->db->get_where("messages", array("user_id" => $id));
 	}
 
 	public function get_adm_accounts() {

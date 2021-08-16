@@ -80,7 +80,7 @@ $template_header;
 						<div class="row">
 							<div class="col-12 border-bottom border-top pt-3">
 								<h5 class="font-weight-bold">
-									Total New Orders This Month (<?=date("M")?>)
+									<i class="fa fa-calendar" aria-hidden="true"></i> Total New Orders This Month (<?=date("M")?>)
 								</h5>
 							</div>
 							<div class="col-12 col-md-10 col-lg-7 mx-auto">

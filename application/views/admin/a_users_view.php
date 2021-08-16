@@ -21,9 +21,18 @@ $template_header;
 							</div>
 						<?php endif; ?>
 						<div class="row view_container">
-							<div class="col-12 text-left">
+							<div class="col-12 col-sm-6 text-left">
 								<h2>View User #<?=$row_info["user_id"]?> <?=($row_info["email"] == NULL ? "[NO ACCOUNT]" : "")?></h2>
 							</div>
+							<?php if ($row_info["email"] != NULL): ?>
+								<div class="col-12 col-sm-6 text-right">
+									<a href="<?=base_url();?>admin/users_messaging?id=<?=$row_info['user_id']?>">
+										<button class="btn btn-primary font-weight-bold">
+											<i class="fa fa-comments-o p-1" aria-hidden="true"></i> Messaging
+										</button>
+									</a>
+								</div>
+							<?php endif; ?>
 							<div class="col-12">
 								<div class="row mt-2">
 									<?php if ($row_info["email"] != NULL): ?>

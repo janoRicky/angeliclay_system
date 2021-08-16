@@ -26,7 +26,7 @@ $template_header;
 							<div class="col-12 col-md-3">
 								<img class="img-responsive img_view img_zoomable" src="<?php
 								if (!empty($row_info["img"])) {
-									echo base_url(). 'uploads/product_'. $row_info["product_id"] .'/'. explode("/", $row_info["img"])[0];
+									echo base_url(). 'uploads/products/product_'. $row_info["product_id"] .'/'. $row_info["img"];
 								} else {
 									echo base_url(). "assets/img/no_img.png";
 								}

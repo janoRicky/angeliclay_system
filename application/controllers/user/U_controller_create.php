@@ -118,15 +118,15 @@
 
 					$product_folder = "custom_". (intval($this->db->count_all("products_custom")) + 1);
 
-					$config["upload_path"] = "./uploads/". $product_folder;
+					$config["upload_path"] = "./uploads/products/". $product_folder;
 					$config["allowed_types"] = "gif|jpg|png";
 					$config["max_size"] = 5000;
 					$config["encrypt_name"] = TRUE;
 
 					$this->load->library("upload", $config);
 
-					if (!is_dir("uploads/". $product_folder)) {
-						mkdir("./uploads/". $product_folder, 0777, TRUE);
+					if (!is_dir("uploads/products/". $product_folder)) {
+						mkdir("./uploads/products/". $product_folder, 0777, TRUE);
 					}
 
 					for ($i = 1; $i <= $img_count; $i++) {

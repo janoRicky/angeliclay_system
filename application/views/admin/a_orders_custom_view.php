@@ -91,7 +91,7 @@ $template_header;
 											<?php if ($src != NULL): ?>
 												<div class="col-12 col-sm-6 col-md-4 col-lg-3 pb-3 mx-auto img_m_view">
 													<img class="img-responsive img_zoomable" src="
-													<?=base_url(). 'uploads/custom_'. $product_info["custom_id"] .'/'. $src?>">
+													<?=base_url(). 'uploads/custom/custom_'. $product_info["custom_id"] .'/'. $src?>">
 												</div>
 											<?php endif; ?>
 										<?php endforeach; ?>

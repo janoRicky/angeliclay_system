@@ -110,7 +110,7 @@ $template_header;
 													<div class="col-12 col-sm-6 col-md-4 col-lg-3 img_box mb-3">
 														<div class="img_m_box">
 															<input type="file" class="d-none img_input" name="inp_img_<?=$ctr?>">
-															<img class="img_m_preview" src="<?=base_url(). 'uploads/custom_'. $product_info["custom_id"] .'/'. $src?>">
+															<img class="img_m_preview" src="<?=base_url(). 'uploads/custom/custom_'. $product_info["custom_id"] .'/'. $src?>">
 															<div class="img_m_change p-3 text-center d-none">
 																Change Image
 															</div>

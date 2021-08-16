@@ -145,7 +145,7 @@ $template_header;
 														<td>
 															<img class="img-responsive img_row img_zoomable" src="<?php
 															if (!empty($row["img"])) {
-																echo base_url(). 'uploads/product_'. $row["product_id"] .'/'. $row["img"];
+																echo base_url(). 'uploads/products/product_'. $row["product_id"] .'/'. $row["img"];
 															} else {
 																echo base_url(). "assets/img/no_img.png";
 															}
