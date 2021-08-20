@@ -342,6 +342,25 @@
 			$this->load->view("user/u_my_order_payment", $data);
 		}
 	}
+	public function view_u_customer_support() {
+		$head["title"] = "Customer Support Chat - Angeliclay Ordering System";
+		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
+
+		if (!$this->session->has_userdata("user_in")) {
+			redirect("home");
+		} else {
+			$user_id = $this->session->userdata("user_id");
+			$page = ($this->input->get("pg") ? $this->input->get("pg") : 0);
+
+			$data["tbl_messages_all"] = $this->Model_read->get_user_messages_all_wuser_id($user_id);
+
+			$data["tbl_messages"] = $this->Model_read->get_user_messages_wuser_id($user_id, $page * 10);
+			$data["tbl_page"] = $page;
+			$data["user_id"] = $user_id;
+
+			$this->load->view("user/u_support", $data);
+		}
+	}
 
 
 
@@ -773,10 +792,23 @@
 			$this->load->view("admin/a_users_update", $data);
 		}
 	}
-	public function view_a_users_messaging() {
+// = = = MESSAGING
+	public function view_a_messaging() {
+		$this->admin_login_check();
+
+		$head["title"] = "Messaging - Angeliclay Ordering System";
+		$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
+		$data["nav"] = array(array("text" => "Messaging", "link" => "messaging"));
+
+		$data["tbl_messages"] = $this->Model_read->get_messages_conversations();
+
+		$this->load->view("admin/a_messaging", $data);
+	}
+	public function view_a_messaging_view() {
 		$this->admin_login_check();
 
 		$id = $this->input->get("id");
+		$page = ($this->input->get("pg") ? $this->input->get("pg") : 0);
 
 		$row_info = $this->Model_read->get_user_wacc_wid($id);
 
@@ -784,19 +816,21 @@
 			$this->session->set_flashdata("alert", array("warning", "User ID does not exist."));
 			redirect("admin/users");
 		} else {
-			$head["title"] = "Users/View - Angeliclay Ordering System";
+			$head["title"] = "Messaging/View - Angeliclay Ordering System";
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
 			$data["nav"] = array(
-				array("text" => "Users", "link" => "users"),
-				array("text" => "View User", "link" => "users_view?id=". $id),
-				array("text" => "Message User #". $id, "link" => "users_messaging?id=". $id)
+				array("text" => "Messaging", "link" => "messaging"),
+				array("text" => "Message User #". $id, "link" => "messaging_view?id=". $id)
 			);
 
-			$data["tbl_messages"] = $this->Model_read->get_user_messages_wid($id);
+			$data["tbl_messages_all"] = $this->Model_read->get_user_messages_all_wuser_id($id);
+
+			$data["tbl_messages"] = $this->Model_read->get_user_messages_wuser_id($id, $page * 10);
+			$data["tbl_page"] = $page;
 
 			$data["row_info"] = $row_info->row_array();
 
-			$this->load->view("admin/a_users_messaging", $data);
+			$this->load->view("admin/a_messaging_view", $data);
 		}
 	}
 // = = = ADMINS

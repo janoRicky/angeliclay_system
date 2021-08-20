@@ -36,6 +36,9 @@
 							<a class="dropdown-item" href="my_orders">
 								<i class="fa fa-list" aria-hidden="true"></i> My Orders
 							</a>
+							<a class="dropdown-item" href="customer_support">
+								<i class="fa fa-envelope" aria-hidden="true"></i> Customer Support Chat
+							</a>
 							<a class="dropdown-item" href="logout">
 								<i class="fa fa-sign-out" aria-hidden="true"></i> Log-Out
 							</a>

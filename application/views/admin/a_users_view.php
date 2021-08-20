@@ -26,7 +26,7 @@ $template_header;
 							</div>
 							<?php if ($row_info["email"] != NULL): ?>
 								<div class="col-12 col-sm-6 text-right">
-									<a href="<?=base_url();?>admin/users_messaging?id=<?=$row_info['user_id']?>">
+									<a href="<?=base_url();?>admin/messaging_view?id=<?=$row_info['user_id']?>">
 										<button class="btn btn-primary font-weight-bold">
 											<i class="fa fa-comments-o p-1" aria-hidden="true"></i> Messaging
 										</button>

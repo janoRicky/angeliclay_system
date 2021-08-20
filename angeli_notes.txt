@@ -16,7 +16,7 @@ archives
 
 add add/update buttons on item views
 
-
+email/password checks
 
 
 

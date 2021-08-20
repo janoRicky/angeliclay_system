@@ -174,8 +174,22 @@ class Model_read extends CI_Model {
 		$this->db->where("user_id", $id);
 		return $this->db->get();
 	}
-	public function get_user_messages_wid($id) {
-		return $this->db->get_where("messages", array("user_id" => $id));
+	public function get_messages_conversations() {
+		$query = ("SELECT m.message_id, m.user_id, m.admin_id, m.message FROM (SELECT message_id, admin_id, user_id, message, MAX(message_id) OVER (PARTITION BY user_id) max_message_id FROM messages) m WHERE m.message_id = m.max_message_id");
+		return $this->db->query($query);
+	}
+	public function get_user_messages_all_wuser_id($user_id) {
+		$this->db->select("message_id");
+		$this->db->from("messages");
+		$this->db->where("user_id", $user_id);
+		return $this->db->get();
+	}
+	public function get_user_messages_wuser_id($user_id, $offset) {
+		$this->db->from("messages");
+		$this->db->where("user_id", $user_id);
+		$this->db->limit(10, $offset);
+		$this->db->order_by("message_id", "DESC");
+		return $this->db->get();
 	}
 
 	public function get_adm_accounts() {

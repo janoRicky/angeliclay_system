@@ -72,7 +72,7 @@ $route['my_orders'] = 'E_controller_main/view_u_my_orders';
 $route['my_order_details'] = 'E_controller_main/view_u_my_order_details';
 $route['my_order_payment'] = 'E_controller_main/view_u_my_order_payment';
 
-
+$route['customer_support'] = 'E_controller_main/view_u_customer_support';
 
 
 // SESSION
@@ -98,6 +98,7 @@ $route['submit_order'] = 'E_controller_main/view_u_submit_order';
 
 $route['order_receive'] = 'user/U_controller_update/user_order_receive';
 
+$route['send_message'] = 'user/U_controller_create/new_message_user';
 
 // PAGES - ADMIN
 $route['admin'] = 'E_controller_main/view_a_login';
@@ -123,7 +124,9 @@ $route['admin/orders_custom_edit'] = 'E_controller_main/view_a_orders_custom_edi
 $route['admin/users'] = 'E_controller_main/view_a_users';
 $route['admin/users_view'] = 'E_controller_main/view_a_users_view';
 $route['admin/users_edit'] = 'E_controller_main/view_a_users_edit';
-$route['admin/users_messaging'] = 'E_controller_main/view_a_users_messaging';
+
+$route['admin/messaging'] = 'E_controller_main/view_a_messaging';
+$route['admin/messaging_view'] = 'E_controller_main/view_a_messaging_view';
 
 $route['admin/accounts'] = 'E_controller_main/view_a_accounts';
 $route['admin/accounts_view'] = 'E_controller_main/view_a_accounts_view';
@@ -151,7 +154,7 @@ $route['admin/user_create'] = 'admin/A_controller_create/new_user_account';
 $route['admin/acc_create'] = 'admin/A_controller_create/new_admin_account';
 
 $route['admin/order_add_payment'] = 'admin/A_controller_create/new_order_payment';
-$route['admin/message_send'] = 'admin/A_controller_create/new_message';
+$route['admin/message_send'] = 'admin/A_controller_create/new_message_admin';
 
 // - UPDATE
 $route['admin/product_update'] = 'admin/A_controller_update/edit_product';

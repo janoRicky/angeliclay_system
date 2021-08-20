@@ -537,11 +537,10 @@
 		redirect("admin/accounts". (isset($item_id) ? "_view?id=". $item_id : ""));
 	}
 	// = = = MESSAGES
-	public function new_message() {
+	public function new_message_admin() {
 		$user_id = $this->input->post("inp_user_id");
 		$admin_id = $this->session->userdata("admin_id");
 		$message = $this->input->post("inp_message");
-		$type = $this->input->post("inp_to");
 
 		if ($user_id == NULL || $admin_id == NULL || $message == NULL) {
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
@@ -554,7 +553,7 @@
 					"user_id" => $user_id,
 					"admin_id" => $admin_id,
 					"message" => $message,
-					"type" => $type,
+					"date_time" => date("Y-m-d H:i:s"),
 
 					"status" => "1"
 				);
@@ -565,6 +564,6 @@
 				}
 			}
 		}
-		redirect("admin/users". (isset($user_id) ? "_messaging?id=". $user_id : ""));
+		redirect("admin/messaging". (isset($user_id) ? "_view?id=". $user_id : ""));
 	}
 }

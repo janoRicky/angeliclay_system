@@ -390,4 +390,32 @@
 		}
 		redirect("home");
 	}
+	// = = = MESSAGES
+	public function new_message_user() {
+		$user_id = $this->session->userdata("user_id");
+		$message = $this->input->post("inp_message");
+
+		if ($user_id == NULL || $message == NULL) {
+			$this->session->set_flashdata("notice", array("warning", "One or more inputs are empty."));
+		} else {
+			$user = $this->Model_read->get_user_wacc_wid($user_id);
+			if ($user->num_rows() < 1 && $user_id != 0) {
+				$this->session->set_flashdata("notice", array("warning", "User ID does not exist."));
+			} else {
+				$data = array(
+					"user_id" => $user_id,
+					"message" => $message,
+					"date_time" => date("Y-m-d H:i:s"),
+
+					"status" => "1"
+				);
+				if ($this->Model_create->create_message($data)) {
+					$this->session->set_flashdata("notice", array("success", "Message is successfully sent."));
+				} else {
+					$this->session->set_flashdata("notice", array("danger", "Something went wrong, please try again."));
+				}
+			}
+		}
+		redirect("customer_support");
+	}
 }
