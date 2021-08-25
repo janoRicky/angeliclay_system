@@ -42,7 +42,7 @@ $template_header;
 							</div>
 							<div class="col-12 col-sm-10 mx-auto">
 								<div class="row mt-2">
-									<div class="col-12 col-sm-7 mt-1" style="max-height: 80vh; overflow-y: scroll;">
+									<div id="message_container" class="col-12 col-sm-7 mt-1" style="max-height: 80vh; overflow-y: scroll;">
 										<?php 
 										$msg_remaining = $tbl_messages_all->num_rows() - ($tbl_page * 10);
 										?>
@@ -113,6 +113,8 @@ $template_header;
 </body>
 <script type="text/javascript">
 	$(document).ready(function () {
+		$("#message_container").animate({ scrollTop: $("#message_container").height() }, 100);
+		$("#message_container").get(0).scrollIntoView();
 	});
 </script>
 </html>

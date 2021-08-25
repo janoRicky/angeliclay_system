@@ -554,7 +554,7 @@
 					"admin_id" => $admin_id,
 					"message" => $message,
 					"date_time" => date("Y-m-d H:i:s"),
-
+					"seen" => "0",
 					"status" => "1"
 				);
 				if ($this->Model_create->create_message($data)) {

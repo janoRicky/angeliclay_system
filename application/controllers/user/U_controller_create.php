@@ -322,7 +322,7 @@
 		$date_time = date('Y-m-d H:i:s');
 		$ref_no = $this->input->post("inp_ref_no");
 
-		$order = $this->Model_read->get_order_custom_to_pay_wid_user_id($order_id, $user_id);
+		$order = $this->Model_read->get_order_to_pay_wid_user_id($order_id, $user_id);
 		if ($order_id == NULL || $order->num_rows() < 1) {
 			$this->session->set_flashdata("notice", array("danger", "Something went wrong, please try again."));
 			redirect("home");
@@ -406,7 +406,7 @@
 					"user_id" => $user_id,
 					"message" => $message,
 					"date_time" => date("Y-m-d H:i:s"),
-
+					"seen" => "1",
 					"status" => "1"
 				);
 				if ($this->Model_create->create_message($data)) {

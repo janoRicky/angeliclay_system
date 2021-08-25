@@ -32,7 +32,8 @@ $template_header;
 									<thead>
 										<tr>
 											<th>User Email</th>
-											<th>Last Message</th>
+											<th>Latest Message</th>
+											<th>Time</th>
 											<th>Action</th>
 										</tr>
 									</thead>
@@ -47,6 +48,26 @@ $template_header;
 												</td>
 												<td class="text-white <?=($row['admin_id'] == NULL ? 'bg-primary' : 'bg-secondary')?>">
 													<?=substr($row["message"], 0, 50) . (strlen($row["message"]) > 50 ? "..." : "")?>
+												</td>
+												<td>
+													<?php
+													$dateDiff = strtotime(date('Y-m-d H:i:s')) - strtotime($row['date_time']);
+													$days = $dateDiff / (60 * 60 * 24);
+													$hours = $dateDiff / (60 * 60);
+													$minutes = $dateDiff / 60;
+													if ($days > 1) {
+														$timePassed = floor($days) . 'd';
+													}
+													elseif ($hours > 1) {
+														$timePassed = floor($hours) . 'h';
+													}
+													elseif ($minutes > 1) {
+														$timePassed = floor($minutes) . 'm';
+													} else {
+														$timePassed = $dateDiff . 's';
+													}
+													?>
+													<?=$timePassed?> ago
 												</td>
 												<td>
 													<a href="messaging_view?id=<?=$row["user_id"]?>">

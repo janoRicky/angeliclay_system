@@ -27,7 +27,7 @@
 				<?php if ($this->session->userdata("user_in")): ?>
 					<li class="nav-item px-4">
 						<a class="nav-link nav_link dropdown-toggle <?=(uri_string() == 'account' || uri_string() == 'my_orders' ? 'active' : '')?>" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-							<i class="fa fa-circle" aria-hidden="true" style="color: lime;"></i> <?=$this->session->userdata("user_name")?>
+							<i class="fa fa-circle text-success" aria-hidden="true"></i> <?=$this->session->userdata("user_name")?>
 						</a>
 						<div class="dropdown-menu dropdown_menu dropdown-menu-right">
 							<a class="dropdown-item" href="account">
@@ -35,9 +35,6 @@
 							</a>
 							<a class="dropdown-item" href="my_orders">
 								<i class="fa fa-list" aria-hidden="true"></i> My Orders
-							</a>
-							<a class="dropdown-item" href="customer_support">
-								<i class="fa fa-envelope" aria-hidden="true"></i> Customer Support Chat
 							</a>
 							<a class="dropdown-item" href="logout">
 								<i class="fa fa-sign-out" aria-hidden="true"></i> Log-Out
@@ -51,6 +48,19 @@
 						</a>
 					</li>
 				<?php endif; ?>
+				<?php
+				$msg_latest = $this->Model_read->get_user_messages_latest($this->session->userdata("user_id"));
+				?>
+				<li class="nav-item px-1">
+					<a class="nav-link nav_link" href="customer_support">
+						<i class="fa fa-envelope" aria-hidden="true"></i>
+						<?php if ($msg_latest->num_rows() > 0 && $msg_latest->row_array()["admin_id"] != NULL && $msg_latest->row_array()["seen"] == "0"): ?>
+							<span style="font-size: 0.85rem;">
+								New message/s
+							</span>
+						<?php endif; ?>
+					</a>
+				</li>
 			</ul>
 		</nav>
 	</div>

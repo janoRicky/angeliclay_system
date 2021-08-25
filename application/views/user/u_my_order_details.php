@@ -43,6 +43,14 @@ $template_header;
 						<div class="col-1"></div>
 						<div class="col-10 p-4">
 							<div class="row">
+								<div class="col-4 col-md-3">
+									<h5 class="font-weight-bold">Date / Time: </h5>
+								</div>
+								<div class="col-8 col-md-9">
+									<?=date("Y-m-d / H:i:s A", strtotime($my_order["date_time"]))?>
+								</div>
+							</div>
+							<div class="row mt-2">
 								<div class="col-3">
 									<h5 class="font-weight-bold">Full Address: </h5>
 								</div>

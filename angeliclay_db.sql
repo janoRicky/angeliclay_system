@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 20, 2021 at 09:58 AM
+-- Generation Time: Aug 25, 2021 at 05:28 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 7.4.21
 
@@ -93,6 +93,7 @@ CREATE TABLE `messages` (
   `admin_id` int(11) DEFAULT NULL,
   `message` text DEFAULT NULL,
   `date_time` datetime DEFAULT NULL,
+  `seen` int(11) DEFAULT NULL,
   `status` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -100,65 +101,66 @@ CREATE TABLE `messages` (
 -- Dumping data for table `messages`
 --
 
-INSERT INTO `messages` (`message_id`, `user_id`, `admin_id`, `message`, `date_time`, `status`) VALUES
-(1, 2, NULL, 'test', '2021-08-10 22:47:33', 1),
-(2, 2, 1, 'hoy user', '2021-08-11 22:47:45', 1),
-(3, 2, 1, 'wazzap', '2021-08-12 22:47:50', 1),
-(4, 2, NULL, 'wazzzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaapppppppppppp', '2021-08-13 22:47:55', 1),
-(5, 2, NULL, 'wazzzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaapppppppppppp kaaaaaaaaa diiiiiiin', '2021-08-14 22:48:02', 1),
-(6, 2, 2, 'waaaaaaaaaaaaaazzzzzzzzzzzzzzzzzuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuupppppppppppppppppppppp', '2021-08-15 22:48:16', 1),
-(7, 2, NULL, 'wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap', '2021-08-16 22:48:20', 1),
-(8, 1, NULL, 'wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap', '2021-08-17 22:48:28', 1),
-(9, 2, 2, 'sdasdwq awsdsadqw asdvxcb', '2021-08-17 22:54:52', 1),
-(10, 2, 1, 'dqwrse oisdhfiodsb', '2021-08-17 22:54:59', 1),
-(11, 2, NULL, 'sdajskgdg cfwefg dsvsdg sdf sdg rgrth dfhgfdfh bdfbgfn', '2021-08-17 22:55:11', 1),
-(12, 2, NULL, 'dfgkj jgihgf dghghn gt bfdbfgf', '2021-08-17 22:55:21', 1),
-(13, 2, NULL, 'rttytyu ntr tetdhj ryl.,btrv reyrey dfbgbfgdfhfyynfnyygfn  yn tyn ny ', '2021-08-17 22:55:35', 1),
-(14, 2, 2, 'gjtr r oi h iug uyf uyfytytd u ih h iu hi hj hf ytd ytcydt cu cyt ufiyf i u fuy fd hgs d edsghfuj', '2021-08-17 22:55:45', 1),
-(15, 1, 2, 'lshdfigciu ifgeiuf dgbiugb iugvjh bj klhdkjgrsghkjd ahfsidufiusage aIUSGUDIFGIAGSFIBAESGE', '2021-08-17 22:55:55', 1),
-(16, 2, 1, 'Sweet talk', '2021-08-17 22:56:06', 1),
-(17, 2, NULL, 'everything you say', '2021-08-17 22:56:12', 1),
-(18, 2, 1, 'it sounds like', '2021-08-17 22:56:18', 1),
-(19, 2, NULL, 'sweet talk to my ears', '2021-08-17 22:56:25', 1),
-(20, 2, 1, 'you could yell', '2021-08-17 22:56:32', 1),
-(21, 2, NULL, 'piss off', '2021-08-17 22:56:38', 1),
-(22, 2, 1, 'won\'t you stay away', '2021-08-17 22:56:48', 1),
-(23, 2, NULL, 'it\'ll still be', '2021-08-17 22:56:56', 1),
-(24, 2, 1, 'sweet talk to my ears', '2021-08-17 22:57:03', 1),
-(25, 2, NULL, 'put it in my pocket', '2021-08-17 22:57:39', 1),
-(26, 2, 1, 'in my backpocket', '2021-08-17 22:57:49', 1),
-(27, 2, NULL, 'you\'re not self-aware', '2021-08-17 22:58:10', 1),
-(28, 2, 1, 'you\'re a big df', '2021-08-17 22:58:20', 1),
-(29, 2, NULL, 'with your df face', '2021-08-17 22:58:29', 1),
-(30, 2, 1, 'trey', '2021-08-19 23:17:31', 1),
-(31, 2, 1, 'terere', '2021-08-19 23:18:30', 1),
-(32, 1, NULL, 'test', '2021-08-20 15:36:43', 1),
-(33, 1, NULL, 'sadasdwe', '2021-08-20 15:37:00', 1),
-(34, 1, NULL, 'Oh, my love', '2021-08-20 15:37:15', 1),
-(35, 1, NULL, 'I know I am a cold cold man', '2021-08-20 15:37:25', 1),
-(36, 1, NULL, 'So slow to give you compliments', '2021-08-20 15:37:37', 1),
-(37, 1, NULL, 'And public displayed affections', '2021-08-20 15:37:47', 1),
-(38, 1, NULL, 'But baby, don\'t you go over-analyze', '2021-08-20 15:38:02', 1),
-(39, 1, NULL, 'No need to theorize', '2021-08-20 15:38:10', 1),
-(40, 1, NULL, 'I can put your doubts to rest', '2021-08-20 15:38:21', 1),
-(41, 1, NULL, 'You\'re the only one worth seeing', '2021-08-20 15:38:31', 1),
-(42, 1, NULL, 'The only place worth being', '2021-08-20 15:38:38', 1),
-(43, 1, NULL, 'The only bed worth sleeping in', '2021-08-20 15:38:50', 1),
-(44, 1, NULL, 'Is the one right next to you', '2021-08-20 15:38:58', 1),
-(45, 1, NULL, 'When it is cold', '2021-08-20 15:39:18', 1),
-(46, 1, NULL, 'I get warm, just thinking of you', '2021-08-20 15:39:32', 1),
-(47, 1, NULL, 'When I\'m alone', '2021-08-20 15:39:40', 1),
-(48, 1, NULL, 'I stare at stars and hope dreams come true', '2021-08-20 15:39:57', 1),
-(49, 1, NULL, 'You\'re probably not aware that I\'m even here', '2021-08-20 15:41:21', 1),
-(50, 1, NULL, 'Yeah you might not know I exist but I don\'t even care', '2021-08-20 15:42:17', 1),
-(51, 1, NULL, 'Sweet talk, everything you say', '2021-08-20 15:42:28', 1),
-(52, 1, NULL, 'It sounds like sweet talk to my ears', '2021-08-20 15:43:09', 1),
-(53, 1, NULL, 'You could yell \"piss off, won\'t you stay away\"', '2021-08-20 15:43:33', 1),
-(54, 1, NULL, 'It\'ll still be, sweet talk to my ears', '2021-08-20 15:43:45', 1),
-(55, 1, 1, 'unko', '2021-08-20 15:52:09', 1),
-(56, 1, 2, 'taberu', '2021-08-20 15:53:16', 1),
-(57, 2, 2, 'unko tabenai konoyarou', '2021-08-20 15:53:31', 1),
-(58, 1, NULL, 'Unko tabenai unko-san', '2021-08-20 15:54:03', 1);
+INSERT INTO `messages` (`message_id`, `user_id`, `admin_id`, `message`, `date_time`, `seen`, `status`) VALUES
+(1, 2, NULL, 'test', '2021-08-10 22:47:33', NULL, 1),
+(2, 2, 1, 'hoy user', '2021-08-11 22:47:45', NULL, 1),
+(3, 2, 1, 'wazzap', '2021-08-12 22:47:50', NULL, 1),
+(4, 2, NULL, 'wazzzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaapppppppppppp', '2021-08-13 22:47:55', NULL, 1),
+(5, 2, NULL, 'wazzzaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaapppppppppppp kaaaaaaaaa diiiiiiin', '2021-08-14 22:48:02', NULL, 1),
+(6, 2, 2, 'waaaaaaaaaaaaaazzzzzzzzzzzzzzzzzuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuupppppppppppppppppppppp', '2021-08-15 22:48:16', NULL, 1),
+(7, 2, NULL, 'wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap', '2021-08-16 22:48:20', NULL, 1),
+(8, 1, NULL, 'wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap wazzap', '2021-08-17 22:48:28', NULL, 1),
+(9, 2, 2, 'sdasdwq awsdsadqw asdvxcb', '2021-08-17 22:54:52', NULL, 1),
+(10, 2, 1, 'dqwrse oisdhfiodsb', '2021-08-17 22:54:59', NULL, 1),
+(11, 2, NULL, 'sdajskgdg cfwefg dsvsdg sdf sdg rgrth dfhgfdfh bdfbgfn', '2021-08-17 22:55:11', NULL, 1),
+(12, 2, NULL, 'dfgkj jgihgf dghghn gt bfdbfgf', '2021-08-17 22:55:21', NULL, 1),
+(13, 2, NULL, 'rttytyu ntr tetdhj ryl.,btrv reyrey dfbgbfgdfhfyynfnyygfn  yn tyn ny ', '2021-08-17 22:55:35', NULL, 1),
+(14, 2, 2, 'gjtr r oi h iug uyf uyfytytd u ih h iu hi hj hf ytd ytcydt cu cyt ufiyf i u fuy fd hgs d edsghfuj', '2021-08-17 22:55:45', NULL, 1),
+(15, 1, 2, 'lshdfigciu ifgeiuf dgbiugb iugvjh bj klhdkjgrsghkjd ahfsidufiusage aIUSGUDIFGIAGSFIBAESGE', '2021-08-17 22:55:55', NULL, 1),
+(16, 2, 1, 'Sweet talk', '2021-08-17 22:56:06', NULL, 1),
+(17, 2, NULL, 'everything you say', '2021-08-17 22:56:12', NULL, 1),
+(18, 2, 1, 'it sounds like', '2021-08-17 22:56:18', NULL, 1),
+(19, 2, NULL, 'sweet talk to my ears', '2021-08-17 22:56:25', NULL, 1),
+(20, 2, 1, 'you could yell', '2021-08-17 22:56:32', NULL, 1),
+(21, 2, NULL, 'piss off', '2021-08-17 22:56:38', NULL, 1),
+(22, 2, 1, 'won\'t you stay away', '2021-08-17 22:56:48', NULL, 1),
+(23, 2, NULL, 'it\'ll still be', '2021-08-17 22:56:56', NULL, 1),
+(24, 2, 1, 'sweet talk to my ears', '2021-08-17 22:57:03', NULL, 1),
+(25, 2, NULL, 'put it in my pocket', '2021-08-17 22:57:39', NULL, 1),
+(26, 2, 1, 'in my backpocket', '2021-08-17 22:57:49', NULL, 1),
+(27, 2, NULL, 'you\'re not self-aware', '2021-08-17 22:58:10', NULL, 1),
+(28, 2, 1, 'you\'re a big df', '2021-08-17 22:58:20', NULL, 1),
+(29, 2, NULL, 'with your df face', '2021-08-17 22:58:29', 0, 1),
+(30, 2, 1, 'trey', '2021-08-19 23:17:31', NULL, 1),
+(31, 2, 1, 'terere', '2021-08-19 23:18:30', NULL, 1),
+(32, 1, NULL, 'test', '2021-08-20 15:36:43', NULL, 1),
+(33, 1, NULL, 'sadasdwe', '2021-08-20 15:37:00', NULL, 1),
+(34, 1, NULL, 'Oh, my love', '2021-08-20 15:37:15', NULL, 1),
+(35, 1, NULL, 'I know I am a cold cold man', '2021-08-20 15:37:25', NULL, 1),
+(36, 1, NULL, 'So slow to give you compliments', '2021-08-20 15:37:37', NULL, 1),
+(37, 1, NULL, 'And public displayed affections', '2021-08-20 15:37:47', NULL, 1),
+(38, 1, NULL, 'But baby, don\'t you go over-analyze', '2021-08-20 15:38:02', NULL, 1),
+(39, 1, NULL, 'No need to theorize', '2021-08-20 15:38:10', NULL, 1),
+(40, 1, NULL, 'I can put your doubts to rest', '2021-08-20 15:38:21', NULL, 1),
+(41, 1, NULL, 'You\'re the only one worth seeing', '2021-08-20 15:38:31', NULL, 1),
+(42, 1, NULL, 'The only place worth being', '2021-08-20 15:38:38', NULL, 1),
+(43, 1, NULL, 'The only bed worth sleeping in', '2021-08-20 15:38:50', NULL, 1),
+(44, 1, NULL, 'Is the one right next to you', '2021-08-20 15:38:58', NULL, 1),
+(45, 1, NULL, 'When it is cold', '2021-08-20 15:39:18', NULL, 1),
+(46, 1, NULL, 'I get warm, just thinking of you', '2021-08-20 15:39:32', NULL, 1),
+(47, 1, NULL, 'When I\'m alone', '2021-08-20 15:39:40', NULL, 1),
+(48, 1, NULL, 'I stare at stars and hope dreams come true', '2021-08-20 15:39:57', NULL, 1),
+(49, 1, NULL, 'You\'re probably not aware that I\'m even here', '2021-08-20 15:41:21', NULL, 1),
+(50, 1, NULL, 'Yeah you might not know I exist but I don\'t even care', '2021-08-20 15:42:17', 0, 1),
+(51, 1, NULL, 'Sweet talk, everything you say', '2021-08-20 15:42:28', NULL, 1),
+(52, 1, NULL, 'It sounds like sweet talk to my ears', '2021-08-20 15:43:09', NULL, 1),
+(53, 1, NULL, 'You could yell \"piss off, won\'t you stay away\"', '2021-08-20 15:43:33', NULL, 1),
+(54, 1, NULL, 'It\'ll still be, sweet talk to my ears', '2021-08-20 15:43:45', NULL, 1),
+(55, 1, 1, 'unko', '2021-08-20 15:52:09', NULL, 1),
+(56, 1, 2, 'taberu', '2021-08-20 15:53:16', NULL, 1),
+(57, 2, 2, 'unko tabenai konoyarou', '2021-08-20 15:53:31', 0, 1),
+(58, 1, NULL, 'Unko tabenai unko-san', '2021-08-20 15:54:03', 1, 1),
+(59, 1, 1, 'Yo yo yo', '2021-08-25 22:26:51', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -194,9 +196,10 @@ INSERT INTO `orders` (`order_id`, `user_id`, `description`, `date_time`, `zip_co
 (6, '2', 'tst', '2021-07-30 00:37:00', '1234', 'Yes', 'No', 'Maybe', 'Idunno', '', '0', '1'),
 (7, '3', 'test', '2021-07-30 01:10:00', '1234', 'Ctr', 'Prv', 'Ct', 'StRd', '', '0', '1'),
 (8, '3', 'try', '2021-07-30 01:21:00', '1234', 'Ctr', 'Prv', 'Ct', 'StRd', '', '0', '1'),
-(9, '1', 'test', '2021-07-30 01:41:00', '1870', 'Philippines', 'Rizal', 'Antipolo', 'Rd', '828', '0', '1'),
+(9, '1', 'test', '2021-07-30 01:41:00', '1870', 'Philippines', 'Rizal', 'Antipolo', 'Rd', '828', '1', '1'),
 (10, '3', 'test', '2021-07-30 01:42:00', '1234', 'Ctr', 'Prv', 'Ct', 'StRd', '', '0', '1'),
-(11, '4', 'Test', '2021-07-30 01:42:00', '1234', 'Ctr', 'Pro', 'Cty', 'Strd', '', '0', '1');
+(11, '4', 'Test', '2021-07-30 01:42:00', '1234', 'Ctr', 'Pro', 'Cty', 'Strd', '', '0', '1'),
+(12, '1', NULL, '2021-08-25 22:42:47', '1870', 'Philippines', 'Rizal', 'Antipolo', 'Rd', '828', '0', '1');
 
 -- --------------------------------------------------------
 
@@ -229,9 +232,10 @@ INSERT INTO `orders_items` (`item_id`, `order_id`, `product_id`, `qty`, `price`,
 (8, '6', '2', '2', '200', 'NORMAL', NULL),
 (9, '7', '2', '3', '200', 'NORMAL', NULL),
 (10, '8', '4', '3', '250', 'NORMAL', NULL),
-(11, '9', '3', NULL, NULL, 'CUSTOM', NULL),
+(11, '9', '3', '10', '30', 'CUSTOM', NULL),
 (12, '10', '4', NULL, NULL, 'CUSTOM', NULL),
-(13, '11', '5', NULL, NULL, 'CUSTOM', NULL);
+(13, '11', '5', NULL, NULL, 'CUSTOM', NULL),
+(14, '12', '1', '1', '200', 'NORMAL', NULL);
 
 -- --------------------------------------------------------
 
@@ -258,7 +262,10 @@ INSERT INTO `orders_payments` (`payment_id`, `order_id`, `description`, `img`, `
 (2, '4', 'tester', '27f9d815a3b034a82dee91fedad43a53.jpg', '2021-07-28 14:17:00', '1020.00', '1'),
 (3, '1', 'Test', '75300b04b84309b9c0f7a8d8106ae0d5.png', '2021-07-28 14:49:00', '199.999995', '1'),
 (4, '3', 'TEST', '6d6be821961b7233eaeac6a791dc119d.png', '2021-07-28 15:36:00', '1000.00', '1'),
-(5, '2', '', NULL, '2021-07-28 15:37:00', '121.999999', '1');
+(5, '2', '', NULL, '2021-07-28 15:37:00', '121.999999', '1'),
+(6, '12', NULL, 'dc02ec5be306f0b5ae372ec4f5793f2c.jpg', '2021-08-25 22:42:47', NULL, '1'),
+(7, '9', NULL, 'f3d99a6a1587a20d2d897bc13da58648.jpg', '2021-08-25 23:19:37', NULL, '1'),
+(8, '4', NULL, '7fc149ed8fe738f108858d1f495bfa3e.jpg', '2021-08-25 23:22:42', NULL, '1');
 
 -- --------------------------------------------------------
 
@@ -286,7 +293,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`product_id`, `img`, `name`, `type_id`, `description`, `price`, `qty`, `type`, `date_added`, `visibility`, `featured`, `status`) VALUES
-(1, '3808feda972c31891c1c9ab60fe0e6f8.jpg', 'Angel Figure (Female)', '1', 'A female angel in casual clothing.', '200', '10', 'NORMAL', '2021-07-22 00:42:08', '1', 2, '1'),
+(1, '3808feda972c31891c1c9ab60fe0e6f8.jpg', 'Angel Figure (Female)', '1', 'A female angel in casual clothing.', '200', '9', 'NORMAL', '2021-07-22 00:42:08', '1', 2, '1'),
 (2, '4ca225f151b79e909e574157fd58c318.jpg', 'Angel Figure (Male)', '1', 'A male angel in casual clothing. ', '200', '10', 'NORMAL', '2021-07-22 01:16:47', '1', NULL, '1'),
 (3, 'c599b6db33a13adcdd1e5c0e0c48031d.jpg', 'Test', '1', 'Test', '250', '0', 'NORMAL', '2021-07-27 22:15:23', '0', 1, '1'),
 (4, '27df0ec9579647df58cb58ae463d6c28.jpg', 'Test', '1', 'Test', '250', '15', 'NORMAL', '2021-07-27 22:34:43', '1', 3, '1');
@@ -474,25 +481,25 @@ ALTER TABLE `logs`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `orders_items`
 --
 ALTER TABLE `orders_items`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `orders_payments`
 --
 ALTER TABLE `orders_payments`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `products`

@@ -41,6 +41,10 @@ class Model_update extends CI_Model {
 		$this->db->where("user_id", $id);
 		return $this->db->update("user_accounts", $data);
 	}
+	public function see_user_message($id) {
+		$this->db->where("message_id", $id);
+		return $this->db->update("messages", array("seen" => "1"));
+	}
 
 	public function update_adm_account($id, $data) {
 		$this->db->where("admin_id", $id);

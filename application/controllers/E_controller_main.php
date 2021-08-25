@@ -6,6 +6,7 @@
 	public function __construct() {
 		parent::__construct();
 		$this->load->model("Model_read");
+		$this->load->model("Model_update");
 
 		date_default_timezone_set("Asia/Manila");
 	}
@@ -313,11 +314,16 @@
 
 		$user_id = $this->session->userdata("user_id");
 
-		$order = $this->Model_read->get_order_custom_to_pay_wid_user_id($id, $user_id);
+		$order = $this->Model_read->get_order_to_pay_wid_user_id($id, $user_id);
 		if ($id == NULL || $order->num_rows() < 1) {
 			redirect("my_orders");
 		} else {
 			$order_items = $this->Model_read->get_order_items_wid_user_id($id, $user_id, "CUSTOM");
+			$type = "CUSTOM";
+			if ($order_items->num_rows() < 1) {
+				$order_items = $this->Model_read->get_order_items_wid_user_id($id, $user_id, "NORMAL");
+				$type = "NORMAL";
+			}
 			
 			$data["my_order"] = $order->row_array();
 			$data["order_items"] = $order_items;
@@ -334,6 +340,7 @@
 			$data["order_payments"] = $this->Model_read->get_order_payments_worder_id($id);
 
 			$data["order_id"] = $id;
+			$data["type"] = $type;
 
 			foreach ($this->Model_read->get_types()->result_array() as $row) {
 				$data["types"][$row["type_id"]] = $row["name"];
@@ -357,6 +364,12 @@
 			$data["tbl_messages"] = $this->Model_read->get_user_messages_wuser_id($user_id, $page * 10);
 			$data["tbl_page"] = $page;
 			$data["user_id"] = $user_id;
+
+			$msg_latest_id = max(array_column($data["tbl_messages_all"]->result_array(), "message_id"));
+			$msg_latest = $this->Model_read->get_user_message_wid($msg_latest_id)->row_array();
+			if ($msg_latest["admin_id"] != NULL && $msg_latest["seen"] == "0") {
+				$this->Model_update->see_user_message($msg_latest_id);
+			}
 
 			$this->load->view("user/u_support", $data);
 		}

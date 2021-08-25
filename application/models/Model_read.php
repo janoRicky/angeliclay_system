@@ -106,6 +106,9 @@ class Model_read extends CI_Model {
 	public function get_order_all_wid_user_id($id, $user_id) {
 		return $this->db->get_where("orders", array("order_id" => $id, "user_id" => $user_id));
 	}
+	public function get_order_to_pay_wid_user_id($id, $user_id) {
+		return $this->db->get_where("orders", array("order_id" => $id, "user_id" => $user_id, "state" => "1"));
+	}
 	public function get_order_items_wid_user_id($id, $user_id, $type) {
 		$query = "SELECT * FROM orders_items AS oi WHERE order_id = '$id' AND type = '$type' AND EXISTS(SELECT * FROM orders AS o WHERE o.order_id = oi.order_id AND user_id = '$user_id' AND status = '1')";
 		return $this->db->query($query);
@@ -174,8 +177,13 @@ class Model_read extends CI_Model {
 		$this->db->where("user_id", $id);
 		return $this->db->get();
 	}
+	public function get_user_message_wid($id) {
+		$this->db->from("messages");
+		$this->db->where("message_id", $id);
+		return $this->db->get();
+	}
 	public function get_messages_conversations() {
-		$query = ("SELECT m.message_id, m.user_id, m.admin_id, m.message FROM (SELECT message_id, admin_id, user_id, message, MAX(message_id) OVER (PARTITION BY user_id) max_message_id FROM messages) m WHERE m.message_id = m.max_message_id");
+		$query = ("SELECT m.message_id, m.user_id, m.admin_id, m.message, m.date_time FROM (SELECT message_id, admin_id, user_id, message, date_time, MAX(message_id) OVER (PARTITION BY user_id) max_message_id FROM messages) m WHERE m.message_id = m.max_message_id");
 		return $this->db->query($query);
 	}
 	public function get_user_messages_all_wuser_id($user_id) {
@@ -188,6 +196,14 @@ class Model_read extends CI_Model {
 		$this->db->from("messages");
 		$this->db->where("user_id", $user_id);
 		$this->db->limit(10, $offset);
+		$this->db->order_by("message_id", "DESC");
+		return $this->db->get();
+	}
+	public function get_user_messages_latest($user_id) {
+		$this->db->select("message_id, admin_id, seen");
+		$this->db->from("messages");
+		$this->db->where("user_id", $user_id);
+		$this->db->limit(1);
 		$this->db->order_by("message_id", "DESC");
 		return $this->db->get();
 	}

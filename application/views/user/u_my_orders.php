@@ -109,6 +109,7 @@ $template_header;
 <script type="text/javascript">
 	$(document).ready(function () {
 		$("#table_my_orders").DataTable({
+			"order": [[0, "desc"]],
 			"bLengthChange": false,
 			createdRow: function (row, data, index) {
 				$(row).addClass("order");
