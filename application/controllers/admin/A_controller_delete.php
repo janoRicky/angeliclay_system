@@ -57,6 +57,31 @@
 		}
 		redirect("admin/types");
 	}
+	// = = = PAYMENT
+	public function delete_payment_tbp() {
+		$id = $this->input->post("inp_id");
+
+		if ($id == NULL) {
+			$this->session->set_flashdata("alert", array("warning", "Something went wrong, please try again."));
+		} else {
+			$payment = $this->Model_read->get_order_payment_unpaid_wid($id);
+			if ($payment->num_rows() < 1) {
+				$this->session->set_flashdata("alert", array("warning", "Payment does not exist."));
+			} else {
+				$payment_details = $payment->row_array();
+
+				if ($payment_details["status"] == 0) {
+					if ($this->Model_delete->delete_payment($id)) {
+						$this->session->set_flashdata("alert", array("success", "Payment is successfully deleted."));
+					} else {
+						$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
+					}
+				}
+				redirect("admin/orders_view?id=". $payment_details["order_id"]);
+			}
+		}
+		redirect("admin/orders");
+	}
 	// = = = ORDERS
 	public function delete_order() {
 		$id = $this->input->post("inp_id");

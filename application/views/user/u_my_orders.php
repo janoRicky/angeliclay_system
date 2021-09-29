@@ -77,6 +77,13 @@ $template_header;
 																	<i class="fa fa-money" aria-hidden="true"></i> Payment
 																</button>
 															</a>
+															<?php if ($this->Model_read->get_order_payments_unpaid_worder_id($row["order_id"])->num_rows() > 0): ?>
+																<a href="my_order_payment_adtl?id=<?=$row["order_id"]?>">
+																	<button class="button b_p">
+																		<i class="fa fa-money" aria-hidden="true"></i> Adtl. Payment
+																	</button>
+																</a>
+															<?php endif; ?>
 														<?php elseif ($row["state"] == 4): ?>
 															<a class="receive" href="order_receive?order_id=<?=$row['order_id']?>">
 																<button class="button b_p">

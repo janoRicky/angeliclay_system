@@ -349,6 +349,41 @@
 			$this->load->view("user/u_my_order_payment", $data);
 		}
 	}
+	public function view_u_my_order_adtl_payment() {
+		$id = $this->input->get("id");
+
+		$head["title"] = "Order Adtl. Payment - Angeliclay Ordering System";
+		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
+
+		$user_id = $this->session->userdata("user_id");
+
+		$order = $this->Model_read->get_order_to_pay_wid_user_id($id, $user_id);
+		if ($id == NULL || $order->num_rows() < 1) {
+			redirect("my_orders");
+		} else {
+			$payments_adtl = $this->Model_read->get_order_payments_unpaid_worder_id($id);
+			if ($payments_adtl->num_rows() > 0) {
+				$data["my_order"] = $order->row_array();
+
+				$data["states"] = array(
+					"PENDING", 
+					"WAITING FOR PAYMENT", 
+					"ACCEPTED / IN PROGRESS", 
+					"TO SHIP", 
+					"SHIPPED", 
+					"RECEIVED", 
+					"CANCELLED"
+				);
+				$data["order_payments"] = $payments_adtl;
+
+				$data["order_id"] = $id;
+
+				$this->load->view("user/u_my_order_adtl_payment", $data);
+			} else {
+				redirect("my_orders");
+			}
+		}
+	}
 	public function view_u_customer_support() {
 		$head["title"] = "Customer Support Chat - Angeliclay Ordering System";
 		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
@@ -476,6 +511,7 @@
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
 			$data["nav"] = array(
 				array("text" => "Products", "link" => "products"),
+				array("text" => "View Product", "link" => "products_view?id=". $id),
 				array("text" => "Edit Product #". $id, "link" => "products_edit?id=". $id)
 			);
 
@@ -537,6 +573,7 @@
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
 			$data["nav"] = array(
 				array("text" => "Types", "link" => "types"),
+				array("text" => "View Type", "link" => "types_view?id=". $id),
 				array("text" => "Edit Type #". $id, "link" => "types_edit?id=". $id)
 			);
 
@@ -605,6 +642,7 @@
 			);
 			
 			$data["tbl_payments"] = $this->Model_read->get_order_payments_worder_id($id);
+			$data["tbl_payments_unpaid"] = $this->Model_read->get_order_payments_unpaid_worder_id($id);
 
 			$this->load->view("admin/a_orders_view", $data);
 		}
@@ -624,6 +662,7 @@
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
 			$data["nav"] = array(
 				array("text" => "Orders", "link" => "orders"),
+				array("text" => "View Order", "link" => "orders_view?id=". $id),
 				array("text" => "Edit Order #". $id, "link" => "orders_edit?id=". $id)
 			);
 
@@ -722,6 +761,7 @@
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
 			$data["nav"] = array(
 				array("text" => "Custom Orders", "link" => "orders_custom"),
+				array("text" => "View Custom Order", "link" => "orders_custom_view?id=". $id),
 				array("text" => "Edit Custom Order #". $id, "link" => "orders_custom_edit?id=". $id)
 			);
 
@@ -797,6 +837,7 @@
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
 			$data["nav"] = array(
 				array("text" => "Users", "link" => "users"),
+				array("text" => "View User", "link" => "users_view?id=". $id),
 				array("text" => "Edit User #". $id, "link" => "users_edit?id=". $id)
 			);
 
@@ -897,6 +938,7 @@
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
 			$data["nav"] = array(
 				array("text" => "Accounts", "link" => "accounts"),
+				array("text" => "View Account", "link" => "accounts_view?id=". $id),
 				array("text" => "Edit Account #". $id, "link" => "accounts_edit?id=". $id)
 			);
 

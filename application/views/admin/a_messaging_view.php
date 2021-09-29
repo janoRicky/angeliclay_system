@@ -14,6 +14,10 @@ $template_header;
 	.older_messages:hover {
 		text-decoration: underline;
 	}
+	.message_link {
+		color: white;
+		text-decoration: none;
+	}
 </style>
 <body>
 	<div class="wrapper h-100">
@@ -73,7 +77,12 @@ $template_header;
 											<?php else: ?>
 												<div class="row m-1 align-items-center">
 													<div class="col-4 font-italic text-center" style="color: grey; font-size: 0.75rem;">
-														Admin #<?=$row["admin_id"]?> <br> <?=$row["date_time"]?>
+														<?php if ($row["admin_id"] == "0"): ?>
+															[SYSTEM]
+														<?php else: ?>
+															Admin #<?=$row["admin_id"]?>
+														<?php endif; ?>
+														<br><?=$row["date_time"]?>
 													</div>
 													<div class="col-8 bg-secondary ml-auto px-3 py-2 text-right" style="color: #fff; border-radius: 0.35rem; word-break: break-word;">
 														<?=$row["message"]?>

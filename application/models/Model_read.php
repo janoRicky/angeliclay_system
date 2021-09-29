@@ -115,10 +115,17 @@ class Model_read extends CI_Model {
 	}
 
 	public function get_order_payments_worder_id($order_id) {
-		return $this->db->get_where("orders_payments", array("order_id" => $order_id));
+		return $this->db->get_where("orders_payments", array("order_id" => $order_id, "type" => "0"));
 	}
 	public function get_order_payment_wid($payment_id) {
-		return $this->db->get_where("orders_payments", array("payment_id" => $payment_id));
+		return $this->db->get_where("orders_payments", array("payment_id" => $payment_id, "type" => "0"));
+	}
+
+	public function get_order_payments_unpaid_worder_id($order_id) {
+		return $this->db->get_where("orders_payments", array("order_id" => $order_id, "type" => "1"));
+	}
+	public function get_order_payment_unpaid_wid($payment_id) {
+		return $this->db->get_where("orders_payments", array("payment_id" => $payment_id, "type" => "1"));
 	}
 
 	public function get_user_accounts() {
@@ -183,7 +190,7 @@ class Model_read extends CI_Model {
 		return $this->db->get();
 	}
 	public function get_messages_conversations() {
-		$query = ("SELECT m.message_id, m.user_id, m.admin_id, m.message, m.date_time FROM (SELECT message_id, admin_id, user_id, message, date_time, MAX(message_id) OVER (PARTITION BY user_id) max_message_id FROM messages) m WHERE m.message_id = m.max_message_id");
+		$query = ("SELECT m.message_id, m.user_id, m.admin_id, m.message, m.seen, m.date_time FROM (SELECT message_id, admin_id, user_id, message, seen, date_time, MAX(message_id) OVER (PARTITION BY user_id) max_message_id FROM messages) m WHERE m.message_id = m.max_message_id");
 		return $this->db->query($query);
 	}
 	public function get_user_messages_all_wuser_id($user_id) {

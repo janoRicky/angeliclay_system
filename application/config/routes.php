@@ -71,6 +71,7 @@ $route['account_details'] = 'E_controller_main/view_u_account_details';
 $route['my_orders'] = 'E_controller_main/view_u_my_orders';
 $route['my_order_details'] = 'E_controller_main/view_u_my_order_details';
 $route['my_order_payment'] = 'E_controller_main/view_u_my_order_payment';
+$route['my_order_payment_adtl'] = 'E_controller_main/view_u_my_order_adtl_payment';
 
 $route['customer_support'] = 'E_controller_main/view_u_customer_support';
 
@@ -154,6 +155,7 @@ $route['admin/user_create'] = 'admin/A_controller_create/new_user_account';
 $route['admin/acc_create'] = 'admin/A_controller_create/new_admin_account';
 
 $route['admin/order_add_payment'] = 'admin/A_controller_create/new_order_payment';
+$route['admin/order_add_payment_tbp'] = 'admin/A_controller_create/new_order_payment_tbp';
 $route['admin/message_send'] = 'admin/A_controller_create/new_message_admin';
 
 // - UPDATE
@@ -180,6 +182,8 @@ $route['admin/order_delete'] = 'admin/A_controller_delete/delete_order';
 $route['admin/order_custom_delete'] = 'admin/A_controller_delete/delete_order_custom';
 $route['admin/user_delete'] = 'admin/A_controller_delete/delete_user_account';
 $route['admin/acc_delete'] = 'admin/A_controller_delete/delete_admin_account';
+
+$route['admin/payment_delete'] = 'admin/A_controller_delete/delete_payment_tbp';
 
 
 // NOTES:

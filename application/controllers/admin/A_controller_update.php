@@ -62,8 +62,8 @@
 				"img" => $img,
 				"type_id" => $type_id,
 				"description" => $description,
-				"price" => $price,
-				"qty" => $qty
+				"price" => floatval($price),
+				"qty" => intval($qty)
 			);
 
 			if ($this->Model_update->update_product($product_id, $data)) {
@@ -275,19 +275,33 @@
 		$order_id = $this->input->post("inp_id");
 		$state = $this->input->post("inp_state");
 
+		$order_info = $this->Model_read->get_order_wid($order_id);
+
 		if ($order_id == NULL || $state == NULL) {
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
+		} elseif ($order_info->num_rows() < 1) {
+			$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
 		} else {
 			$data = array(
 				"state" => $state
 			);
+			$states = array(
+				"PENDING", 
+				"WAITING FOR PAYMENT", 
+				"ACCEPTED / IN PROGRESS", 
+				"TO SHIP", 
+				"SHIPPED", 
+				"RECEIVED", 
+				"CANCELLED"
+			);
 			if ($this->Model_update->update_order($order_id, $data)) {
+				$this->Model_create->message_user($order_info->row_array()["user_id"], "0", "Your order <a class='message_link' href='my_order_details?id=". $order_id ."'>[". $order_id ."]</a> has been updated to ". $states[$state] .".", date("Y-m-d H:i:s"));
 				$this->session->set_flashdata("alert", array("success", "State is successfully updated."));
 			} else {
 				$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
 			}
 		}
-		redirect("admin/orders");
+		redirect("admin/orders". (isset($order_id) ? "_view?id=". $order_id : ""));
 	}
 	// = = = ORDERS CUSTOM
 	public function edit_order_custom() {
@@ -388,8 +402,8 @@
 					);
 					if ($this->Model_update->update_product_custom($product_id, $data_product)) {
 						$data_item = array(
-							"qty" => $qty,
-							"price" => $price
+							"qty" => intval($qty),
+							"price" => floatval($price)
 						);
 						$this->Model_update->update_order_item($order_id, $data_item);
 
@@ -433,8 +447,8 @@
 						$error = "One or more inputs are empty.";
 					} else {
 						$data = array(
-							"price" => $price,
-							"qty" => $qty
+							"price" => floatval($price),
+							"qty" => intval($qty)
 						);
 						if (!$this->Model_update->update_order_item($order_id, $data)) {
 							$error = "Order Item Error";
@@ -478,8 +492,8 @@
 								"img" => $img,
 								"type_id" => $type_id,
 								"description" => $description,
-								"price" => $price,
-								"qty" => $qty,
+								"price" => floatval($price),
+								"qty" => intval($qty),
 								"type" => "NORMAL",
 								"date_added" => date("Y-m-d H:i:s"),
 								"visibility" => "0",
@@ -499,7 +513,7 @@
 					}
 				} elseif ($state == 6 && $order_info["state"] > 2 && $custom_product_info["product_id"] != NULL) {
 					$data = array(
-						"qty" => $order_item_info["qty"]
+						"qty" => intval($order_item_info["qty"])
 					);
 					if (!$this->Model_update->update_product($custom_product_info["product_id"], $data)) {
 						$error = "Order Cancel Error";

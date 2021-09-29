@@ -2,7 +2,12 @@
 <?php
 $template_header;
 ?>
-
+<style type="text/css">
+	.message_link {
+		color: white;
+		text-decoration: none;
+	}
+</style>
 <body>
 	<div class="wrapper h-100">
 		<div class="container-fluid">
@@ -47,7 +52,7 @@ $template_header;
 													<?=$user_info["email"]?>
 												</td>
 												<td class="text-white <?=($row['admin_id'] == NULL ? 'bg-primary' : 'bg-secondary')?>">
-													<?=substr($row["message"], 0, 50) . (strlen($row["message"]) > 50 ? "..." : "")?>
+													<?=($row["seen"] ? "[SEEN] " : "") . substr($row["message"], 0, 100) . (strlen($row["message"]) > 100 ? "..." : "")?>
 												</td>
 												<td>
 													<?php

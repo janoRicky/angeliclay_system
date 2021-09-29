@@ -26,65 +26,71 @@ $template_header;
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-12 col-md-6 mt-2">
-								<div class="row align-items-center">
-									<div class="col-12 border-bottom">
-										<a href="orders_custom">
-											<h5 class="font-weight-bold">
-												<i class="fa fa-list-alt fa-lg" aria-hidden="true"></i> Custom Orders
-											</h5>
-										</a>
-									</div>
-									<div class="col-12 col-sm-6 my-2">
-										<a href="orders_custom?state=0">
-											<div class="card text-center bg-info text-dark py-3 px-2">
-												<h6 class="my-auto font-weight-bold">PENDING (<?=$custom_count_0?>)</h6>
+							<div class="col-12 col-md-3 mt-2">
+								<div class="row">
+									<div class="col-12 mt-2">
+										<div class="row align-items-center">
+											<div class="col-12 border-bottom">
+												<a href="orders_custom">
+													<h5 class="font-weight-bold">
+														<i class="fa fa-list-alt fa-lg" aria-hidden="true"></i> Custom Orders
+													</h5>
+												</a>
 											</div>
-										</a>
-									</div>
-									<div class="col-12 col-sm-6 my-2">
-										<a href="orders_custom?state=1">
-											<div class="card text-center bg-warning text-dark py-3 px-2">
-												<h6 class="my-auto font-weight-bold">WAITING FOR PAYMENT (<?=$custom_count_1?>)</h6>
+											<div class="col-12 my-2">
+												<a href="orders_custom?state=0">
+													<div class="card text-center bg-info text-dark py-3 px-2">
+														<h6 class="my-auto font-weight-bold">PENDING (<?=$custom_count_0?>)</h6>
+													</div>
+												</a>
 											</div>
-										</a>
+											<div class="col-12 my-2">
+												<a href="orders_custom?state=1">
+													<div class="card text-center bg-warning text-dark py-3 px-2">
+														<h6 class="my-auto font-weight-bold">WAITING FOR PAYMENT (<?=$custom_count_1?>)</h6>
+													</div>
+												</a>
+											</div>
+										</div>
+									</div>
+									<div class="col-12 mt-2">
+										<div class="row align-items-center">
+											<div class="col-12 border-bottom">
+												<a href="orders">
+													<h5 class="font-weight-bold">
+														<i class="fa fa-list fa-lg" aria-hidden="true"></i> Regular Orders
+													</h5>
+												</a>
+											</div>
+											<div class="col-12 my-2">
+												<a href="orders?state=0">
+													<div class="card text-center bg-info text-dark py-3 px-2">
+														<h6 class="my-auto font-weight-bold">PENDING (<?=$regular_count_0?>)</h6>
+													</div>
+												</a>
+											</div>
+											<div class="col-12 my-2">
+												<a href="orders?state=1">
+													<div class="card text-center bg-warning text-dark py-3 px-2">
+														<h6 class="my-auto font-weight-bold">WAITING FOR PAYMENT (<?=$regular_count_1?>)</h6>
+													</div>
+												</a>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
-							<div class="col-12 col-md-6 mt-2">
-								<div class="row align-items-center">
-									<div class="col-12 border-bottom">
-										<a href="orders">
-											<h5 class="font-weight-bold">
-												<i class="fa fa-list fa-lg" aria-hidden="true"></i> Regular Orders
-											</h5>
-										</a>
+							<div class="col-12 col-md-9 mt-2">
+								<div class="row">
+									<div class="col-12">
+										<h5 class="font-weight-bold">
+											<i class="fa fa-calendar" aria-hidden="true"></i> Total New Orders This Month (<?=date("M")?>)
+										</h5>
 									</div>
-									<div class="col-12 col-sm-6 my-2">
-										<a href="orders?state=0">
-											<div class="card text-center bg-info text-dark py-3 px-2">
-												<h6 class="my-auto font-weight-bold">PENDING (<?=$regular_count_0?>)</h6>
-											</div>
-										</a>
-									</div>
-									<div class="col-12 col-sm-6 my-2">
-										<a href="orders?state=1">
-											<div class="card text-center bg-warning text-dark py-3 px-2">
-												<h6 class="my-auto font-weight-bold">WAITING FOR PAYMENT (<?=$regular_count_1?>)</h6>
-											</div>
-										</a>
+									<div class="col-12 col-md-10 col-lg-7 mx-auto">
+										<canvas id="lineChart" height="200"></canvas>
 									</div>
 								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-12 border-bottom border-top pt-3">
-								<h5 class="font-weight-bold">
-									<i class="fa fa-calendar" aria-hidden="true"></i> Total New Orders This Month (<?=date("M")?>)
-								</h5>
-							</div>
-							<div class="col-12 col-md-10 col-lg-7 mx-auto">
-								<canvas id="lineChart" height="200"></canvas>
 							</div>
 						</div>
 					</div>

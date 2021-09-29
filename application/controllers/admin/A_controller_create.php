@@ -50,8 +50,8 @@
 				"img" => $img,
 				"type_id" => $type_id,
 				"description" => $description,
-				"price" => $price,
-				"qty" => $qty,
+				"price" => floatval($price),
+				"qty" => intval($qty),
 				"type" => "NORMAL",
 				"date_added" => date("Y-m-d H:i:s"),
 				"visibility" => "0",
@@ -426,11 +426,48 @@
 					"img" => $img,
 					"date_time" => $date ." ". $time,
 					"amount" => $amount,
+					"type" => "0",
 					"status" => "1"
 				);
 
 				if ($this->Model_create->create_order_payment($data)) {
 					$this->session->set_flashdata("alert", array("success", "Order Payment is successfully added."));
+				} else {
+					$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
+				}
+			} else {
+				$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again." ));
+			}
+		}
+		if ($this->input->post("payment_submit") == "Submit Payment for Order") {
+			redirect("admin/orders". (isset($order_id) ? "_view?id=". $order_id : ""));
+		} else {
+			redirect("admin/orders_custom". (isset($order_id) ? "_view?id=". $order_id : ""));
+		}
+	}
+	public function new_order_payment_tbp() {
+		$order_id = $this->input->post("inp_id");
+		$description = $this->input->post("inp_description");
+		$amount = $this->input->post("inp_amount");
+
+		if ($order_id == NULL || $amount == NULL) {
+			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
+		} else {
+			$order = $this->Model_read->get_order_general_wid($order_id);
+
+			if ($order->num_rows() > 0) {
+				$order_info = $order->row_array();
+
+				$data = array(
+					"order_id" => $order_id,
+					"description" => $description,
+					"amount" => $amount,
+					"type" => "1",
+					"status" => "0"
+				);
+
+				if ($this->Model_create->create_order_payment($data)) {
+					$this->session->set_flashdata("alert", array("success", "TBP Order Payment is successfully added."));
 				} else {
 					$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
 				}
@@ -549,15 +586,7 @@
 			if ($user->num_rows() < 1 && $user_id != 0) {
 				$this->session->set_flashdata("alert", array("warning", "User ID does not exist."));
 			} else {
-				$data = array(
-					"user_id" => $user_id,
-					"admin_id" => $admin_id,
-					"message" => $message,
-					"date_time" => date("Y-m-d H:i:s"),
-					"seen" => "0",
-					"status" => "1"
-				);
-				if ($this->Model_create->create_message($data)) {
+				if ($this->Model_create->message_user($user_id, $admin_id, $message, date("Y-m-d H:i:s"))) {
 					$this->session->set_flashdata("alert", array("success", "Message is successfully sent."));
 				} else {
 					$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));

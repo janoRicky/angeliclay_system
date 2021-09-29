@@ -168,3 +168,7 @@ form .form-group {
 	border-top: 1px solid #999;
 	padding-top: 0.5rem;
 }
+
+table th {
+	font-weight: bold;
+}
