@@ -361,7 +361,7 @@
 		if ($id == NULL || $order->num_rows() < 1) {
 			redirect("my_orders");
 		} else {
-			$payments_adtl = $this->Model_read->get_order_payments_unpaid_worder_id($id);
+			$payments_adtl = $this->Model_read->get_order_payments_adtl_worder_id($id);
 			if ($payments_adtl->num_rows() > 0) {
 				$data["my_order"] = $order->row_array();
 
@@ -641,7 +641,7 @@
 				"CANCELLED"
 			);
 			
-			$data["tbl_payments"] = $this->Model_read->get_order_payments_worder_id($id);
+			$data["tbl_payments"] = $this->Model_read->get_all_order_payments_paid_worder_id($id);
 			$data["tbl_payments_unpaid"] = $this->Model_read->get_order_payments_unpaid_worder_id($id);
 
 			$this->load->view("admin/a_orders_view", $data);
@@ -741,7 +741,8 @@
 				"CANCELLED"
 			);
 
-			$data["tbl_payments"] = $this->Model_read->get_order_payments_worder_id($id);
+			$data["tbl_payments"] = $this->Model_read->get_all_order_payments_paid_worder_id($id);
+			$data["tbl_payments_unpaid"] = $this->Model_read->get_order_payments_unpaid_worder_id($id);
 
 			$this->load->view("admin/a_orders_custom_view", $data);
 		}

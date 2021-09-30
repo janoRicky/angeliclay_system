@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 25, 2021 at 05:28 PM
+-- Generation Time: Sep 30, 2021 at 05:27 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 7.4.21
 
@@ -160,7 +160,15 @@ INSERT INTO `messages` (`message_id`, `user_id`, `admin_id`, `message`, `date_ti
 (56, 1, 2, 'taberu', '2021-08-20 15:53:16', NULL, 1),
 (57, 2, 2, 'unko tabenai konoyarou', '2021-08-20 15:53:31', 0, 1),
 (58, 1, NULL, 'Unko tabenai unko-san', '2021-08-20 15:54:03', 1, 1),
-(59, 1, 1, 'Yo yo yo', '2021-08-25 22:26:51', 1, 1);
+(59, 1, 1, 'Yo yo yo', '2021-08-25 22:26:51', 1, 1),
+(60, 1, 1, 'Test', '2021-08-28 18:28:39', 0, 1),
+(61, 1, 1, 'Just say', '2021-08-28 18:29:13', 1, 1),
+(62, 1, 0, 'Your order <a href=\'my_order_details?id=12\'>[12]</a> has been changed to WAITING FOR PAYMENT', '2021-08-28 18:37:02', 0, 1),
+(63, 1, 0, 'Your order <a href=\'my_order_details?id=12\'>[12]</a> has been changed to PENDING', '2021-08-28 18:37:35', 0, 1),
+(64, 1, 0, 'Your order <a href=\'my_order_details?id=12\'>[12]</a> has been changed to WAITING FOR PAYMENT', '2021-08-28 18:37:40', 1, 1),
+(65, 1, 0, 'Your order <a class=\'message_link\' href=\'my_order_details?id=12\'>[12]</a> has been changed to PENDING', '2021-08-28 18:55:07', 0, 1),
+(66, 1, 1, 'adsas', '2021-08-28 18:57:55', 0, 1),
+(67, 1, 0, 'Your order <a class=\'message_link\' href=\'my_order_details?id=12\'>[12]</a> has been changed to PENDING', '2021-08-28 18:59:33', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -198,8 +206,8 @@ INSERT INTO `orders` (`order_id`, `user_id`, `description`, `date_time`, `zip_co
 (8, '3', 'try', '2021-07-30 01:21:00', '1234', 'Ctr', 'Prv', 'Ct', 'StRd', '', '0', '1'),
 (9, '1', 'test', '2021-07-30 01:41:00', '1870', 'Philippines', 'Rizal', 'Antipolo', 'Rd', '828', '1', '1'),
 (10, '3', 'test', '2021-07-30 01:42:00', '1234', 'Ctr', 'Prv', 'Ct', 'StRd', '', '0', '1'),
-(11, '4', 'Test', '2021-07-30 01:42:00', '1234', 'Ctr', 'Pro', 'Cty', 'Strd', '', '0', '1'),
-(12, '1', NULL, '2021-08-25 22:42:47', '1870', 'Philippines', 'Rizal', 'Antipolo', 'Rd', '828', '0', '1');
+(11, '1', 'Test', '2021-07-30 01:42:00', '1234', 'Ctr', 'Pro', 'Cty', 'Strd', '', '1', '1'),
+(12, '1', NULL, '2021-08-25 22:42:47', '1870', 'Philippines', 'Rizal', 'Antipolo', 'Rd', '828', '1', '1');
 
 -- --------------------------------------------------------
 
@@ -234,7 +242,7 @@ INSERT INTO `orders_items` (`item_id`, `order_id`, `product_id`, `qty`, `price`,
 (10, '8', '4', '3', '250', 'NORMAL', NULL),
 (11, '9', '3', '10', '30', 'CUSTOM', NULL),
 (12, '10', '4', NULL, NULL, 'CUSTOM', NULL),
-(13, '11', '5', NULL, NULL, 'CUSTOM', NULL),
+(13, '11', '5', '1', '1216', 'CUSTOM', NULL),
 (14, '12', '1', '1', '200', 'NORMAL', NULL);
 
 -- --------------------------------------------------------
@@ -250,22 +258,26 @@ CREATE TABLE `orders_payments` (
   `img` varchar(64) DEFAULT NULL,
   `date_time` datetime DEFAULT NULL,
   `amount` varchar(32) DEFAULT NULL,
-  `status` varchar(16) DEFAULT NULL
+  `type` int(11) DEFAULT NULL COMMENT '0=order;1=additional;',
+  `status` varchar(16) DEFAULT NULL COMMENT '0=unpaid;1=paid;'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `orders_payments`
 --
 
-INSERT INTO `orders_payments` (`payment_id`, `order_id`, `description`, `img`, `date_time`, `amount`, `status`) VALUES
-(1, '1', 'Test', '78c64f5500ce4e239bd7f5893566d27d.jpg', '2021-07-22 02:18:00', '200', '1'),
-(2, '4', 'tester', '27f9d815a3b034a82dee91fedad43a53.jpg', '2021-07-28 14:17:00', '1020.00', '1'),
-(3, '1', 'Test', '75300b04b84309b9c0f7a8d8106ae0d5.png', '2021-07-28 14:49:00', '199.999995', '1'),
-(4, '3', 'TEST', '6d6be821961b7233eaeac6a791dc119d.png', '2021-07-28 15:36:00', '1000.00', '1'),
-(5, '2', '', NULL, '2021-07-28 15:37:00', '121.999999', '1'),
-(6, '12', NULL, 'dc02ec5be306f0b5ae372ec4f5793f2c.jpg', '2021-08-25 22:42:47', NULL, '1'),
-(7, '9', NULL, 'f3d99a6a1587a20d2d897bc13da58648.jpg', '2021-08-25 23:19:37', NULL, '1'),
-(8, '4', NULL, '7fc149ed8fe738f108858d1f495bfa3e.jpg', '2021-08-25 23:22:42', NULL, '1');
+INSERT INTO `orders_payments` (`payment_id`, `order_id`, `description`, `img`, `date_time`, `amount`, `type`, `status`) VALUES
+(2, '12', 'tester', '27f9d815a3b034a82dee91fedad43a53.jpg', '2021-07-28 14:17:00', '1020.00', 0, '0'),
+(3, '1', 'Test', '75300b04b84309b9c0f7a8d8106ae0d5.png', '2021-07-28 14:49:00', '199.999995', 0, '1'),
+(4, '3', 'TEST', '6d6be821961b7233eaeac6a791dc119d.png', '2021-07-28 15:36:00', '1000.00', 0, '1'),
+(5, '12', 'Shipping Fee', 'aaa57a271b4fe7415e6f8452d0cbe500.png', '2021-09-30 22:10:42', '120', 1, '1'),
+(6, '12', 'test', 'dc02ec5be306f0b5ae372ec4f5793f2c.jpg', '2021-08-25 22:42:00', '00000303023', 0, '1'),
+(7, '9', NULL, 'f3d99a6a1587a20d2d897bc13da58648.jpg', '2021-08-25 23:19:37', NULL, 0, '1'),
+(8, '4', NULL, '7fc149ed8fe738f108858d1f495bfa3e.jpg', '2021-08-25 23:22:42', NULL, 0, '1'),
+(9, '12', 'Misc', 'a3c4d5baf5c5fdc839cf23c58b8adcbb.png', '2021-09-30 22:28:10', '100', 1, '1'),
+(10, '11', 'test', NULL, '2021-09-30 22:48:00', '2423', 0, '1'),
+(12, '11', '546', 'cd1702c2a05f836f1bb1b733811582c4.png', '2021-09-30 22:58:58', '64565', 1, '1'),
+(14, '11', 'Test', 'ea4d143899c1d9be0ef20a245c2448cd.png', '2021-09-30 23:03:52', '20', 1, '1');
 
 -- --------------------------------------------------------
 
@@ -296,7 +308,8 @@ INSERT INTO `products` (`product_id`, `img`, `name`, `type_id`, `description`, `
 (1, '3808feda972c31891c1c9ab60fe0e6f8.jpg', 'Angel Figure (Female)', '1', 'A female angel in casual clothing.', '200', '9', 'NORMAL', '2021-07-22 00:42:08', '1', 2, '1'),
 (2, '4ca225f151b79e909e574157fd58c318.jpg', 'Angel Figure (Male)', '1', 'A male angel in casual clothing. ', '200', '10', 'NORMAL', '2021-07-22 01:16:47', '1', NULL, '1'),
 (3, 'c599b6db33a13adcdd1e5c0e0c48031d.jpg', 'Test', '1', 'Test', '250', '0', 'NORMAL', '2021-07-27 22:15:23', '0', 1, '1'),
-(4, '27df0ec9579647df58cb58ae463d6c28.jpg', 'Test', '1', 'Test', '250', '15', 'NORMAL', '2021-07-27 22:34:43', '1', 3, '1');
+(4, '27df0ec9579647df58cb58ae463d6c28.jpg', 'Test', '1', 'Test', '250', '15', 'NORMAL', '2021-07-27 22:34:43', '1', 3, '1'),
+(5, NULL, 'test', '1', 'test', '3.6446', '21', 'NORMAL', '2021-08-28 20:19:11', '0', NULL, '1');
 
 -- --------------------------------------------------------
 
@@ -481,7 +494,7 @@ ALTER TABLE `logs`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -499,13 +512,13 @@ ALTER TABLE `orders_items`
 -- AUTO_INCREMENT for table `orders_payments`
 --
 ALTER TABLE `orders_payments`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `products_custom`

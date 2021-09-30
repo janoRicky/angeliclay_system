@@ -114,7 +114,7 @@ $template_header;
 													<?php endforeach; ?>
 												<?php endif; ?>
 											</tbody>
-											<tr id="total_info">
+											<tr>
 												<td class="font-weight-bold">Total</td>
 												<td id="total_qty">
 													<?=$total_qty?>
@@ -173,17 +173,17 @@ $template_header;
 																</button>
 															</td>
 														</tr>
-														<tr id="total_info">
-															<td class="font-weight-bold">Total</td>
-															<td></td>
-															<td></td>
-															<td></td>
-															<td>
-																PHP <?=number_format($total_payment, 2)?>
-															</td>
-															<td></td>
-														</tr>
 													<?php endforeach; ?>
+													<tr>
+														<td class="font-weight-bold">Total</td>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td>
+															PHP <?=number_format($total_payment, 2)?>
+														</td>
+														<td></td>
+													</tr>
 												<?php endif; ?>
 											</tbody>
 										</table>
@@ -400,8 +400,7 @@ $template_header;
 <script type="text/javascript" src="<?=base_url()?>assets/js/sum().js"></script>
 <script type="text/javascript">
 	$(document).ready(function () {
-		// $("#table_items").DataTable();
-		// $("#table_payments").DataTable();
+
 		$(".btn_delete_payment").on("click", function() {
 			$("#delete_id").text($(this).data("id"));
 			$("#delete_inp_id").val($(this).data("id"));

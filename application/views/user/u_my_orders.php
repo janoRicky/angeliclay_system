@@ -62,7 +62,7 @@ $template_header;
 														<?=date("Y-m-d / H:i:s A", strtotime($row["date_time"]))?>
 													</div>
 													<div class="col-12 col-sm-6 col-lg-2 border p-3">
-														<?=($this->Model_read->is_order_custom($row["order_id"]) ? "CUSTOM" : "NORMAL")?>
+														<?=($this->Model_read->is_order_custom($row["order_id"]) ? "<i class='fa fa-list-alt' aria-hidden='true'></i> CUSTOM ORDER" : "<i class='fa fa-list' aria-hidden='true'></i> NORMAL ORDER")?>
 													</div>
 													<div class="col-12 col-sm-12 col-lg-3 border p-3">
 														<?=$row["zip_code"] ." / ". $row["country"] ." / ". $row["province"] ." / ". $row["city"] ." / ". $row["street"] ." / ". $row["address"]?>

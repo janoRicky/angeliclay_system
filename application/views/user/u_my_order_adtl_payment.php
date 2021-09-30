@@ -43,40 +43,45 @@ $template_header;
 						<div class="col-1"></div>
 						<div class="col-10">
 							<div class="row mt-2">
-								<div class="col-5">
-									<table class="table table-center table-hover table-responsive-lg table-bordered">
-										<thead>
-											<tr>
-												<th>Description</th>
-												<th>Amount</th>
-												<th>Status</th>
-											</tr>
-										</thead>
-										<tbody>
-											<?php if ($order_payments->num_rows() < 1): ?>
+								<div class="col-12 col-md-5">
+									<div class="w-100 h-100" style="overflow-y: auto;">
+										<table class="table table-center table-hover table-responsive-sm table-bordered">
+											<thead>
 												<tr>
-													<td class="text-center font-weight-bold" colspan="3">[ EMPTY ]</td>
+													<th>Description</th>
+													<th>Amount</th>
+													<th>Status</th>
 												</tr>
-											<?php else: ?>
-												<?php foreach ($order_payments->result_array() as $key => $row): ?>
-													<?php if ($key == 0) { $payment_id = $row["payment_id"]; $payment_desc = $row["description"]; } ?>
-													<tr class="adtl_payment_row <?=($key == 0 ? 'bg-secondary text-light' : '')?>" data-id="<?=$row["payment_id"]?>">
-														<td class="desc"><?=$row["description"]?></td>
-														<td>PHP <?=number_format($row["amount"], 2)?></td>
-														<td>
-															<?php if ($row["status"] == "0"): ?>
-																<b class="text-danger">UNPAID</b>
-															<?php else: ?>
-																<b class="text-success">PAID</b>
-															<?php endif; ?>
-														</td>
+											</thead>
+											<tbody>
+												<?php if ($order_payments->num_rows() < 1): ?>
+													<tr>
+														<td class="text-center font-weight-bold" colspan="3">[ EMPTY ]</td>
 													</tr>
-												<?php endforeach; ?>
-											<?php endif; ?>
-										</tbody>
-									</table>
+												<?php else: ?>
+													<?php foreach ($order_payments->result_array() as $key => $row): ?>
+														<?php // get first row data
+														if ($key == 0) { $payment_id = $row["payment_id"]; $payment_desc = $row["description"]; }
+														if ($row["status"] == "1") { $paid_row = $row["payment_id"]; }
+														?>
+														<tr class="adtl_payment_row <?=($key == 0 ? 'bg-secondary text-light' : '')?>" data-id="<?=$row["payment_id"]?>">
+															<td class="desc"><?=$row["description"]?></td>
+															<td>PHP <?=number_format($row["amount"], 2)?></td>
+															<td class="status" data-status=<?=$row["status"]?>>
+																<?php if ($row["status"] == "0"): ?>
+																	<b class="text-danger">UNPAID</b>
+																<?php else: ?>
+																	<b class="text-success">PAID</b>
+																<?php endif; ?>
+															</td>
+														</tr>
+													<?php endforeach; ?>
+												<?php endif; ?>
+											</tbody>
+										</table>
+									</div>
 								</div>
-								<div class="col-7">
+								<div class="col-12 col-md-7">
 									<?php if (!isset($payment_id)): ?>
 										<div class="row">
 											<div class="col-12 text-center font-weight-bold text-success">
@@ -84,10 +89,10 @@ $template_header;
 											</div>
 										</div>
 									<?php else: ?>
-										<?=form_open(base_url() . "payment", "method='POST' enctype='multipart/form-data'")?>
+										<?=form_open(base_url() . "payment", "method='POST' enctype='multipart/form-data' id='payment_form' ". (isset($paid_row) ? "style='display: none;'" : ""))?>
 											<input type="hidden" name="inp_order_id" value="<?=$order_id?>" required="">
 											<input type="hidden" name="inp_payment_id" id="inp_payment_id" value="<?=$payment_id?>" required="">
-											<div class="row mt-2">
+											<div class="row mt-2" style="border-bottom: 1px solid black;">
 												<h4 class="font-weight-bold">Payment for [ <span class="payment_desc text-success"><?=$payment_desc?></span> ]: </h4>
 											</div>
 											<div class="row mt-2">
@@ -124,6 +129,11 @@ $template_header;
 												</div>
 											</div>
 										<?=form_close()?>
+										<div class="row paid_already" <?=(!isset($paid_row) ? "style='display: none;'" : "")?>>
+											<div class="col-12 text-center">
+												<h2 class="font-weight-bold text-success py-4">[ ALREADY PAID ]</h2>
+											</div>
+										</div>
 									<?php endif; ?>
 								</div>
 							</div>
@@ -170,6 +180,14 @@ $template_header;
 		$(document).on("click", ".adtl_payment_row", function(event) {
 			$(".adtl_payment_row").removeClass("bg-secondary text-light");
 			$(this).addClass("bg-secondary text-light");
+
+			if ($(this).find(".status").data("status") == "1") {
+				$("#payment_form").hide();
+				$(".paid_already").show();
+			} else {
+				$("#payment_form").show();
+				$(".paid_already").hide();
+			}
 
 			$("#inp_payment_id").val($(this).data("id"));
 			$(".payment_desc").fadeOut(0).text($(this).children(".desc").html()).fadeIn(500);

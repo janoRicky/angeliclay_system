@@ -64,7 +64,7 @@
 		if ($id == NULL) {
 			$this->session->set_flashdata("alert", array("warning", "Something went wrong, please try again."));
 		} else {
-			$payment = $this->Model_read->get_order_payment_unpaid_wid($id);
+			$payment = $this->Model_read->get_order_payment_adtl_wid($id);
 			if ($payment->num_rows() < 1) {
 				$this->session->set_flashdata("alert", array("warning", "Payment does not exist."));
 			} else {
@@ -77,10 +77,13 @@
 						$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
 					}
 				}
-				redirect("admin/orders_view?id=". $payment_details["order_id"]);
 			}
 		}
-		redirect("admin/orders");
+		if (strpos($_SERVER["HTTP_REFERER"], "orders_custom") == false) {
+			redirect("admin/orders". (isset($payment_details["order_id"]) ? "_view?id=". $payment_details["order_id"] : ""));
+		} else {
+			redirect("admin/orders_custom". (isset($payment_details["order_id"]) ? "_view?id=". $payment_details["order_id"] : ""));
+		}
 	}
 	// = = = ORDERS
 	public function delete_order() {

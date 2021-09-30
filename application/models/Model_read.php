@@ -121,11 +121,18 @@ class Model_read extends CI_Model {
 		return $this->db->get_where("orders_payments", array("payment_id" => $payment_id, "type" => "0"));
 	}
 
-	public function get_order_payments_unpaid_worder_id($order_id) {
+	public function get_order_payments_adtl_worder_id($order_id) {
 		return $this->db->get_where("orders_payments", array("order_id" => $order_id, "type" => "1"));
 	}
-	public function get_order_payment_unpaid_wid($payment_id) {
+	public function get_order_payment_adtl_wid($payment_id) {
 		return $this->db->get_where("orders_payments", array("payment_id" => $payment_id, "type" => "1"));
+	}
+
+	public function get_all_order_payments_paid_worder_id($order_id) {
+		return $this->db->get_where("orders_payments", array("order_id" => $order_id, "status" => "1"));
+	}
+	public function get_order_payments_unpaid_worder_id($order_id) {
+		return $this->db->get_where("orders_payments", array("order_id" => $order_id, "type" => "1", "status" => "0"));
 	}
 
 	public function get_user_accounts() {
