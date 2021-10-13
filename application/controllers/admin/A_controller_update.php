@@ -37,7 +37,9 @@
 			$config["encrypt_name"] = TRUE;
 
 			$this->load->library("upload", $config);
-
+			if (!is_dir("uploads")) {
+				mkdir("./uploads", 0777, TRUE);
+			}
 			if (!is_dir("uploads/products")) {
 				mkdir("./uploads/products", 0777, TRUE);
 			}
@@ -62,8 +64,8 @@
 				"img" => $img,
 				"type_id" => $type_id,
 				"description" => $description,
-				"price" => floatval($price),
-				"qty" => intval($qty)
+				"price" => $price,
+				"qty" => $qty
 			);
 
 			if ($this->Model_update->update_product($product_id, $data)) {
@@ -141,6 +143,9 @@
 
 			$this->load->library("upload", $config);
 
+			if (!is_dir("uploads")) {
+				mkdir("./uploads", 0777, TRUE);
+			}
 			if (!is_dir("uploads/types")) {
 				mkdir("./uploads/types", 0777, TRUE);
 			}
@@ -153,7 +158,7 @@
 					$this->session->set_flashdata("alert", array("warning", $this->upload->display_errors()));
 					redirect("admin/types");
 				} else {
-					unlink("./uploads/types/". $type_folder ."/". $row_info["img"]);
+					unlink("./assets/img/featured/". $type_folder ."/". $row_info["img"]);
 					$img = $this->upload->data("file_name");
 				}
 			}
@@ -275,33 +280,19 @@
 		$order_id = $this->input->post("inp_id");
 		$state = $this->input->post("inp_state");
 
-		$order_info = $this->Model_read->get_order_wid($order_id);
-
 		if ($order_id == NULL || $state == NULL) {
 			$this->session->set_flashdata("alert", array("warning", "One or more inputs are empty."));
-		} elseif ($order_info->num_rows() < 1) {
-			$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
 		} else {
 			$data = array(
 				"state" => $state
 			);
-			$states = array(
-				"PENDING", 
-				"WAITING FOR PAYMENT", 
-				"ACCEPTED / IN PROGRESS", 
-				"TO SHIP", 
-				"SHIPPED", 
-				"RECEIVED", 
-				"CANCELLED"
-			);
 			if ($this->Model_update->update_order($order_id, $data)) {
-				$this->Model_create->message_user($order_info->row_array()["user_id"], "0", "Your order <a class='message_link' href='my_order_details?id=". $order_id ."'>[". $order_id ."]</a> has been updated to ". $states[$state] .".", date("Y-m-d H:i:s"));
 				$this->session->set_flashdata("alert", array("success", "State is successfully updated."));
 			} else {
 				$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again."));
 			}
 		}
-		redirect("admin/orders". (isset($order_id) ? "_view?id=". $order_id : ""));
+		redirect("admin/orders");
 	}
 	// = = = ORDERS CUSTOM
 	public function edit_order_custom() {
@@ -357,18 +348,18 @@
 
 					$product_folder = "custom_". $product_id;
 
-					$config["upload_path"] = "./uploads/custom/". $product_folder;
+					$config["upload_path"] = "./uploads/". $product_folder;
 					$config["allowed_types"] = "gif|jpg|png";
 					$config["max_size"] = 5000;
 					$config["encrypt_name"] = TRUE;
 
 					$this->load->library("upload", $config);
 
-					if (!is_dir("uploads/custom")) {
-						mkdir("./uploads/custom", 0777, TRUE);
+					if (!is_dir("uploads")) {
+						mkdir("./uploads", 0777, TRUE);
 					}
-					if (!is_dir("uploads/custom/". $product_folder)) {
-						mkdir("./uploads/custom/". $product_folder, 0777, TRUE);
+					if (!is_dir("uploads/". $product_folder)) {
+						mkdir("./uploads/". $product_folder, 0777, TRUE);
 					}
 
 					for ($i = 1; $i <= $img_count; $i++) {
@@ -380,7 +371,7 @@
 								redirect("admin/orders_custom");
 							} else {
 								if (isset($imgs[$i - 1]) && !is_null($imgs[$i - 1]) && $imgs[$i - 1] != "") {
-									unlink("./uploads/custom/". $product_folder ."/". $imgs[$i - 1]);
+									unlink("./uploads/". $product_folder ."/". $imgs[$i - 1]);
 								}
 								$imgs[$i - 1] = $this->upload->data("file_name");
 							}
@@ -402,8 +393,8 @@
 					);
 					if ($this->Model_update->update_product_custom($product_id, $data_product)) {
 						$data_item = array(
-							"qty" => intval($qty),
-							"price" => floatval($price)
+							"qty" => $qty,
+							"price" => $price
 						);
 						$this->Model_update->update_order_item($order_id, $data_item);
 
@@ -447,8 +438,8 @@
 						$error = "One or more inputs are empty.";
 					} else {
 						$data = array(
-							"price" => floatval($price),
-							"qty" => intval($qty)
+							"price" => $price,
+							"qty" => $qty
 						);
 						if (!$this->Model_update->update_order_item($order_id, $data)) {
 							$error = "Order Item Error";
@@ -469,14 +460,14 @@
 
 							$product_folder = "product_". (intval($this->db->count_all("products")) + 1);
 
-							$config["upload_path"] = "./uploads/products/". $product_folder;
+							$config["upload_path"] = "./uploads/". $product_folder;
 							$config["allowed_types"] = "gif|jpg|png";
 							$config["max_size"] = 5000;
 							$config["encrypt_name"] = TRUE;
 
 							$this->load->library("upload", $config);
-							if (!is_dir("uploads/products/". $product_folder)) {
-								mkdir("./uploads/products/". $product_folder, 0777, TRUE);
+							if (!is_dir("uploads/". $product_folder)) {
+								mkdir("./uploads/". $product_folder, 0777, TRUE);
 							}
 
 							if (isset($_FILES["inp_img"])) {
@@ -492,8 +483,8 @@
 								"img" => $img,
 								"type_id" => $type_id,
 								"description" => $description,
-								"price" => floatval($price),
-								"qty" => intval($qty),
+								"price" => $price,
+								"qty" => $qty,
 								"type" => "NORMAL",
 								"date_added" => date("Y-m-d H:i:s"),
 								"visibility" => "0",
@@ -513,7 +504,7 @@
 					}
 				} elseif ($state == 6 && $order_info["state"] > 2 && $custom_product_info["product_id"] != NULL) {
 					$data = array(
-						"qty" => intval($order_item_info["qty"])
+						"qty" => $order_item_info["qty"]
 					);
 					if (!$this->Model_update->update_product($custom_product_info["product_id"], $data)) {
 						$error = "Order Cancel Error";
@@ -567,7 +558,7 @@
 					$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again.2"));
 				}
 			} else {
-				$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again.3" ));
+				$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again.3"));
 			}
 		}
 		if ($this->input->post("payment_submit") == "Update Payment for Order") {

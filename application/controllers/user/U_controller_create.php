@@ -67,12 +67,13 @@
 				);
 				if ($this->Model_create->create_user_account($data)) {
 					$this->session->set_flashdata("notice", array("success", "User is successfully added."));
+					redirect("login");
 				} else {
 					$this->session->set_flashdata("notice", array("danger", "Something went wrong, please try again."));
 				}
 			}
 		}
-		redirect("login");
+		redirect("register");
 	}
 
 	public function new_order_custom() {
@@ -98,6 +99,7 @@
 			$user = $this->Model_read->get_user_acc_wid($user_id);
 			if ($user->num_rows() < 1) {
 				$this->session->set_flashdata("notice", array("warning", "User does not exist."));
+				redirect("home");
 			} else {
 				$data = array(
 					"user_id" => $user_id,
@@ -118,15 +120,21 @@
 
 					$product_folder = "custom_". (intval($this->db->count_all("products_custom")) + 1);
 
-					$config["upload_path"] = "./uploads/products/". $product_folder;
+					$config["upload_path"] = "./uploads/custom/". $product_folder;
 					$config["allowed_types"] = "gif|jpg|png";
 					$config["max_size"] = 5000;
 					$config["encrypt_name"] = TRUE;
 
 					$this->load->library("upload", $config);
 
-					if (!is_dir("uploads/products/". $product_folder)) {
-						mkdir("./uploads/products/". $product_folder, 0777, TRUE);
+					if (!is_dir("uploads")) {
+						mkdir("./uploads", 0777, TRUE);
+					}
+					if (!is_dir("uploads/custom")) {
+						mkdir("./uploads/custom", 0777, TRUE);
+					}
+					if (!is_dir("uploads/custom/". $product_folder)) {
+						mkdir("./uploads/custom/". $product_folder, 0777, TRUE);
 					}
 
 					for ($i = 1; $i <= $img_count; $i++) {
@@ -169,6 +177,8 @@
 						$this->email->send();
 
 						$this->session->set_flashdata("notice", array("success", "Order is successfully added."));
+
+						redirect("my_orders");
 					} else {
 						$this->session->set_flashdata("notice", array("danger", "Something went wrong, please try again."));
 					}
@@ -177,7 +187,7 @@
 				}
 			}
 		}
-		redirect("home");
+		redirect("custom");
 	}
 	public function new_order() {
 		$user_id = ($this->session->has_userdata("user_id") ? $this->session->userdata("user_id") : NULL);
@@ -201,6 +211,7 @@
 			$user = $this->Model_read->get_user_acc_wid($user_id);
 			if ($user->num_rows() < 1) {
 				$this->session->set_flashdata("notice", array("warning", "User does not exist."));
+				redirect("home");
 			} else {
 				$data_products = array();
 				$data_items = array();
@@ -263,6 +274,12 @@
 						$config["encrypt_name"] = TRUE;
 
 						$this->load->library("upload", $config);
+						if (!is_dir("uploads")) {
+							mkdir("./uploads", 0777, TRUE);
+						}
+						if (!is_dir("uploads/users")) {
+							mkdir("./uploads/users", 0777, TRUE);
+						}
 						if (!is_dir("uploads/users/". $user_folder)) {
 							mkdir("./uploads/users/". $user_folder, 0777, TRUE);
 						}
@@ -285,6 +302,7 @@
 							"order_id" => $order_id,
 							"img" => $img,
 							"date_time" => $date_time,
+							"type" => "0",
 							"status" => "1"
 						);
 
@@ -302,6 +320,8 @@
 							$this->email->send();
 
 							$this->session->set_flashdata("notice", array("success", "Order is successfully added."));
+							
+							redirect("my_orders");
 						} else {
 							$this->session->set_flashdata("notice", array("danger", "Something went wrong, please try again."));
 						}
@@ -314,7 +334,7 @@
 				}
 			}
 		}
-		redirect("home");
+		redirect("cart");
 	}
 	public function submit_payment() {
 		$order_id = $this->input->post("inp_order_id");
@@ -337,8 +357,9 @@
 			$user = $this->Model_read->get_user_acc_wid($user_id);
 			if ($user->num_rows() < 1) {
 				$this->session->set_flashdata("notice", array("warning", "User does not exist."));
+				redirect("home");
 			} else {
-				// insert order payment
+				// insert payment image
 				$img = NULL;
 
 				$user_folder = "user_". $user_id;
@@ -350,6 +371,12 @@
 				$config["encrypt_name"] = TRUE;
 
 				$this->load->library("upload", $config);
+				if (!is_dir("uploads")) {
+					mkdir("./uploads", 0777, TRUE);
+				}
+				if (!is_dir("uploads/users")) {
+					mkdir("./uploads/users", 0777, TRUE);
+				}
 				if (!is_dir("uploads/users/". $user_folder)) {
 					mkdir("./uploads/users/". $user_folder, 0777, TRUE);
 				}
@@ -394,11 +421,14 @@
 					} else {
 						$this->session->set_flashdata("notice", array("danger", "Something went wrong, please try again.[2]"));
 					}
-				} else {
+
+					redirect("my_order_payment_adtl?id=". $order_id);
+				} else { // submit order payment
 					$data = array(
 						"order_id" => $order_id,
 						"img" => $img,
 						"date_time" => $date_time,
+						"type" => "0",
 						"status" => "1"
 					);
 
@@ -420,10 +450,12 @@
 					} else {
 						$this->session->set_flashdata("notice", array("danger", "Something went wrong, please try again.[3]"));
 					}
+
+					redirect("my_order_details?id=". $order_id);
 				}
 			}
 		}
-		redirect("home");
+		redirect("my_orders");
 	}
 	// = = = MESSAGES
 	public function new_message_user() {

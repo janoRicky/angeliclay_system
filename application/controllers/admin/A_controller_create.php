@@ -33,6 +33,12 @@
 			$config["encrypt_name"] = TRUE;
 
 			$this->load->library("upload", $config);
+			if (!is_dir("uploads")) {
+				mkdir("./uploads", 0777, TRUE);
+			}
+			if (!is_dir("uploads/products")) {
+				mkdir("./uploads/products", 0777, TRUE);
+			}
 			if (!is_dir("uploads/products/". $product_folder)) {
 				mkdir("./uploads/products/". $product_folder, 0777, TRUE);
 			}
@@ -86,6 +92,12 @@
 
 			$this->load->library("upload", $config);
 
+			if (!is_dir("uploads")) {
+				mkdir("./uploads", 0777, TRUE);
+			}
+			if (!is_dir("uploads/types")) {
+				mkdir("./uploads/types", 0777, TRUE);
+			}
 			if (!is_dir("uploads/types/". $type_folder)) {
 				mkdir("./uploads/types/". $type_folder, 0777, TRUE);
 			}

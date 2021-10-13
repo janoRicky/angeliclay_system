@@ -11,36 +11,6 @@
 		date_default_timezone_set("Asia/Manila");
 	}
 
-	public function view_image() { // <img src="img">
-		// $name = base_url() . $this->input->get("name");
-		$name = NULL;
-		$type = $this->input->get("t");
-		$id = $this->input->get("i");
-
-		switch ($type) {
-			case "0":
-				$product = $this->Model_read->get_product_wid($id)->row_array();
-				$name = base_url(). "uploads/products/product_". $product["product_id"] ."/". $product["img"];
-				break;
-		}
-
-		// if (pathinfo($name, PATHINFO_EXTENSION) == "png") {
-		// 	$image_png = imagecreatefrompng($name);
-
-		// 	header("Content-type: image/png");
-		// 	imagepng($image_png);
-
-		// 	imagedestroy($image_png);
-		// } elseif (pathinfo($name, PATHINFO_EXTENSION) == "jpeg") {
-		// 	$image_jpeg = imagecreatefromjpeg($name);
-
-		// 	header("Content-type: image/jpg");
-		// 	imagejpeg($image_jpeg);
-
-		// 	imagedestroy($image_jpeg);
-		// }
-		redirect($name);
-	}
 
 	public function index() {
 		redirect("home");
@@ -135,20 +105,25 @@
 		$head["title"] = "Place Order - Angeliclay Ordering System";
 		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
 
-		$grand_total = $this->input->get("grand_total");
+		$grand_total = $this->input->post("grand_total");
 
 		if (!$this->session->has_userdata("user_in")) {
 			$this->session->set_flashdata("notice", array("warning", "Please log-in first."));
 			redirect("login");
 		} else {
-			$user_details = $this->Model_read->get_user_acc_wid($this->session->userdata("user_id"));
-			if ($user_details->num_rows() < 1) {
-				session_destroy();
-				redirect("home");
+			if (!isset($grand_total) || $grand_total <= 0){
+				$this->session->set_flashdata("notice", array("danger", "Something went wrong, please try again."));
+				redirect("cart");
 			} else {
-				$data["grand_total"] = $grand_total;
-				$data["account_details"] = $user_details->row_array();
-				$this->load->view("user/u_submit_order", $data);
+				$user_details = $this->Model_read->get_user_acc_wid($this->session->userdata("user_id"));
+				if ($user_details->num_rows() < 1) {
+					session_destroy();
+					redirect("home");
+				} else {
+					$data["grand_total"] = $grand_total;
+					$data["account_details"] = $user_details->row_array();
+					$this->load->view("user/u_submit_order", $data);
+				}
 			}
 		}
 	}
@@ -357,7 +332,7 @@
 
 		$user_id = $this->session->userdata("user_id");
 
-		$order = $this->Model_read->get_order_to_pay_wid_user_id($id, $user_id);
+		$order = $this->Model_read->get_order_to_pay_wid_user_id($id, $user_id); // if order state is waiting for payment
 		if ($id == NULL || $order->num_rows() < 1) {
 			redirect("my_orders");
 		} else {
