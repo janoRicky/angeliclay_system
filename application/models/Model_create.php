@@ -29,6 +29,20 @@ class Model_create extends CI_Model {
 	public function create_user_account($data) {
 		return $this->db->insert("user_accounts", $data);
 	}
+	public function create_message($data) {
+		return $this->db->insert("messages", $data);
+	}
+	public function message_user($user_id, $admin_id, $message, $date_time) {
+		$data = array(
+			"user_id" => $user_id,
+			"admin_id" => $admin_id,
+			"message" => $message,
+			"date_time" => $date_time,
+			"seen" => "0",
+			"status" => "1"
+		);
+		return $this->db->insert("messages", $data);
+	}
 
 	public function create_adm_account($data) {
 		return $this->db->insert("admin_accounts", $data);

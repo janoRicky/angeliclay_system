@@ -1,14 +1,12 @@
 
 EMAIL = order, custom order, custom order payment, state received
 -also email users on important state changes
+MESSAGING - when changing states send a message to the user
 
 make DASHBOARD - notifications/logs
 
 user+admin logs
 
-MESSAGING - when changing states send a message to the user
-
-allow user to make additional payment for normal orders?
 if there are more than 1 product on a custom order, add the ability for the admin to add multiple products to custom order
 - add product in custom order view
 
@@ -16,9 +14,9 @@ archives
 
 add add/update buttons on item views
 
+email/password checks
 
-
-
+check custom user payment image preview
 
 
 image protection, controller access for image src

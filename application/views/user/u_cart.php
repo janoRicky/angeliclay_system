@@ -45,7 +45,7 @@ $template_header;
 									<?php if (count($cart) < 1): ?>
 										<div class="price text-center p-4 mt-4">
 											<h4 class="font-weight-bold">
-												Cart is empty.
+												CART IS EMPTY
 											</h4>
 										</div>
 									<?php endif; $grand_total = 0; ?>
@@ -68,7 +68,7 @@ $template_header;
 														<a href="<?=base_url()?>product?id=<?=$item_info['product_id']?>" class="text-dark">
 															<img class="img-responsive item_img" src="<?php
 															if (!empty($item_info["img"])) {
-																echo base_url(). 'uploads/product_'. $item_info["product_id"] .'/'. explode("/", $item_info["img"])[0];
+																echo base_url(). 'uploads/products/product_'. $item_info["product_id"] .'/'. explode("/", $item_info["img"])[0];
 															} else {
 																echo base_url(). "assets/img/no_img.png";
 															}
@@ -130,13 +130,17 @@ $template_header;
 										<div class="col-12 p-3 price text-center">
 											<h4 class="font-weight-bold">PHP <?=number_format($grand_total, 2)?></h4>
 										</div>
-										<div class="col-12 text-center mt-4">
-											<a <?=(count($cart) > 0 ? "href='submit_order?grand_total=". $grand_total ."'" : "")?>>
-												<button class="button b_p b_lg">
-													<i class="fa fa-money" aria-hidden="true"></i> Place Order
-												</button>
-											</a>
-										</div>
+										<?php if (count($cart) > 0): ?>
+											<div class="col-12 text-center mt-4">
+												<?=form_open(base_url() . "submit_order", "method='POST'")?>
+													<input type="hidden" name="grand_total" value="<?=$grand_total?>">
+													
+													<button class="button b_p b_lg" <?=($grand_total > 0 ? "" : "disabled")?>>
+														<i class="fa fa-money" aria-hidden="true"></i> Place Order
+													</button>
+												<?=form_close()?>
+											</div>
+										<?php endif; ?>
 									</div>
 								</div>
 							</div>

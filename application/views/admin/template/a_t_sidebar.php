@@ -20,6 +20,9 @@
 		<a href="users" class="list-group-item side_link">
 			<i class="fa fa-users" aria-hidden="true"></i> User Accounts
 		</a>
+		<a href="messaging" class="list-group-item side_link">
+			<i class="fa fa-envelope" aria-hidden="true"></i> Messaging
+		</a>
 		<a href="accounts" class="list-group-item side_link">
 			<i class="fa fa-user-secret" aria-hidden="true"></i> Admin Accounts
 		</a>

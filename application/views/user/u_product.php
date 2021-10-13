@@ -20,7 +20,7 @@ $template_header;
 						<div class="col-12 col-md-6">
 							<img class="img-responsive item_img" src="<?php
 							if (!empty($product_details["img"])) {
-								echo base_url(). 'uploads/product_'. $product_details["product_id"] .'/'. explode("/", $product_details["img"])[0];
+								echo base_url(). 'uploads/products/product_'. $product_details["product_id"] .'/'. explode("/", $product_details["img"])[0];
 							} else {
 								echo base_url(). "assets/img/no_img.png";
 							}

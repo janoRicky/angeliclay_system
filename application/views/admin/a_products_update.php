@@ -31,7 +31,7 @@ $template_header;
 										<input class="form-control mb-1" id="product_image" type="file" name="inp_img">
 										<img class="img-responsive img_view img_zoomable" id="image_preview" src="<?php
 										if (!empty($row_info["img"])) {
-											echo base_url(). 'uploads/product_'. $row_info["product_id"] .'/'. $row_info["img"];
+											echo base_url(). 'uploads/products/product_'. $row_info["product_id"] .'/'. $row_info["img"];
 										} else {
 											echo base_url(). "assets/img/no_img.png";
 										}

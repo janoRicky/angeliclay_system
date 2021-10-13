@@ -28,10 +28,17 @@ $template_header;
 								</button>
 							</div>
 						<?php endif; ?>
-						<div class="row view_container">
-							<div class="col-12 text-left">
+						<div class="row">
+							<div class="col-12 col-sm-6 text-left">
 								<h2>View Order #<?=$row_info["order_id"]?></h2>
 							</div>
+							<div class="col-12 col-sm-6 text-right">
+								<a class="btn btn-primary" href="<?=base_url();?>admin/orders_edit?id=<?=$row_info['order_id']?>">
+									<i class="fa fa-pencil p-1" aria-hidden="true"></i> Update
+								</a>
+							</div>
+						</div>
+						<div class="row view_container">
 							<div class="col-12">
 								<div class="row mt-2">
 									<div class="col-12">
@@ -77,28 +84,38 @@ $template_header;
 											</thead>
 											<tbody>
 												<?php $total_qty = 0; $total_price = 0; ?>
-												<?php foreach ($tbl_order_items->result_array() as $row): ?>
+												<?php if ($tbl_order_items->num_rows() < 1): ?>
 													<tr>
-														<td><?=$this->Model_read->get_product_wid($row["product_id"])->row_array()["name"]?></td>
-														<td><?=$row["qty"]?></td>
-														<?php $total_qty += $row["qty"]; ?>
-														<td>
-															PHP <?=number_format($row["price"], 2)?>
-														</td>
-														<td class="total_price">
-															PHP <?=number_format($row["qty"] * $row["price"], 2)?>
-														</td>
-														<?php $total_price += $row["qty"] * $row["price"]; ?>
-														<td>
-															<a href="<?=base_url();?>admin/products_view?id=<?=$row['product_id']?>">
-																<button class="btn btn-sm btn-primary mb-1">View</button>
-															</a>
-														</td>
+														<td colspan="5" class="font-weight-bold">[ EMPTY ]</td>
 													</tr>
-												<?php endforeach; ?>
+												<?php else: ?>
+													<?php foreach ($tbl_order_items->result_array() as $row): ?>
+														<tr>
+															<td>
+																<a href="<?=base_url();?>admin/products_view?id=<?=$row["product_id"]?>">
+																	<i class="fa fa-eye p-1" aria-hidden="true"></i> <?=$this->Model_read->get_product_wid($row["product_id"])->row_array()["name"]?>
+																</a>
+															</td>
+															<td><?=$row["qty"]?></td>
+															<?php $total_qty += $row["qty"]; ?>
+															<td>
+																PHP <?=number_format($row["price"], 2)?>
+															</td>
+															<td class="total_price">
+																PHP <?=number_format($row["qty"] * $row["price"], 2)?>
+															</td>
+															<?php $total_price += $row["qty"] * $row["price"]; ?>
+															<td>
+																<a href="<?=base_url();?>admin/products_view?id=<?=$row['product_id']?>">
+																	<button class="btn btn-sm btn-primary mb-1">View</button>
+																</a>
+															</td>
+														</tr>
+													<?php endforeach; ?>
+												<?php endif; ?>
 											</tbody>
-											<tr id="total_info">
-												<td>Total</td>
+											<tr>
+												<td class="font-weight-bold">Total</td>
 												<td id="total_qty">
 													<?=$total_qty?>
 												</td>
@@ -125,36 +142,89 @@ $template_header;
 											</thead>
 											<tbody>
 												<?php $total_payment = 0; ?>
-												<?php foreach ($tbl_payments->result_array() as $row): ?>
+												<?php if ($tbl_payments->num_rows() < 1): ?>
 													<tr>
-														<td class="id"><?=$row["payment_id"]?></td>
-														<td>
-															<?php if($row["img"] != NULL): ?>
-																<img class="img-responsive img_row img_zoomable" src="<?php
-																if (!empty($row["img"])) {
-																	echo base_url(). 'uploads/users/user_'. $row_info["user_id"] .'/payments/order_'. $row_info["order_id"] .'/'. $row["img"];
-																} else {
-																	echo base_url(). "assets/img/no_img.png";
-																}
-																?>">
-															<?php endif; ?>
-														</td>
-														<td class="date_time"><?=$row["date_time"]?></td>
-														<td class="description"><?=$row["description"]?></td>
-														<td class="amount">
-															PHP <span><?=number_format($row["amount"], 2)?></span>
-														</td>
-														<td>
-															<button class="btn btn-primary btn-sm btn_update_payment my-2" data-toggle="modal" data-target="#modal_payment_update" data-id="<?=$row['payment_id']?>">
-																Update
-															</button>
-														</td>
+														<td colspan="6" class="font-weight-bold">[ EMPTY ]</td>
 													</tr>
-												<?php endforeach; ?>
+												<?php else: ?>
+													<?php foreach ($tbl_payments->result_array() as $row): ?>
+														<tr>
+															<td class="id"><?=$row["payment_id"]?></td>
+															<td>
+																<?php if($row["img"] != NULL): ?>
+																	<img class="img-responsive img_row img_zoomable" src="<?php
+																	if (!empty($row["img"])) {
+																		echo base_url(). 'uploads/users/user_'. $row_info["user_id"] .'/payments/order_'. $row_info["order_id"] .'/'. $row["img"];
+																	} else {
+																		echo base_url(). "assets/img/no_img.png";
+																	}
+																	?>">
+																<?php endif; ?>
+															</td>
+															<td class="date_time"><?=$row["date_time"]?></td>
+															<td class="description"><?=$row["description"]?></td>
+															<?php $total_payment += $row["amount"]; ?>
+															<td class="amount">
+																PHP <span><?=number_format($row["amount"], 2)?></span>
+															</td>
+															<td>
+																<button class="btn btn-primary btn-sm btn_update_payment my-2" data-toggle="modal" data-target="#modal_payment_update" data-id="<?=$row['payment_id']?>">
+																	Update
+																</button>
+															</td>
+														</tr>
+													<?php endforeach; ?>
+													<tr>
+														<td class="font-weight-bold">Total</td>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td>
+															PHP <?=number_format($total_payment, 2)?>
+														</td>
+														<td></td>
+													</tr>
+												<?php endif; ?>
 											</tbody>
 										</table>
 										<button class="btn btn-primary btn-lg my-2" data-toggle="modal" data-target="#modal_payment" data-id="<?=$row_info['order_id']?>">
 											Add Payment
+										</button>
+									</div>
+									<div class="col-12">
+										<label>Unpaid Payments:</label>
+										<table class="table table-striped table-hover table-responsive-md table-bordered">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>Description</th>
+													<th>Amount To Be Paid</th>
+													<th>Action</th>
+												</tr>
+											</thead>
+											<tbody>
+												<?php if ($tbl_payments_unpaid->num_rows() < 1): ?>
+													<tr>
+														<td colspan="4" class="font-weight-bold">[ EMPTY ]</td>
+													</tr>
+												<?php else: ?>
+													<?php foreach ($tbl_payments_unpaid->result_array() as $row): ?>
+														<tr>
+															<td class="id"><?=$row["payment_id"]?></td>
+															<td class="description"><?=$row["description"]?></td>
+															<td class="amount">
+																PHP <span><?=number_format($row["amount"], 2)?></span>
+															</td>
+															<td>
+																<i class="fa fa-trash p-1 btn_delete_payment action_button" data-toggle="modal" data-target="#modal_delete_payment_tbp" data-id="<?=$row['payment_id']?>" aria-hidden="true"></i>
+															</td>
+														</tr>
+													<?php endforeach; ?>
+												<?php endif; ?>
+											</tbody>
+										</table>
+										<button class="btn btn-primary btn-lg my-2" data-toggle="modal" data-target="#modal_payment_tbp" data-id="<?=$row_info['order_id']?>">
+											Add Payment To Be Paid
 										</button>
 									</div>
 									<div class="col-12">
@@ -264,7 +334,7 @@ $template_header;
 							<label>State:</label>
 							<select name="inp_state" class="form-control">
 								<?php foreach ($states as $key => $val): ?>
-									<option value="<?=$key?>"><?=$val?></option>
+									<option value="<?=$key?>" <?=($row_info["state"] == $key ? "selected" : "")?>><?=$val?></option>
 								<?php endforeach; ?>
 							</select>
 						</div>
@@ -276,12 +346,65 @@ $template_header;
 			</div>
 		</div>
 	</div>
+	<div id="modal_delete_payment_tbp" class="modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<?=form_open(base_url() . "admin/payment_delete", "method='POST'");?>
+					<input id="delete_inp_id" type="hidden" name="inp_id">
+					<div class="modal-header">
+						<h4 class="modal-title">Delete Order</h4>
+						<button type="button" class="close" data-dismiss="modal">
+							&times;
+						</button>
+					</div>
+					<div class="modal-body">
+						Are you sure you want to delete Payment (TBP) #<span id="delete_id"></span>?
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+						<input type="submit" class="btn btn-primary" value="Yes">
+					</div>
+				<?=form_close()?>
+			</div>
+		</div>
+	</div>
+	<div id="modal_payment_tbp" class="modal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<?=form_open(base_url() . "admin/order_add_payment_tbp", "method='POST' enctype='multipart/form-data'");?>
+					<input type="hidden" name="inp_id" value="<?=$row_info['order_id']?>">
+					<div class="modal-header">
+						<h4 class="modal-title">Add Payment</h4>
+						<button type="button" class="close" data-dismiss="modal">
+							&times;
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label>Payment Description:</label>
+							<textarea class="form-control" rows="3" style="resize: none;" name="inp_description" maxlength="128" placeholder="Description"></textarea>
+						</div>
+						<div class="form-group">
+							<label>Amount:</label>
+							<input type="number" class="form-control" name="inp_amount" placeholder="*Price" autocomplete="off" required="" step="0.000001">
+						</div>
+					</div>
+					<div class="modal-footer">
+						<input type="submit" class="btn btn-primary" name="payment_submit" value="Submit Payment for Order">
+					</div>
+				<?=form_close()?>
+			</div>
+		</div>
+	</div>
 </body>
 <script type="text/javascript" src="<?=base_url()?>assets/js/sum().js"></script>
 <script type="text/javascript">
 	$(document).ready(function () {
-		$("#table_items").DataTable();
-		$("#table_payments").DataTable();
+
+		$(".btn_delete_payment").on("click", function() {
+			$("#delete_id").text($(this).data("id"));
+			$("#delete_inp_id").val($(this).data("id"));
+		});
 
 		$(".btn_state").on("click", function() {
 			$("#state_inp_id").val($(this).data("id"));

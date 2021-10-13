@@ -27,12 +27,11 @@ $template_header;
 								<?=form_open(base_url() . "admin/type_update", "method='POST' enctype='multipart/form-data'"); ?>
 									<input id="update_inp_id" type="hidden" name="inp_id" value="<?=$row_info["type_id"]?>">
 									<div class="form-group">
-										<?php $images = explode("/", $row_info["img"]); ?>
 										<label>Image:</label>
 										<input class="form-control mb-1" id="type_image" type="file" name="inp_img">
 										<img class="img-responsive img_view img_zoomable" id="image_preview" src="<?php
 										if (!empty($row_info["img"])) {
-											echo base_url(). 'assets/img/featured/type_'. $row_info["type_id"] .'/'. $row_info["img"];
+											echo base_url(). 'uploads/types/type_'. $row_info["type_id"] .'/'. $row_info["img"];
 										} else {
 											echo base_url(). "assets/img/no_img.png";
 										}
@@ -48,7 +47,7 @@ $template_header;
 									</div>
 									<div class="form-group">
 										<label for="inp_type">Price Range:</label>
-										<input type="text" class="form-control" name="inp_price_range" placeholder="*Price Range" value="<?=$row_info['price_range']?>" autocomplete="off" required="">
+										<input type="text" class="form-control" name="inp_price_range" placeholder="*e.g. 150.00 - 200.00" value="<?=$row_info['price_range']?>" autocomplete="off" required="">
 									</div>
 									<div class="form-group">
 										<input type="submit" class="btn btn-primary" value="Update">

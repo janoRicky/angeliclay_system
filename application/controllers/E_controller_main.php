@@ -6,21 +6,11 @@
 	public function __construct() {
 		parent::__construct();
 		$this->load->model("Model_read");
+		$this->load->model("Model_update");
 
 		date_default_timezone_set("Asia/Manila");
 	}
 
-	public function view_image() { // <img src="img">
-		$name = $this->input->get("name");
-
-		$test = imagecreatefromjpeg(base_url()."assets/img/sample2.jpg");
-
-		header("Content-type: image/jpg");
-		imagejpeg($test);
-
-		imagedestroy($test);
-
-	}
 
 	public function index() {
 		redirect("home");
@@ -115,20 +105,25 @@
 		$head["title"] = "Place Order - Angeliclay Ordering System";
 		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
 
-		$grand_total = $this->input->get("grand_total");
+		$grand_total = $this->input->post("grand_total");
 
 		if (!$this->session->has_userdata("user_in")) {
 			$this->session->set_flashdata("notice", array("warning", "Please log-in first."));
 			redirect("login");
 		} else {
-			$user_details = $this->Model_read->get_user_acc_wid($this->session->userdata("user_id"));
-			if ($user_details->num_rows() < 1) {
-				session_destroy();
-				redirect("home");
+			if (!isset($grand_total) || $grand_total <= 0){
+				$this->session->set_flashdata("notice", array("danger", "Something went wrong, please try again."));
+				redirect("cart");
 			} else {
-				$data["grand_total"] = $grand_total;
-				$data["account_details"] = $user_details->row_array();
-				$this->load->view("user/u_submit_order", $data);
+				$user_details = $this->Model_read->get_user_acc_wid($this->session->userdata("user_id"));
+				if ($user_details->num_rows() < 1) {
+					session_destroy();
+					redirect("home");
+				} else {
+					$data["grand_total"] = $grand_total;
+					$data["account_details"] = $user_details->row_array();
+					$this->load->view("user/u_submit_order", $data);
+				}
 			}
 		}
 	}
@@ -294,11 +289,16 @@
 
 		$user_id = $this->session->userdata("user_id");
 
-		$order = $this->Model_read->get_order_custom_to_pay_wid_user_id($id, $user_id);
+		$order = $this->Model_read->get_order_to_pay_wid_user_id($id, $user_id);
 		if ($id == NULL || $order->num_rows() < 1) {
 			redirect("my_orders");
 		} else {
 			$order_items = $this->Model_read->get_order_items_wid_user_id($id, $user_id, "CUSTOM");
+			$type = "CUSTOM";
+			if ($order_items->num_rows() < 1) {
+				$order_items = $this->Model_read->get_order_items_wid_user_id($id, $user_id, "NORMAL");
+				$type = "NORMAL";
+			}
 			
 			$data["my_order"] = $order->row_array();
 			$data["order_items"] = $order_items;
@@ -315,12 +315,73 @@
 			$data["order_payments"] = $this->Model_read->get_order_payments_worder_id($id);
 
 			$data["order_id"] = $id;
+			$data["type"] = $type;
 
 			foreach ($this->Model_read->get_types()->result_array() as $row) {
 				$data["types"][$row["type_id"]] = $row["name"];
 			}
 
 			$this->load->view("user/u_my_order_payment", $data);
+		}
+	}
+	public function view_u_my_order_adtl_payment() {
+		$id = $this->input->get("id");
+
+		$head["title"] = "Order Adtl. Payment - Angeliclay Ordering System";
+		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
+
+		$user_id = $this->session->userdata("user_id");
+
+		$order = $this->Model_read->get_order_to_pay_wid_user_id($id, $user_id); // if order state is waiting for payment
+		if ($id == NULL || $order->num_rows() < 1) {
+			redirect("my_orders");
+		} else {
+			$payments_adtl = $this->Model_read->get_order_payments_adtl_worder_id($id);
+			if ($payments_adtl->num_rows() > 0) {
+				$data["my_order"] = $order->row_array();
+
+				$data["states"] = array(
+					"PENDING", 
+					"WAITING FOR PAYMENT", 
+					"ACCEPTED / IN PROGRESS", 
+					"TO SHIP", 
+					"SHIPPED", 
+					"RECEIVED", 
+					"CANCELLED"
+				);
+				$data["order_payments"] = $payments_adtl;
+
+				$data["order_id"] = $id;
+
+				$this->load->view("user/u_my_order_adtl_payment", $data);
+			} else {
+				redirect("my_orders");
+			}
+		}
+	}
+	public function view_u_customer_support() {
+		$head["title"] = "Customer Support Chat - Angeliclay Ordering System";
+		$data["template_head"] = $this->load->view("user/template/u_t_head", $head);
+
+		if (!$this->session->has_userdata("user_in")) {
+			redirect("home");
+		} else {
+			$user_id = $this->session->userdata("user_id");
+			$page = ($this->input->get("pg") ? $this->input->get("pg") : 0);
+
+			$data["tbl_messages_all"] = $this->Model_read->get_user_messages_all_wuser_id($user_id);
+
+			$data["tbl_messages"] = $this->Model_read->get_user_messages_wuser_id($user_id, $page * 10);
+			$data["tbl_page"] = $page;
+			$data["user_id"] = $user_id;
+
+			$msg_latest_id = max(array_column($data["tbl_messages_all"]->result_array(), "message_id"));
+			$msg_latest = $this->Model_read->get_user_message_wid($msg_latest_id)->row_array();
+			if ($msg_latest["admin_id"] != NULL && $msg_latest["seen"] == "0") {
+				$this->Model_update->see_user_message($msg_latest_id);
+			}
+
+			$this->load->view("user/u_support", $data);
 		}
 	}
 
@@ -425,6 +486,7 @@
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
 			$data["nav"] = array(
 				array("text" => "Products", "link" => "products"),
+				array("text" => "View Product", "link" => "products_view?id=". $id),
 				array("text" => "Edit Product #". $id, "link" => "products_edit?id=". $id)
 			);
 
@@ -486,6 +548,7 @@
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
 			$data["nav"] = array(
 				array("text" => "Types", "link" => "types"),
+				array("text" => "View Type", "link" => "types_view?id=". $id),
 				array("text" => "Edit Type #". $id, "link" => "types_edit?id=". $id)
 			);
 
@@ -553,7 +616,8 @@
 				"CANCELLED"
 			);
 			
-			$data["tbl_payments"] = $this->Model_read->get_order_payments_worder_id($id);
+			$data["tbl_payments"] = $this->Model_read->get_all_order_payments_paid_worder_id($id);
+			$data["tbl_payments_unpaid"] = $this->Model_read->get_order_payments_unpaid_worder_id($id);
 
 			$this->load->view("admin/a_orders_view", $data);
 		}
@@ -573,6 +637,7 @@
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
 			$data["nav"] = array(
 				array("text" => "Orders", "link" => "orders"),
+				array("text" => "View Order", "link" => "orders_view?id=". $id),
 				array("text" => "Edit Order #". $id, "link" => "orders_edit?id=". $id)
 			);
 
@@ -626,7 +691,6 @@
 		} else {
 			$head["title"] = "Custom Orders/View - Angeliclay Ordering System";
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
-			$data["nav"] = array("text" => "Custom Orders/View", "link" => "orders_custom");
 			$data["nav"] = array(
 				array("text" => "Custom Orders", "link" => "orders_custom"),
 				array("text" => "View Custom Order #". $id, "link" => "orders_custom_view?id=". $id)
@@ -652,7 +716,8 @@
 				"CANCELLED"
 			);
 
-			$data["tbl_payments"] = $this->Model_read->get_order_payments_worder_id($id);
+			$data["tbl_payments"] = $this->Model_read->get_all_order_payments_paid_worder_id($id);
+			$data["tbl_payments_unpaid"] = $this->Model_read->get_order_payments_unpaid_worder_id($id);
 
 			$this->load->view("admin/a_orders_custom_view", $data);
 		}
@@ -672,6 +737,7 @@
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
 			$data["nav"] = array(
 				array("text" => "Custom Orders", "link" => "orders_custom"),
+				array("text" => "View Custom Order", "link" => "orders_custom_view?id=". $id),
 				array("text" => "Edit Custom Order #". $id, "link" => "orders_custom_edit?id=". $id)
 			);
 
@@ -710,7 +776,6 @@
 		} else {
 			$head["title"] = "Users/View - Angeliclay Ordering System";
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
-			$data["nav"] = array("text" => "Users/View", "link" => "users");
 			$data["nav"] = array(
 				array("text" => "Users", "link" => "users"),
 				array("text" => "View User #". $id, "link" => "users_view?id=". $id)
@@ -748,12 +813,54 @@
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
 			$data["nav"] = array(
 				array("text" => "Users", "link" => "users"),
+				array("text" => "View User", "link" => "users_view?id=". $id),
 				array("text" => "Edit User #". $id, "link" => "users_edit?id=". $id)
 			);
 
 			$data["row_info"] = $row_info->row_array();
 
 			$this->load->view("admin/a_users_update", $data);
+		}
+	}
+// = = = MESSAGING
+	public function view_a_messaging() {
+		$this->admin_login_check();
+
+		$head["title"] = "Messaging - Angeliclay Ordering System";
+		$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
+		$data["nav"] = array(array("text" => "Messaging", "link" => "messaging"));
+
+		$data["tbl_messages"] = $this->Model_read->get_messages_conversations();
+
+		$this->load->view("admin/a_messaging", $data);
+	}
+	public function view_a_messaging_view() {
+		$this->admin_login_check();
+
+		$id = $this->input->get("id");
+		$page = ($this->input->get("pg") ? $this->input->get("pg") : 0);
+
+		$row_info = $this->Model_read->get_user_wacc_wid($id);
+
+		if ($id == NULL || $row_info->num_rows() < 1) {
+			$this->session->set_flashdata("alert", array("warning", "User ID does not exist."));
+			redirect("admin/users");
+		} else {
+			$head["title"] = "Messaging/View - Angeliclay Ordering System";
+			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
+			$data["nav"] = array(
+				array("text" => "Messaging", "link" => "messaging"),
+				array("text" => "Message User #". $id, "link" => "messaging_view?id=". $id)
+			);
+
+			$data["tbl_messages_all"] = $this->Model_read->get_user_messages_all_wuser_id($id);
+
+			$data["tbl_messages"] = $this->Model_read->get_user_messages_wuser_id($id, $page * 10);
+			$data["tbl_page"] = $page;
+
+			$data["row_info"] = $row_info->row_array();
+
+			$this->load->view("admin/a_messaging_view", $data);
 		}
 	}
 // = = = ADMINS
@@ -807,6 +914,7 @@
 			$data["template_head"] = $this->load->view("admin/template/a_t_head", $head);
 			$data["nav"] = array(
 				array("text" => "Accounts", "link" => "accounts"),
+				array("text" => "View Account", "link" => "accounts_view?id=". $id),
 				array("text" => "Edit Account #". $id, "link" => "accounts_edit?id=". $id)
 			);
 

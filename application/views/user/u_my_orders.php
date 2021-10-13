@@ -62,7 +62,7 @@ $template_header;
 														<?=date("Y-m-d / H:i:s A", strtotime($row["date_time"]))?>
 													</div>
 													<div class="col-12 col-sm-6 col-lg-2 border p-3">
-														<?=($this->Model_read->is_order_custom($row["order_id"]) ? "CUSTOM" : "NORMAL")?>
+														<?=($this->Model_read->is_order_custom($row["order_id"]) ? "<i class='fa fa-list-alt' aria-hidden='true'></i> CUSTOM ORDER" : "<i class='fa fa-list' aria-hidden='true'></i> NORMAL ORDER")?>
 													</div>
 													<div class="col-12 col-sm-12 col-lg-3 border p-3">
 														<?=$row["zip_code"] ." / ". $row["country"] ." / ". $row["province"] ." / ". $row["city"] ." / ". $row["street"] ." / ". $row["address"]?>
@@ -77,6 +77,13 @@ $template_header;
 																	<i class="fa fa-money" aria-hidden="true"></i> Payment
 																</button>
 															</a>
+															<?php if ($this->Model_read->get_order_payments_adtl_worder_id($row["order_id"])->num_rows() > 0): ?>
+																<a href="my_order_payment_adtl?id=<?=$row["order_id"]?>">
+																	<button class="button b_p">
+																		<i class="fa fa-money" aria-hidden="true"></i> Adtl. Payment
+																	</button>
+																</a>
+															<?php endif; ?>
 														<?php elseif ($row["state"] == 4): ?>
 															<a class="receive" href="order_receive?order_id=<?=$row['order_id']?>">
 																<button class="button b_p">
@@ -109,6 +116,7 @@ $template_header;
 <script type="text/javascript">
 	$(document).ready(function () {
 		$("#table_my_orders").DataTable({
+			"order": [[0, "desc"]],
 			"bLengthChange": false,
 			createdRow: function (row, data, index) {
 				$(row).addClass("order");

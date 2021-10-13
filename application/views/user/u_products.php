@@ -78,7 +78,7 @@ $template_header;
 												<div class="col-6">
 													<img class="img-responsive item_img" src="<?php
 													if (!empty($row["img"])) {
-														echo base_url(). 'uploads/product_'. $row["product_id"] .'/'. explode("/", $row["img"])[0];
+														echo base_url(). 'uploads/products/product_'. $row["product_id"] .'/'. explode("/", $row["img"])[0];
 													} else {
 														echo base_url(). "assets/img/no_img.png";
 													}

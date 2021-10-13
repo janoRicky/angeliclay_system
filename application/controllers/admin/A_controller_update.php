@@ -31,18 +31,20 @@
 
 			$product_folder = "product_". $product_id;
 
-			$config["upload_path"] = "./uploads/". $product_folder;
+			$config["upload_path"] = "./uploads/products/". $product_folder;
 			$config["allowed_types"] = "gif|jpg|png";
 			$config["max_size"] = 5000;
 			$config["encrypt_name"] = TRUE;
 
 			$this->load->library("upload", $config);
-
 			if (!is_dir("uploads")) {
 				mkdir("./uploads", 0777, TRUE);
 			}
-			if (!is_dir("uploads/". $product_folder)) {
-				mkdir("./uploads/". $product_folder, 0777, TRUE);
+			if (!is_dir("uploads/products")) {
+				mkdir("./uploads/products", 0777, TRUE);
+			}
+			if (!is_dir("uploads/products/". $product_folder)) {
+				mkdir("./uploads/products/". $product_folder, 0777, TRUE);
 			}
 
 			if (!empty($_FILES["inp_img"]["name"])) {
@@ -51,7 +53,7 @@
 					redirect("admin/products");
 				} else {
 				    if (isset($row_info["img"]) && !is_null($row_info["img"]) && $row_info["img"] != "") {
-				        unlink("./uploads/". $product_folder ."/". $row_info["img"]);
+				        unlink("./uploads/products/". $product_folder ."/". $row_info["img"]);
 				    }
 					$img = $this->upload->data("file_name");
 				}
@@ -134,18 +136,21 @@
 
 			$type_folder = "type_". $type_id;
 
-			$config["upload_path"] = "./assets/img/featured/". $type_folder;
+			$config["upload_path"] = "./uploads/types/". $type_folder;
 			$config["allowed_types"] = "gif|jpg|png";
 			$config["max_size"] = 5000;
 			$config["encrypt_name"] = TRUE;
 
 			$this->load->library("upload", $config);
 
-			if (!is_dir("assets/img/featured")) {
-				mkdir("./assets/img/featured", 0777, TRUE);
+			if (!is_dir("uploads")) {
+				mkdir("./uploads", 0777, TRUE);
 			}
-			if (!is_dir("assets/img/featured/". $type_folder)) {
-				mkdir("./assets/img/featured/". $type_folder, 0777, TRUE);
+			if (!is_dir("uploads/types")) {
+				mkdir("./uploads/types", 0777, TRUE);
+			}
+			if (!is_dir("uploads/types/". $type_folder)) {
+				mkdir("./uploads/types/". $type_folder, 0777, TRUE);
 			}
 
 			if (!empty($_FILES["inp_img"]["name"])) {
@@ -553,7 +558,7 @@
 					$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again.2"));
 				}
 			} else {
-				$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again.3" ));
+				$this->session->set_flashdata("alert", array("danger", "Something went wrong, please try again.3"));
 			}
 		}
 		if ($this->input->post("payment_submit") == "Update Payment for Order") {

@@ -106,16 +106,33 @@ class Model_read extends CI_Model {
 	public function get_order_all_wid_user_id($id, $user_id) {
 		return $this->db->get_where("orders", array("order_id" => $id, "user_id" => $user_id));
 	}
+	public function get_order_to_pay_wid_user_id($id, $user_id) {
+		return $this->db->get_where("orders", array("order_id" => $id, "user_id" => $user_id, "state" => "1"));
+	}
 	public function get_order_items_wid_user_id($id, $user_id, $type) {
 		$query = "SELECT * FROM orders_items AS oi WHERE order_id = '$id' AND type = '$type' AND EXISTS(SELECT * FROM orders AS o WHERE o.order_id = oi.order_id AND user_id = '$user_id' AND status = '1')";
 		return $this->db->query($query);
 	}
 
 	public function get_order_payments_worder_id($order_id) {
-		return $this->db->get_where("orders_payments", array("order_id" => $order_id));
+		return $this->db->get_where("orders_payments", array("order_id" => $order_id, "type" => "0"));
 	}
 	public function get_order_payment_wid($payment_id) {
-		return $this->db->get_where("orders_payments", array("payment_id" => $payment_id));
+		return $this->db->get_where("orders_payments", array("payment_id" => $payment_id, "type" => "0"));
+	}
+
+	public function get_order_payments_adtl_worder_id($order_id) {
+		return $this->db->get_where("orders_payments", array("order_id" => $order_id, "type" => "1"));
+	}
+	public function get_order_payment_adtl_wid($payment_id) {
+		return $this->db->get_where("orders_payments", array("payment_id" => $payment_id, "type" => "1"));
+	}
+
+	public function get_all_order_payments_paid_worder_id($order_id) {
+		return $this->db->get_where("orders_payments", array("order_id" => $order_id, "status" => "1"));
+	}
+	public function get_order_payments_unpaid_worder_id($order_id) {
+		return $this->db->get_where("orders_payments", array("order_id" => $order_id, "type" => "1", "status" => "0"));
 	}
 
 	public function get_user_accounts() {
@@ -123,6 +140,9 @@ class Model_read extends CI_Model {
 	}
 	public function get_user_acc_wid($id) {
 		return $this->db->get_where("user_accounts", array("user_id" => $id));
+	}
+	public function get_user_wacc_wid($id) {
+		return $this->db->get_where("user_accounts", array("email !=" => "NULL", "user_id" => $id));
 	}
 	public function get_user_acc_wemail($email) {
 		return $this->db->get_where("user_accounts", array("email" => $email, "status" => "1"));
@@ -169,6 +189,36 @@ class Model_read extends CI_Model {
 		$this->db->select("name_last, name_first, name_middle, name_extension, gender, contact_num, zip_code, country, province, city, street, address");
 		$this->db->from("user_accounts");
 		$this->db->where("user_id", $id);
+		return $this->db->get();
+	}
+	public function get_user_message_wid($id) {
+		$this->db->from("messages");
+		$this->db->where("message_id", $id);
+		return $this->db->get();
+	}
+	public function get_messages_conversations() {
+		$query = ("SELECT m.message_id, m.user_id, m.admin_id, m.message, m.seen, m.date_time FROM (SELECT message_id, admin_id, user_id, message, seen, date_time, MAX(message_id) OVER (PARTITION BY user_id) max_message_id FROM messages) m WHERE m.message_id = m.max_message_id");
+		return $this->db->query($query);
+	}
+	public function get_user_messages_all_wuser_id($user_id) {
+		$this->db->select("message_id");
+		$this->db->from("messages");
+		$this->db->where("user_id", $user_id);
+		return $this->db->get();
+	}
+	public function get_user_messages_wuser_id($user_id, $offset) {
+		$this->db->from("messages");
+		$this->db->where("user_id", $user_id);
+		$this->db->limit(10, $offset);
+		$this->db->order_by("message_id", "DESC");
+		return $this->db->get();
+	}
+	public function get_user_messages_latest($user_id) {
+		$this->db->select("message_id, admin_id, seen");
+		$this->db->from("messages");
+		$this->db->where("user_id", $user_id);
+		$this->db->limit(1);
+		$this->db->order_by("message_id", "DESC");
 		return $this->db->get();
 	}
 
