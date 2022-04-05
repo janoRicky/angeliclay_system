@@ -1,86 +1,54 @@
 # angeliclay_system
 
-used Code Igniter 3, php framework
+An ordering website with an admin area for the AngeliClay clay and figure making business.<br />
 
-ADMIN EMAIL:	test@email.com
-ADMIN PASSWORD:	1234
+The user area features an ordering system similar to popular ordering websites. The user is able to:<br />
+&emsp;- view the products list<br />
+&emsp;- add products to cart<br />
+&emsp;- view the details of the cart and place their payments<br />
+&emsp;- place custom orders<br />
+&emsp;- create personal accounts and login<br />
+&emsp;- view the status of customer orders<br />
+&emsp;- contact admins in customer chat<br />
 
-
-
-NOTES:
-	- import database angeliclay_db.sql on phpmyadmin
-	- localhost/angeliclay_system/admin
-
-LIBRARIES USED:
-	- bootstrap (for css)
-	- jquery (for js)
-
-
-CODE IGNITER (PHP framework)
-	
-	admin pages 		(located at application/views/admin)
-	admin template 		(located at application/views/admin/template)
-		- parts of the page used on multiple pages
-
-	multiple functions from codeigniter are used
-		- examples: form_open, redirect, etc.
-
-	MVC - Model View Controller
-	Models - used to interact with the database
-	Views - contains the pages that will be viewed
-	Controller - php functions
-
-	models				(located at application/models)
-	views				(located at application/views)
-	controllers			(located at application/controllers)
-
-	creating a new page
-		- create new file at views folder
-		- add function that loads the file in controller_main
-		- add the directory to application/config/routes
-
-	creating new form
-		FOR ADD
-			- create new table on phpmyadmin
-			- use form_open function to initialize a form (example at login, admin accounts page)
-			- create new function on model_create to access the table created at phpmyadmin
-			- create new function on controller_create
-		FOR UPDATE, DELETE - use model_update, model_delete, controller_update, controller_delete
+The admin area allows website admins to manage the website in many ways. The user is able to:<br />
+&emsp;- chat with the users in customer support<br />
+&emsp;&emsp;- adding, updating, deleting<br />
+&emsp;- manage the products list<br />
+&emsp;&emsp;- adding, updating, deleting<br />
+&emsp;&emsp;- feature products<br />
+&emsp;&emsp;- set visibility<br />
+&emsp;- manage the product types list<br />
+&emsp;&emsp;- adding, updating, deleting<br />
+&emsp;&emsp;- feature product types<br />
+&emsp;- manage the orders list<br />
+&emsp;&emsp;- adding includes selecting from the list of stocked products and selecting from the list of users and custom user details<br />
+&emsp;&emsp;- updating, deleting<br />
+&emsp;- on the individual orders page the admin is able to manage payments<br />
+&emsp;&emsp;- adding, updating, deleting<br />
+&emsp;- manage the custom orders list<br />
+&emsp;&emsp;- adding includes adding custom pictures and selecting from the list of users and custom user details<br />
+&emsp;&emsp;- updating, deleting<br />
+&emsp;- similar to the regular orders on the individual custom orders page the admin is also able to manage payments<br />
+&emsp;&emsp;- adding, updating, deleting<br />
+&emsp;- manage the user accounts list<br />
+&emsp;&emsp;- adding, updating, deleting<br />
+&emsp;- manage the admin accounts list<br />
+&emsp;&emsp;- adding, updating, deleting<br />
+&emsp;- change configurations to allow the admin to receive alerts on their email when users place orders<br />
 
 
+MADE WITH:<br />
+&emsp;- Code Igniter 3<br />
+&emsp;- Bootstrap 4.0.0<br />
+&emsp;- jQuery 3.6.0<br />
+&emsp;- Font Awesome 4.7.0<br />
+&emsp;- DataTables 1.10.20<br />
 
 
-To-Do:
-	add stocks function
-
-
-allow more photos?
-
-when user orders check if there is enough stock
-
-include product photos when changing order state
-
-
-
-custom products - custom orders
-
-
-custom ordered products has 'type' of CUSTOM
-
-
-product search with dropdown and images
-
-
-
-revert product image function
-
-
-add error messages for user and in unauthorized access
-
-
-
-
-
-
-
+MADE IN COLLABORATION WITH:<br />
+&emsp;- Jano, Ricky John P. &emsp;&emsp;[janorickyjohn@gmail.com]<br />
+&emsp;- Panganiban, Camille O. &emsp;[camopanganiban@gmail.com]<br />
+&emsp;- Arenal, Angel Rose E. &emsp;[arenalangelrose2000@gmail.com]<br />
+&emsp;- Cea, Lizel B. &emsp;&emsp;[cealizel4@gmail.com]<br />
 
